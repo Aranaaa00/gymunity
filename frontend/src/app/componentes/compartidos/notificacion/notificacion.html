@@ -1,0 +1,18 @@
+@if (visible) {
+  <aside
+    class="notificacion"
+    [class.notificacion--success]="tipo === 'success'"
+    [class.notificacion--error]="tipo === 'error'"
+    [class.notificacion--warning]="tipo === 'warning'"
+    [class.notificacion--info]="tipo === 'info'"
+    role="alert">
+    <p class="notificacion__mensaje">{{ mensaje }}</p>
+    <button 
+      type="button"
+      class="notificacion__cerrar" 
+      (click)="onCerrar()" 
+      aria-label="Cerrar notificación">
+      <app-icono nombre="x" tamano="md" peso="bold"></app-icono>
+    </button>
+  </aside>
+}

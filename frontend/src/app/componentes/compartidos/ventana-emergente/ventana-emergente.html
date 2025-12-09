@@ -1,0 +1,12 @@
+<aside class="ventana-emergente" (click)="onOverlayClick($event)">
+  <article class="ventana-emergente__contenido">
+    <button 
+      type="button" 
+      class="ventana-emergente__cerrar" 
+      aria-label="Cerrar"
+      (click)="cerrar.emit()">
+      <app-icono nombre="x" tamano="lg"></app-icono>
+    </button>
+    <ng-content></ng-content>
+  </article>
+</aside>

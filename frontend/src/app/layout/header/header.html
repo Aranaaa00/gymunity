@@ -1,0 +1,35 @@
+<header class="gym-header">
+  <section class="gym-header__container">
+    <a class="gym-header__logo" routerLink="/" aria-label="Ir a inicio">
+      <img src="assets/logo.png" alt="Gymunity">
+    </a>
+    
+    <search class="gym-header__buscador">
+      <app-buscador placeholder="Buscar..." (buscar)="onBuscar($event)"></app-buscador>
+    </search>
+
+    <app-boton-tema class="gym-header__tema" aria-label="Cambiar tema"></app-boton-tema>
+
+    <nav class="gym-header__nav" [class.gym-header__nav--abierto]="menuAbierto">
+      <app-boton variante="ghost" (click)="abrirLogin.emit(); cerrarMenu()">Iniciar Sesión</app-boton>
+      <app-boton variante="primary" (click)="abrirRegistro.emit(); cerrarMenu()">Registrarse</app-boton>
+    </nav>
+
+    <app-boton 
+      variante="ghost" 
+      tamanio="sm"
+      (click)="toggleMenu()"
+      class="gym-header__hamburguesa"
+      [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+    >
+      <app-icono [nombre]="menuAbierto ? 'x' : 'menu'"></app-icono>
+    </app-boton>
+  </section>
+  
+  <aside 
+    class="gym-header__backdrop" 
+    [class.gym-header__backdrop--visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    [attr.aria-hidden]="!menuAbierto"
+  ></aside>
+</header>

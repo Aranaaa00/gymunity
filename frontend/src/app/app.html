@@ -1,0 +1,26 @@
+<app-header
+  (abrirLogin)="modal.abrirLogin()"
+  (abrirRegistro)="modal.abrirRegistro()">
+</app-header>
+<app-main></app-main>
+<app-footer></app-footer>
+
+@if (modal.modalActivo() === 'login') {
+  <app-ventana-emergente (cerrar)="modal.cerrar()">
+    <app-formulario-login
+      (enviar)="onLogin($event)"
+      (irRegistro)="modal.abrirRegistro()"
+      (cerrar)="modal.cerrar()">
+    </app-formulario-login>
+  </app-ventana-emergente>
+}
+
+@if (modal.modalActivo() === 'registro') {
+  <app-ventana-emergente (cerrar)="modal.cerrar()">
+    <app-formulario-registro
+      (enviar)="onRegistro($event)"
+      (irLogin)="modal.abrirLogin()"
+      (cerrar)="modal.cerrar()">
+    </app-formulario-registro>
+  </app-ventana-emergente>
+}

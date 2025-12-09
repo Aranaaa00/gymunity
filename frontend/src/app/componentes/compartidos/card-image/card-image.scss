@@ -1,0 +1,52 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// CARD IMAGE (Imagen de Tarjeta)
+// ============================================
+
+.card-image-wrapper {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-radius: $radio-xl;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+  &.size-sm {
+    width: 5rem;
+    height: 5rem;
+    flex-shrink: 0;
+  }
+
+  &.size-md {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+  }
+
+  &.size-lg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  &.horizontal {
+    &.size-md {
+      width: 7rem;
+      height: 5rem;
+      border-radius: $radio-md;
+      flex-shrink: 0;
+    }
+  }
+}

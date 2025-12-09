@@ -1,0 +1,47 @@
+@use '../00-settings/variables' as *;
+
+// Fuente Roboto
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+// --------------------------------------------
+// RESET CSS
+// --------------------------------------------
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  line-height: $line-height-normal;
+}
+
+body {
+  min-height: 100vh;
+  font-family: $fuente-principal;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,0 +1,3 @@
+<button type="button" class="boton-tema" (click)="alternar()" [attr.aria-label]="modoOscuro() ? 'Modo claro' : 'Modo oscuro'">
+  <app-icono [nombre]="modoOscuro() ? 'sol' : 'luna'" tamano="md"></app-icono>
+</button>

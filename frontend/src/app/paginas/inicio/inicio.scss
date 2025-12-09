@@ -1,0 +1,61 @@
+@use '../../../styles/00-settings/variables' as *;
+
+// ============================================
+// PÁGINA INICIO
+// ============================================
+
+.inicio {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  width: 100%;
+}
+
+.gimnasios-section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.section-header {
+  margin: 0;
+}
+
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: var(--color-texto);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-boton);
+
+    .section-arrow {
+      transform: translateX(0.25rem);
+    }
+  }
+}
+
+.section-title {
+  margin: 0;
+  font-size: $texto-s;
+  font-weight: $font-weight-bold;
+}
+
+.section-arrow {
+  font-size: $texto-m;
+  font-weight: $font-weight-bold;
+  transition: transform 0.2s ease;
+}
+
+.gimnasios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  gap: $space-4;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

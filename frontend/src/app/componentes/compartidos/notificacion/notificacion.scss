@@ -1,0 +1,102 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// ANIMACIONES
+// ============================================
+
+@keyframes notificacion-entrada {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ============================================
+// NOTIFICACIÓN (Toast)
+// ============================================
+
+.notificacion {
+  position: fixed;
+  right: $space-3;
+  bottom: $space-3;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  min-width: 12rem;
+  max-width: 16rem;
+  padding: $space-2 $space-3;
+  border-radius: $radio-md;
+  border: 0.0625rem solid;
+  font-size: $texto-xs;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  box-shadow: $shadow-lg;
+  animation: notificacion-entrada 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &--success {
+    background: var(--color-alerta-success-bg, #d1fae5);
+    border-color: var(--color-alerta-success-border, #10b981);
+    color: var(--color-alerta-success-text, #065f46);
+  }
+
+  &--error {
+    background: var(--color-alerta-error-bg, #fecaca);
+    border-color: var(--color-alerta-error-border, #ef4444);
+    color: var(--color-alerta-error-text, #991b1b);
+  }
+
+  &--warning {
+    background: var(--color-alerta-warning-bg, #fef3c7);
+    border-color: var(--color-alerta-warning-border, #f59e0b);
+    color: var(--color-alerta-warning-text, #92400e);
+  }
+
+  &--info {
+    background: var(--color-alerta-info-bg, #dbeafe);
+    border-color: var(--color-alerta-info-border, #3b82f6);
+    color: var(--color-alerta-info-text, #1e40af);
+  }
+}
+
+.notificacion__mensaje {
+  flex: 1;
+  margin: 0;
+}
+
+.notificacion__cerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: $radio-full;
+  color: currentColor;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  lucide-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}

@@ -1,0 +1,60 @@
+@use '../00-settings/variables' as *;
+
+// --------------------------------------------
+// LAYOUT
+// --------------------------------------------
+
+app-main {
+  // Layout
+  display: block;
+  flex: 1;
+}
+
+// --------------------------------------------
+// SISTEMA DE GRID
+// --------------------------------------------
+
+.gym-grid {
+  // Layout
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $space-6;
+  // Box Model
+  width: 100%;
+}
+
+.gym-grid__row {
+  // Layout
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-6;
+  // Box Model
+  width: 100%;
+}
+
+.gym-grid__item {
+  // Layout
+  flex: 1 1 280px;
+  // Box Model
+  min-width: 280px;
+  max-width: 360px;
+  // Background
+  background: var(--color-fondo-secundario);
+  // Border
+  border-radius: $radio-lg;
+  // Visual
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+  // Transition
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.gym-grid--section {
+  // Box Model
+  margin-bottom: $space-8;
+}

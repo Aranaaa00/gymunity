@@ -1,0 +1,85 @@
+@use '../00-settings/variables' as *;
+
+// --------------------------------------------
+// ESTILOS BASE PARA ELEMENTOS HTML
+// --------------------------------------------
+
+// Encabezados
+h1, h2 {
+  // Box Model
+  margin-bottom: $space-2;
+  // Typography
+  font-family: $fuente-principal;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: var(--color-texto);
+}
+
+h3, h4, h5, h6 {
+  // Box Model
+  margin-bottom: $space-2;
+  // Typography
+  font-family: $fuente-principal;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: var(--color-subtitulo);
+}
+
+// Párrafos
+p {
+  // Box Model
+  margin-bottom: $space-2;
+  // Typography
+  font-family: $fuente-principal;
+  font-size: $texto-m;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: var(--color-texto);
+}
+
+p.subtitulo,
+.subtitulo {
+  color: var(--color-subtitulo);
+}
+
+// Enlaces
+a {
+  // Typography
+  color: var(--color-boton);
+  // Transition
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-boton-hover);
+    text-decoration: underline;
+  }
+}
+
+// Listas
+ul, ol {
+  // Box Model
+  margin-bottom: $space-2;
+  padding-left: $space-4;
+}
+
+// Imágenes
+img {
+  // Layout
+  display: block;
+  // Box Model
+  max-width: 100%;
+  height: auto;
+}
+
+// Botones base
+button {
+  // Border
+  border: none;
+  border-radius: $radio-md;
+  // Typography
+  font-family: $fuente-principal;
+  font-size: $texto-s;
+  font-weight: $font-weight-medium;
+  // Otros
+  cursor: pointer;
+}

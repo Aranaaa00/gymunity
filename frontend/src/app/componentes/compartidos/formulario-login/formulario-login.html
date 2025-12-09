@@ -1,0 +1,38 @@
+<header class="formulario-auth__header">
+  <img src="assets/logo.png" alt="Gymunity" class="formulario-auth__logo">
+</header>
+
+<form class="formulario-auth" (submit)="onSubmit($event)">
+  <fieldset class="formulario-auth__fieldset">
+    <legend class="formulario-auth__legend">Iniciar sesión</legend>
+    
+    <app-campo-formulario
+      label="Usuario o email:"
+      type="email"
+      inputId="login-email"
+      name="email"
+      [required]="true"
+      [hasError]="!!errores.email"
+      [errorMessage]="errores.email"
+      (blur)="validarEmail($event)">
+    </app-campo-formulario>
+    
+    <app-campo-formulario
+      label="Contraseña:"
+      type="password"
+      inputId="login-password"
+      name="password"
+      [required]="true"
+      [hasError]="!!errores.password"
+      [errorMessage]="errores.password"
+      (blur)="validarPassword($event)">
+    </app-campo-formulario>
+    
+    <app-boton tipo="submit">Iniciar sesión</app-boton>
+  </fieldset>
+  
+  <p class="formulario-auth__alt">
+    ¿No tienes cuenta? 
+    <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Regístrate</button>
+  </p>
+</form>

@@ -1,0 +1,17 @@
+<section class="hero">
+  <h1 class="hero__titulo">
+    @for (linea of tituloLineas; track linea) {
+      <span>{{ linea }}</span>
+    }
+  </h1>
+  @if (subtituloLineas.length) {
+    <p class="hero__subtitulo">
+      @for (linea of subtituloLineas; track linea) {
+        <span>{{ linea }}</span>
+      }
+    </p>
+  }
+  @if (textoBoton) {
+    <button class="hero__cta" (click)="accion.emit()">{{ textoBoton }}</button>
+  }
+</section>

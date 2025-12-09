@@ -1,0 +1,31 @@
+<article class="card" [class]="variant">
+  @if (imageSrc) {
+    <app-card-image
+      [src]="imageSrc"
+      [alt]="imageAlt || title"
+      [size]="'md'"
+      [variant]="variant"
+    />
+  }
+  <section class="card-body">
+    <header class="card-header">
+      <h3 class="card-title">{{ title }}</h3>
+      @if (subtitle) {
+        <p class="card-subtitle">{{ subtitle }}</p>
+      }
+      @if (rating) {
+        <span class="card-rating">{{ rating }}</span>
+      }
+    </header>
+  </section>
+  @if (variant === 'horizontal') {
+    <footer class="card-footer">
+      <app-boton variante="ghost" tamanio="sm">Ver más</app-boton>
+    </footer>
+  }
+  @if (actionText && variant !== 'horizontal') {
+    <footer class="card-footer">
+      <button class="card-action">{{ actionText }}</button>
+    </footer>
+  }
+</article>

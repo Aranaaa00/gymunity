@@ -1,0 +1,30 @@
+@use '../00-settings/variables' as *;
+
+// --------------------------------------------
+// MIXINS REUTILIZABLES
+// --------------------------------------------
+
+// Mixin para media queries responsive
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+}
+
+// Mixin para centrar con flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mixin para aplicar sombra
+@mixin box-shadow($shadow: $shadow-md) {
+  box-shadow: $shadow;
+}

@@ -1,0 +1,17 @@
+// ITCSS: Importación en orden de especificidad
+
+// 1. Settings (variables SCSS + CSS Custom Properties)
+@use '00-settings/variables' as *;
+@use '00-settings/css-variables';
+
+// 2. Tools (mixins, funciones)
+@use '01-tools/mixins' as *;
+
+// 3. Generic (reset)
+@use '02-generic/reset';
+
+// 4. Elements (estilos base para h1, p, a, etc.)
+@use '03-elements/elements';
+
+// 5. Layout (layouts, containers, grids)
+@use '04-layout/layout';

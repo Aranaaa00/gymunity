@@ -1,0 +1,28 @@
+<label class="campo-formulario__label" [for]="inputId">
+  {{ label }}
+  @if (required) {
+    <abbr class="campo-formulario__required" title="Campo obligatorio">*</abbr>
+  }
+</label>
+
+<input 
+  class="campo-formulario__field"
+  [class.campo-formulario__field--error]="hasError"
+  [type]="type"
+  [id]="inputId"
+  [name]="name"
+  [placeholder]="placeholder"
+  [required]="required"
+  [disabled]="disabled"
+  [attr.aria-describedby]="helpText ? inputId + '-help' : (hasError ? inputId + '-error' : null)"
+  [attr.aria-invalid]="hasError"
+  (blur)="onBlur($event)"
+/>
+
+@if (helpText && !hasError) {
+  <small class="campo-formulario__help" [id]="inputId + '-help'">{{ helpText }}</small>
+}
+
+@if (hasError && errorMessage) {
+  <small class="campo-formulario__error" [id]="inputId + '-error'" role="alert">{{ errorMessage }}</small>
+}

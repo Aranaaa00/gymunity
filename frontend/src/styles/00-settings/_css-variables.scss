@@ -1,0 +1,86 @@
+// ============================================
+// VARIABLES CSS - Sistema de Temas
+// ============================================
+
+@use 'variables' as *;
+
+// --------------------------------------------
+// TEMA CLARO (por defecto)
+// --------------------------------------------
+
+:root,
+[data-tema="claro"] {
+  // Fondos
+  --color-fondo: #{$color-fondo};
+  --color-fondo-secundario: #{$gris-50};
+  --color-header: #{$color-header};
+  // Textos
+  --color-texto: #{$color-text};
+  --color-subtitulo: #{$color-subtitulo};
+  // Bordes
+  --color-borde: #{$gris-300};
+  // Botones
+  --color-boton: #{$color-botones};
+  --color-boton-hover: #{$color-botones-hover};
+  // Semánticos
+  --color-exito: #{$color-exito};
+  --color-error: #{$color-error};
+  --color-warning: #{$color-warning};
+  --color-info: #{$color-info};
+  // Sombras
+  --shadow-glow: #{$shadow-boton};
+  
+  // Alertas y Notificaciones
+  --color-alerta-success-bg: #ecfdf5;
+  --color-alerta-success-border: #10b981;
+  --color-alerta-success-text: #065f46;
+  --color-alerta-error-bg: #fef2f2;
+  --color-alerta-error-border: #ef4444;
+  --color-alerta-error-text: #991b1b;
+  --color-alerta-warning-bg: #fffbeb;
+  --color-alerta-warning-border: #f59e0b;
+  --color-alerta-warning-text: #92400e;
+  --color-alerta-info-bg: #eff6ff;
+  --color-alerta-info-border: #3b82f6;
+  --color-alerta-info-text: #1e40af;
+}
+
+// --------------------------------------------
+// TEMA OSCURO
+// --------------------------------------------
+
+[data-tema="oscuro"] {
+  // Fondos
+  --color-fondo: #{$oscuro-fondo};
+  --color-fondo-secundario: #{$oscuro-fondo-secundario};
+  --color-header: #{$oscuro-header};
+  // Textos
+  --color-texto: #{$oscuro-texto};
+  --color-subtitulo: #{$oscuro-subtitulo};
+  // Bordes
+  --color-borde: #{$oscuro-borde};
+  // Botones
+  --color-boton: #{$oscuro-boton};
+  --color-boton-hover: #{$oscuro-boton-hover};
+  // Semánticos
+  --color-exito: #{$oscuro-exito};
+  --color-error: #{$oscuro-error};
+  --color-warning: #{$oscuro-warning};
+  --color-info: #{$oscuro-info};
+  // Sombras con glow
+  --shadow-glow: #{$oscuro-shadow-boton};
+  
+  // Alertas y Notificaciones - Modo Oscuro
+  --color-alerta-success-bg: #064e3b;
+  --color-alerta-success-border: #{$oscuro-exito};
+  --color-alerta-success-text: #a7f3d0;
+  --color-alerta-error-bg: #7f1d1d;
+  --color-alerta-error-border: #{$oscuro-error};
+  --color-alerta-error-text: #fca5a5;
+  --color-alerta-warning-bg: #78350f;
+  --color-alerta-warning-border: #{$oscuro-warning};
+  --color-alerta-warning-text: #fcd34d;
+  --color-alerta-info-bg: #1e3a8a;
+  --color-alerta-info-border: #{$oscuro-info};
+  --color-alerta-info-text: #93c5fd;
+}

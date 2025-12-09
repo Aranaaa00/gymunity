@@ -1,0 +1,115 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// BOTÓN
+// ============================================
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  background: var(--color-boton);
+  border: $borde-thin solid var(--color-boton);
+  border-radius: $radio-lg;
+  font-family: inherit;
+  font-size: $texto-s;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  white-space: nowrap;
+  color: $gris-50;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--color-boton-hover);
+    border-color: var(--color-boton-hover);
+  }
+
+  &:active:not(:disabled) {
+    background: $color-botones-active;
+    border-color: $color-botones-active;
+    transform: scale(0.98);
+  }
+
+  &:focus {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Variantes
+  &--primary {
+    background: var(--color-boton);
+    border-color: var(--color-boton);
+    color: $gris-50;
+  }
+
+  &--secondary {
+    background: var(--color-fondo-secundario);
+    border-color: var(--color-borde);
+    color: var(--color-texto);
+
+    &:hover:not(:disabled) {
+      background: var(--color-borde);
+    }
+
+    &:active:not(:disabled) {
+      background: $gris-400;
+      border-color: $gris-400;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    border-color: var(--color-boton);
+    color: var(--color-boton);
+
+    &:hover:not(:disabled) {
+      background: rgba(52, 198, 160, 0.1);
+      border-color: var(--color-boton-hover);
+      color: var(--color-boton-hover);
+    }
+
+    &:active:not(:disabled) {
+      background: rgba(52, 198, 160, 0.2);
+    }
+  }
+
+  &--danger {
+    background: $color-error;
+    border-color: $color-error;
+
+    &:hover:not(:disabled) {
+      background: #d63031;
+      border-color: #d63031;
+    }
+
+    &:active:not(:disabled) {
+      background: #b71c1c;
+      border-color: #b71c1c;
+    }
+  }
+
+  // Tamaños
+  &--sm {
+    padding: $space-1 $space-1;
+    font-size: $texto-xs;
+  }
+
+  &--md {
+    padding: $space-1 $space-2;
+    font-size: $texto-s;
+  }
+
+  &--lg {
+    padding: $space-2 $space-3;
+    font-size: $texto-m;
+  }
+}

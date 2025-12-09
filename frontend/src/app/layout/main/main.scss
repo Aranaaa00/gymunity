@@ -1,0 +1,15 @@
+@use '../../../styles/00-settings/variables' as *;
+
+// ============================================
+// MAIN - CONTENEDOR PRINCIPAL
+// ============================================
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  max-width: $max-width-contenido;
+  margin: 0 auto;
+  padding: calc($space-4 + 3.5rem) $space-3 $space-4;
+}

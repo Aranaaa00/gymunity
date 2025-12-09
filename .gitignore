@@ -1,0 +1,78 @@
+# ===========================
+# Node.js / Frontend
+# ===========================
+**/node_modules/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+**/package-lock.json
+package-lock.json
+**/.angular/
+.angular/
+**/dist/
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# ===========================
+# Java / Maven / Backend
+# ===========================
+target/
+.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ===========================
+# IDEs y Editores
+# ===========================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.project
+.classpath
+.settings/
+*.sublime-workspace
+.c9/
+*.launch
+
+# ===========================
+# Sistema Operativo
+# ===========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ===========================
+# Logs y Temporales
+# ===========================
+*.log
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# ===========================
+# Archivos de caché
+# ===========================
+.sass-cache/
+.cache/
+
+# ===========================
+# MANTENER PARA EVALUACIÓN
+# ===========================
+# Los siguientes archivos SÍ se subirán:
+# - *.md (documentación Markdown)
+# - docs/ (carpeta de documentación)
+# - img/ o images/ (imágenes del proyecto)
+# - *.pdf (documentación)
+# - README.md, HELP.md, etc.
+# - archivos de código fuente (.java, .ts, .html, .css, .scss)
+# - archivos de configuración del proyecto (pom.xml, package.json, angular.json)

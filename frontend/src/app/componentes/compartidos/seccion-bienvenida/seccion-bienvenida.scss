@@ -1,0 +1,72 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// HERO (Sección de Bienvenida)
+// ============================================
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-8 0;
+  text-align: center;
+}
+
+.hero__titulo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: $texto-l;
+  font-weight: $font-weight-bold;
+  font-style: italic;
+  color: var(--color-texto);
+  line-height: $line-height-tight;
+
+  span {
+    display: block;
+  }
+}
+
+.hero__subtitulo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: $texto-s;
+  font-weight: $font-weight-regular;
+  color: var(--color-subtitulo);
+  line-height: $line-height-relaxed;
+
+  span {
+    display: block;
+  }
+}
+
+.hero__cta {
+  margin-top: $space-2;
+  padding: $space-2 $space-5;
+  background: var(--color-boton);
+  border: none;
+  border-radius: $radio-full;
+  font-size: $texto-s;
+  font-weight: $font-weight-medium;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--color-boton-hover);
+    box-shadow: var(--shadow-glow);
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid var(--color-boton);
+    outline-offset: 0.25rem;
+  }
+}

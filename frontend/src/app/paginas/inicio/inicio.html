@@ -1,0 +1,52 @@
+<article class="inicio">
+  <app-seccion-bienvenida
+    [tituloLineas]="['Encuentra el gimnasio perfecto para ti,', 'según tu estilo y tus metas.']"
+    [subtituloLineas]="['Tu entrenamiento comienza aquí.', 'Nosotros te ayudamos a dar el primer paso.']"
+    textoBoton="Únete gratis"
+    (accion)="modal.abrirRegistro()">
+  </app-seccion-bienvenida>
+
+  <section class="gimnasios-section">
+    <header class="section-header">
+      <a class="section-link" href="#">
+        <h2 class="section-title">Gimnasios más populares</h2>
+        <span class="section-arrow">›</span>
+      </a>
+    </header>
+    <ul class="gimnasios-grid">
+      @for (gym of gimnasiosPopulares; track gym.nombre) {
+        <li>
+          <app-card
+            [title]="gym.nombre"
+            [subtitle]="gym.disciplina"
+            [rating]="gym.valoracion"
+            [imageSrc]="gym.imagen"
+            variant="vertical"
+          />
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="gimnasios-section">
+    <header class="section-header">
+      <a class="section-link" href="#">
+        <h2 class="section-title">Nuevos gimnasios en Gymunity</h2>
+        <span class="section-arrow">›</span>
+      </a>
+    </header>
+    <ul class="gimnasios-grid">
+      @for (gym of gimnasiosNuevos; track gym.nombre) {
+        <li>
+          <app-card
+            [title]="gym.nombre"
+            [subtitle]="gym.disciplina"
+            [rating]="gym.valoracion"
+            [imageSrc]="gym.imagen"
+            variant="vertical"
+          />
+        </li>
+      }
+    </ul>
+  </section>
+</article>

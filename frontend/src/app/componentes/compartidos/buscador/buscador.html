@@ -1,0 +1,13 @@
+<form class="buscador" role="search" (ngSubmit)="onBuscar()">
+  <input 
+    type="search" 
+    class="buscador__input"
+    [placeholder]="placeholder" 
+    [(ngModel)]="valor"
+    [attr.aria-label]="placeholder"
+    name="busqueda"
+  >
+  <button type="submit" class="buscador__boton" aria-label="Buscar">
+    <app-icono nombre="buscar" tamano="md"></app-icono>
+  </button>
+</form>

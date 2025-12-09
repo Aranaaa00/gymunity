@@ -1,0 +1,155 @@
+@use '../../../styles/00-settings/variables' as *;
+
+// ============================================
+// PÁGINA GUÍA DE ESTILO
+// ============================================
+
+.guia-estilo {
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: $space-8 $space-4;
+}
+
+.guia-estilo__header {
+  margin-bottom: $space-8;
+  padding-bottom: $space-6;
+  
+  border-bottom: $borde-thin solid var(--color-borde);
+  text-align: center;
+}
+
+.guia-estilo__titulo {
+  margin-bottom: $space-2;
+  
+  font-size: $texto-3xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-texto);
+}
+
+.guia-estilo__descripcion {
+  font-size: $texto-lg;
+  color: var(--color-subtitulo);
+}
+
+.seccion {
+  margin-bottom: $space-12;
+}
+
+.seccion__titulo {
+  margin-bottom: $space-6;
+  padding-bottom: $space-3;
+  
+  border-bottom: $borde-medium solid var(--color-botones);
+  
+  font-size: $texto-2xl;
+  font-weight: $font-weight-semibold;
+  color: var(--color-texto);
+}
+
+.subseccion {
+  margin-bottom: $space-8;
+}
+
+.subseccion__titulo {
+  margin-bottom: $space-4;
+  
+  font-size: $texto-lg;
+  font-weight: $font-weight-medium;
+  color: var(--color-texto);
+}
+
+.subseccion__descripcion {
+  margin-bottom: $space-3;
+  
+  font-size: $texto-sm;
+  color: var(--color-subtitulo);
+}
+
+.ejemplos {
+  display: flex;
+  gap: $space-4;
+  
+  padding: 0;
+  
+  list-style: none;
+}
+
+.ejemplos--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ejemplos--columna {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 56rem;
+}
+
+.ejemplos--grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  li {
+    min-width: 0;
+  }
+}
+
+.ejemplos--grid-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+
+  li {
+    min-width: 0;
+  }
+}
+
+.ejemplo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  
+  padding: $space-3;
+  
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+  
+  font-size: $texto-sm;
+  color: var(--color-subtitulo);
+}
+
+.colores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: $space-4;
+  
+  padding: 0;
+  
+  list-style: none;
+}
+
+.color {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.color__muestra {
+  width: 100%;
+  height: 5rem;
+  margin: 0;
+  
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+}
+
+.color__nombre {
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  color: var(--color-texto);
+}

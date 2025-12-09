@@ -1,0 +1,18 @@
+<aside
+  class="alerta"
+  [class.alerta--success]="tipo === 'success'"
+  [class.alerta--error]="tipo === 'error'"
+  [class.alerta--warning]="tipo === 'warning'"
+  [class.alerta--info]="tipo === 'info'"
+  role="alert">
+  <p class="alerta__mensaje">{{ mensaje }}</p>
+  @if (cerrable) {
+    <button 
+      type="button"
+      class="alerta__cerrar" 
+      (click)="cerrar.emit()" 
+      aria-label="Cerrar alerta">
+      <app-icono nombre="x" tamano="md" peso="bold"></app-icono>
+    </button>
+  }
+</aside>

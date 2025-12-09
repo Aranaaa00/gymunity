@@ -1,0 +1,302 @@
+<main class="guia-estilo">
+  <header class="guia-estilo__header">
+    <h1 class="guia-estilo__titulo">Guía de Estilo - Gymunity</h1>
+    <p class="guia-estilo__descripcion">
+      Catálogo completo de componentes, variantes, tamaños y estados
+    </p>
+  </header>
+
+  <!-- SECCIÓN: BOTONES -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Botones</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Variantes</h3>
+      <ul class="ejemplos ejemplos--horizontal">
+        <li><app-boton variante="primary">Primary</app-boton></li>
+        <li><app-boton variante="secondary">Secondary</app-boton></li>
+        <li><app-boton variante="ghost">Ghost</app-boton></li>
+        <li><app-boton variante="danger">Danger</app-boton></li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Tamaños</h3>
+      <ul class="ejemplos ejemplos--horizontal">
+        <li><app-boton tamanio="sm">Small</app-boton></li>
+        <li><app-boton tamanio="md">Medium</app-boton></li>
+        <li><app-boton tamanio="lg">Large</app-boton></li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Estados</h3>
+      <ul class="ejemplos ejemplos--horizontal">
+        <li><app-boton>Normal</app-boton></li>
+        <li><app-boton [disabled]="true">Disabled</app-boton></li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SECCIÓN: CARDS -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Cards</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Card básica (sin imagen)</h3>
+      <ul class="ejemplos ejemplos--grid">
+        <li><app-card title="Gimnasio FitZone" subtitle="Musculación y Fitness" rating="4.5"></app-card></li>
+        <li><app-card title="Dojo Shaolin" subtitle="Artes Marciales" rating="4.9"></app-card></li>
+        <li><app-card title="Studio Pilates Plus" subtitle="Pilates y Yoga" rating="4.7"></app-card></li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Card vertical (imagen arriba)</h3>
+      <ul class="ejemplos ejemplos--grid">
+        <li>
+          <app-card
+            variant="vertical"
+            title="CrossFit Central"
+            subtitle="CrossFit"
+            rating="4.9"
+            imageSrc="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop"
+            imageAlt="CrossFit Central">
+          </app-card>
+        </li>
+        <li>
+          <app-card
+            variant="vertical"
+            title="Yoga Studio"
+            subtitle="Yoga"
+            rating="4.7"
+            imageSrc="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop"
+            imageAlt="Yoga Studio">
+          </app-card>
+        </li>
+        <li>
+          <app-card
+            variant="vertical"
+            title="Boxing Club"
+            subtitle="Boxeo"
+            rating="4.8"
+            imageSrc="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&h=300&fit=crop"
+            imageAlt="Boxing Club">
+          </app-card>
+        </li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Card horizontal (imagen a la izquierda)</h3>
+      <ul class="ejemplos ejemplos--grid-cards">
+        <li>
+          <app-card
+            variant="horizontal"
+            title="Smart Fit"
+            subtitle="MMA, Boxeo"
+            rating="3.9 ⭐"
+            imageSrc="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&h=300&fit=crop"
+            imageAlt="Smart Fit">
+          </app-card>
+        </li>
+        <li>
+          <app-card
+            variant="horizontal"
+            title="Karate Dojo Tradicional"
+            subtitle="Karate, Judo"
+            rating="4.9 ⭐"
+            imageSrc="https://images.unsplash.com/photo-1555597408-26bc8e548a46?w=400&h=300&fit=crop"
+            imageAlt="Karate Dojo">
+          </app-card>
+        </li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SECCIÓN: FORMULARIOS -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Formularios</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Campo de texto</h3>
+      <ul class="ejemplos ejemplos--columna">
+        <li><app-campo-formulario label="Nombre" placeholder="Tu nombre" type="text"></app-campo-formulario></li>
+        <li>
+          <app-campo-formulario
+            label="Email"
+            placeholder="tu@email.com"
+            type="email"
+            [required]="true">
+          </app-campo-formulario>
+        </li>
+        <li>
+          <app-campo-formulario
+            label="Contraseña"
+            placeholder="••••••••"
+            type="password"
+            [required]="true">
+          </app-campo-formulario>
+        </li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Área de texto</h3>
+      <ul class="ejemplos ejemplos--columna">
+        <li>
+          <app-area-texto
+            label="Descripción"
+            placeholder="Escribe una descripción..."
+            [rows]="4">
+          </app-area-texto>
+        </li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Selector</h3>
+      <ul class="ejemplos ejemplos--columna">
+        <li>
+          <app-selector
+            label="Disciplina"
+            [opciones]="opcionesSelector"
+            (cambio)="valorSeleccionado = $event">
+          </app-selector>
+        </li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Buscador</h3>
+      <ul class="ejemplos ejemplos--columna">
+        <li><app-buscador placeholder="Buscar gimnasios..."></app-buscador></li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SECCIÓN: FEEDBACK -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Feedback</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Alertas</h3>
+      <ul class="ejemplos ejemplos--columna">
+        @if (mostrarAlertaInfo) {
+          <li><app-alerta tipo="info" mensaje="Información importante para el usuario" (cerrar)="mostrarAlertaInfo = false"></app-alerta></li>
+        }
+        @if (mostrarAlertaSuccess) {
+          <li><app-alerta tipo="success" mensaje="Operación completada exitosamente" (cerrar)="mostrarAlertaSuccess = false"></app-alerta></li>
+        }
+        @if (mostrarAlertaWarning) {
+          <li><app-alerta tipo="warning" mensaje="Advertencia: revisa esta información" (cerrar)="mostrarAlertaWarning = false"></app-alerta></li>
+        }
+        @if (mostrarAlertaError) {
+          <li><app-alerta tipo="error" mensaje="Error: algo salió mal" (cerrar)="mostrarAlertaError = false"></app-alerta></li>
+        }
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Notificaciones</h3>
+      <p class="subseccion__descripcion">Haz clic en el botón para ver una notificación de prueba</p>
+      <ul class="ejemplos ejemplos--columna">
+        <li>
+          <app-boton (click)="lanzarNotificacion()">Mostrar notificación</app-boton>
+        </li>
+      </ul>
+      @if (mostrarNotificacion) {
+        <app-notificacion 
+          tipo="success" 
+          mensaje="¡Esta es una notificación de prueba!"
+          [visible]="mostrarNotificacion"
+          (cerrar)="mostrarNotificacion = false">
+        </app-notificacion>
+      }
+    </article>
+  </section>
+
+  <!-- SECCIÓN: NAVEGACIÓN -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Navegación</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Botón de tema</h3>
+      <ul class="ejemplos ejemplos--horizontal">
+        <li><app-boton-tema></app-boton-tema></li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SECCIÓN: TIPOGRAFÍA -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Tipografía</h2>
+
+    <article class="subseccion">
+      <ul class="ejemplos ejemplos--columna">
+        <li><h1>Título H1</h1></li>
+        <li><h2>Título H2</h2></li>
+        <li><h3>Título H3</h3></li>
+        <li><h4>Título H4</h4></li>
+        <li>
+          <p>
+            Párrafo normal con texto de ejemplo. Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </li>
+        <li><p><strong>Texto en negrita</strong></p></li>
+        <li><p><em>Texto en cursiva</em></p></li>
+        <li><p><a href="#">Enlace</a></p></li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SECCIÓN: COLORES -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Colores</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Modo claro</h3>
+      <ul class="colores">
+        <li class="color">
+          <figure class="color__muestra" style="background: #34C6A0"></figure>
+          <span class="color__nombre">Botones</span>
+        </li>
+        <li class="color">
+          <figure class="color__muestra" style="background: #EAF8F4"></figure>
+          <span class="color__nombre">Fondo</span>
+        </li>
+        <li class="color">
+          <figure class="color__muestra" style="background: #1F2937"></figure>
+          <span class="color__nombre">Texto</span>
+        </li>
+        <li class="color">
+          <figure class="color__muestra" style="background: #D1D5DB"></figure>
+          <span class="color__nombre">Borde</span>
+        </li>
+      </ul>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Modo oscuro</h3>
+      <ul class="colores">
+        <li class="color">
+          <figure class="color__muestra" style="background: #00E5A0"></figure>
+          <span class="color__nombre">Botones</span>
+        </li>
+        <li class="color">
+          <figure class="color__muestra" style="background: #0F1C1C"></figure>
+          <span class="color__nombre">Fondo</span>
+        </li>
+        <li class="color">
+          <figure class="color__muestra" style="background: #F0FAF7"></figure>
+          <span class="color__nombre">Texto</span>
+        </li>
+        <li class="color">
+          <figure class="color__muestra" style="background: #2D4A4A"></figure>
+          <span class="color__nombre">Borde</span>
+        </li>
+      </ul>
+    </article>
+  </section>
+</main>
