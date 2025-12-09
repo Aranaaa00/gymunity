@@ -8,29 +8,34 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "usuario")
-@Inheritance(strategy = InheritanceType.JOINED)
-@Getter @Setter
-public abstract class Usuario {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String nombre_usuario;
+    private String nombreUsuario;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -41,27 +46,30 @@ public abstract class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
-    
-    @Column(nullable = false)
-    private LocalDate fecha_registro;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
+    private LocalDate fechaRegistro;
+
+    @Column
     private String avatar;
 
     @Column(nullable = false)
     private String ciudad;
 
+    @Builder.Default
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AlumnoClase> clasesAlumno;
+    private List<AlumnoClase> clasesAlumno = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Clase> clasesProfesor;
+    private List<Clase> clasesProfesor = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Interaccion> interacciones;
+    private List<Interaccion> interacciones = new ArrayList<>();
 
     @PrePersist
     protected void alCrear() {
-        fecha_registro = LocalDate.now();
+        this.fechaRegistro = LocalDate.now();
     }
 }

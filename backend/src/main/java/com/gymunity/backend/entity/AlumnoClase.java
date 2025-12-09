@@ -4,9 +4,11 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -14,21 +16,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "alumno_clase")
-@NoArgsConstructor @AllArgsConstructor @Builder 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
+@Setter
 public class AlumnoClase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "alumno_id", nullable = false)
     private Usuario alumno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "clase_id", nullable = false)
     private Clase clase;
 
     @Column(nullable = false)
@@ -36,6 +44,6 @@ public class AlumnoClase {
 
     @PrePersist
     protected void alCrear() {
-        fechaInscripcion = LocalDate.now();
+        this.fechaInscripcion = LocalDate.now();
     }
 }
