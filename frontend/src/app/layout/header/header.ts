@@ -1,31 +1,153 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  output,
+  HostListener,
+  signal,
+  inject,
+  PLATFORM_ID,
+  ViewChild,
+  ElementRef,
+  OutputEmitterRef,
+} from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { Buscador } from '../../componentes/compartidos/buscador/buscador';
 import { BotonTema } from '../../componentes/compartidos/boton-tema/boton-tema';
 import { Icono } from '../../componentes/compartidos/icono/icono';
 
+// ============================================
+// CONSTANTES
+// ============================================
+
+const OVERFLOW_HIDDEN = 'hidden';
+const OVERFLOW_NORMAL = '';
+
+// ============================================
+// COMPONENTE HEADER
+// ============================================
+
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [RouterLink, Boton, Buscador, BotonTema, Icono],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
-  @Output() abrirLogin = new EventEmitter<void>();
-  @Output() abrirRegistro = new EventEmitter<void>();
-  
-  menuAbierto = false;
-  
-  toggleMenu(): void {
-    this.menuAbierto = !this.menuAbierto;
+  // ----------------------------------------
+  // Outputs
+  // ----------------------------------------
+  readonly abrirLogin: OutputEmitterRef<void> = output<void>();
+  readonly abrirRegistro: OutputEmitterRef<void> = output<void>();
+
+  // ----------------------------------------
+  // ViewChild
+  // ----------------------------------------
+  @ViewChild('menuNav') menuNav!: ElementRef<HTMLElement>;
+  @ViewChild('botonHamburguesa') botonHamburguesa!: ElementRef<HTMLButtonElement>;
+
+  // ----------------------------------------
+  // Dependencias
+  // ----------------------------------------
+  private readonly documento = inject(DOCUMENT);
+  private readonly esBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  // ----------------------------------------
+  // Estado
+  // ----------------------------------------
+  readonly menuAbierto = signal<boolean>(false);
+
+  // ----------------------------------------
+  // Host Listeners
+  // ----------------------------------------
+  @HostListener('document:keydown.escape')
+  alPresionarEscape(): void {
+    const menuCerrado = !this.menuAbierto();
+
+    if (menuCerrado) {
+      return;
+    }
+
+    this.cerrarMenu();
+    this.enfocarBotonHamburguesa();
   }
-  
+
+  @HostListener('document:click', ['$event'])
+  alClickDocumento(evento: MouseEvent): void {
+    const menuCerrado = !this.menuAbierto();
+
+    if (menuCerrado) {
+      return;
+    }
+
+    const elemento = evento.target as HTMLElement;
+    const clickDentroMenu = this.esClickDentroMenu(elemento);
+
+    if (clickDentroMenu) {
+      return;
+    }
+
+    this.cerrarMenu();
+  }
+
+  // ----------------------------------------
+  // Métodos públicos
+  // ----------------------------------------
+  alternarMenu(): void {
+    this.menuAbierto.update((abierto: boolean): boolean => !abierto);
+    this.actualizarOverflowBody();
+  }
+
   cerrarMenu(): void {
-    this.menuAbierto = false;
+    this.menuAbierto.set(false);
+    this.restaurarOverflowBody();
   }
-  
-  onBuscar(termino: string): void {
+
+  alBuscar(termino: string): void {
     console.log('Buscando:', termino);
+  }
+
+  ejecutarYCerrar(accion: () => void): void {
+    accion();
+    this.cerrarMenu();
+  }
+
+  // ----------------------------------------
+  // Métodos privados
+  // ----------------------------------------
+  private esClickDentroMenu(elemento: HTMLElement): boolean {
+    const dentroMenu = this.menuNav?.nativeElement?.contains(elemento) ?? false;
+    const enBoton =
+      this.botonHamburguesa?.nativeElement?.contains(elemento) ?? false;
+    const clickDentro = dentroMenu || enBoton;
+
+    return clickDentro;
+  }
+
+  private enfocarBotonHamburguesa(): void {
+    this.botonHamburguesa?.nativeElement?.focus();
+  }
+
+  private actualizarOverflowBody(): void {
+    const noEsBrowser = !this.esBrowser;
+
+    if (noEsBrowser) {
+      return;
+    }
+
+    const menuEstaAbierto = this.menuAbierto();
+    const overflow = menuEstaAbierto ? OVERFLOW_HIDDEN : OVERFLOW_NORMAL;
+    this.documento.body.style.overflow = overflow;
+  }
+
+  private restaurarOverflowBody(): void {
+    const noEsBrowser = !this.esBrowser;
+
+    if (noEsBrowser) {
+      return;
+    }
+
+    this.documento.body.style.overflow = OVERFLOW_NORMAL;
   }
 }

@@ -5,31 +5,36 @@
     </a>
     
     <search class="gym-header__buscador">
-      <app-buscador placeholder="Buscar..." (buscar)="onBuscar($event)"></app-buscador>
+      <app-buscador placeholder="Buscar..." (buscar)="alBuscar($event)"></app-buscador>
     </search>
 
     <app-boton-tema class="gym-header__tema" aria-label="Cambiar tema"></app-boton-tema>
 
-    <nav class="gym-header__nav" [class.gym-header__nav--abierto]="menuAbierto">
-      <app-boton variante="ghost" (click)="abrirLogin.emit(); cerrarMenu()">Iniciar Sesión</app-boton>
-      <app-boton variante="primary" (click)="abrirRegistro.emit(); cerrarMenu()">Registrarse</app-boton>
+    <nav 
+      #menuNav
+      class="gym-header__nav" 
+      [class.gym-header__nav--abierto]="menuAbierto()"
+      role="navigation"
+      [attr.aria-hidden]="!menuAbierto()">
+      <app-boton variante="ghost" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
+      <app-boton variante="primary" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
     </nav>
 
-    <app-boton 
-      variante="ghost" 
-      tamanio="sm"
-      (click)="toggleMenu()"
+    <button 
+      #botonHamburguesa
+      type="button"
+      (click)="alternarMenu()"
       class="gym-header__hamburguesa"
-      [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
-    >
-      <app-icono [nombre]="menuAbierto ? 'x' : 'menu'"></app-icono>
-    </app-boton>
+      [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
+      [attr.aria-expanded]="menuAbierto()">
+      <app-icono [nombre]="menuAbierto() ? 'x' : 'menu'"></app-icono>
+    </button>
   </section>
   
   <aside 
     class="gym-header__backdrop" 
-    [class.gym-header__backdrop--visible]="menuAbierto"
+    [class.gym-header__backdrop--visible]="menuAbierto()"
     (click)="cerrarMenu()"
-    [attr.aria-hidden]="!menuAbierto"
-  ></aside>
+    aria-hidden="true">
+  </aside>
 </header>

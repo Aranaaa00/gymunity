@@ -1,99 +1,113 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
-// FORMULARIO AUTH (Login/Registro)
+// VARIABLES LOCALES
+// ============================================
+
+$formulario-max-width: 22rem;
+$formulario-logo-height: 5rem;
+$formulario-submit-max-width: 12rem;
+$formulario-link-transition-duration: 0.15s;
+
+// ============================================
+// CONTENEDOR DEL FORMULARIO
+// ============================================
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.formulario-auth {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: $formulario-max-width;
+}
+
+// ============================================
+// HEADER CON LOGO
 // ============================================
 
 .formulario-auth__header {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  position: relative;
-  margin-bottom: $space-1;
+  margin-bottom: $space-4;
 }
 
 .formulario-auth__logo {
-  height: 4.375rem;
+  height: $formulario-logo-height;
 }
 
-.formulario-auth__cerrar {
-  position: absolute;
-  top: -0.5rem;
-  right: -0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: $radio-full;
-  color: var(--color-texto);
-  cursor: pointer;
-  opacity: 0.65;
-  transition: opacity 0.2s ease, background 0.2s ease, transform 0.1s ease;
-
-  &:hover {
-    opacity: 1;
-    background: var(--color-fondo-hover);
-    transform: scale(1.05);
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid var(--color-boton);
-    outline-offset: 0.125rem;
-    opacity: 1;
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  lucide-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-}
+// ============================================
+// FIELDSET Y CAMPOS
+// ============================================
 
 .formulario-auth__fieldset {
   display: flex;
   flex-direction: column;
   gap: $space-3;
+  margin: 0;
+  padding: 0;
   border: none;
-
-  app-boton {
-    align-self: center;
-    margin-top: $space-1;
-  }
 }
 
 .formulario-auth__legend {
   margin-bottom: $space-2;
-  font-size: $texto-l;
+  font-size: $texto-xl;
   font-weight: $font-weight-bold;
-  color: var(--color-texto);
+  line-height: $line-height-tight;
   text-align: center;
+  color: var(--color-texto);
 }
 
+// ============================================
+// BOTÓN SUBMIT
+// ============================================
+
+.formulario-auth__submit {
+  display: flex;
+  justify-content: center;
+  margin-top: $space-2;
+  
+  app-boton {
+    width: 100%;
+    max-width: $formulario-submit-max-width;
+  }
+}
+
+// ============================================
+// TEXTO ALTERNATIVO
+// ============================================
+
 .formulario-auth__alt {
-  margin-top: $space-3;
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
+  margin-top: $space-4;
+  font-size: $texto-s;
   text-align: center;
+  color: var(--color-subtitulo);
 }
 
 .formulario-auth__link {
   padding: 0;
   background: none;
   border: none;
-  font-weight: $font-weight-medium;
+  font-size: inherit;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
   color: var(--color-boton);
-  text-decoration: underline;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color $formulario-link-transition-duration ease;
 
   &:hover {
     color: var(--color-boton-hover);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-thin;
+    border-radius: $radio-sm;
   }
 }

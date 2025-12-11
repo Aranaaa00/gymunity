@@ -1,4 +1,18 @@
+@use 'sass:color';
 @use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$boton-transition-duration: 0.2s;
+$boton-active-scale: 0.98;
+$boton-focus-outline-offset: 2px;
+$boton-disabled-opacity: 0.5;
+$boton-ghost-hover-bg-opacity: 0.1;
+$boton-ghost-active-bg-opacity: 0.2;
+$boton-danger-darken-hover: -8%;
+$boton-danger-darken-active: -15%;
 
 // ============================================
 // BOTÓN
@@ -20,7 +34,12 @@
   white-space: nowrap;
   color: $gris-50;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  transition: 
+    background $boton-transition-duration ease, 
+    border-color $boton-transition-duration ease, 
+    color $boton-transition-duration ease, 
+    opacity $boton-transition-duration ease, 
+    transform $boton-transition-duration ease;
 
   &:hover:not(:disabled) {
     background: var(--color-boton-hover);
@@ -30,17 +49,17 @@
   &:active:not(:disabled) {
     background: $color-botones-active;
     border-color: $color-botones-active;
-    transform: scale(0.98);
+    transform: scale($boton-active-scale);
   }
 
   &:focus {
     outline: $borde-medium solid var(--color-boton);
-    outline-offset: 2px;
+    outline-offset: $boton-focus-outline-offset;
   }
 
   &:disabled,
   &--disabled {
-    opacity: 0.5;
+    opacity: $boton-disabled-opacity;
     cursor: not-allowed;
   }
 
@@ -72,13 +91,13 @@
     color: var(--color-boton);
 
     &:hover:not(:disabled) {
-      background: rgba(52, 198, 160, 0.1);
+      background: rgba($color-botones, $boton-ghost-hover-bg-opacity);
       border-color: var(--color-boton-hover);
       color: var(--color-boton-hover);
     }
 
     &:active:not(:disabled) {
-      background: rgba(52, 198, 160, 0.2);
+      background: rgba($color-botones, $boton-ghost-active-bg-opacity);
     }
   }
 
@@ -87,13 +106,13 @@
     border-color: $color-error;
 
     &:hover:not(:disabled) {
-      background: #d63031;
-      border-color: #d63031;
+      background: color.adjust($color-error, $lightness: $boton-danger-darken-hover);
+      border-color: color.adjust($color-error, $lightness: $boton-danger-darken-hover);
     }
 
     &:active:not(:disabled) {
-      background: #b71c1c;
-      border-color: #b71c1c;
+      background: color.adjust($color-error, $lightness: $boton-danger-darken-active);
+      border-color: color.adjust($color-error, $lightness: $boton-danger-darken-active);
     }
   }
 

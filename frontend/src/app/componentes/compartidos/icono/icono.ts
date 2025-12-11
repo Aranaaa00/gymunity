@@ -1,53 +1,94 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, computed, InputSignal, Signal } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
-/**
- * Componente wrapper para iconos Lucide.
- * Los iconos están registrados globalmente en app.config.ts
- */
+// ============================================
+// TIPOS
+// ============================================
+
+type NombreIcono =
+  | 'instagram'
+  | 'discord'
+  | 'twitter'
+  | 'x'
+  | 'buscar'
+  | 'user'
+  | 'bell'
+  | 'heart'
+  | 'calendar'
+  | 'map-pin'
+  | 'users'
+  | 'sol'
+  | 'luna'
+  | 'email'
+  | 'menu';
+
+type TamanoIcono = 'sm' | 'md' | 'lg';
+
+// ============================================
+// CONSTANTES
+// ============================================
+
+const NOMBRE_DEFECTO: NombreIcono = 'buscar';
+const TAMANO_DEFECTO: TamanoIcono = 'md';
+const ICONO_FALLBACK = 'Search';
+
+const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
+  instagram: 'Instagram',
+  discord: 'MessageCircle',
+  twitter: 'Twitter',
+  x: 'X',
+  buscar: 'Search',
+  user: 'User',
+  bell: 'Bell',
+  heart: 'Heart',
+  calendar: 'Calendar',
+  'map-pin': 'MapPin',
+  users: 'Users',
+  sol: 'Sun',
+  luna: 'Moon',
+  email: 'Mail',
+  menu: 'Menu',
+} as const;
+
+const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {
+  sm: 16,
+  md: 20,
+  lg: 24,
+} as const;
+
+// ============================================
+// COMPONENTE ICONO
+// ============================================
+
 @Component({
   selector: 'app-icono',
+  standalone: true,
   imports: [LucideAngularModule],
   templateUrl: './icono.html',
   styleUrl: './icono.scss',
 })
 export class Icono {
-  @Input() nombre: 'instagram' | 'discord' | 'twitter' | 'x' | 'buscar' | 'user' | 'bell' | 'heart' | 'calendar' | 'map-pin' | 'users' | 'sol' | 'luna' | 'email' | 'menu' = 'buscar';
-  @Input() tamano: 'sm' | 'md' | 'lg' = 'md';
+  // ----------------------------------------
+  // Inputs
+  // ----------------------------------------
+  readonly nombre: InputSignal<NombreIcono> = input<NombreIcono>(NOMBRE_DEFECTO);
+  readonly tamano: InputSignal<TamanoIcono> = input<TamanoIcono>(TAMANO_DEFECTO);
 
-  /** Mapeo de nombres personalizados a nombres de iconos Lucide */
-  private readonly MAPEO_ICONOS: Record<string, string> = {
-    instagram: 'Instagram',
-    discord: 'MessageCircle',
-    twitter: 'Twitter',
-    x: 'X',
-    buscar: 'Search',
-    user: 'User',
-    bell: 'Bell',
-    heart: 'Heart',
-    calendar: 'Calendar',
-    'map-pin': 'MapPin',
-    users: 'Users',
-    sol: 'Sun',
-    luna: 'Moon',
-    email: 'Mail',
-    menu: 'Menu'
-  };
+  // ----------------------------------------
+  // Señales computadas
+  // ----------------------------------------
+  readonly iconoNombre: Signal<string> = computed((): string => {
+    const nombreActual = this.nombre();
+    const iconoMapeado = MAPEO_ICONOS[nombreActual];
+    const nombreFinal = iconoMapeado ?? ICONO_FALLBACK;
 
-  /** Tamaños en píxeles para cada variante */
-  private readonly TAMANOS: Record<'sm' | 'md' | 'lg', number> = {
-    sm: 16,
-    md: 20,
-    lg: 24
-  };
+    return nombreFinal;
+  });
 
-  /** Devuelve el nombre del icono Lucide a renderizar */
-  get iconoNombre(): string {
-    return this.MAPEO_ICONOS[this.nombre] || 'Search';
-  }
+  readonly tamanoPixeles: Signal<number> = computed((): number => {
+    const tamanoActual = this.tamano();
+    const pixeles = TAMANOS_PIXELES[tamanoActual];
 
-  /** Devuelve el tamaño en píxeles según la variante */
-  get tamanoPixeles(): number {
-    return this.TAMANOS[this.tamano];
-  }
+    return pixeles;
+  });
 }

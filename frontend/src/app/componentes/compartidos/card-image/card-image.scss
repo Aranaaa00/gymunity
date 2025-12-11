@@ -1,6 +1,16 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$card-image-transition-duration: 0.3s;
+$card-image-hover-scale: 1.05;
+$card-image-sm-size: 5rem;
+$card-image-horizontal-md-width: 7rem;
+$card-image-horizontal-md-height: 5rem;
+
+// ============================================
 // CARD IMAGE (Imagen de Tarjeta)
 // ============================================
 
@@ -9,25 +19,27 @@
   display: block;
   margin: 0;
   padding: 0;
-  border-radius: $radio-xl;
   overflow: hidden;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border-radius: $radio-xl;
+  transition: 
+    box-shadow $card-image-transition-duration ease, 
+    transform $card-image-transition-duration ease;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform $card-image-transition-duration ease;
   }
 
   &:hover img {
-    transform: scale(1.05);
+    transform: scale($card-image-hover-scale);
   }
 
   &.size-sm {
-    width: 5rem;
-    height: 5rem;
+    width: $card-image-sm-size;
+    height: $card-image-sm-size;
     flex-shrink: 0;
   }
 
@@ -43,8 +55,8 @@
 
   &.horizontal {
     &.size-md {
-      width: 7rem;
-      height: 5rem;
+      width: $card-image-horizontal-md-width;
+      height: $card-image-horizontal-md-height;
       border-radius: $radio-md;
       flex-shrink: 0;
     }

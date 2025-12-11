@@ -1,13 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef } from '@angular/core';
+
+// ============================================
+// COMPONENTE SECCIÓN BIENVENIDA
+// ============================================
 
 @Component({
   selector: 'app-seccion-bienvenida',
+  standalone: true,
   templateUrl: './seccion-bienvenida.html',
   styleUrls: ['./seccion-bienvenida.scss'],
 })
 export class SeccionBienvenida {
-  @Input() tituloLineas: string[] = [];
-  @Input() subtituloLineas: string[] = [];
-  @Input() textoBoton = '';
-  @Output() accion = new EventEmitter<void>();
+  // ----------------------------------------
+  // Inputs
+  // ----------------------------------------
+  readonly tituloLineas: InputSignal<string[]> = input<string[]>([]);
+  readonly subtituloLineas: InputSignal<string[]> = input<string[]>([]);
+  readonly textoBoton: InputSignal<string> = input<string>('');
+
+  // ----------------------------------------
+  // Outputs
+  // ----------------------------------------
+  readonly accion: OutputEmitterRef<void> = output<void>();
 }

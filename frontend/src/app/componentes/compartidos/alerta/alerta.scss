@@ -1,6 +1,15 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$alerta-transition-duration: 0.2s;
+$alerta-cerrar-size: 2.25rem;
+$alerta-cerrar-opacity-default: 0.65;
+$alerta-cerrar-hover-bg: rgba(0, 0, 0, 0.08);
+
+// ============================================
 // ALERTA
 // ============================================
 
@@ -11,8 +20,8 @@
   gap: $space-2;
   width: 100%;
   padding: $space-2 $space-3;
+  border: $borde-medium solid;
   border-radius: $radio-md;
-  border: 0.125rem solid;
   font-size: $texto-xs;
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
@@ -53,17 +62,20 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: $alerta-cerrar-size;
+  height: $alerta-cerrar-size;
   padding: 0;
   margin: 0;
   background: transparent;
   border: none;
   border-radius: $radio-full;
   color: currentColor;
-  opacity: 0.65;
   cursor: pointer;
-  transition: opacity 0.2s ease, background 0.2s ease, transform 0.1s ease;
+  opacity: $alerta-cerrar-opacity-default;
+  transition: 
+    opacity $alerta-transition-duration ease, 
+    background $alerta-transition-duration ease, 
+    transform 0.1s ease;
 
   lucide-icon {
     display: flex;
@@ -73,12 +85,12 @@
 
   &:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.08);
+    background: $alerta-cerrar-hover-bg;
   }
 
   &:focus-visible {
-    outline: 0.125rem solid currentColor;
-    outline-offset: 0.125rem;
+    outline: $borde-medium solid currentColor;
+    outline-offset: $borde-medium;
     opacity: 1;
   }
 

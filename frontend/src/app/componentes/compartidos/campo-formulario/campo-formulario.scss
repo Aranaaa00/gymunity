@@ -1,49 +1,111 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
-// CAMPO DE FORMULARIO
+// VARIABLES LOCALES
 // ============================================
 
-.campo-formulario {
-  &__label {
-    display: flex;
-    align-items: center;
-    gap: 0.125rem;
-    margin-bottom: $space-1;
-    font-size: $texto-s;
-    font-weight: $font-weight-medium;
-    color: var(--color-texto);
+$campo-focus-shadow-size: 0.1875rem;
+$campo-transition-duration: 0.15s;
+$campo-label-margin-bottom: 0.25rem;
+$campo-focus-shadow-opacity: 0.15;
+$campo-hover-opacity: 0.5;
+$campo-disabled-opacity: 0.5;
+$campo-placeholder-opacity: 0.7;
+
+// ============================================
+// HOST
+// ============================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+// ============================================
+// LABEL
+// ============================================
+
+.campo-formulario__label {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  margin-bottom: $campo-label-margin-bottom;
+  font-size: $texto-xs;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  color: var(--color-texto);
+}
+
+.campo-formulario__required {
+  font-weight: $font-weight-bold;
+  text-decoration: none;
+  color: var(--color-error);
+}
+
+// ============================================
+// CAMPO INPUT
+// ============================================
+
+.campo-formulario__field {
+  width: 100%;
+  padding: $space-2;
+  background-color: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  line-height: $line-height-normal;
+  color: var(--color-texto);
+  transition: 
+    border-color $campo-transition-duration ease,
+    box-shadow $campo-transition-duration ease;
+
+  &::placeholder {
+    color: var(--color-subtitulo);
+    opacity: $campo-placeholder-opacity;
   }
 
-  &__required {
-    color: var(--color-error);
+  &:hover:not(:disabled):not(:focus) {
+    border-color: rgba($color-botones, $campo-hover-opacity);
   }
 
-  &__field {
-    width: 100%;
-    padding: $space-1 $space-2;
-    background-color: var(--color-fondo-secundario);
-    border: $borde-thin solid var(--color-borde);
-    border-radius: $radio-md;
-    font-size: $texto-s;
-    color: var(--color-texto);
+  &:focus {
+    border-color: var(--color-boton);
+    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-botones, $campo-focus-shadow-opacity);
     outline: none;
-    transition: border-color 0.2s ease;
-
-    &::placeholder { color: var(--color-subtitulo); }
-    &:hover:not(:disabled) { border-color: var(--color-boton); }
-    &:focus { border-color: var(--color-boton); }
-    &:disabled { cursor: not-allowed; opacity: 0.5; }
-    &--error { border-color: var(--color-error); }
   }
 
-  &__help,
-  &__error {
-    display: block;
-    margin-top: $space-1;
-    font-size: $texto-xs;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: $campo-disabled-opacity;
   }
+}
 
-  &__help { color: var(--color-subtitulo); }
-  &__error { color: var(--color-error); }
+.campo-formulario__field--error {
+  border-color: var(--color-error);
+
+  &:focus {
+    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-error, $campo-focus-shadow-opacity);
+  }
+}
+
+// ============================================
+// MENSAJES DE AYUDA Y ERROR
+// ============================================
+
+.campo-formulario__help,
+.campo-formulario__error {
+  display: block;
+  margin-top: $space-1;
+  font-size: $texto-xs;
+  line-height: $line-height-normal;
+}
+
+.campo-formulario__help {
+  color: var(--color-subtitulo);
+}
+
+.campo-formulario__error {
+  font-weight: $font-weight-medium;
+  color: var(--color-error);
 }

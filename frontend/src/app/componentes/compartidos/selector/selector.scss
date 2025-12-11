@@ -1,6 +1,13 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$selector-transition-duration: 0.2s;
+$selector-label-gap: 0.125rem;
+
+// ============================================
 // SELECTOR (Select)
 // ============================================
 
@@ -8,7 +15,7 @@
   &__label {
     display: flex;
     align-items: center;
-    gap: 0.125rem;
+    gap: $selector-label-gap;
     margin-bottom: $space-1;
     font-size: $texto-s;
     font-weight: $font-weight-medium;
@@ -27,22 +34,18 @@
   &__field {
     width: 100%;
     padding: $space-1 $space-4 $space-1 $space-2;
-    
     background-color: var(--color-fondo-secundario);
-    
     border: $borde-thin solid var(--color-borde);
     border-radius: $radio-md;
-    
     font-family: inherit;
     font-size: $texto-s;
     font-weight: $font-weight-medium;
     color: var(--color-texto);
-    
-    outline: none;
-    appearance: none;
     cursor: pointer;
-    
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    appearance: none;
+    transition: 
+      border-color $selector-transition-duration ease, 
+      background-color $selector-transition-duration ease;
 
     &:hover:not(:disabled) { 
       border-color: var(--color-boton);
@@ -71,7 +74,7 @@
 
       &:checked {
         background-color: var(--color-boton);
-        color: white;
+        color: $gris-50;
         font-weight: $font-weight-medium;
       }
     }
@@ -84,10 +87,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(-50%);
     font-size: $texto-xs;
     color: var(--color-subtitulo);
     pointer-events: none;
+    transform: translateY(-50%);
   }
 
   &__help,

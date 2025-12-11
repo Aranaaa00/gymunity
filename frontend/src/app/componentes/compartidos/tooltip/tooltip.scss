@@ -1,0 +1,10 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// TOOLTIP - Contenedor Host
+// ============================================
+
+:host {
+  position: relative;
+  display: inline-block;
+}

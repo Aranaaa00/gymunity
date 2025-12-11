@@ -4,3 +4,32 @@
 // Reutiliza los estilos de formulario-login
 
 @use '../formulario-login/formulario-login.scss';
+@use '../../../../styles/00-settings/variables' as *;
+
+// Override para registro: menos espacio entre campos
+:host {
+  .formulario-auth__fieldset {
+    gap: $space-1;
+  }
+
+  .formulario-auth__header {
+    margin-bottom: $space-2;
+  }
+
+  .formulario-auth__logo {
+    height: 3.5rem;
+  }
+
+  .formulario-auth__legend {
+    margin-bottom: $space-1;
+    font-size: $texto-lg;
+  }
+
+  .formulario-auth__submit {
+    margin-top: $space-1;
+  }
+
+  .formulario-auth__alt {
+    margin-top: $space-2;
+  }
+}

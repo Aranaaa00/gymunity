@@ -1,6 +1,14 @@
 @use '../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$inicio-transition-duration: 0.2s;
+$inicio-arrow-translate-x: 0.25rem;
+$inicio-link-gap: 0.25rem;
+
+// ============================================
 // PÁGINA INICIO
 // ============================================
 
@@ -24,16 +32,16 @@
 .section-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: $inicio-link-gap;
   text-decoration: none;
   color: var(--color-texto);
-  transition: color 0.2s ease;
+  transition: color $inicio-transition-duration ease;
 
   &:hover {
     color: var(--color-boton);
 
     .section-arrow {
-      transform: translateX(0.25rem);
+      transform: translateX($inicio-arrow-translate-x);
     }
   }
 }
@@ -47,7 +55,7 @@
 .section-arrow {
   font-size: $texto-m;
   font-weight: $font-weight-bold;
-  transition: transform 0.2s ease;
+  transition: transform $inicio-transition-duration ease;
 }
 
 .gimnasios-grid {

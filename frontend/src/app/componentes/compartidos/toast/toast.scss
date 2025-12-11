@@ -1,0 +1,242 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$toast-z-index: 9999;
+$toast-min-width: 18rem;
+$toast-max-width: 24rem;
+$toast-border-left-width: 4px;
+$toast-icon-size: 2rem;
+$toast-close-size: 1.5rem;
+$toast-progress-height: 0.1875rem;
+$toast-animation-duration-enter: 0.2s;
+$toast-animation-duration-exit: 0.15s;
+$toast-progress-duration: 3s;
+
+// ============================================
+// TOAST BASE
+// ============================================
+
+.toast {
+  position: fixed;
+  right: $space-3;
+  bottom: $space-3;
+  z-index: $toast-z-index;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  min-width: $toast-min-width;
+  max-width: $toast-max-width;
+  padding: $space-2 $space-3;
+  overflow: hidden;
+  background-color: $gris-50;
+  border: $borde-thin solid $gris-300;
+  border-radius: $radio-lg;
+  box-shadow: $shadow-lg;
+  animation: toast-entrar $toast-animation-duration-enter ease-out;
+}
+
+.toast--saliendo {
+  animation: toast-salir $toast-animation-duration-exit ease-in forwards;
+}
+
+// ============================================
+// VARIANTES POR TIPO
+// ============================================
+
+.toast--success {
+  border-left: $toast-border-left-width solid $color-exito;
+
+  .toast__icono {
+    background-color: rgba($color-exito, 0.12);
+    color: $color-exito;
+  }
+
+  .toast__progreso {
+    background-color: $color-exito;
+  }
+}
+
+.toast--error {
+  border-left: $toast-border-left-width solid $color-error;
+
+  .toast__icono {
+    background-color: rgba($color-error, 0.12);
+    color: $color-error;
+  }
+
+  .toast__progreso {
+    background-color: $color-error;
+  }
+}
+
+.toast--warning {
+  border-left: $toast-border-left-width solid $color-warning;
+
+  .toast__icono {
+    background-color: rgba($color-warning, 0.12);
+    color: $color-warning;
+  }
+
+  .toast__progreso {
+    background-color: $color-warning;
+  }
+}
+
+.toast--info {
+  border-left: $toast-border-left-width solid $color-info;
+
+  .toast__icono {
+    background-color: rgba($color-info, 0.12);
+    color: $color-info;
+  }
+
+  .toast__progreso {
+    background-color: $color-info;
+  }
+}
+
+// ============================================
+// ELEMENTOS INTERNOS
+// ============================================
+
+.toast__icono {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: $toast-icon-size;
+  height: $toast-icon-size;
+  border-radius: $radio-full;
+}
+
+.toast__mensaje {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  color: $gris-900;
+  word-break: break-word;
+}
+
+.toast__cerrar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: $toast-close-size;
+  height: $toast-close-size;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: $radio-md;
+  color: $gris-500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: $gris-100;
+    color: $gris-700;
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid $color-botones;
+    outline-offset: $borde-thin;
+  }
+}
+
+// ============================================
+// BARRA DE PROGRESO
+// ============================================
+
+.toast__progreso {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $toast-progress-height;
+  opacity: 0.8;
+  animation: progreso-toast $toast-progress-duration linear forwards;
+}
+
+// ============================================
+// ANIMACIONES
+// ============================================
+
+@keyframes toast-entrar {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-salir {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+
+@keyframes progreso-toast {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: $breakpoint-sm) {
+  .toast {
+    right: $space-2;
+    bottom: $space-2;
+    left: $space-2;
+    min-width: auto;
+    max-width: none;
+  }
+}
+
+// ============================================
+// TEMA OSCURO
+// ============================================
+
+[data-tema="oscuro"] {
+  .toast {
+    background-color: $gris-800;
+    border-color: $gris-700;
+  }
+
+  .toast__mensaje {
+    color: $gris-50;
+  }
+
+  .toast__cerrar {
+    color: $gris-400;
+
+    &:hover {
+      background-color: $gris-700;
+      color: $gris-200;
+    }
+  }
+}

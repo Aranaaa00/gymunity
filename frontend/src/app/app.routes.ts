@@ -6,4 +6,8 @@ export const routes: Routes = [
     path: 'guia-estilo',
     loadComponent: () => import('./paginas/guia-estilo/guia-estilo').then(m => m.GuiaEstilo),
   },
+  {
+    path: 'pruebas',
+    loadComponent: () => import('./paginas/pruebas/pruebas').then(m => m.Pruebas),
+  },
 ];

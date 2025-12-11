@@ -1,0 +1,51 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$carga-z-index: 9998;
+$carga-animation-duration: 0.2s;
+$carga-backdrop-blur: 0.25rem;
+$carga-overlay-opacity-claro: 0.7;
+$carga-overlay-opacity-oscuro: 0.85;
+
+// ============================================
+// CARGA GLOBAL - Overlay de Pantalla Completa
+// ============================================
+
+.carga-global {
+  position: fixed;
+  inset: 0;
+  z-index: $carga-z-index;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($gris-900, $carga-overlay-opacity-claro);
+  animation: carga-aparecer $carga-animation-duration ease-out;
+  backdrop-filter: blur($carga-backdrop-blur);
+}
+
+// ============================================
+// ANIMACIONES
+// ============================================
+
+@keyframes carga-aparecer {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+// ============================================
+// MODO OSCURO
+// ============================================
+
+[data-tema="oscuro"] {
+  .carga-global {
+    background-color: rgba($gris-900, $carga-overlay-opacity-oscuro);
+  }
+}

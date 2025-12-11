@@ -1,0 +1,16 @@
+<figure 
+  class="spinner" 
+  [class.spinner--sm]="tamano() === 'sm'"
+  [class.spinner--md]="tamano() === 'md'"
+  [class.spinner--lg]="tamano() === 'lg'"
+  [class.spinner--overlay]="overlay()"
+  role="status" 
+  aria-live="polite"
+>
+  <lucide-icon 
+    class="spinner__icono" 
+    name="loader-circle" 
+    [size]="iconoTamano()" 
+  />
+  <figcaption class="spinner__texto">{{ textoCompleto() }}</figcaption>
+</figure>

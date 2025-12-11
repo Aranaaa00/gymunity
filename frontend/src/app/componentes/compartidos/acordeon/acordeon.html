@@ -1,0 +1,42 @@
+<header class="acordeon-item__header">
+  <button
+    type="button"
+    class="acordeon-item__trigger"
+    [attr.id]="idHeader"
+    [attr.aria-expanded]="expandido()"
+    [attr.aria-controls]="idPanel"
+    (click)="onClick()"
+    (keydown)="onKeydown($event)">
+    
+    <!-- Título con icono opcional -->
+    <span class="acordeon-item__titulo-wrapper">
+      @if (icono()) {
+        <lucide-icon 
+          class="acordeon-item__icono" 
+          [name]="icono()" 
+          [size]="16"
+          aria-hidden="true" />
+      }
+      <span class="acordeon-item__titulo">{{ titulo() }}</span>
+    </span>
+    
+    <!-- Indicador de expansión -->
+    <span class="acordeon-item__indicador" aria-hidden="true">
+      <lucide-icon 
+        class="acordeon-item__flecha" 
+        name="plus" 
+        [size]="16" />
+    </span>
+  </button>
+</header>
+
+<section
+  class="acordeon-item__panel"
+  [attr.id]="idPanel"
+  [attr.aria-labelledby]="idHeader"
+  [attr.aria-hidden]="!expandido()"
+  role="region">
+  <article class="acordeon-item__contenido">
+    <ng-content></ng-content>
+  </article>
+</section>

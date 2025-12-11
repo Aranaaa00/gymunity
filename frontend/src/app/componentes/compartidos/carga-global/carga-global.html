@@ -1,0 +1,15 @@
+@if (cargando()) {
+  <aside 
+    class="carga-global" 
+    role="alert" 
+    aria-busy="true" 
+    [attr.aria-label]="mensaje()"
+  >
+    <app-spinner 
+      tamano="lg"
+      [overlay]="true"
+      [texto]="mensaje()" 
+      [porcentaje]="porcentaje() > 0 ? porcentaje() : null"
+    />
+  </aside>
+}

@@ -1,0 +1,10 @@
+export { ModalService } from './modal';
+export type { TipoModal } from './modal';
+export { TemaService } from './tema';
+export type { Tema } from './tema';
+export { ComunicacionService } from './comunicacion';
+export type { Evento } from './comunicacion';
+export { EstadoService } from './estado';
+export { NotificacionService } from './notificacion';
+export type { TipoNotificacion, Notificacion } from './notificacion';
+export { CargaService } from './carga';

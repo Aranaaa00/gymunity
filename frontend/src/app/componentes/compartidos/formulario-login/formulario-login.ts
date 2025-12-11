@@ -1,50 +1,110 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output, inject, OutputEmitterRef } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { Boton } from '../boton/boton';
 
+// ============================================
+// TIPOS
+// ============================================
+
+export interface DatosLogin {
+  readonly identifier: string;
+  readonly password: string;
+}
+
+type CampoLogin = 'identifier' | 'password';
+
+// ============================================
+// CONSTANTES
+// ============================================
+
+const LONGITUD_MINIMA_IDENTIFIER = 3;
+const LONGITUD_MINIMA_PASSWORD = 1;
+
+const MENSAJES_ERROR: Readonly<Record<CampoLogin, Record<string, string>>> = {
+  identifier: {
+    required: 'Este campo es obligatorio',
+    minlength: `Mínimo ${LONGITUD_MINIMA_IDENTIFIER} caracteres`,
+  },
+  password: {
+    required: 'La contraseña es obligatoria',
+  },
+} as const;
+
+// ============================================
+// COMPONENTE
+// ============================================
+
 @Component({
   selector: 'app-formulario-login',
-  imports: [CampoFormulario, Boton],
+  standalone: true,
+  imports: [ReactiveFormsModule, CampoFormulario, Boton],
   templateUrl: './formulario-login.html',
   styleUrl: './formulario-login.scss',
 })
 export class FormularioLogin {
-  @Output() enviar = new EventEmitter<{ email: string; password: string }>();
-  @Output() irRegistro = new EventEmitter<void>();
-  @Output() cerrar = new EventEmitter<void>();
+  // ----------------------------------------
+  // Outputs
+  // ----------------------------------------
+  readonly enviar: OutputEmitterRef<DatosLogin> = output<DatosLogin>();
+  readonly irRegistro: OutputEmitterRef<void> = output<void>();
+  readonly cerrar: OutputEmitterRef<void> = output<void>();
 
-  errores = { email: '', password: '' };
+  // ----------------------------------------
+  // Dependencias
+  // ----------------------------------------
+  private readonly formBuilder = inject(FormBuilder);
 
-  validarEmail(valor: string): void {
-    if (!valor) {
-      this.errores.email = 'El email es obligatorio';
-    } else if (!valor.includes('@')) {
-      this.errores.email = 'Email no válido';
-    } else {
-      this.errores.email = '';
-    }
+  // ----------------------------------------
+  // Formulario
+  // ----------------------------------------
+  readonly loginForm: FormGroup = this.formBuilder.group({
+    identifier: ['', [Validators.required, Validators.minLength(LONGITUD_MINIMA_IDENTIFIER)]],
+    password: ['', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PASSWORD)]],
+  });
+
+  // ----------------------------------------
+  // Getters de controles
+  // ----------------------------------------
+  get identifierControl(): AbstractControl | null {
+    const control = this.loginForm.get('identifier');
+
+    return control;
   }
 
-  validarPassword(valor: string): void {
-    if (!valor) {
-      this.errores.password = 'La contraseña es obligatoria';
-    } else {
-      this.errores.password = '';
-    }
+  get passwordControl(): AbstractControl | null {
+    const control = this.loginForm.get('password');
+
+    return control;
   }
 
-  onSubmit(event: Event): void {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+  // ----------------------------------------
+  // Métodos públicos
+  // ----------------------------------------
+  getErrorMessage(campo: CampoLogin): string {
+    const control = this.loginForm.get(campo);
     
-    this.validarEmail(email);
-    this.validarPassword(password);
-    
-    if (!this.errores.email && !this.errores.password) {
-      this.enviar.emit({ email, password });
+    const noMostrarError = !control?.touched || !control?.errors;
+    if (noMostrarError) {
+      return '';
     }
+
+    const mensajesCampo = MENSAJES_ERROR[campo];
+    const tipoError = Object.keys(control.errors)[0];
+    const mensaje = mensajesCampo[tipoError];
+
+    return mensaje ?? '';
+  }
+
+  onSubmit(): void {
+    this.loginForm.markAllAsTouched();
+
+    const formularioInvalido = this.loginForm.invalid;
+    if (formularioInvalido) {
+      return;
+    }
+
+    const datos: DatosLogin = this.loginForm.value;
+    this.enviar.emit(datos);
   }
 }

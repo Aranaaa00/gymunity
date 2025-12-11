@@ -1,0 +1,34 @@
+@if (notificacion(); as n) {
+  <aside 
+    class="toast"
+    [class]="tipoClase()"
+    [class.toast--saliendo]="saliendo()"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true">
+    
+    <!-- Icono del tipo de notificación -->
+    <span class="toast__icono" aria-hidden="true">
+      <lucide-icon [name]="icono()" [size]="18" />
+    </span>
+    
+    <!-- Mensaje de la notificación -->
+    <p class="toast__mensaje">{{ mensaje() }}</p>
+    
+    <!-- Botón cerrar -->
+    <button 
+      type="button"
+      class="toast__cerrar" 
+      (click)="cerrar()" 
+      aria-label="Cerrar notificación">
+      <lucide-icon name="x" [size]="14" />
+    </button>
+    
+    <!-- Barra de progreso -->
+    <span 
+      class="toast__progreso" 
+      [attr.data-id]="notificacionId()" 
+      aria-hidden="true">
+    </span>
+  </aside>
+}

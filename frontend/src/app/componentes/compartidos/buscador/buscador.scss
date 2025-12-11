@@ -1,4 +1,15 @@
 @use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
+
+// ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$buscador-size: 2.5rem;
+$buscador-max-width-tablet: 12rem;
+$buscador-max-width-desktop: 28rem;
+$buscador-transition-duration: 0.2s;
+$buscador-width-transition-duration: 0.3s;
 
 // ============================================
 // BUSCADOR
@@ -7,23 +18,26 @@
 .buscador {
   display: flex;
   align-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: $buscador-size;
+  height: $buscador-size;
   max-width: none;
   background: transparent;
   border: none;
   border-radius: $radio-md;
   box-shadow: none;
-  transition: background-color 0.2s ease, width 0.3s ease, border 0.2s ease;
+  transition: 
+    background-color $buscador-transition-duration ease, 
+    width $buscador-width-transition-duration ease, 
+    border $buscador-transition-duration ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba($gris-100, 0.1);
   }
 
-  @media (min-width: 40rem) {
-    width: 12rem;
+  @include respond-to(sm) {
+    width: $buscador-max-width-tablet;
     background: var(--color-fondo-secundario);
-    border: 0.0625rem solid var(--color-borde);
+    border: $borde-thin solid var(--color-borde);
     border-radius: $radio-full;
     box-shadow: $shadow-buscador;
 
@@ -34,37 +48,39 @@
 
     &:focus-within {
       border-color: var(--color-boton);
-      border-width: 0.125rem;
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $borde-medium;
     }
   }
 
-  @media (min-width: 48rem) {
+  @include respond-to(md) {
     width: 100%;
-    max-width: 28rem;
+    max-width: $buscador-max-width-desktop;
   }
 }
 
 .buscador__input {
   flex: 1;
+  width: 0;
   min-width: 0;
   padding: 0;
   background: transparent;
   border: none;
   font-size: $texto-s;
   color: var(--color-texto);
-  outline: none;
   opacity: 0;
-  width: 0;
-  transition: opacity 0.2s ease, padding 0.2s ease;
+  transition: 
+    opacity $buscador-transition-duration ease, 
+    padding $buscador-transition-duration ease;
 
   &::placeholder {
     color: var(--color-subtitulo);
   }
 
-  @media (min-width: 40rem) {
+  @include respond-to(sm) {
     padding: $space-1 $space-2;
-    opacity: 1;
     width: auto;
+    opacity: 1;
   }
 }
 
@@ -73,14 +89,15 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: $buscador-size;
+  height: $buscador-size;
   padding: 0;
   background: transparent;
   border: none;
   color: $gris-200;
   cursor: pointer;
-  transition: color 0.2s ease;
+  outline: none;
+  transition: color $buscador-transition-duration ease;
 
   &:hover {
     color: $color-botones;
@@ -88,6 +105,10 @@
 
   &:active {
     color: var(--color-boton-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
   }
 
   i {

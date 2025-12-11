@@ -1,9 +1,8 @@
-<button 
+<button
   class="boton"
-  [ngClass]="'boton--' + variante + ' boton--' + tamanio"
-  [class.boton--disabled]="disabled"
-  [type]="tipo"
-  [disabled]="disabled"
->
+  [class]="clases()"
+  [class.boton--disabled]="disabled()"
+  [type]="tipo()"
+  [disabled]="disabled()">
   <ng-content></ng-content>
 </button>

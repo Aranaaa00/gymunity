@@ -1,33 +1,62 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef } from '@angular/core';
+
+// ============================================
+// INTERFACES
+// ============================================
 
 export interface OpcionSelector {
-  valor: string;
-  etiqueta: string;
-  disabled?: boolean;
+  readonly valor: string;
+  readonly etiqueta: string;
+  readonly disabled?: boolean;
 }
+
+// ============================================
+// CONSTANTES
+// ============================================
+
+const LABEL_DEFECTO = '';
+const PLACEHOLDER_DEFECTO = 'Selecciona una opción';
+const MENSAJE_ERROR_DEFECTO = '';
+const TEXTO_AYUDA_DEFECTO = '';
+
+// ============================================
+// COMPONENTE SELECTOR
+// ============================================
 
 @Component({
   selector: 'app-selector',
+  standalone: true,
   imports: [],
   templateUrl: './selector.html',
   styleUrl: './selector.scss',
 })
 export class Selector {
-  @Input() label: string = '';
-  @Input() inputId: string = '';
-  @Input() name: string = '';
-  @Input() opciones: OpcionSelector[] = [];
-  @Input() placeholder: string = 'Selecciona una opción';
-  @Input() required: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() errorMessage: string = '';
-  @Input() helpText: string = '';
-  @Input() hasError: boolean = false;
+  // ----------------------------------------
+  // Inputs
+  // ----------------------------------------
+  readonly label: InputSignal<string> = input<string>(LABEL_DEFECTO);
+  readonly inputId: InputSignal<string> = input<string>(LABEL_DEFECTO);
+  readonly name: InputSignal<string> = input<string>(LABEL_DEFECTO);
+  readonly opciones: InputSignal<readonly OpcionSelector[]> = input<readonly OpcionSelector[]>([]);
+  readonly placeholder: InputSignal<string> = input<string>(PLACEHOLDER_DEFECTO);
+  readonly required: InputSignal<boolean> = input<boolean>(false);
+  readonly disabled: InputSignal<boolean> = input<boolean>(false);
+  readonly errorMessage: InputSignal<string> = input<string>(MENSAJE_ERROR_DEFECTO);
+  readonly helpText: InputSignal<string> = input<string>(TEXTO_AYUDA_DEFECTO);
+  readonly hasError: InputSignal<boolean> = input<boolean>(false);
 
-  @Output() cambio = new EventEmitter<string>();
+  // ----------------------------------------
+  // Outputs
+  // ----------------------------------------
+  readonly cambio: OutputEmitterRef<string> = output<string>();
 
-  onChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.cambio.emit(select.value);
+  // ----------------------------------------
+  // Métodos públicos
+  // ----------------------------------------
+  onChange(evento: Event): void {
+    const select = evento.target as HTMLSelectElement;
+    const valorSeleccionado = select.value;
+
+    this.cambio.emit(valorSeleccionado);
   }
 }

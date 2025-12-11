@@ -1,35 +1,45 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { Icono } from '../icono/icono';
+import { Component, input, output, InputSignal, OutputEmitterRef } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
+
+// ============================================
+// TIPOS
+// ============================================
+
+type TipoNotificacion = 'success' | 'error' | 'warning' | 'info';
+
+// ============================================
+// CONSTANTES
+// ============================================
+
+const TIPO_DEFECTO: TipoNotificacion = 'info';
+
+// ============================================
+// COMPONENTE NOTIFICACIÓN
+// ============================================
 
 @Component({
   selector: 'app-notificacion',
-  imports: [Icono],
+  standalone: true,
+  imports: [LucideAngularModule],
   templateUrl: './notificacion.html',
-  styleUrls: ['./notificacion.scss'],
+  styleUrl: './notificacion.scss',
 })
-export class Notificacion implements OnInit, OnDestroy {
-  @Input() tipo: 'success' | 'error' | 'warning' | 'info' = 'info';
-  @Input() mensaje = '';
-  @Input() duracion = 5000;
-  @Input() visible = false;
-  @Output() cerrar = new EventEmitter<void>();
+export class Notificacion {
+  // ----------------------------------------
+  // Inputs
+  // ----------------------------------------
+  readonly tipo: InputSignal<TipoNotificacion> = input<TipoNotificacion>(TIPO_DEFECTO);
+  readonly mensaje: InputSignal<string> = input<string>('');
+  readonly visible: InputSignal<boolean> = input<boolean>(false);
 
-  private temporizador: ReturnType<typeof setTimeout> | null = null;
+  // ----------------------------------------
+  // Outputs
+  // ----------------------------------------
+  readonly cerrar: OutputEmitterRef<void> = output<void>();
 
-  ngOnInit(): void {
-    if (this.duracion > 0) {
-      this.temporizador = setTimeout(() => {
-        this.cerrar.emit();
-      }, this.duracion);
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.temporizador) {
-      clearTimeout(this.temporizador);
-    }
-  }
-
+  // ----------------------------------------
+  // Métodos públicos
+  // ----------------------------------------
   onCerrar(): void {
     this.cerrar.emit();
   }

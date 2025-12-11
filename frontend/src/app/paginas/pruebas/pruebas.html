@@ -1,0 +1,143 @@
+<main class="pruebas">
+  <h1 class="pruebas__titulo">Página de Pruebas</h1>
+  <p class="pruebas__descripcion">Página temporal para verificar la funcionalidad de servicios y componentes.</p>
+
+  <!-- Sistema de Tabs -->
+  <app-tabs [pestanas]="pestanasPruebas" (tabCambiado)="tabActivo.set($event)">
+    <!-- Tab 0: Notificaciones -->
+    @if (tabActivo() === 0) {
+      <section class="pruebas__seccion">
+        <h2 class="pruebas__subtitulo">Sistema de Notificaciones</h2>
+        <p class="pruebas__descripcion">Prueba los diferentes tipos de notificaciones del sistema.</p>
+        <div class="pruebas__grupo">
+          <app-boton variante="primary" (click)="mostrarSuccess()">Success</app-boton>
+          <app-boton variante="secondary" (click)="mostrarError()">Error</app-boton>
+          <app-boton variante="ghost" (click)="mostrarWarning()">Warning</app-boton>
+          <app-boton variante="ghost" (click)="mostrarInfo()">Info</app-boton>
+        </div>
+      </section>
+    }
+
+    <!-- Tab 1: Loading States -->
+    @if (tabActivo() === 1) {
+      <section class="pruebas__seccion">
+        <h2 class="pruebas__subtitulo">Gestión de Loading States</h2>
+        <p class="pruebas__descripcion">Visualiza estados de carga globales y locales.</p>
+        <div class="pruebas__grupo">
+          <app-boton variante="primary" (click)="simularCargaGlobal()">Carga Global (2s)</app-boton>
+          <app-boton 
+            variante="secondary" 
+            [disabled]="cargandoBoton()" 
+            (click)="simularCargaBoton()"
+          >
+            {{ cargandoBoton() ? 'Guardando...' : 'Guardar (2s)' }}
+          </app-boton>
+        </div>
+        <div class="pruebas__grupo">
+          <h3 class="pruebas__label">Spinners:</h3>
+          <app-spinner tamano="sm" />
+          <app-spinner tamano="md" [porcentaje]="45" />
+          <app-spinner tamano="lg" [porcentaje]="78" texto="Cargando datos..." />
+        </div>
+      </section>
+    }
+
+    <!-- Tab 2: Comunicación -->
+    @if (tabActivo() === 2) {
+      <section class="pruebas__seccion">
+        <h2 class="pruebas__subtitulo">Comunicación entre Componentes</h2>
+        <p class="pruebas__descripcion">La suscripción se crea automáticamente al cargar. Haz clic en "Emitir" para enviar un mensaje.</p>
+        <div class="pruebas__grupo">
+          <app-boton variante="primary" (click)="emitirEvento()">Emitir Evento</app-boton>
+        </div>
+        <p class="pruebas__resultado">Último mensaje: <strong>{{ mensajeRecibido() || '(ninguno)' }}</strong></p>
+      </section>
+    }
+
+    <!-- Tab 3: Estado Global -->
+    @if (tabActivo() === 3) {
+      <section class="pruebas__seccion">
+        <h2 class="pruebas__subtitulo">Estado Global</h2>
+        <p class="pruebas__descripcion">Gestión de estado compartido entre componentes.</p>
+        <div class="pruebas__grupo">
+          <app-boton variante="primary" (click)="incrementarContador()">Incrementar</app-boton>
+          <app-boton variante="ghost" (click)="resetearContador()">Resetear</app-boton>
+        </div>
+        <p class="pruebas__resultado">Contador: <strong>{{ estadoContador() ?? 0 }}</strong></p>
+      </section>
+    }
+
+    <!-- Tab 4: Acordeón -->
+    @if (tabActivo() === 4) {
+      <section class="pruebas__seccion">
+        <h2 class="pruebas__subtitulo">Acordeón</h2>
+        <p class="pruebas__descripcion">Componente expansible para organizar contenido. Haz clic en cada sección para desplegar la información.</p>
+        <app-acordeon [unico]="true">
+          <app-acordeon-item titulo="¿Qué es Gymunity?" icono="dumbbell">
+            <p>
+              <strong>Gymunity</strong> es una plataforma innovadora diseñada para conectar deportistas 
+              con gimnasios, centros de artes marciales y entrenadores personales. Nuestra misión es 
+              crear una comunidad activa donde encontrar el lugar perfecto para entrenar.
+            </p>
+            <ul>
+              <li>Búsqueda de gimnasios por ubicación</li>
+              <li>Reseñas y valoraciones de usuarios</li>
+              <li>Comparativa de precios y servicios</li>
+              <li>Reserva de clases online</li>
+            </ul>
+          </app-acordeon-item>
+          <app-acordeon-item titulo="¿Cómo me registro?" icono="user-plus">
+            <p>Registrarse en Gymunity es rápido y sencillo. Sigue estos pasos:</p>
+            <ol>
+              <li>Haz clic en <strong>"Registrarse"</strong> en la parte superior de la página</li>
+              <li>Completa el formulario con tus datos personales</li>
+              <li>Verifica tu correo electrónico</li>
+              <li>¡Listo! Ya puedes empezar a explorar gimnasios</li>
+            </ol>
+            <p>También puedes registrarte con tu cuenta de <a href="#">Google</a> o <a href="#">Apple</a>.</p>
+          </app-acordeon-item>
+          <app-acordeon-item titulo="Planes y precios" icono="credit-card">
+            <p>Ofrecemos diferentes planes adaptados a tus necesidades:</p>
+            <ul>
+              <li><strong>Plan Gratuito:</strong> Búsqueda ilimitada, ver reseñas, guardar favoritos</li>
+              <li><strong>Plan Pro (9.99€/mes):</strong> Reservas ilimitadas, descuentos exclusivos, soporte prioritario</li>
+              <li><strong>Plan Gym Partner:</strong> Para gimnasios que quieren aparecer en nuestra plataforma</li>
+            </ul>
+          </app-acordeon-item>
+          <app-acordeon-item titulo="Preguntas frecuentes" icono="help-circle">
+            <p><strong>¿Puedo cancelar en cualquier momento?</strong></p>
+            <p>Sí, todos nuestros planes son sin permanencia. Puedes cancelar cuando quieras desde tu perfil.</p>
+            <p><strong>¿Cómo contacto con soporte?</strong></p>
+            <p>Puedes escribirnos a <a href="mailto:soporte@gymunity.com">soporte@gymunity.com</a> o usar el chat en vivo disponible 24/7.</p>
+          </app-acordeon-item>
+        </app-acordeon>
+      </section>
+    }
+
+    <!-- Tab 5: Tooltips -->
+    @if (tabActivo() === 5) {
+      <section class="pruebas__seccion">
+        <h2 class="pruebas__subtitulo">Tooltips</h2>
+        <p class="pruebas__descripcion">Información contextual al pasar el cursor.</p>
+        <nav class="pruebas__grupo">
+          <app-tooltip texto="Posición arriba (default)" posicion="arriba">
+            <app-boton variante="ghost">Arriba</app-boton>
+          </app-tooltip>
+          <app-tooltip texto="Posición abajo" posicion="abajo">
+            <app-boton variante="ghost">Abajo</app-boton>
+          </app-tooltip>
+          <app-tooltip texto="Posición izquierda" posicion="izquierda">
+            <app-boton variante="ghost">Izquierda</app-boton>
+          </app-tooltip>
+          <app-tooltip texto="Posición derecha" posicion="derecha">
+            <app-boton variante="ghost">Derecha</app-boton>
+          </app-tooltip>
+        </nav>
+      </section>
+    }
+  </app-tabs>
+</main>
+
+<!-- Componentes globales -->
+<app-toast />
+<app-carga-global />

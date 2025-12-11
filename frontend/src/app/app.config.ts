@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { LUCIDE_ICONS, LucideIconProvider } from 'lucide-angular';
-import { X, Search, User, Bell, Heart, Calendar, MapPin, Users, Sun, Moon, Mail, Instagram, MessageCircle, Twitter, Menu } from 'lucide-angular';
+import { X, Search, User, Bell, Heart, Calendar, MapPin, Users, Sun, Moon, Mail, Instagram, MessageCircle, Twitter, Menu, LoaderCircle, ChevronDown } from 'lucide-angular';
 
 // Iconos disponibles en toda la aplicación
 const iconos = {
@@ -21,7 +21,9 @@ const iconos = {
   Instagram,
   MessageCircle,
   Twitter,
-  Menu
+  Menu,
+  LoaderCircle,
+  ChevronDown
 };
 
 export const appConfig: ApplicationConfig = {

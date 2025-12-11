@@ -1,0 +1,182 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$acordeon-indicator-size: 1.5rem;
+$acordeon-icon-size: 1rem;
+$acordeon-animation-duration: 0.2s;
+$acordeon-indicator-rotation: 45deg;
+
+// ============================================
+// CONTENEDOR ACORDEON
+// ============================================
+
+.acordeon {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-fondo);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-lg;
+}
+
+// ============================================
+// ITEM DEL ACORDEON
+// ============================================
+
+.acordeon-item {
+  display: block;
+
+  &:not(:last-child) {
+    border-bottom: $borde-thin solid var(--color-borde);
+  }
+}
+
+// ============================================
+// HEADER / TRIGGER
+// ============================================
+
+.acordeon-item__header {
+  display: block;
+  width: 100%;
+}
+
+.acordeon-item__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-3;
+  background-color: var(--color-fondo-secundario);
+  border: none;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  text-align: left;
+  color: var(--color-texto);
+  cursor: pointer;
+  transition: background-color $acordeon-animation-duration ease;
+
+  &:hover {
+    background-color: var(--color-fondo);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 $borde-medium var(--color-boton);
+  }
+
+  .acordeon-item--expandido & {
+    background-color: var(--color-fondo);
+  }
+}
+
+// ============================================
+// TITULO CON ICONO OPCIONAL
+// ============================================
+
+.acordeon-item__titulo-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: $space-2;
+}
+
+.acordeon-item__icono {
+  flex-shrink: 0;
+  color: var(--color-boton);
+}
+
+.acordeon-item__titulo {
+  flex: 1;
+}
+
+// ============================================
+// INDICADOR DE EXPANSIÓN
+// ============================================
+
+.acordeon-item__indicador {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: $acordeon-indicator-size;
+  height: $acordeon-indicator-size;
+  background-color: rgba($color-botones, 0.1);
+  border-radius: $radio-md;
+  color: var(--color-boton);
+  transition: 
+    transform $acordeon-animation-duration ease-out,
+    background-color $acordeon-animation-duration ease,
+    color $acordeon-animation-duration ease;
+
+  .acordeon-item--expandido & {
+    background-color: var(--color-boton);
+    color: $gris-50;
+    transform: rotate($acordeon-indicator-rotation);
+  }
+}
+
+.acordeon-item__flecha {
+  display: block;
+}
+
+// ============================================
+// PANEL EXPANDIBLE
+// ============================================
+
+.acordeon-item__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows $acordeon-animation-duration ease-out;
+
+  .acordeon-item--expandido & {
+    grid-template-rows: 1fr;
+  }
+}
+
+.acordeon-item__contenido {
+  overflow: hidden;
+
+  > * {
+    padding: $space-3;
+    padding-top: 0;
+    margin: 0;
+  }
+
+  p,
+  ul,
+  ol {
+    font-family: $fuente-principal;
+    font-size: $texto-sm;
+    line-height: $line-height-relaxed;
+    color: var(--color-subtitulo);
+  }
+
+  ul,
+  ol {
+    padding-left: $space-4;
+  }
+
+  a {
+    font-weight: $font-weight-medium;
+    text-decoration: none;
+    color: var(--color-boton);
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--color-boton-hover);
+      text-decoration: underline;
+    }
+  }
+
+  strong {
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+  }
+}

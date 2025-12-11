@@ -2,37 +2,43 @@
   <img src="assets/logo.png" alt="Gymunity" class="formulario-auth__logo">
 </header>
 
-<form class="formulario-auth" (submit)="onSubmit($event)">
+<form class="formulario-auth" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <fieldset class="formulario-auth__fieldset">
     <legend class="formulario-auth__legend">Iniciar sesión</legend>
     
     <app-campo-formulario
-      label="Usuario o email:"
-      type="email"
-      inputId="login-email"
-      name="email"
+      label="Usuario o email"
+      type="text"
+      placeholder="tu_usuario o tu@email.com"
+      inputId="login-identifier"
+      name="identifier"
+      [formControl]="$any(identifierControl)"
       [required]="true"
-      [hasError]="!!errores.email"
-      [errorMessage]="errores.email"
-      (blur)="validarEmail($event)">
+      [hasError]="!!identifierControl?.touched && !!identifierControl?.invalid"
+      [errorMessage]="getErrorMessage('identifier')">
     </app-campo-formulario>
     
     <app-campo-formulario
-      label="Contraseña:"
+      label="Contraseña"
       type="password"
+      placeholder="••••••••"
       inputId="login-password"
       name="password"
+      [formControl]="$any(passwordControl)"
       [required]="true"
-      [hasError]="!!errores.password"
-      [errorMessage]="errores.password"
-      (blur)="validarPassword($event)">
+      [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
+      [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
     
-    <app-boton tipo="submit">Iniciar sesión</app-boton>
+    <div class="formulario-auth__submit">
+      <app-boton tipo="submit" [disabled]="loginForm.invalid && loginForm.touched">
+        Iniciar sesión
+      </app-boton>
+    </div>
   </fieldset>
   
   <p class="formulario-auth__alt">
     ¿No tienes cuenta? 
-    <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Regístrate</button>
+    <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Crear cuenta</button>
   </p>
 </form>

@@ -1,29 +1,29 @@
-<label class="area-texto__label" [for]="inputId">
-  {{ label }}
-  @if (required) {
+<label class="area-texto__label" [for]="inputId()">
+  {{ label() }}
+  @if (required()) {
     <abbr class="area-texto__required" title="Campo obligatorio">*</abbr>
   }
 </label>
 
 <textarea 
   class="area-texto__field"
-  [class.area-texto__field--error]="hasError"
-  [id]="inputId"
-  [name]="name"
-  [placeholder]="placeholder"
-  [required]="required"
-  [disabled]="disabled"
-  [rows]="rows"
-  [attr.maxlength]="maxlength"
-  [attr.aria-describedby]="helpText ? inputId + '-help' : (hasError ? inputId + '-error' : null)"
-  [attr.aria-invalid]="hasError"
+  [class.area-texto__field--error]="hasError()"
+  [id]="inputId()"
+  [name]="name()"
+  [placeholder]="placeholder()"
+  [required]="required()"
+  [disabled]="disabled()"
+  [rows]="rows()"
+  [attr.maxlength]="maxlength()"
+  [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
+  [attr.aria-invalid]="hasError()"
   (blur)="onBlur($event)"
 ></textarea>
 
-@if (helpText && !hasError) {
-  <small class="area-texto__help" [id]="inputId + '-help'">{{ helpText }}</small>
+@if (helpText() && !hasError()) {
+  <small class="area-texto__help" [id]="inputId() + '-help'">{{ helpText() }}</small>
 }
 
-@if (hasError && errorMessage) {
-  <small class="area-texto__error" [id]="inputId + '-error'" role="alert">{{ errorMessage }}</small>
+@if (hasError() && errorMessage()) {
+  <small class="area-texto__error" [id]="inputId() + '-error'" role="alert">{{ errorMessage() }}</small>
 }

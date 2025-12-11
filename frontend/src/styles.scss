@@ -1,2 +1,99 @@
 // Importación principal de estilos ITCSS
 @use 'styles/main';
+@use 'styles/00-settings/variables' as *;
+
+// ============================================
+// TOOLTIP - Estilos Globales
+// ============================================
+// El tooltip se renderiza en el body, por lo que
+// necesita estilos globales
+
+.tooltip {
+  position: absolute;
+  z-index: 6;
+  max-width: 18rem;
+  padding: $space-1 $space-2;
+  background: var(--color-header);
+  border-radius: $radio-md;
+  box-shadow: $shadow-lg;
+  font-family: $fuente-principal;
+  font-size: $texto-xs;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  color: $gris-50;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: 
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out;
+  pointer-events: none;
+}
+
+.tooltip--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tooltip--arriba::after,
+.tooltip--abajo::after,
+.tooltip--izquierda::after,
+.tooltip--derecha::after {
+  content: '';
+  position: absolute;
+  border: 0.375rem solid transparent;
+}
+
+.tooltip--arriba::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--color-header);
+}
+
+.tooltip--abajo::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: var(--color-header);
+}
+
+.tooltip--izquierda::after {
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border-left-color: var(--color-header);
+}
+
+.tooltip--derecha::after {
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border-right-color: var(--color-header);
+}
+
+[data-tema="oscuro"] {
+  .tooltip {
+    background: $oscuro-fondo-secundario;
+    border: $borde-thin solid $oscuro-borde;
+    box-shadow: $oscuro-shadow-lg;
+  }
+
+  .tooltip--arriba::after {
+    border-top-color: $oscuro-fondo-secundario;
+  }
+
+  .tooltip--abajo::after {
+    border-bottom-color: $oscuro-fondo-secundario;
+  }
+
+  .tooltip--izquierda::after {
+    border-left-color: $oscuro-fondo-secundario;
+  }
+
+  .tooltip--derecha::after {
+    border-right-color: $oscuro-fondo-secundario;
+  }
+}

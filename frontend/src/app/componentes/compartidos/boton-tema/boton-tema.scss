@@ -1,6 +1,16 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$boton-tema-size: 2.5rem;
+$boton-tema-icon-size: 1.25rem;
+$boton-tema-transition-duration: 0.2s;
+$boton-tema-hover-bg: rgba($gris-100, 0.05);
+$boton-tema-active-scale: 0.95;
+
+// ============================================
 // BOTÓN TEMA (Toggle Claro/Oscuro)
 // ============================================
 
@@ -8,30 +18,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: $boton-tema-size;
+  height: $boton-tema-size;
   padding: 0;
   background: transparent;
   border: none;
   border-radius: $radio-md;
   color: $gris-200;
   cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: 
+    color $boton-tema-transition-duration ease, 
+    background $boton-tema-transition-duration ease;
 
   &:hover {
     color: $color-botones;
-    background: rgba(255, 255, 255, 0.05);
+    background: $boton-tema-hover-bg;
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale($boton-tema-active-scale);
   }
 
   lucide-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: $boton-tema-icon-size;
+    height: $boton-tema-icon-size;
   }
 }

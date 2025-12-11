@@ -1,0 +1,97 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$tabs-transition-duration: 0.2s;
+$tabs-shadow-active: 0 2px 8px rgba($color-botones, 0.3);
+
+// ============================================
+// HOST
+// ============================================
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+// ============================================
+// CONTAINER
+// ============================================
+
+.tabs__container {
+  width: 100%;
+}
+
+// ============================================
+// LISTA DE TABS
+// ============================================
+
+.tabs__lista {
+  display: flex;
+  gap: $space-1;
+  padding: $space-1;
+  overflow-x: auto;
+  background-color: var(--color-fondo);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-lg;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ============================================
+// TAB INDIVIDUAL
+// ============================================
+
+.tabs__tab {
+  position: relative;
+  flex: 1;
+  min-width: max-content;
+  padding: $space-2 $space-3;
+  background-color: transparent;
+  border: none;
+  border-radius: $radio-md;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  color: var(--color-subtitulo);
+  cursor: pointer;
+  transition:
+    background-color $tabs-transition-duration ease,
+    color $tabs-transition-duration ease,
+    box-shadow $tabs-transition-duration ease;
+
+  &:hover:not(.tabs__tab--activo) {
+    background-color: var(--color-fondo-secundario);
+    color: var(--color-texto);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: -$borde-medium;
+  }
+}
+
+.tabs__tab--activo {
+  background-color: var(--color-boton);
+  box-shadow: $tabs-shadow-active;
+  color: $gris-50;
+
+  &:hover {
+    background-color: var(--color-boton-hover);
+  }
+}
+
+// ============================================
+// CONTENIDO DEL TAB
+// ============================================
+
+.tabs__contenido {
+  padding: $space-3 0;
+}

@@ -1,6 +1,6 @@
-<label class="selector__label" [for]="inputId">
-  {{ label }}
-  @if (required) {
+<label class="selector__label" [for]="inputId()">
+  {{ label() }}
+  @if (required()) {
     <abbr class="selector__required" title="Campo obligatorio">*</abbr>
   }
 </label>
@@ -8,29 +8,29 @@
 <div class="selector__wrapper">
   <select
     class="selector__field"
-    [class.selector__field--error]="hasError"
-    [id]="inputId"
-    [name]="name"
-    [required]="required"
-    [disabled]="disabled"
-    [attr.aria-describedby]="helpText ? inputId + '-help' : (hasError ? inputId + '-error' : null)"
-    [attr.aria-invalid]="hasError"
+    [class.selector__field--error]="hasError()"
+    [id]="inputId()"
+    [name]="name()"
+    [required]="required()"
+    [disabled]="disabled()"
+    [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
+    [attr.aria-invalid]="hasError()"
     (change)="onChange($event)"
   >
-    @if (placeholder) {
-      <option value="" disabled selected>{{ placeholder }}</option>
+    @if (placeholder()) {
+      <option value="" disabled selected>{{ placeholder() }}</option>
     }
-    @for (opcion of opciones; track opcion.valor) {
+    @for (opcion of opciones(); track opcion.valor) {
       <option [value]="opcion.valor" [disabled]="opcion.disabled">{{ opcion.etiqueta }}</option>
     }
   </select>
   <span class="selector__icon" aria-hidden="true">▼</span>
 </div>
 
-@if (helpText && !hasError) {
-  <small class="selector__help" [id]="inputId + '-help'">{{ helpText }}</small>
+@if (helpText() && !hasError()) {
+  <small class="selector__help" [id]="inputId() + '-help'">{{ helpText() }}</small>
 }
 
-@if (hasError && errorMessage) {
-  <small class="selector__error" [id]="inputId + '-error'" role="alert">{{ errorMessage }}</small>
+@if (hasError() && errorMessage()) {
+  <small class="selector__error" [id]="inputId() + '-error'" role="alert">{{ errorMessage() }}</small>
 }

@@ -1,28 +1,37 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, computed, Signal } from '@angular/core';
 import { Icono } from '../icono/icono';
+import { TemaService } from '../../../servicios/tema';
+
+// ============================================
+// COMPONENTE BOTÓN TEMA
+// ============================================
 
 @Component({
   selector: 'app-boton-tema',
+  standalone: true,
   imports: [Icono],
   templateUrl: './boton-tema.html',
   styleUrl: './boton-tema.scss',
 })
 export class BotonTema {
-  modoOscuro = signal(false);
+  // ----------------------------------------
+  // Dependencias
+  // ----------------------------------------
+  private readonly temaService = inject(TemaService);
 
-  constructor() {
-    if (typeof window !== 'undefined') {
-      const guardado = localStorage.getItem('tema');
-      const oscuro = guardado ? guardado === 'oscuro' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.modoOscuro.set(oscuro);
-      document.documentElement.setAttribute('data-tema', oscuro ? 'oscuro' : 'claro');
-    }
-  }
+  // ----------------------------------------
+  // Señales computadas
+  // ----------------------------------------
+  readonly esOscuro: Signal<boolean> = computed((): boolean => {
+    const temaOscuro = this.temaService.esOscuro();
 
+    return temaOscuro;
+  });
+
+  // ----------------------------------------
+  // Métodos públicos
+  // ----------------------------------------
   alternar(): void {
-    this.modoOscuro.update(v => !v);
-    const tema = this.modoOscuro() ? 'oscuro' : 'claro';
-    localStorage.setItem('tema', tema);
-    document.documentElement.setAttribute('data-tema', tema);
+    this.temaService.alternar();
   }
 }

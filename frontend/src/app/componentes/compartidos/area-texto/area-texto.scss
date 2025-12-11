@@ -1,6 +1,13 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$area-texto-transition-duration: 0.2s;
+$area-texto-label-gap: 0.125rem;
+
+// ============================================
 // ÁREA DE TEXTO (Textarea)
 // ============================================
 
@@ -8,7 +15,7 @@
   &__label {
     display: flex;
     align-items: center;
-    gap: 0.125rem;
+    gap: $area-texto-label-gap;
     margin-bottom: $space-1;
     font-size: $texto-s;
     font-weight: $font-weight-medium;
@@ -27,11 +34,10 @@
     border-radius: $radio-md;
     font-family: inherit;
     font-size: $texto-s;
-    color: var(--color-texto);
     line-height: $line-height-normal;
-    outline: none;
+    color: var(--color-texto);
     resize: vertical;
-    transition: border-color 0.2s ease;
+    transition: border-color $area-texto-transition-duration ease;
 
     &::placeholder { color: var(--color-subtitulo); }
     &:hover:not(:disabled) { border-color: var(--color-boton); }

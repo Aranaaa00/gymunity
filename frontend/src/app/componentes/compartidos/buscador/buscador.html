@@ -2,12 +2,13 @@
   <input 
     type="search" 
     class="buscador__input"
-    [placeholder]="placeholder" 
-    [(ngModel)]="valor"
-    [attr.aria-label]="placeholder"
+    [placeholder]="placeholder()" 
+    [value]="valor()"
+    (input)="onValorCambia($any($event.target).value)"
+    [attr.aria-label]="placeholder()"
     name="busqueda"
   >
   <button type="submit" class="buscador__boton" aria-label="Buscar">
-    <app-icono nombre="buscar" tamano="md"></app-icono>
+    <app-icono nombre="buscar" tamano="md" />
   </button>
 </form>

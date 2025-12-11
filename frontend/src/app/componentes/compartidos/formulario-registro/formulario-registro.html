@@ -2,48 +2,79 @@
   <img src="assets/logo.png" alt="Gymunity" class="formulario-auth__logo">
 </header>
 
-<form class="formulario-auth" (submit)="onSubmit($event)">
+<form class="formulario-auth" [formGroup]="registroForm" (ngSubmit)="onSubmit()">
   <fieldset class="formulario-auth__fieldset">
     <legend class="formulario-auth__legend">Crear cuenta</legend>
     
     <app-campo-formulario
-      label="Usuario o email:"
+      label="Nombre de usuario"
+      type="text"
+      placeholder="tu_usuario"
+      inputId="registro-username"
+      name="username"
+      [formControl]="$any(usernameControl)"
+      [required]="true"
+      [hasError]="!!usernameControl?.touched && !!usernameControl?.invalid"
+      [errorMessage]="getErrorMessage('username')">
+    </app-campo-formulario>
+
+    <app-campo-formulario
+      label="Nombre completo"
+      type="text"
+      placeholder="Tu Nombre Completo"
+      inputId="registro-fullname"
+      name="fullName"
+      [formControl]="$any(fullNameControl)"
+      [required]="true"
+      [hasError]="!!fullNameControl?.touched && !!fullNameControl?.invalid"
+      [errorMessage]="getErrorMessage('fullName')">
+    </app-campo-formulario>
+    
+    <app-campo-formulario
+      label="Email"
       type="email"
+      placeholder="tu@email.com"
       inputId="registro-email"
       name="email"
+      [formControl]="$any(emailControl)"
       [required]="true"
-      [hasError]="!!errores.email"
-      [errorMessage]="errores.email"
-      (blur)="validarEmail($event)">
+      [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
+      [errorMessage]="getErrorMessage('email')">
     </app-campo-formulario>
     
     <app-campo-formulario
-      label="Contraseña:"
+      label="Contraseña"
       type="password"
+      placeholder="Mínimo 6 caracteres"
       inputId="registro-password"
       name="password"
+      [formControl]="$any(passwordControl)"
       [required]="true"
-      [hasError]="!!errores.password"
-      [errorMessage]="errores.password"
-      (blur)="validarPassword($event)">
+      [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
+      [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
     
     <app-campo-formulario
-      label="Confirmar contraseña:"
+      label="Confirmar contraseña"
       type="password"
+      placeholder="Repite tu contraseña"
       inputId="registro-password2"
       name="password2"
+      [formControl]="$any(password2Control)"
       [required]="true"
-      [hasError]="!!errores.password2"
-      [errorMessage]="errores.password2"
-      (blur)="validarPassword2($event)">
+      [hasError]="!!password2Control?.touched && !!password2Control?.invalid"
+      [errorMessage]="getErrorMessage('password2')">
     </app-campo-formulario>
     
-    <app-boton tipo="submit">Registrarse</app-boton>
+    <div class="formulario-auth__submit">
+      <app-boton tipo="submit" [disabled]="registroForm.invalid && registroForm.touched">
+        Crear cuenta
+      </app-boton>
+    </div>
   </fieldset>
   
   <p class="formulario-auth__alt">
     ¿Ya tienes cuenta? 
-    <button type="button" class="formulario-auth__link" (click)="irLogin.emit()">Inicia sesión</button>
+    <button type="button" class="formulario-auth__link" (click)="irLogin.emit()">Iniciar sesión</button>
   </p>
 </form>

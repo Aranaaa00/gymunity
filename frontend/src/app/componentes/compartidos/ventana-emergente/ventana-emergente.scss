@@ -1,7 +1,22 @@
 @use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
-// VENTANA EMERGENTE (Modal)
+// VARIABLES LOCALES
+// ============================================
+
+$modal-fade-duration: 0.15s;
+$modal-slide-duration: 0.18s;
+$modal-max-width: 28rem;
+$modal-backdrop-blur: 0.25rem;
+$modal-backdrop-opacity: 0.5;
+$modal-cerrar-size: 2.25rem;
+$modal-cerrar-transition-duration: 0.15s;
+$modal-slide-offset: 0.5rem;
+$modal-slide-scale: 0.98;
+
+// ============================================
+// OVERLAY DE VENTANA EMERGENTE
 // ============================================
 
 .ventana-emergente {
@@ -11,73 +26,91 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $space-2;
-  background-color: rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.2s ease;
+  padding: $space-4;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, $modal-backdrop-opacity);
+  backdrop-filter: blur($modal-backdrop-blur);
+  animation: modal-fade $modal-fade-duration ease-out;
+
+  @media (max-height: 40rem) {
+    align-items: flex-start;
+    padding-top: $space-6;
+    padding-bottom: $space-6;
+  }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+// ============================================
+// CONTENIDO DE LA VENTANA
+// ============================================
 
 .ventana-emergente__contenido {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  max-width: 26.25rem;
-  max-height: 90vh;
-  padding: $space-4;
-  background-color: var(--color-fondo);
+  max-width: $modal-max-width;
+  margin: auto;
+  padding: $space-4 $space-5;
+  overflow: visible;
+  background: var(--color-fondo);
   border-radius: $radio-xl;
-  box-shadow: $shadow-xl;
-  overflow-y: auto;
-  transition: background-color 0.3s ease;
-  animation: slideUp 0.3s ease;
+  box-shadow: $shadow-lg;
+  animation: modal-slide $modal-slide-duration ease-out;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+// ============================================
+// BOTÓN CERRAR
+// ============================================
 
 .ventana-emergente__cerrar {
   position: absolute;
-  top: $space-1;
-  right: $space-1;
+  top: $space-2;
+  right: $space-2;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: $modal-cerrar-size;
+  height: $modal-cerrar-size;
   padding: 0;
-  background: none;
-  border: none;
-  border-radius: $radio-md;
+  background: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-full;
   color: var(--color-subtitulo);
   cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: 
+    background-color $modal-cerrar-transition-duration ease, 
+    color $modal-cerrar-transition-duration ease, 
+    border-color $modal-cerrar-transition-duration ease;
 
   &:hover {
-    background: var(--color-fondo-hover);
+    background: var(--color-fondo);
+    border-color: var(--color-boton);
     color: var(--color-texto);
   }
 
-  &:active {
-    transform: scale(0.95);
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-thin;
   }
+}
 
-  lucide-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+// ============================================
+// ANIMACIONES
+// ============================================
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-slide {
+  from { 
+    opacity: 0; 
+    transform: translateY(-$modal-slide-offset) scale($modal-slide-scale); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
   }
 }

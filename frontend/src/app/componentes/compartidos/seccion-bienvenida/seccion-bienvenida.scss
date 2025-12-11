@@ -1,6 +1,16 @@
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$hero-transition-duration: 0.2s;
+$hero-cta-hover-scale: 1.03;
+$hero-cta-active-scale: 0.98;
+$hero-focus-outline-size: 0.125rem;
+$hero-focus-outline-offset: 0.25rem;
+
+// ============================================
 // HERO (Sección de Bienvenida)
 // ============================================
 
@@ -20,8 +30,8 @@
   font-size: $texto-l;
   font-weight: $font-weight-bold;
   font-style: italic;
-  color: var(--color-texto);
   line-height: $line-height-tight;
+  color: var(--color-texto);
 
   span {
     display: block;
@@ -34,8 +44,8 @@
   margin: 0;
   font-size: $texto-s;
   font-weight: $font-weight-regular;
-  color: var(--color-subtitulo);
   line-height: $line-height-relaxed;
+  color: var(--color-subtitulo);
 
   span {
     display: block;
@@ -50,23 +60,25 @@
   border-radius: $radio-full;
   font-size: $texto-s;
   font-weight: $font-weight-medium;
-  color: #fff;
+  color: $gris-50;
   cursor: pointer;
-  outline: none;
-  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: 
+    background $hero-transition-duration ease, 
+    box-shadow $hero-transition-duration ease, 
+    transform $hero-transition-duration ease;
 
   &:hover {
     background: var(--color-boton-hover);
     box-shadow: var(--shadow-glow);
-    transform: scale(1.03);
+    transform: scale($hero-cta-hover-scale);
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: scale($hero-cta-active-scale);
   }
 
   &:focus-visible {
-    outline: 0.125rem solid var(--color-boton);
-    outline-offset: 0.25rem;
+    outline: $hero-focus-outline-size solid var(--color-boton);
+    outline-offset: $hero-focus-outline-offset;
   }
 }

@@ -161,7 +161,7 @@
           <app-selector
             label="Disciplina"
             [opciones]="opcionesSelector"
-            (cambio)="valorSeleccionado = $event">
+            (cambio)="valorSeleccionado.set($event)">
           </app-selector>
         </li>
       </ul>
@@ -170,7 +170,7 @@
     <article class="subseccion">
       <h3 class="subseccion__titulo">Buscador</h3>
       <ul class="ejemplos ejemplos--columna">
-        <li><app-buscador placeholder="Buscar gimnasios..."></app-buscador></li>
+        <li><app-buscador placeholder="Buscar gimnasios..." /></li>
       </ul>
     </article>
   </section>
@@ -182,17 +182,17 @@
     <article class="subseccion">
       <h3 class="subseccion__titulo">Alertas</h3>
       <ul class="ejemplos ejemplos--columna">
-        @if (mostrarAlertaInfo) {
-          <li><app-alerta tipo="info" mensaje="Información importante para el usuario" (cerrar)="mostrarAlertaInfo = false"></app-alerta></li>
+        @if (mostrarAlertaInfo()) {
+          <li><app-alerta tipo="info" mensaje="Información importante para el usuario" (cerrar)="mostrarAlertaInfo.set(false)" /></li>
         }
-        @if (mostrarAlertaSuccess) {
-          <li><app-alerta tipo="success" mensaje="Operación completada exitosamente" (cerrar)="mostrarAlertaSuccess = false"></app-alerta></li>
+        @if (mostrarAlertaSuccess()) {
+          <li><app-alerta tipo="success" mensaje="Operación completada exitosamente" (cerrar)="mostrarAlertaSuccess.set(false)" /></li>
         }
-        @if (mostrarAlertaWarning) {
-          <li><app-alerta tipo="warning" mensaje="Advertencia: revisa esta información" (cerrar)="mostrarAlertaWarning = false"></app-alerta></li>
+        @if (mostrarAlertaWarning()) {
+          <li><app-alerta tipo="warning" mensaje="Advertencia: revisa esta información" (cerrar)="mostrarAlertaWarning.set(false)" /></li>
         }
-        @if (mostrarAlertaError) {
-          <li><app-alerta tipo="error" mensaje="Error: algo salió mal" (cerrar)="mostrarAlertaError = false"></app-alerta></li>
+        @if (mostrarAlertaError()) {
+          <li><app-alerta tipo="error" mensaje="Error: algo salió mal" (cerrar)="mostrarAlertaError.set(false)" /></li>
         }
       </ul>
     </article>
@@ -205,13 +205,12 @@
           <app-boton (click)="lanzarNotificacion()">Mostrar notificación</app-boton>
         </li>
       </ul>
-      @if (mostrarNotificacion) {
+      @if (mostrarNotificacion()) {
         <app-notificacion 
           tipo="success" 
           mensaje="¡Esta es una notificación de prueba!"
-          [visible]="mostrarNotificacion"
-          (cerrar)="mostrarNotificacion = false">
-        </app-notificacion>
+          [visible]="mostrarNotificacion()"
+          (cerrar)="mostrarNotificacion.set(false)" />
       }
     </article>
   </section>
@@ -224,6 +223,48 @@
       <h3 class="subseccion__titulo">Botón de tema</h3>
       <ul class="ejemplos ejemplos--horizontal">
         <li><app-boton-tema></app-boton-tema></li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SECCIÓN: COMPONENTES INTERACTIVOS -->
+  <section class="seccion">
+    <h2 class="seccion__titulo">Componentes Interactivos</h2>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Tabs</h3>
+      <app-tabs [pestanas]="['Descripción', 'Servicios', 'Contacto']">
+        @switch (0) {
+          @case (0) {
+            <p>Este gimnasio ofrece las mejores instalaciones de la ciudad.</p>
+          }
+        }
+      </app-tabs>
+    </article>
+
+    <article class="subseccion">
+      <h3 class="subseccion__titulo">Tooltips</h3>
+      <ul class="ejemplos ejemplos--horizontal">
+        <li>
+          <app-tooltip texto="Tooltip arriba" posicion="arriba">
+            <app-boton>Arriba</app-boton>
+          </app-tooltip>
+        </li>
+        <li>
+          <app-tooltip texto="Tooltip abajo" posicion="abajo">
+            <app-boton>Abajo</app-boton>
+          </app-tooltip>
+        </li>
+        <li>
+          <app-tooltip texto="Tooltip izquierda" posicion="izquierda">
+            <app-boton>Izquierda</app-boton>
+          </app-tooltip>
+        </li>
+        <li>
+          <app-tooltip texto="Tooltip derecha" posicion="derecha">
+            <app-boton>Derecha</app-boton>
+          </app-tooltip>
+        </li>
       </ul>
     </article>
   </section>

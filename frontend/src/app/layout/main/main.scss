@@ -1,6 +1,12 @@
 @use '../../../styles/00-settings/variables' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$main-header-offset: 3.5rem;
+
+// ============================================
 // MAIN - CONTENEDOR PRINCIPAL
 // ============================================
 
@@ -11,5 +17,5 @@
   width: 100%;
   max-width: $max-width-contenido;
   margin: 0 auto;
-  padding: calc($space-4 + 3.5rem) $space-3 $space-4;
+  padding: calc($space-4 + $main-header-offset) $space-3 $space-4;
 }
