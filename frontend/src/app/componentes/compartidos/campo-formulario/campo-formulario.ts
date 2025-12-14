@@ -48,6 +48,8 @@ export class CampoFormulario implements ControlValueAccessor {
   readonly helpText: InputSignal<string> = input<string>('');
   readonly hasError: InputSignal<boolean> = input<boolean>(false);
   readonly formControl: InputSignal<FormControl | undefined> = input<FormControl | undefined>(undefined);
+  readonly validando: InputSignal<boolean> = input<boolean>(false);
+  readonly mensajeExito: InputSignal<string> = input<string>('');
 
   // ----------------------------------------
   // Estado interno (signals para mutabilidad)

@@ -20,7 +20,8 @@ type NombreIcono =
   | 'sol'
   | 'luna'
   | 'email'
-  | 'menu';
+  | 'menu'
+  | 'plus';
 
 type TamanoIcono = 'sm' | 'md' | 'lg';
 
@@ -48,6 +49,7 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   luna: 'Moon',
   email: 'Mail',
   menu: 'Menu',
+  plus: 'Plus',
 } as const;
 
 const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {

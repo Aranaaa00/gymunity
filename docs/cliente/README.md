@@ -267,4 +267,65 @@ componente/
 | Loading global | 4 | Indicador de carga |
 | Toast | 5 | Notificaciones |
 
+---
+
+## Fase 8: Sistema de Formularios Reactivos
+
+### 8.1 Arquitectura
+
+Sistema de formularios con Angular Reactive Forms que incluye validadores síncronos, asíncronos y retroalimentación visual en tiempo real.
+
+### 8.2 Catálogo de Validadores
+
+**Síncronos:**
+- `passwordFuerte`: Mayúsculas, minúsculas, números y caracteres especiales (@$!%*?&.)
+- `coincidenCampos`: Validación cruzada entre dos campos
+- `nifValido`: NIE/NIF/CIF español con letra de control
+- `telefonoEspanol`: Teléfono español (9 dígitos, +34)
+- `codigoPostalEspanol`: CP español (01000-52999)
+- `rangoNumerico`: Valor dentro de un rango
+
+**Asíncronos (debounce 500ms):**
+- `emailUnico`: Verifica disponibilidad en BD
+- `usernameUnico`: Verifica disponibilidad en BD
+
+```typescript
+// Ejemplo de uso
+this.formulario = this.fb.group({
+  username: ['', [Validators.required], [this.validadoresAsincronos.usernameUnico()]],
+  password: ['', [Validators.required, this.validadores.passwordFuerte()]]
+});
+```
+
+### 8.3 Retroalimentación Visual
+
+Estados: **Error** (rojo), **Validando** (spinner azul), **Éxito** (verde).
+
+### 8.4 Indicador de Fuerza de Contraseña
+
+Calcula fortaleza: longitud incremental (45pts: 8+=15, 12+=10, 16+=10, 20+=10), minúsculas (15pts), mayúsculas (15pts), números (15pts), caracteres especiales (15pts).
+
+Niveles: Débil (0-39%), Media (40-64%), Fuerte (65-84%), Muy Fuerte (85-100%).
+
+### 8.5 FormArray - Edición de Perfil
+
+El `formulario-perfil` implementa FormArray para redes sociales con campos dinámicos:
+
+```typescript
+// Añadir elemento dinámicamente
+agregarRedSocial(): void {
+  const grupo = this.fb.group({
+    plataforma: ['Instagram', [Validators.required]],
+    url: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]]
+  });
+  this.redesSocialesArray.push(grupo);
+}
+
+// Eliminar elemento
+eliminarRedSocial(index: number): void {
+  this.redesSocialesArray.removeAt(index);
+}
+```
+
+Campos del formulario: nombre, apellidos, username (async), email (readonly), teléfono, código postal, bio, redes sociales (FormArray).
 

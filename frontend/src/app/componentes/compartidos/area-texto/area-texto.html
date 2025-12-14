@@ -10,14 +10,16 @@
   [class.area-texto__field--error]="hasError()"
   [id]="inputId()"
   [name]="name()"
+  [value]="value"
   [placeholder]="placeholder()"
   [required]="required()"
-  [disabled]="disabled()"
+  [disabled]="disabled() || isDisabled"
   [rows]="rows()"
   [attr.maxlength]="maxlength()"
   [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
   [attr.aria-invalid]="hasError()"
-  (blur)="onBlur($event)"
+  (input)="onInput($event)"
+  (blur)="onBlurEvent($event)"
 ></textarea>
 
 @if (helpText() && !hasError()) {

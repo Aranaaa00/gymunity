@@ -89,12 +89,30 @@ $campo-placeholder-opacity: 0.7;
   }
 }
 
+.campo-formulario__field--validando {
+  border-color: var(--color-info);
+
+  &:focus {
+    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-info, $campo-focus-shadow-opacity);
+  }
+}
+
+.campo-formulario__field--exito {
+  border-color: var(--color-exito);
+
+  &:focus {
+    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-exito, $campo-focus-shadow-opacity);
+  }
+}
+
 // ============================================
 // MENSAJES DE AYUDA Y ERROR
 // ============================================
 
 .campo-formulario__help,
-.campo-formulario__error {
+.campo-formulario__error,
+.campo-formulario__validando,
+.campo-formulario__exito {
   display: block;
   margin-top: $space-1;
   font-size: $texto-xs;
@@ -108,4 +126,14 @@ $campo-placeholder-opacity: 0.7;
 .campo-formulario__error {
   font-weight: $font-weight-medium;
   color: var(--color-error);
+}
+
+.campo-formulario__validando {
+  font-weight: $font-weight-medium;
+  color: var(--color-info);
+}
+
+.campo-formulario__exito {
+  font-weight: $font-weight-medium;
+  color: var(--color-exito);
 }

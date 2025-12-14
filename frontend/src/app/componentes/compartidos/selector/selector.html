@@ -11,17 +11,23 @@
     [class.selector__field--error]="hasError()"
     [id]="inputId()"
     [name]="name()"
+    [value]="value"
     [required]="required()"
-    [disabled]="disabled()"
+    [disabled]="disabled() || isDisabled"
     [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
     [attr.aria-invalid]="hasError()"
-    (change)="onChange($event)"
+    (change)="onChangeEvent($event)"
+    (blur)="onBlur()"
   >
     @if (placeholder()) {
-      <option value="" disabled selected>{{ placeholder() }}</option>
+      <option value="" disabled>{{ placeholder() }}</option>
     }
-    @for (opcion of opciones(); track opcion.valor) {
-      <option [value]="opcion.valor" [disabled]="opcion.disabled">{{ opcion.etiqueta }}</option>
+    @for (opcion of opciones(); track getValorOpcion(opcion)) {
+      <option 
+        [value]="getValorOpcion(opcion)" 
+        [disabled]="isOpcionDisabled(opcion)">
+        {{ getEtiquetaOpcion(opcion) }}
+      </option>
     }
   </select>
   <span class="selector__icon" aria-hidden="true">▼</span>

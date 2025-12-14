@@ -9,6 +9,8 @@
   <input 
     class="campo-formulario__field"
     [class.campo-formulario__field--error]="hasError()"
+    [class.campo-formulario__field--validando]="validando()"
+    [class.campo-formulario__field--exito]="mensajeExito() && !hasError() && !validando()"
     [type]="type()"
     [id]="inputId()"
     [name]="name()"
@@ -21,6 +23,8 @@
   <input 
     class="campo-formulario__field"
     [class.campo-formulario__field--error]="hasError()"
+    [class.campo-formulario__field--validando]="validando()"
+    [class.campo-formulario__field--exito]="mensajeExito() && !hasError() && !validando()"
     [type]="type()"
     [id]="inputId()"
     [name]="name()"
@@ -35,7 +39,15 @@
   />
 }
 
-@if (helpText() && !hasError()) {
+@if (validando()) {
+  <small class="campo-formulario__validando" role="status">Verificando...</small>
+}
+
+@if (mensajeExito() && !hasError() && !validando()) {
+  <small class="campo-formulario__exito" role="status">{{ mensajeExito() }}</small>
+}
+
+@if (helpText() && !hasError() && !validando() && !mensajeExito()) {
   <small class="campo-formulario__help" [id]="inputId() + '-help'">{{ helpText() }}</small>
 }
 

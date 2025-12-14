@@ -1,0 +1,170 @@
+<form class="formulario-perfil" [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+  <fieldset class="formulario-perfil__seccion">
+    <legend class="formulario-perfil__titulo">Información personal</legend>
+
+    <div class="formulario-perfil__grupo">
+      <app-campo-formulario
+        label="Nombre"
+        type="text"
+        placeholder="Tu nombre"
+        inputId="perfil-nombre"
+        name="nombre"
+        [formControl]="$any(perfilForm.get('nombre'))"
+        [required]="true"
+        [hasError]="!!perfilForm.get('nombre')?.touched && !!perfilForm.get('nombre')?.invalid"
+        [errorMessage]="getErrorMessage('nombre')">
+      </app-campo-formulario>
+
+      <app-campo-formulario
+        label="Apellidos"
+        type="text"
+        placeholder="Tus apellidos"
+        inputId="perfil-apellidos"
+        name="apellidos"
+        [formControl]="$any(perfilForm.get('apellidos'))"
+        [required]="true"
+        [hasError]="!!perfilForm.get('apellidos')?.touched && !!perfilForm.get('apellidos')?.invalid"
+        [errorMessage]="getErrorMessage('apellidos')">
+      </app-campo-formulario>
+    </div>
+
+    <app-campo-formulario
+      label="Nombre de usuario"
+      type="text"
+      placeholder="tu_usuario"
+      inputId="perfil-username"
+      name="username"
+      [formControl]="$any(perfilForm.get('username'))"
+      [required]="true"
+      [validando]="estaValidando('username')"
+      [hasError]="!!perfilForm.get('username')?.touched && !!perfilForm.get('username')?.invalid"
+      [errorMessage]="getErrorMessage('username')"
+      [mensajeExito]="getMensajeExito('username')">
+    </app-campo-formulario>
+
+    <app-campo-formulario
+      label="Email"
+      type="email"
+      placeholder="tu@email.com"
+      inputId="perfil-email"
+      name="email"
+      [formControl]="$any(perfilForm.get('email'))"
+      [required]="true"
+      [hasError]="!!perfilForm.get('email')?.touched && !!perfilForm.get('email')?.invalid"
+      [errorMessage]="getErrorMessage('email')">
+      <small class="formulario-perfil__ayuda">El email no se puede modificar</small>
+    </app-campo-formulario>
+  </fieldset>
+
+  <fieldset class="formulario-perfil__seccion">
+    <legend class="formulario-perfil__titulo">Contacto</legend>
+
+    <div class="formulario-perfil__grupo">
+      <app-campo-formulario
+        label="Teléfono"
+        type="tel"
+        placeholder="600123456"
+        inputId="perfil-telefono"
+        name="telefono"
+        [formControl]="$any(perfilForm.get('telefono'))"
+        [hasError]="!!perfilForm.get('telefono')?.touched && !!perfilForm.get('telefono')?.invalid"
+        [errorMessage]="getErrorMessage('telefono')">
+      </app-campo-formulario>
+
+      <app-campo-formulario
+        label="Código Postal"
+        type="text"
+        placeholder="28001"
+        inputId="perfil-codigoPostal"
+        name="codigoPostal"
+        [formControl]="$any(perfilForm.get('codigoPostal'))"
+        [hasError]="!!perfilForm.get('codigoPostal')?.touched && !!perfilForm.get('codigoPostal')?.invalid"
+        [errorMessage]="getErrorMessage('codigoPostal')">
+      </app-campo-formulario>
+    </div>
+  </fieldset>
+
+  <fieldset class="formulario-perfil__seccion">
+    <legend class="formulario-perfil__titulo">Biografía</legend>
+
+    <app-area-texto
+      label="Cuéntanos sobre ti"
+      placeholder="Escribe una breve descripción..."
+      inputId="perfil-bio"
+      name="bio"
+      [formControl]="$any(perfilForm.get('bio'))"
+      [hasError]="!!perfilForm.get('bio')?.touched && !!perfilForm.get('bio')?.invalid"
+      [errorMessage]="getErrorMessage('bio')">
+    </app-area-texto>
+  </fieldset>
+
+  <fieldset class="formulario-perfil__seccion">
+    <legend class="formulario-perfil__titulo">Redes sociales</legend>
+
+    <div class="formulario-perfil__redes" formArrayName="redesSociales">
+      @for (redControl of redesSocialesArray.controls; track $index) {
+        <div class="formulario-perfil__red" [formGroupName]="$index">
+          <div class="formulario-perfil__red-campos">
+            <div class="formulario-perfil__campo-selector">
+              <label>Plataforma</label>
+              <select [formControl]="$any(getRedSocialControl($index, 'plataforma'))">
+                @for (plataforma of plataformasDisponibles; track plataforma) {
+                  <option [value]="plataforma">{{ plataforma }}</option>
+                }
+              </select>
+              @if (!!getRedSocialControl($index, 'plataforma')?.touched && !!getRedSocialControl($index, 'plataforma')?.invalid) {
+                <small class="error">{{ getErrorMessageRedSocial($index, 'plataforma') }}</small>
+              }
+            </div>
+
+            <app-campo-formulario
+              label="URL"
+              type="url"
+              placeholder="https://..."
+              inputId="red-url-{{$index}}"
+              name="url-{{$index}}"
+              [formControl]="$any(getRedSocialControl($index, 'url'))"
+              [required]="true"
+              [hasError]="!!getRedSocialControl($index, 'url')?.touched && !!getRedSocialControl($index, 'url')?.invalid"
+              [errorMessage]="getErrorMessageRedSocial($index, 'url')">
+            </app-campo-formulario>
+          </div>
+
+          <button
+            type="button"
+            class="formulario-perfil__eliminar"
+            (click)="eliminarRedSocial($index)"
+            aria-label="Eliminar red social">
+            <app-icono nombre="x" />
+          </button>
+        </div>
+      }
+
+      @if (redesSocialesArray.length === 0) {
+        <p class="formulario-perfil__vacio">No hay redes sociales añadidas</p>
+      }
+
+      <app-boton
+        tipo="button"
+        variante="secondary"
+        (click)="agregarRedSocial()">
+        <app-icono nombre="plus" />
+        Añadir red social
+      </app-boton>
+    </div>
+  </fieldset>
+
+  <div class="formulario-perfil__acciones">
+    <app-boton
+      tipo="button"
+      variante="secondary"
+      (click)="onCancelar()">
+      Cancelar
+    </app-boton>
+    <app-boton
+      tipo="submit"
+      [disabled]="perfilForm.invalid && perfilForm.touched">
+      Guardar cambios
+    </app-boton>
+  </div>
+</form>

@@ -8,3 +8,5 @@ export { EstadoService } from './estado';
 export { NotificacionService } from './notificacion';
 export type { TipoNotificacion, Notificacion } from './notificacion';
 export { CargaService } from './carga';
+export { ValidadoresAsincronos, MENSAJES_VALIDACION_ASINCRONA } from './validadores-asincronos';
+export { passwordFuerte, coincidenCampos, nifValido, telefonoEspanol, codigoPostalEspanol, rangoNumerico, MENSAJES_VALIDACION } from './validadores';

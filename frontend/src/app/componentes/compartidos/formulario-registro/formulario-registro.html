@@ -14,8 +14,10 @@
       name="username"
       [formControl]="$any(usernameControl)"
       [required]="true"
+      [validando]="estaValidando('username')"
       [hasError]="!!usernameControl?.touched && !!usernameControl?.invalid"
-      [errorMessage]="getErrorMessage('username')">
+      [errorMessage]="getErrorMessage('username')"
+      [mensajeExito]="getMensajeExito('username')">
     </app-campo-formulario>
 
     <app-campo-formulario
@@ -38,14 +40,16 @@
       name="email"
       [formControl]="$any(emailControl)"
       [required]="true"
+      [validando]="estaValidando('email')"
       [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
-      [errorMessage]="getErrorMessage('email')">
+      [errorMessage]="getErrorMessage('email')"
+      [mensajeExito]="getMensajeExito('email')">
     </app-campo-formulario>
     
     <app-campo-formulario
       label="Contraseña"
       type="password"
-      placeholder="Mínimo 6 caracteres"
+      placeholder="Mínimo 8 caracteres seguros"
       inputId="registro-password"
       name="password"
       [formControl]="$any(passwordControl)"
@@ -53,6 +57,22 @@
       [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
+
+    @if (passwordControl?.value) {
+      <div class="formulario-registro__fuerza">
+        <div class="formulario-registro__fuerza-barra">
+          <div 
+            class="formulario-registro__fuerza-progreso"
+            [class.formulario-registro__fuerza-progreso--debil]="fuerzaPassword().nivel === 'debil'"
+            [class.formulario-registro__fuerza-progreso--media]="fuerzaPassword().nivel === 'media'"
+            [class.formulario-registro__fuerza-progreso--fuerte]="fuerzaPassword().nivel === 'fuerte'"
+            [class.formulario-registro__fuerza-progreso--muy-fuerte]="fuerzaPassword().nivel === 'muy-fuerte'"
+            [style.width.%]="fuerzaPassword().porcentaje">
+          </div>
+        </div>
+        <small class="formulario-registro__fuerza-mensaje">{{ fuerzaPassword().mensaje }}</small>
+      </div>
+    }
     
     <app-campo-formulario
       label="Confirmar contraseña"

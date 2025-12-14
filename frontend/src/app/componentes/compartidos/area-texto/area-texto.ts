@@ -1,4 +1,5 @@
-import { Component, input, output, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // ============================================
 // CONSTANTES
@@ -16,8 +17,15 @@ const FILAS_DEFECTO = 4;
   imports: [],
   templateUrl: './area-texto.html',
   styleUrl: './area-texto.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AreaTexto),
+      multi: true,
+    },
+  ],
 })
-export class AreaTexto {
+export class AreaTexto implements ControlValueAccessor {
   // ----------------------------------------
   // Inputs
   // ----------------------------------------
@@ -39,12 +47,46 @@ export class AreaTexto {
   readonly blur: OutputEmitterRef<string> = output<string>();
 
   // ----------------------------------------
+  // Estado
+  // ----------------------------------------
+  value = '';
+  isDisabled = false;
+  private onChange: (value: string) => void = () => {};
+  private onTouched: () => void = () => {};
+
+  // ----------------------------------------
+  // ControlValueAccessor
+  // ----------------------------------------
+  writeValue(value: string): void {
+    this.value = value ?? '';
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+  }
+
+  // ----------------------------------------
   // Métodos públicos
   // ----------------------------------------
-  onBlur(evento: Event): void {
+  onInput(evento: Event): void {
+    const textarea = evento.target as HTMLTextAreaElement;
+    this.value = textarea.value;
+    this.onChange(this.value);
+  }
+
+  onBlurEvent(evento: Event): void {
     const textarea = evento.target as HTMLTextAreaElement;
     const valor = textarea.value;
 
+    this.onTouched();
     this.blur.emit(valor);
   }
 }
