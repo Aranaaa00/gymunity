@@ -9,12 +9,12 @@
       <section class="pruebas__seccion">
         <h2 class="pruebas__subtitulo">Sistema de Notificaciones</h2>
         <p class="pruebas__descripcion">Prueba los diferentes tipos de notificaciones del sistema.</p>
-        <div class="pruebas__grupo">
+        <section class="pruebas__grupo">
           <app-boton variante="primary" (click)="mostrarSuccess()">Success</app-boton>
           <app-boton variante="secondary" (click)="mostrarError()">Error</app-boton>
           <app-boton variante="ghost" (click)="mostrarWarning()">Warning</app-boton>
           <app-boton variante="ghost" (click)="mostrarInfo()">Info</app-boton>
-        </div>
+        </section>
       </section>
     }
 
@@ -23,7 +23,7 @@
       <section class="pruebas__seccion">
         <h2 class="pruebas__subtitulo">Gestión de Loading States</h2>
         <p class="pruebas__descripcion">Visualiza estados de carga globales y locales.</p>
-        <div class="pruebas__grupo">
+        <section class="pruebas__grupo">
           <app-boton variante="primary" (click)="simularCargaGlobal()">Carga Global (2s)</app-boton>
           <app-boton 
             variante="secondary" 
@@ -32,13 +32,13 @@
           >
             {{ cargandoBoton() ? 'Guardando...' : 'Guardar (2s)' }}
           </app-boton>
-        </div>
-        <div class="pruebas__grupo">
+        </section>
+        <section class="pruebas__grupo">
           <h3 class="pruebas__label">Spinners:</h3>
           <app-spinner tamano="sm" />
           <app-spinner tamano="md" [porcentaje]="45" />
           <app-spinner tamano="lg" [porcentaje]="78" texto="Cargando datos..." />
-        </div>
+        </section>
       </section>
     }
 
@@ -47,9 +47,9 @@
       <section class="pruebas__seccion">
         <h2 class="pruebas__subtitulo">Comunicación entre Componentes</h2>
         <p class="pruebas__descripcion">La suscripción se crea automáticamente al cargar. Haz clic en "Emitir" para enviar un mensaje.</p>
-        <div class="pruebas__grupo">
+        <section class="pruebas__grupo">
           <app-boton variante="primary" (click)="emitirEvento()">Emitir Evento</app-boton>
-        </div>
+        </section>
         <p class="pruebas__resultado">Último mensaje: <strong>{{ mensajeRecibido() || '(ninguno)' }}</strong></p>
       </section>
     }
@@ -59,10 +59,10 @@
       <section class="pruebas__seccion">
         <h2 class="pruebas__subtitulo">Estado Global</h2>
         <p class="pruebas__descripcion">Gestión de estado compartido entre componentes.</p>
-        <div class="pruebas__grupo">
+        <section class="pruebas__grupo">
           <app-boton variante="primary" (click)="incrementarContador()">Incrementar</app-boton>
           <app-boton variante="ghost" (click)="resetearContador()">Resetear</app-boton>
-        </div>
+        </section>
         <p class="pruebas__resultado">Contador: <strong>{{ estadoContador() ?? 0 }}</strong></p>
       </section>
     }

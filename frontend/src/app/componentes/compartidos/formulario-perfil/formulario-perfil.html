@@ -2,7 +2,7 @@
   <fieldset class="formulario-perfil__seccion">
     <legend class="formulario-perfil__titulo">Información personal</legend>
 
-    <div class="formulario-perfil__grupo">
+    <section class="formulario-perfil__grupo">
       <app-campo-formulario
         label="Nombre"
         type="text"
@@ -26,7 +26,7 @@
         [hasError]="!!perfilForm.get('apellidos')?.touched && !!perfilForm.get('apellidos')?.invalid"
         [errorMessage]="getErrorMessage('apellidos')">
       </app-campo-formulario>
-    </div>
+    </section>
 
     <app-campo-formulario
       label="Nombre de usuario"
@@ -59,7 +59,7 @@
   <fieldset class="formulario-perfil__seccion">
     <legend class="formulario-perfil__titulo">Contacto</legend>
 
-    <div class="formulario-perfil__grupo">
+    <section class="formulario-perfil__grupo">
       <app-campo-formulario
         label="Teléfono"
         type="tel"
@@ -81,7 +81,7 @@
         [hasError]="!!perfilForm.get('codigoPostal')?.touched && !!perfilForm.get('codigoPostal')?.invalid"
         [errorMessage]="getErrorMessage('codigoPostal')">
       </app-campo-formulario>
-    </div>
+    </section>
   </fieldset>
 
   <fieldset class="formulario-perfil__seccion">
@@ -101,11 +101,11 @@
   <fieldset class="formulario-perfil__seccion">
     <legend class="formulario-perfil__titulo">Redes sociales</legend>
 
-    <div class="formulario-perfil__redes" formArrayName="redesSociales">
+    <section class="formulario-perfil__redes" formArrayName="redesSociales">
       @for (redControl of redesSocialesArray.controls; track $index) {
-        <div class="formulario-perfil__red" [formGroupName]="$index">
-          <div class="formulario-perfil__red-campos">
-            <div class="formulario-perfil__campo-selector">
+        <article class="formulario-perfil__red" [formGroupName]="$index">
+          <section class="formulario-perfil__red-campos">
+            <section class="formulario-perfil__campo-selector">
               <label>Plataforma</label>
               <select [formControl]="$any(getRedSocialControl($index, 'plataforma'))">
                 @for (plataforma of plataformasDisponibles; track plataforma) {
@@ -115,7 +115,7 @@
               @if (!!getRedSocialControl($index, 'plataforma')?.touched && !!getRedSocialControl($index, 'plataforma')?.invalid) {
                 <small class="error">{{ getErrorMessageRedSocial($index, 'plataforma') }}</small>
               }
-            </div>
+            </section>
 
             <app-campo-formulario
               label="URL"
@@ -128,7 +128,7 @@
               [hasError]="!!getRedSocialControl($index, 'url')?.touched && !!getRedSocialControl($index, 'url')?.invalid"
               [errorMessage]="getErrorMessageRedSocial($index, 'url')">
             </app-campo-formulario>
-          </div>
+          </section>
 
           <button
             type="button"
@@ -137,7 +137,7 @@
             aria-label="Eliminar red social">
             <app-icono nombre="x" />
           </button>
-        </div>
+        </article>
       }
 
       @if (redesSocialesArray.length === 0) {
@@ -151,10 +151,10 @@
         <app-icono nombre="plus" />
         Añadir red social
       </app-boton>
-    </div>
+    </section>
   </fieldset>
 
-  <div class="formulario-perfil__acciones">
+  <footer class="formulario-perfil__acciones">
     <app-boton
       tipo="button"
       variante="secondary"
@@ -166,5 +166,5 @@
       [disabled]="perfilForm.invalid && perfilForm.touched">
       Guardar cambios
     </app-boton>
-  </div>
+  </footer>
 </form>

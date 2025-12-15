@@ -1,0 +1,106 @@
+@use '../00-settings/variables' as *;
+
+// ============================================
+// PÁGINA EN DESARROLLO - LAYOUT COMPARTIDO
+// ============================================
+
+.pagina-desarrollo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  min-height: calc(100vh - 4rem);
+  padding: $space-4 $space-3;
+}
+
+.pagina-desarrollo__contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  
+  width: 100%;
+  max-width: 48rem;
+  
+  text-align: center;
+}
+
+.pagina-desarrollo__header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.pagina-desarrollo__titulo {
+  font-size: $texto-3xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-titulo);
+}
+
+.pagina-desarrollo__subtitulo {
+  font-size: $texto-lg;
+  color: var(--color-subtitulo);
+}
+
+.pagina-desarrollo__mensaje {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  
+  padding: $space-4;
+  
+  background: var(--color-fondo-secundario);
+  
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-lg;
+}
+
+.pagina-desarrollo__icono {
+  font-size: 4rem;
+}
+
+.pagina-desarrollo__mensaje-titulo {
+  font-size: $texto-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--color-titulo);
+}
+
+.pagina-desarrollo__mensaje-texto {
+  max-width: 36rem;
+  
+  font-size: $texto-s;
+  line-height: $line-height-relaxed;
+  color: var(--color-subtitulo);
+}
+
+.pagina-desarrollo__caracteristicas {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  
+  width: 100%;
+}
+
+.pagina-desarrollo__caracteristicas-titulo {
+  font-size: $texto-s;
+  font-weight: $font-weight-semibold;
+  text-align: left;
+  color: var(--color-texto);
+}
+
+.pagina-desarrollo__lista {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  
+  margin: 0;
+  padding: 0;
+  
+  list-style: none;
+  text-align: left;
+}
+
+.pagina-desarrollo__lista-item {
+  font-size: $texto-s;
+  color: var(--color-subtitulo);
+}

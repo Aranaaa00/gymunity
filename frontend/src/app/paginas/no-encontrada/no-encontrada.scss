@@ -1,0 +1,41 @@
+@use '../../../styles/00-settings/variables' as *;
+
+// ============================================
+// NO ENCONTRADA - ESTILOS ESPECÍFICOS
+// ============================================
+
+.no-encontrada__contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  
+  max-width: 32rem;
+  
+  text-align: center;
+}
+
+.no-encontrada__icono {
+  font-size: 5rem;
+  
+  opacity: 0.5;
+}
+
+.no-encontrada__titulo {
+  font-size: 6rem;
+  font-weight: $font-weight-black;
+  line-height: 1;
+  color: var(--color-boton);
+}
+
+.no-encontrada__subtitulo {
+  font-size: $texto-2xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-titulo);
+}
+
+.no-encontrada__texto {
+  font-size: $texto-s;
+  line-height: $line-height-relaxed;
+  color: var(--color-subtitulo);
+}

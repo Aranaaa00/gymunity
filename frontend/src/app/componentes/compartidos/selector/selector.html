@@ -5,7 +5,7 @@
   }
 </label>
 
-<div class="selector__wrapper">
+<span class="selector__wrapper">
   <select
     class="selector__field"
     [class.selector__field--error]="hasError()"
@@ -31,7 +31,7 @@
     }
   </select>
   <span class="selector__icon" aria-hidden="true">▼</span>
-</div>
+</span>
 
 @if (helpText() && !hasError()) {
   <small class="selector__help" [id]="inputId() + '-help'">{{ helpText() }}</small>

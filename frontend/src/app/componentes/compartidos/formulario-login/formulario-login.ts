@@ -1,30 +1,30 @@
-import { Component, output, inject, OutputEmitterRef } from '@angular/core';
+import { Component, output, inject, OutputEmitterRef, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { Boton } from '../boton/boton';
+import { AuthService } from '../../../servicios/auth';
 
 // ============================================
 // TIPOS
 // ============================================
 
 export interface DatosLogin {
-  readonly identifier: string;
+  readonly email: string;
   readonly password: string;
 }
 
-type CampoLogin = 'identifier' | 'password';
+type CampoLogin = 'email' | 'password';
 
 // ============================================
 // CONSTANTES
 // ============================================
 
-const LONGITUD_MINIMA_IDENTIFIER = 3;
 const LONGITUD_MINIMA_PASSWORD = 1;
 
 const MENSAJES_ERROR: Readonly<Record<CampoLogin, Record<string, string>>> = {
-  identifier: {
-    required: 'Este campo es obligatorio',
-    minlength: `Mínimo ${LONGITUD_MINIMA_IDENTIFIER} caracteres`,
+  email: {
+    required: 'El email es obligatorio',
+    email: 'El email no es válido',
   },
   password: {
     required: 'La contraseña es obligatoria',
@@ -54,28 +54,31 @@ export class FormularioLogin {
   // Dependencias
   // ----------------------------------------
   private readonly formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+
+  // ----------------------------------------
+  // Estado
+  // ----------------------------------------
+  readonly cargando = signal<boolean>(false);
+  readonly errorServidor = signal<string | null>(null);
 
   // ----------------------------------------
   // Formulario
   // ----------------------------------------
   readonly loginForm: FormGroup = this.formBuilder.group({
-    identifier: ['', [Validators.required, Validators.minLength(LONGITUD_MINIMA_IDENTIFIER)]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PASSWORD)]],
   });
 
   // ----------------------------------------
   // Getters de controles
   // ----------------------------------------
-  get identifierControl(): AbstractControl | null {
-    const control = this.loginForm.get('identifier');
-
-    return control;
+  get emailControl(): AbstractControl | null {
+    return this.loginForm.get('email');
   }
 
   get passwordControl(): AbstractControl | null {
-    const control = this.loginForm.get('password');
-
-    return control;
+    return this.loginForm.get('password');
   }
 
   // ----------------------------------------
@@ -98,13 +101,30 @@ export class FormularioLogin {
 
   onSubmit(): void {
     this.loginForm.markAllAsTouched();
+    this.errorServidor.set(null);
 
     const formularioInvalido = this.loginForm.invalid;
     if (formularioInvalido) {
       return;
     }
 
-    const datos: DatosLogin = this.loginForm.value;
-    this.enviar.emit(datos);
+    this.cargando.set(true);
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe({
+      next: (exito) => {
+        this.cargando.set(false);
+        if (exito) {
+          this.cerrar.emit();
+          this.enviar.emit({ email, password });
+        } else {
+          this.errorServidor.set(this.authService.error() || 'Credenciales incorrectas');
+        }
+      },
+      error: () => {
+        this.cargando.set(false);
+        this.errorServidor.set('Error de conexión con el servidor');
+      },
+    });
   }
 }

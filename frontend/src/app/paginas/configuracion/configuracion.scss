@@ -1,0 +1,117 @@
+@use '../../../styles/00-settings/variables' as *;
+
+// ============================================
+// CONFIGURACIÓN - CONTENEDOR PRINCIPAL
+// ============================================
+
+.configuracion {
+  min-height: calc(100vh - 4rem);
+  padding: $space-4 $space-3;
+}
+
+.configuracion__contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+// ============================================
+// HEADER
+// ============================================
+
+.configuracion__header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.configuracion__titulo {
+  font-size: $texto-3xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-titulo);
+}
+
+.configuracion__subtitulo {
+  font-size: $texto-lg;
+  color: var(--color-subtitulo);
+}
+
+// ============================================
+// CONTENIDO
+// ============================================
+
+.configuracion__contenido {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.configuracion__seccion {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  
+  padding: $space-3;
+  
+  background: var(--color-fondo-secundario);
+  
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-lg;
+}
+
+.configuracion__seccion-titulo {
+  font-size: $texto-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--color-titulo);
+}
+
+// ============================================
+// MENSAJE
+// ============================================
+
+.configuracion__mensaje {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  
+  padding: $space-3;
+  
+  background: var(--color-info-fondo);
+  
+  border: $borde-thin solid var(--color-info);
+  border-radius: $radio-md;
+}
+
+.configuracion__icono {
+  flex-shrink: 0;
+  color: var(--color-info);
+}
+
+.configuracion__mensaje-texto {
+  font-size: $texto-s;
+  line-height: $line-height-normal;
+  color: var(--color-texto);
+}
+
+// ============================================
+// ACCIONES Y PRUEBAS
+// ============================================
+
+.configuracion__info {
+  font-size: $texto-s;
+  color: var(--color-subtitulo);
+}
+
+.configuracion__acciones {
+  display: flex;
+  gap: $space-2;
+}
+
+.configuracion__alerta {
+  font-size: $texto-s;
+  font-weight: $font-weight-semibold;
+  color: var(--color-warning);
+}

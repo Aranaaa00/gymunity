@@ -1,4 +1,8 @@
-<article class="card" [class]="variant()">
+<article 
+  class="card" 
+  [class]="variant()"
+  [class.card--clickable]="!!id()"
+  (click)="navegarAGimnasio()">
   @if (imageSrc()) {
     <app-card-image
       [src]="imageSrc()"

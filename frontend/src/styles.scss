@@ -10,7 +10,7 @@
 
 .tooltip {
   position: absolute;
-  z-index: 6;
+  z-index: 4;
   max-width: 18rem;
   padding: $space-1 $space-2;
   background: var(--color-header);
@@ -78,7 +78,7 @@
   .tooltip {
     background: $oscuro-fondo-secundario;
     border: $borde-thin solid $oscuro-borde;
-    box-shadow: $oscuro-shadow-lg;
+    box-shadow: $oscuro-shadow-boton;
   }
 
   .tooltip--arriba::after {

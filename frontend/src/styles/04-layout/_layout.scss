@@ -11,50 +11,47 @@ app-main {
 }
 
 // --------------------------------------------
+// VARIABLES LOCALES
+// --------------------------------------------
+
+$grid-item-min: 17.5rem;
+$grid-item-max: 22.5rem;
+$transform-hover: -0.125rem;
+
+// --------------------------------------------
 // SISTEMA DE GRID
 // --------------------------------------------
 
 .gym-grid {
-  // Layout
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax($grid-item-min, 1fr));
   gap: $space-6;
-  // Box Model
   width: 100%;
 }
 
 .gym-grid__row {
-  // Layout
   display: flex;
   flex-wrap: wrap;
   gap: $space-6;
-  // Box Model
   width: 100%;
 }
 
 .gym-grid__item {
-  // Layout
-  flex: 1 1 280px;
-  // Box Model
-  min-width: 280px;
-  max-width: 360px;
-  // Background
+  flex: 1 1 $grid-item-min;
+  min-width: $grid-item-min;
+  max-width: $grid-item-max;
   background: var(--color-fondo-secundario);
-  // Border
   border-radius: $radio-lg;
-  // Visual
   box-shadow: $shadow-sm;
   overflow: hidden;
-  // Transition
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY($transform-hover);
     box-shadow: $shadow-md;
   }
 }
 
 .gym-grid--section {
-  // Box Model
   margin-bottom: $space-8;
 }

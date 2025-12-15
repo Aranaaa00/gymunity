@@ -1,0 +1,41 @@
+<main class="pagina-desarrollo">
+  <section class="pagina-desarrollo__contenedor">
+    <header class="pagina-desarrollo__header">
+      <h1 class="pagina-desarrollo__titulo"><app-icono nombre="search" tamano="lg" /> Búsqueda de Gimnasios</h1>
+      @if (terminoBusqueda()) {
+        <p class="pagina-desarrollo__subtitulo">
+          Buscando: <strong>{{ terminoBusqueda() }}</strong>
+        </p>
+      } @else {
+        <p class="pagina-desarrollo__subtitulo">Descubre tu gimnasio ideal cerca de ti</p>
+      }
+    </header>
+
+    @if (cargando()) {
+      <article class="pagina-desarrollo__mensaje">
+        <app-icono nombre="loader" tamano="2xl" class="pagina-desarrollo__icono" />
+        <h2 class="pagina-desarrollo__mensaje-titulo">Buscando gimnasios...</h2>
+      </article>
+    } @else {
+      <article class="pagina-desarrollo__mensaje">
+        <app-icono nombre="construction" tamano="2xl" class="pagina-desarrollo__icono" />
+        <h2 class="pagina-desarrollo__mensaje-titulo">Funcionalidad en construcción</h2>
+        <p class="pagina-desarrollo__mensaje-texto">
+          Estamos trabajando en un potente sistema de búsqueda que te permitirá encontrar 
+          el gimnasio perfecto según tu ubicación, presupuesto y preferencias de entrenamiento.
+        </p>
+        <section class="pagina-desarrollo__caracteristicas">
+          <h3 class="pagina-desarrollo__caracteristicas-titulo"><app-icono nombre="sparkles" /> Próximamente disponible:</h3>
+          <ul class="pagina-desarrollo__lista">
+            <li class="pagina-desarrollo__lista-item"><app-icono nombre="map-pin" /> Búsqueda por ubicación con mapa interactivo</li>
+            <li class="pagina-desarrollo__lista-item"><app-icono nombre="dumbbell" /> Filtros por equipamiento y servicios</li>
+            <li class="pagina-desarrollo__lista-item"><app-icono nombre="star" /> Ordenar por valoraciones de usuarios</li>
+            <li class="pagina-desarrollo__lista-item"><app-icono nombre="wallet" /> Comparador de precios y tarifas</li>
+            <li class="pagina-desarrollo__lista-item"><app-icono nombre="clock" /> Horarios en tiempo real</li>
+          </ul>
+        </section>
+      </article>
+    }
+  </section>
+</main>
+

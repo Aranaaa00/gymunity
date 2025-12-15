@@ -1,0 +1,71 @@
+<main class="configuracion">
+  <section class="configuracion__contenedor">
+    <header class="configuracion__header">
+      <h1 class="configuracion__titulo"><app-icono nombre="settings" tamano="lg" /> Configuración</h1>
+      <p class="configuracion__subtitulo">Personaliza tu experiencia en Gymunity</p>
+    </header>
+
+    <article class="configuracion__contenido">
+      <section class="configuracion__seccion">
+        <h2 class="configuracion__seccion-titulo"><app-icono nombre="palette" /> Apariencia</h2>
+        <article class="configuracion__mensaje">
+          <app-icono nombre="construction" tamano="xl" class="configuracion__icono" />
+          <p class="configuracion__mensaje-texto">
+            Opciones de tema (claro/oscuro), idioma y personalización en desarrollo.
+          </p>
+        </article>
+      </section>
+
+      <section class="configuracion__seccion">
+        <h2 class="configuracion__seccion-titulo"><app-icono nombre="bell" /> Notificaciones</h2>
+        <article class="configuracion__mensaje">
+          <app-icono nombre="construction" tamano="xl" class="configuracion__icono" />
+          <p class="configuracion__mensaje-texto">
+            Configuración de notificaciones push, email y preferencias en desarrollo.
+          </p>
+        </article>
+      </section>
+
+      <section class="configuracion__seccion">
+        <h2 class="configuracion__seccion-titulo"><app-icono nombre="lock" /> Privacidad y seguridad</h2>
+        <article class="configuracion__mensaje">
+          <app-icono nombre="construction" tamano="xl" class="configuracion__icono" />
+          <p class="configuracion__mensaje-texto">
+            Gestión de privacidad, cambio de contraseña, autenticación de dos factores
+            y control de datos personales. Funcionalidad próximamente disponible.
+          </p>
+        </article>
+      </section>
+
+      <section class="configuracion__seccion">
+        <h2 class="configuracion__seccion-titulo"><app-icono nombre="message-circle" /> Prueba de guard CanDeactivate</h2>
+        <p class="configuracion__info">Haz clic en "Simular cambio" e intenta salir de la página:</p>
+        <section class="configuracion__acciones">
+          <app-boton 
+            variante="secondary" 
+            (click)="simularCambio()">
+            Simular cambio
+          </app-boton>
+          <app-boton 
+            variante="primary" 
+            (click)="guardar()"
+            [disabled]="!cambiosPendientes()">
+            Guardar
+          </app-boton>
+        </section>
+        @if (cambiosPendientes()) {
+          <p class="configuracion__alerta">⚠️ Tienes cambios sin guardar</p>
+        }
+      </section>
+
+      <section class="configuracion__seccion">
+        <h2 class="configuracion__seccion-titulo">🚪 Sesión</h2>
+        <app-boton 
+          variante="ghost" 
+          (click)="cerrarSesion()">
+          Cerrar sesión
+        </app-boton>
+      </section>
+    </article>
+  </section>
+</main>

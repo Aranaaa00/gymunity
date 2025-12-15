@@ -13,6 +13,7 @@ $header-nav-min-width: 12rem;
 $header-nav-translate-y: -0.5rem;
 $header-backdrop-opacity: 0.4;
 $header-buscador-max-width: 28rem;
+$header-acciones-min-width: 16rem;
 
 // ============================================
 // HEADER - COMPONENTE PRINCIPAL
@@ -23,14 +24,12 @@ $header-buscador-max-width: 28rem;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   padding: $space-2 0;
   background: var(--color-header);
   box-shadow: $shadow-sm;
-  transition: 
-    background-color $header-transition-duration ease, 
-    box-shadow $header-transition-duration ease;
+  transition: background-color $header-transition-duration ease, box-shadow $header-transition-duration ease;
 }
 
 // ============================================
@@ -39,7 +38,7 @@ $header-buscador-max-width: 28rem;
 
 .gym-header__container {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: $space-2;
   width: 100%;
@@ -91,18 +90,38 @@ $header-buscador-max-width: 28rem;
 // ============================================
 
 .gym-header__buscador {
+  justify-self: center;
   display: flex;
   align-items: center;
-  justify-self: center;
   width: 100%;
   max-width: $header-buscador-max-width;
 }
 
 // ============================================
-// TEMA
+// ACCIONES (tema + menu/nav + hamburguesa)
 // ============================================
 
+.gym-header__acciones {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-2;
+  min-width: $header-acciones-min-width;
+
+  @include respond-to(md) {
+    min-width: auto;
+  }
+}
+
 .gym-header__tema {
+  display: flex;
+}
+
+// ============================================
+// MENU USUARIO
+// ============================================
+
+.gym-header__menu-usuario {
   display: flex;
 }
 
@@ -114,13 +133,12 @@ $header-buscador-max-width: 28rem;
   position: fixed;
   top: $space-2;
   right: $space-2;
-  z-index: 2;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   gap: $space-2;
-  width: auto;
   min-width: $header-nav-min-width;
   padding: $space-3;
   background: var(--color-fondo);
@@ -130,9 +148,7 @@ $header-buscador-max-width: 28rem;
   opacity: 0;
   pointer-events: none;
   transform: translateY($header-nav-translate-y);
-  transition: 
-    opacity $header-menu-transition-duration ease, 
-    transform $header-menu-transition-duration ease;
+  transition: opacity $header-menu-transition-duration ease, transform $header-menu-transition-duration ease;
 
   &--abierto {
     opacity: 1;
@@ -142,11 +158,11 @@ $header-buscador-max-width: 28rem;
 
   @include respond-to(md) {
     position: static;
+    z-index: auto;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     gap: $space-2;
-    width: auto;
     min-width: 0;
     padding: 0;
     background: transparent;
@@ -179,11 +195,8 @@ $header-buscador-max-width: 28rem;
 
 .gym-header__backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
+  inset: 0;
+  z-index: 2;
   background: rgba(0, 0, 0, $header-backdrop-opacity);
   opacity: 0;
   cursor: pointer;

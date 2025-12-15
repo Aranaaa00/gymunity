@@ -19,14 +19,21 @@ $card-shadow-hover-horizontal-opacity: 0.2;
 
 .card {
   position: relative;
+  
   display: flex;
   flex-direction: column;
   gap: $space-1;
+  
   width: 100%;
+  
   font-family: $fuente-principal;
   color: var(--color-texto);
-  cursor: pointer;
+  
   transition: transform $card-transition-duration ease;
+}
+
+.card--clickable {
+  cursor: pointer;
 
   &:hover {
     transform: translateY($card-hover-translate-y);

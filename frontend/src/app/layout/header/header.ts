@@ -15,6 +15,8 @@ import { Boton } from '../../componentes/compartidos/boton/boton';
 import { Buscador } from '../../componentes/compartidos/buscador/buscador';
 import { BotonTema } from '../../componentes/compartidos/boton-tema/boton-tema';
 import { Icono } from '../../componentes/compartidos/icono/icono';
+import { MenuUsuario } from '../../componentes/compartidos/menu-usuario/menu-usuario';
+import { AuthService } from '../../servicios/auth';
 
 // ============================================
 // CONSTANTES
@@ -30,7 +32,7 @@ const OVERFLOW_NORMAL = '';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, Boton, Buscador, BotonTema, Icono],
+  imports: [RouterLink, Boton, Buscador, BotonTema, Icono, MenuUsuario],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -52,11 +54,13 @@ export class Header {
   // ----------------------------------------
   private readonly documento = inject(DOCUMENT);
   private readonly esBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly authService = inject(AuthService);
 
   // ----------------------------------------
   // Estado
   // ----------------------------------------
   readonly menuAbierto = signal<boolean>(false);
+  readonly usuarioAutenticado = this.authService.estaAutenticado;
 
   // ----------------------------------------
   // Host Listeners
@@ -106,6 +110,7 @@ export class Header {
 
   alBuscar(termino: string): void {
     console.log('Buscando:', termino);
+    this.cerrarMenu();
   }
 
   ejecutarYCerrar(accion: () => void): void {

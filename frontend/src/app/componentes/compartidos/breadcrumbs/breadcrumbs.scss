@@ -1,0 +1,70 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// BREADCRUMBS - NAVEGACIÓN
+// ============================================
+
+.breadcrumbs {
+  width: 100%;
+  padding: $space-2 $space-3;
+  
+  background: var(--color-fondo-secundario);
+  
+  border-bottom: $borde-thin solid var(--color-borde);
+}
+
+.breadcrumbs__lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-1;
+  
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0;
+  
+  list-style: none;
+}
+
+// ============================================
+// ITEMS
+// ============================================
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.breadcrumbs__enlace {
+  font-size: $texto-s;
+  text-decoration: none;
+  color: var(--color-boton);
+  
+  cursor: pointer;
+  
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--color-boton-hover);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-thin;
+    
+    border-radius: $radio-sm;
+  }
+}
+
+.breadcrumbs__separador {
+  font-size: $texto-s;
+  color: var(--color-subtitulo);
+}
+
+.breadcrumbs__actual {
+  font-size: $texto-s;
+  font-weight: $font-weight-semibold;
+  color: var(--color-texto);
+}

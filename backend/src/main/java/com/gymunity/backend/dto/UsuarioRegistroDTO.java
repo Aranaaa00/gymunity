@@ -29,7 +29,6 @@ public class UsuarioRegistroDTO {
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String contrasenia;
 
-    @NotBlank(message = "La ciudad es obligatoria")
     private String ciudad;
 
     @NotBlank(message = "El rol es obligatorio")

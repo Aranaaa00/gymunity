@@ -12,6 +12,7 @@ type NombreIcono =
   | 'x'
   | 'buscar'
   | 'user'
+  | 'user-circle'
   | 'bell'
   | 'heart'
   | 'calendar'
@@ -21,9 +22,27 @@ type NombreIcono =
   | 'luna'
   | 'email'
   | 'menu'
-  | 'plus';
+  | 'chevron-down'
+  | 'settings'
+  | 'log-out'
+  | 'plus'
+  | 'search'
+  | 'loader'
+  | 'construction'
+  | 'sparkles'
+  | 'dumbbell'
+  | 'star'
+  | 'wallet'
+  | 'clock'
+  | 'trophy'
+  | 'bar-chart'
+  | 'palette'
+  | 'lock'
+  | 'message-circle'
+  | 'check'
+  | 'x-circle';
 
-type TamanoIcono = 'sm' | 'md' | 'lg';
+type TamanoIcono = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 // ============================================
 // CONSTANTES
@@ -40,6 +59,7 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   x: 'X',
   buscar: 'Search',
   user: 'User',
+  'user-circle': 'UserCircle',
   bell: 'Bell',
   heart: 'Heart',
   calendar: 'Calendar',
@@ -49,13 +69,33 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   luna: 'Moon',
   email: 'Mail',
   menu: 'Menu',
+  'chevron-down': 'ChevronDown',
+  settings: 'Settings',
+  'log-out': 'LogOut',
   plus: 'Plus',
+  search: 'Search',
+  loader: 'Loader2',
+  construction: 'HardHat',
+  sparkles: 'Sparkles',
+  dumbbell: 'Dumbbell',
+  star: 'Star',
+  wallet: 'Wallet',
+  clock: 'Clock',
+  trophy: 'Trophy',
+  'bar-chart': 'BarChart3',
+  palette: 'Palette',
+  lock: 'Lock',
+  'message-circle': 'MessageCircle',
+  check: 'Check',
+  'x-circle': 'XCircle',
 } as const;
 
 const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {
   sm: 16,
   md: 20,
   lg: 24,
+  xl: 32,
+  '2xl': 40,
 } as const;
 
 // ============================================

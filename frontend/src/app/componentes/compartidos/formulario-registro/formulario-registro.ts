@@ -1,10 +1,12 @@
-import { Component, output, inject, OutputEmitterRef, signal, WritableSignal, computed, Signal } from '@angular/core';
+import { Component, output, inject, OutputEmitterRef, signal, WritableSignal, computed, Signal, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { Boton } from '../boton/boton';
 import { passwordFuerte, coincidenCampos, MENSAJES_VALIDACION } from '../../../servicios/validadores';
 import { ValidadoresAsincronos, MENSAJES_VALIDACION_ASINCRONA } from '../../../servicios/validadores-asincronos';
 import { calcularFuerzaPassword, ResultadoFuerza } from '../../../servicios/fuerza-password';
+import { AuthService } from '../../../servicios/auth';
 
 // ============================================
 // TIPOS
@@ -82,13 +84,13 @@ export class FormularioRegistro {
   // ----------------------------------------
   readonly validandoEmail: WritableSignal<boolean> = signal(false);
   readonly validandoUsername: WritableSignal<boolean> = signal(false);
+  private readonly _passwordValue: WritableSignal<string> = signal('');
 
   // ----------------------------------------
   // Computed
   // ----------------------------------------
   readonly fuerzaPassword: Signal<ResultadoFuerza> = computed(() => {
-    const password = this.passwordControl?.value ?? '';
-    return calcularFuerzaPassword(password);
+    return calcularFuerzaPassword(this._passwordValue());
   });
 
   // ----------------------------------------
@@ -96,6 +98,14 @@ export class FormularioRegistro {
   // ----------------------------------------
   private readonly formBuilder = inject(FormBuilder);
   private readonly validadoresAsincronos = inject(ValidadoresAsincronos);
+  private readonly authService = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  // ----------------------------------------
+  // Estado
+  // ----------------------------------------
+  readonly cargando = signal<boolean>(false);
+  readonly errorServidor = signal<string | null>(null);
 
   // ----------------------------------------
   // Formulario
@@ -147,13 +157,18 @@ export class FormularioRegistro {
   private configurarObservablesValidacion(): void {
     const emailControl = this.registroForm.get('email');
     const usernameControl = this.registroForm.get('username');
+    const passwordControl = this.registroForm.get('password');
 
-    emailControl?.statusChanges.subscribe((status) => {
+    emailControl?.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((status) => {
       this.validandoEmail.set(status === 'PENDING');
     });
 
-    usernameControl?.statusChanges.subscribe((status) => {
+    usernameControl?.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((status) => {
       this.validandoUsername.set(status === 'PENDING');
+    });
+
+    passwordControl?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: string) => {
+      this._passwordValue.set(value ?? '');
     });
   }
 
@@ -215,12 +230,34 @@ export class FormularioRegistro {
 
   onSubmit(): void {
     this.registroForm.markAllAsTouched();
+    this.errorServidor.set(null);
     
     const esInvalido = this.registroForm.invalid;
     
     if (esInvalido) return;
 
+    this.cargando.set(true);
     const { username, fullName, email, password } = this.registroForm.value;
-    this.enviar.emit({ username, fullName, email, password });
+    
+    this.authService.registrar({
+      nombreUsuario: username,
+      email,
+      contrasenia: password,
+      ciudad: '',
+    }).subscribe({
+      next: (exito) => {
+        this.cargando.set(false);
+        if (exito) {
+          this.cerrar.emit();
+          this.enviar.emit({ username, fullName, email, password });
+        } else {
+          this.errorServidor.set(this.authService.error() || 'Error al registrar');
+        }
+      },
+      error: () => {
+        this.cargando.set(false);
+        this.errorServidor.set('Error de conexión con el servidor');
+      },
+    });
   }
 }

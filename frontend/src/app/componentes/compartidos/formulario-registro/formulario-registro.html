@@ -59,19 +59,19 @@
     </app-campo-formulario>
 
     @if (passwordControl?.value) {
-      <div class="formulario-registro__fuerza">
-        <div class="formulario-registro__fuerza-barra">
-          <div 
+      <section class="formulario-registro__fuerza">
+        <figure class="formulario-registro__fuerza-barra">
+          <span 
             class="formulario-registro__fuerza-progreso"
             [class.formulario-registro__fuerza-progreso--debil]="fuerzaPassword().nivel === 'debil'"
             [class.formulario-registro__fuerza-progreso--media]="fuerzaPassword().nivel === 'media'"
             [class.formulario-registro__fuerza-progreso--fuerte]="fuerzaPassword().nivel === 'fuerte'"
             [class.formulario-registro__fuerza-progreso--muy-fuerte]="fuerzaPassword().nivel === 'muy-fuerte'"
             [style.width.%]="fuerzaPassword().porcentaje">
-          </div>
-        </div>
+          </span>
+        </figure>
         <small class="formulario-registro__fuerza-mensaje">{{ fuerzaPassword().mensaje }}</small>
-      </div>
+      </section>
     }
     
     <app-campo-formulario
@@ -86,15 +86,19 @@
       [errorMessage]="getErrorMessage('password2')">
     </app-campo-formulario>
     
-    <div class="formulario-auth__submit">
-      <app-boton tipo="submit" [disabled]="registroForm.invalid && registroForm.touched">
+    <section class="formulario-auth__submit">
+      <app-boton tipo="submit" [disabled]="registroForm.invalid && registroForm.touched" [cargando]="cargando()">
         Crear cuenta
       </app-boton>
-    </div>
+    </section>
+
+    @if (errorServidor()) {
+      <p class="formulario-auth__error-servidor">{{ errorServidor() }}</p>
+    }
+
+    <p class="formulario-auth__alt">
+      ¿Ya tienes cuenta? 
+      <button type="button" class="formulario-auth__link" (click)="irLogin.emit()">Iniciar sesión</button>
+    </p>
   </fieldset>
-  
-  <p class="formulario-auth__alt">
-    ¿Ya tienes cuenta? 
-    <button type="button" class="formulario-auth__link" (click)="irLogin.emit()">Iniciar sesión</button>
-  </p>
 </form>

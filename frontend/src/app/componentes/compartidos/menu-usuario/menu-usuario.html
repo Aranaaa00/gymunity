@@ -1,0 +1,53 @@
+<button
+  #botonToggle
+  class="menu-usuario__boton"
+  type="button"
+  (click)="toggleMenu()"
+  [attr.aria-expanded]="desplegableAbierto()"
+  aria-haspopup="true"
+  aria-label="Menú de usuario">
+  <app-icono nombre="user-circle" />
+  <span class="menu-usuario__nombre">{{ usuario()?.nombreUsuario || 'Usuario' }}</span>
+  <app-icono 
+    nombre="chevron-down" 
+    [class.menu-usuario__icono--rotado]="desplegableAbierto()"
+    tamano="sm"
+  />
+</button>
+
+@if (desplegableAbierto()) {
+  <nav
+    #menuDropdown
+    class="menu-usuario__desplegable"
+    role="menu"
+    aria-label="Opciones de usuario">
+    <button
+      class="menu-usuario__opcion"
+      type="button"
+      role="menuitem"
+      (click)="navegarAPerfil()">
+      <app-icono nombre="user" />
+      <span>Perfil</span>
+    </button>
+
+    <button
+      class="menu-usuario__opcion"
+      type="button"
+      role="menuitem"
+      (click)="navegarAConfiguracion()">
+      <app-icono nombre="settings" />
+      <span>Configuración</span>
+    </button>
+
+    <hr class="menu-usuario__separador" />
+
+    <button
+      class="menu-usuario__opcion"
+      type="button"
+      role="menuitem"
+      (click)="cerrarSesion()">
+      <app-icono nombre="log-out" />
+      <span>Cerrar sesión</span>
+    </button>
+  </nav>
+}

@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // VARIABLES SCSS - Gymunity
 // ============================================
 
@@ -20,43 +20,9 @@ $color-buscador-hover: #E8F5F1;
 $color-buscador-focus: #F5FAF8;
 $color-buscador-borde: #34C6A0;
 
-// --------------------------------------------
-// COLORES MODO OSCURO
-// --------------------------------------------
-
-// Fondos oscuros con toque verde azulado
-$oscuro-fondo: #0F1C1C;
-$oscuro-fondo-secundario: #1A2D2D;
-$oscuro-header: #081414;
-
-// Textos claros para buen contraste
-$oscuro-texto: #F0FAF7;
-$oscuro-subtitulo: #8EC5B5;
-
-// Bordes sutiles
-$oscuro-borde: #2D4A4A;
-
-// Acentos vibrantes y luminosos
-$oscuro-boton: #00E5A0;
-$oscuro-boton-hover: #00CC8E;
-
-// Semánticos adaptados
-$oscuro-exito: #00E676;
-$oscuro-error: #FF6B6B;
-$oscuro-warning: #FFB74D;
-$oscuro-info: #40C4FF;
-
-// --------------------------------------------
-// COLORES SECUNDARIOS
-// --------------------------------------------
-
 $color-botones: #34C6A0;
 $color-botones-hover: #2AAE8E;
 $color-botones-active: #0C5649;
-
-// Sombras de botones
-$shadow-boton: 0 4px 12px 0 rgba(52, 198, 160, 0.4);
-$shadow-boton-hover: 0 6px 16px 0 rgba(42, 174, 142, 0.5);
 
 // --------------------------------------------
 // COLORES SEMÁNTICOS
@@ -87,7 +53,38 @@ $gris-900: #111827;
 // --------------------------------------------
 
 $color-text: $gris-800;
+$color-text-claro: #F7FAFC;
+$color-text-header: #F0FAF7;
 $color-subtitulo: #4A5568;
+
+// Color para hover suave en menús
+$color-hover-suave: #E8F8F5;
+
+// --------------------------------------------
+// COLORES MODO OSCURO
+// --------------------------------------------
+
+// Fondos
+$oscuro-fondo: #0F1C1C;
+$oscuro-fondo-secundario: #1A2D2D;
+$oscuro-header: #081414;
+
+// Textos
+$oscuro-texto: #F0FAF7;
+$oscuro-subtitulo: #8EC5B5;
+
+// Bordes
+$oscuro-borde: #2D4A4A;
+
+// Acentos
+$oscuro-boton: #00E5A0;
+$oscuro-boton-hover: #00CC8E;
+
+// Semánticos
+$oscuro-exito: #00E676;
+$oscuro-error: #FF6B6B;
+$oscuro-warning: #FFB74D;
+$oscuro-info: #40C4FF;
 
 // --------------------------------------------
 // TIPOGRAFÍA
@@ -117,6 +114,7 @@ $font-weight-regular: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
+$font-weight-black: 900;
 
 // Alturas de línea
 $line-height-tight: 1.1;
@@ -129,6 +127,7 @@ $line-height-relaxed: 1.75;
 
 $space-1: 0.5rem;
 $space-2: 1rem;
+$space-2-5: 1.25rem;
 $space-3: 1.5rem;
 $space-4: 2rem;
 $space-5: 2.5rem;
@@ -141,31 +140,22 @@ $space-11: 5.5rem;
 $space-12: 6rem;
 
 // --------------------------------------------
-// BREAKPOINTS
-// --------------------------------------------
-
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-
-// --------------------------------------------
 // SOMBRAS
 // --------------------------------------------
 
+// Sombras generales
 $shadow-sm: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
 $shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.16);
 $shadow-lg: 0 4px 16px 0 rgba(0, 0, 0, 0.24);
-$shadow-xl: 0 8px 32px 0 rgba(0, 0, 0, 0.32);
 $shadow-buscador: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+
+// Sombras de botones
 $shadow-boton: 0 4px 12px 0 rgba(52, 198, 160, 0.4);
 $shadow-boton-hover: 0 6px 16px 0 rgba(42, 174, 142, 0.5);
 
-// Sombras con glow para modo oscuro
-$oscuro-shadow-sm: 0 1px 4px 0 rgba(0, 229, 160, 0.1);
-$oscuro-shadow-md: 0 2px 8px 0 rgba(0, 229, 160, 0.15);
-$oscuro-shadow-lg: 0 4px 16px 0 rgba(0, 229, 160, 0.2);
+// Sombras modo oscuro
 $oscuro-shadow-boton: 0 4px 20px 0 rgba(0, 229, 160, 0.35);
+$oscuro-shadow-lg: 0 4px 16px 0 rgba(0, 229, 160, 0.2);
 
 // --------------------------------------------
 // BORDES Y RADIOS
@@ -180,3 +170,12 @@ $radio-md: 4px;
 $radio-lg: 8px;
 $radio-xl: 16px;
 $radio-full: 9999px;
+
+// --------------------------------------------
+// BREAKPOINTS
+// --------------------------------------------
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;

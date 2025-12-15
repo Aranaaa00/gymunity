@@ -1,4 +1,5 @@
-import { Component, input, output, signal, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, output, signal, inject, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Icono } from '../icono/icono';
 
@@ -31,6 +32,11 @@ export class Buscador {
   readonly buscar: OutputEmitterRef<string> = output<string>();
 
   // ----------------------------------------
+  // Dependencias
+  // ----------------------------------------
+  private readonly router = inject(Router);
+
+  // ----------------------------------------
   // Estado
   // ----------------------------------------
   readonly valor = signal<string>('');
@@ -40,12 +46,29 @@ export class Buscador {
   // ----------------------------------------
   onBuscar(): void {
     const terminoBusqueda = this.valor();
-
+    
     this.buscar.emit(terminoBusqueda);
+    this.navegarABusqueda(terminoBusqueda);
   }
 
   onValorCambia(nuevoValor: string): void {
     this.valor.set(nuevoValor);
   }
+
+  // ----------------------------------------
+  // Métodos privados
+  // ----------------------------------------
+  private navegarABusqueda(termino: string): void {
+    const noHayTermino = !termino.trim();
+    
+    if (noHayTermino) {
+      return;
+    }
+    
+    this.router.navigate(['/busqueda'], {
+      queryParams: { q: termino }
+    });
+  }
 }
+
 

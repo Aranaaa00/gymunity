@@ -1,4 +1,5 @@
 import { Component, input, computed } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
 // TIPOS
@@ -23,6 +24,7 @@ const TAMANO_DEFAULT: TamanoBoton = 'md';
 @Component({
   selector: 'app-boton',
   standalone: true,
+  imports: [LucideAngularModule],
   templateUrl: './boton.html',
   styleUrl: './boton.scss',
 })
@@ -34,6 +36,7 @@ export class Boton {
   readonly variante = input<VarianteBoton>(VARIANTE_DEFAULT);
   readonly tamano = input<TamanoBoton>(TAMANO_DEFAULT);
   readonly disabled = input<boolean>(false);
+  readonly cargando = input<boolean>(false);
 
   // ----------------------------------------
   // Propiedades computadas

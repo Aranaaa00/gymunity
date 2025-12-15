@@ -1,0 +1,55 @@
+<main class="perfil">
+  <section class="perfil__contenedor">
+    <header class="perfil__header">
+      <h1 class="perfil__titulo"><app-icono nombre="user-circle" tamano="lg" /> Mi Perfil</h1>
+      @if (usuario()) {
+        <p class="perfil__bienvenida">Bienvenido, <strong>{{ usuario()!.nombreUsuario }}</strong></p>
+      }
+    </header>
+
+    <article class="perfil__info">
+      <section class="perfil__seccion">
+        <h2 class="perfil__seccion-titulo">Información personal</h2>
+        @if (usuario()) {
+          <dl class="perfil__datos">
+            <dt class="perfil__dato-label">Usuario:</dt>
+            <dd class="perfil__dato-valor">{{ usuario()!.nombreUsuario }}</dd>
+            
+            <dt class="perfil__dato-label">Email:</dt>
+            <dd class="perfil__dato-valor">{{ usuario()!.email }}</dd>
+            
+            <dt class="perfil__dato-label">Rol:</dt>
+            <dd class="perfil__dato-valor">{{ usuario()!.rol }}</dd>
+
+            @if (usuario()!.ciudad) {
+              <dt class="perfil__dato-label">Ciudad:</dt>
+              <dd class="perfil__dato-valor">{{ usuario()!.ciudad }}</dd>
+            }
+          </dl>
+        }
+      </section>
+
+      <section class="perfil__seccion">
+        <h2 class="perfil__seccion-titulo"><app-icono nombre="trophy" /> Logros</h2>
+        <article class="perfil__mensaje">
+          <app-icono nombre="construction" tamano="xl" class="perfil__icono" />
+          <p class="perfil__mensaje-texto">
+            Sistema de logros en desarrollo. Pronto verás tus medallas por asistencia, 
+            objetivos cumplidos y hitos de entrenamiento.
+          </p>
+        </article>
+      </section>
+
+      <section class="perfil__seccion">
+        <h2 class="perfil__seccion-titulo"><app-icono nombre="bar-chart" /> Estadísticas</h2>
+        <article class="perfil__mensaje">
+          <app-icono nombre="construction" tamano="xl" class="perfil__icono" />
+          <p class="perfil__mensaje-texto">
+            Seguimiento de tu progreso: asistencias mensuales, calorías quemadas, 
+            tiempo total de entrenamiento. Funcionalidad próximamente disponible.
+          </p>
+        </article>
+      </section>
+    </article>
+  </section>
+</main>

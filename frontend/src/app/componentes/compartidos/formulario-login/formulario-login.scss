@@ -4,9 +4,9 @@
 // VARIABLES LOCALES
 // ============================================
 
-$formulario-max-width: 22rem;
-$formulario-logo-height: 5rem;
-$formulario-submit-max-width: 12rem;
+$formulario-max-width: 24rem;
+$formulario-logo-height: 3rem;
+$formulario-submit-max-width: 100%;
 $formulario-link-transition-duration: 0.15s;
 
 // ============================================
@@ -34,7 +34,7 @@ $formulario-link-transition-duration: 0.15s;
 .formulario-auth__header {
   display: flex;
   justify-content: center;
-  margin-bottom: $space-4;
+  margin-bottom: $space-2;
 }
 
 .formulario-auth__logo {
@@ -48,7 +48,7 @@ $formulario-link-transition-duration: 0.15s;
 .formulario-auth__fieldset {
   display: flex;
   flex-direction: column;
-  gap: $space-3;
+  gap: $space-1;
   margin: 0;
   padding: 0;
   border: none;
@@ -56,11 +56,23 @@ $formulario-link-transition-duration: 0.15s;
 
 .formulario-auth__legend {
   margin-bottom: $space-2;
-  font-size: $texto-xl;
-  font-weight: $font-weight-bold;
-  line-height: $line-height-tight;
+  font: $font-weight-bold #{$texto-2xl}/#{$line-height-tight} $fuente-principal;
   text-align: center;
   color: var(--color-texto);
+}
+
+// ============================================
+// ERROR DEL SERVIDOR
+// ============================================
+
+.formulario-auth__error-servidor {
+  margin: 0 0 $space-2;
+  padding: $space-2;
+  border-radius: $radio-md;
+  background-color: var(--color-error-fondo);
+  color: var(--color-error);
+  font-size: $texto-s;
+  text-align: center;
 }
 
 // ============================================
@@ -74,7 +86,6 @@ $formulario-link-transition-duration: 0.15s;
   
   app-boton {
     width: 100%;
-    max-width: $formulario-submit-max-width;
   }
 }
 
@@ -91,12 +102,15 @@ $formulario-link-transition-duration: 0.15s;
 
 .formulario-auth__link {
   padding: 0;
+  
   background: none;
   border: none;
-  font-size: inherit;
-  font-weight: $font-weight-semibold;
+  border-radius: $radio-sm;
+  
+  font: inherit $font-weight-semibold;
   text-decoration: none;
   color: var(--color-boton);
+  
   cursor: pointer;
   transition: color $formulario-link-transition-duration ease;
 
@@ -108,6 +122,5 @@ $formulario-link-transition-duration: 0.15s;
   &:focus-visible {
     outline: $borde-medium solid var(--color-boton);
     outline-offset: $borde-thin;
-    border-radius: $radio-sm;
   }
 }

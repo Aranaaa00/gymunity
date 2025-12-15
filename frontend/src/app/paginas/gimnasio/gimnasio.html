@@ -1,0 +1,67 @@
+@if (cargando()) {
+  <main class="gimnasio gimnasio--cargando">
+    <section class="gimnasio__carga">
+      <app-icono nombre="loader" tamano="2xl" class="gimnasio__spinner" />
+      <p class="gimnasio__carga-texto">Cargando información del gimnasio...</p>
+    </section>
+  </main>
+} @else if (gimnasio()) {
+  <main class="gimnasio">
+    <article class="gimnasio__contenedor">
+      <header class="gimnasio__header">
+        @if (gimnasio()!.foto) {
+          <img [src]="gimnasio()!.foto" [alt]="gimnasio()!.nombre" class="gimnasio__imagen" />
+        }
+        <h1 class="gimnasio__titulo">{{ gimnasio()!.nombre }}</h1>
+        <p class="gimnasio__valoracion"><app-icono nombre="star" /> {{ formatearValoracion() }}</p>
+      </header>
+
+      <section class="gimnasio__info">
+        <h2 class="gimnasio__seccion-titulo">Descripción</h2>
+        <p class="gimnasio__descripcion">{{ gimnasio()!.descripcion }}</p>
+      </section>
+
+      <section class="gimnasio__info">
+        <h2 class="gimnasio__seccion-titulo"><app-icono nombre="map-pin" /> Ubicación</h2>
+        <p class="gimnasio__direccion">{{ gimnasio()!.ciudad }}</p>
+      </section>
+
+      @if (gimnasio()!.clases.length > 0) {
+        <section class="gimnasio__info">
+          <h2 class="gimnasio__seccion-titulo"><app-icono nombre="dumbbell" /> Clases disponibles</h2>
+          <ul class="gimnasio__servicios">
+            @for (clase of gimnasio()!.clases; track clase.id) {
+              <li class="gimnasio__servicio">{{ clase.icono }} {{ clase.nombre }} - {{ clase.profesorNombre }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (gimnasio()!.resenias.length > 0) {
+        <section class="gimnasio__info">
+          <h2 class="gimnasio__seccion-titulo"><app-icono nombre="message-circle" /> Reseñas ({{ gimnasio()!.totalResenias }})</h2>
+          <ul class="gimnasio__resenias">
+            @for (resenia of gimnasio()!.resenias; track resenia.id) {
+              <li class="gimnasio__resenia">
+                <strong>{{ resenia.usuarioNombre }}</strong>
+                <p>{{ resenia.texto }}</p>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      <p class="gimnasio__apuntados">
+        <app-icono nombre="users" /> {{ gimnasio()!.totalApuntados }} personas apuntadas
+      </p>
+    </article>
+  </main>
+} @else {
+  <main class="gimnasio">
+    <section class="gimnasio__error">
+      <app-icono nombre="x-circle" tamano="2xl" class="gimnasio__error-icono" />
+      <h1 class="gimnasio__error-titulo">Gimnasio no encontrado</h1>
+      <p class="gimnasio__error-texto">El gimnasio que buscas no existe o ha sido eliminado.</p>
+    </section>
+  </main>
+}

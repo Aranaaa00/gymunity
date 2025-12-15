@@ -5,30 +5,36 @@
     </a>
     
     <search class="gym-header__buscador">
-      <app-buscador placeholder="Buscar..." (buscar)="alBuscar($event)"></app-buscador>
+      <app-buscador placeholder="Buscar..." (buscar)="alBuscar($event)" />
     </search>
 
-    <app-boton-tema class="gym-header__tema" aria-label="Cambiar tema"></app-boton-tema>
+    <section class="gym-header__acciones">
+      <app-boton-tema class="gym-header__tema" aria-label="Cambiar tema" />
 
-    <nav 
-      #menuNav
-      class="gym-header__nav" 
-      [class.gym-header__nav--abierto]="menuAbierto()"
-      role="navigation"
-      [attr.aria-hidden]="!menuAbierto()">
-      <app-boton variante="ghost" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
-      <app-boton variante="primary" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
-    </nav>
+      @if (usuarioAutenticado()) {
+        <app-menu-usuario class="gym-header__menu-usuario" />
+      } @else {
+        <nav 
+          #menuNav
+          class="gym-header__nav" 
+          [class.gym-header__nav--abierto]="menuAbierto()"
+          role="navigation"
+          [attr.aria-hidden]="!menuAbierto()">
+          <app-boton variante="ghost" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
+          <app-boton variante="primary" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
+        </nav>
+      }
 
-    <button 
-      #botonHamburguesa
-      type="button"
-      (click)="alternarMenu()"
-      class="gym-header__hamburguesa"
-      [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
-      [attr.aria-expanded]="menuAbierto()">
-      <app-icono [nombre]="menuAbierto() ? 'x' : 'menu'"></app-icono>
-    </button>
+      <button 
+        #botonHamburguesa
+        type="button"
+        (click)="alternarMenu()"
+        class="gym-header__hamburguesa"
+        [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
+        [attr.aria-expanded]="menuAbierto()">
+        <app-icono [nombre]="menuAbierto() ? 'x' : 'menu'" />
+      </button>
+    </section>
   </section>
   
   <aside 

@@ -5,17 +5,21 @@
 <form class="formulario-auth" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <fieldset class="formulario-auth__fieldset">
     <legend class="formulario-auth__legend">Iniciar sesión</legend>
+
+    @if (errorServidor()) {
+      <p class="formulario-auth__error-servidor">{{ errorServidor() }}</p>
+    }
     
     <app-campo-formulario
-      label="Usuario o email"
-      type="text"
-      placeholder="tu_usuario o tu@email.com"
-      inputId="login-identifier"
-      name="identifier"
-      [formControl]="$any(identifierControl)"
+      label="Email"
+      type="email"
+      placeholder="tu@email.com"
+      inputId="login-email"
+      name="email"
+      [formControl]="$any(emailControl)"
       [required]="true"
-      [hasError]="!!identifierControl?.touched && !!identifierControl?.invalid"
-      [errorMessage]="getErrorMessage('identifier')">
+      [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
+      [errorMessage]="getErrorMessage('email')">
     </app-campo-formulario>
     
     <app-campo-formulario
@@ -30,15 +34,15 @@
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
     
-    <div class="formulario-auth__submit">
-      <app-boton tipo="submit" [disabled]="loginForm.invalid && loginForm.touched">
+    <section class="formulario-auth__submit">
+      <app-boton tipo="submit" [disabled]="loginForm.invalid && loginForm.touched" [cargando]="cargando()">
         Iniciar sesión
       </app-boton>
-    </div>
+    </section>
+
+    <p class="formulario-auth__alt">
+      ¿No tienes cuenta? 
+      <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Crear cuenta</button>
+    </p>
   </fieldset>
-  
-  <p class="formulario-auth__alt">
-    ¿No tienes cuenta? 
-    <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Crear cuenta</button>
-  </p>
 </form>

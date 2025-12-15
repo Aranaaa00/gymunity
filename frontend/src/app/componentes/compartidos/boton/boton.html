@@ -1,8 +1,14 @@
 <button
   class="boton"
   [class]="clases()"
-  [class.boton--disabled]="disabled()"
+  [class.boton--disabled]="disabled() || cargando()"
+  [class.boton--cargando]="cargando()"
   [type]="tipo()"
-  [disabled]="disabled()">
-  <ng-content></ng-content>
+  [disabled]="disabled() || cargando()">
+  @if (cargando()) {
+    <lucide-icon name="Loader2" class="boton__spinner" [size]="16"></lucide-icon>
+  }
+  <span [class.boton__contenido--oculto]="cargando()">
+    <ng-content></ng-content>
+  </span>
 </button>

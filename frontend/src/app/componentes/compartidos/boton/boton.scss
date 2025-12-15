@@ -22,28 +22,30 @@ $boton-danger-darken-active: -15%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: $space-1;
-  padding: $space-1 $space-2;
+  gap: $space-2;
+  padding: $space-2 $space-4;
   background: var(--color-boton);
   border: $borde-thin solid var(--color-boton);
   border-radius: $radio-lg;
   font-family: inherit;
   font-size: $texto-s;
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   white-space: nowrap;
-  color: $gris-50;
+  color: var(--color-texto-claro);
   cursor: pointer;
   transition: 
     background $boton-transition-duration ease, 
     border-color $boton-transition-duration ease, 
     color $boton-transition-duration ease, 
     opacity $boton-transition-duration ease, 
-    transform $boton-transition-duration ease;
+    transform $boton-transition-duration ease,
+    box-shadow $boton-transition-duration ease;
 
   &:hover:not(:disabled) {
     background: var(--color-boton-hover);
     border-color: var(--color-boton-hover);
+    box-shadow: var(--shadow-glow);
   }
 
   &:active:not(:disabled) {
@@ -67,7 +69,7 @@ $boton-danger-darken-active: -15%;
   &--primary {
     background: var(--color-boton);
     border-color: var(--color-boton);
-    color: $gris-50;
+    color: var(--color-texto-claro);
   }
 
   &--secondary {
@@ -130,5 +132,32 @@ $boton-danger-darken-active: -15%;
   &--lg {
     padding: $space-2 $space-3;
     font-size: $texto-m;
+  }
+
+  // Estado de carga
+  &--cargando {
+    position: relative;
+    pointer-events: none;
+  }
+}
+
+// ============================================
+// SPINNER
+// ============================================
+
+.boton__spinner {
+  animation: spin 1s linear infinite;
+}
+
+.boton__contenido--oculto {
+  visibility: hidden;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

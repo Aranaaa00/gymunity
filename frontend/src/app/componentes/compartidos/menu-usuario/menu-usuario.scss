@@ -1,0 +1,135 @@
+@use '../../../../styles/00-settings/variables' as *;
+
+// ============================================
+// CONSTANTES
+// ============================================
+
+$transition: 0.2s ease;
+
+// ============================================
+// HOST
+// ============================================
+
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+// ============================================
+// BOTÓN
+// ============================================
+
+.menu-usuario__boton {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  background: transparent;
+  border: none;
+  border-radius: $radio-lg;
+  font: $font-weight-medium #{$texto-sm}/#{$line-height-normal} $fuente-principal;
+  color: $gris-50;
+  cursor: pointer;
+  transition: background $transition;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid $color-botones;
+    outline-offset: $borde-medium;
+  }
+
+  app-icono {
+    flex-shrink: 0;
+    color: inherit;
+
+    &:last-child {
+      opacity: 0.8;
+      transition: transform $transition;
+    }
+  }
+}
+
+.menu-usuario__icono--rotado {
+  transform: rotate(180deg);
+}
+
+// ============================================
+// DESPLEGABLE
+// ============================================
+
+.menu-usuario__desplegable {
+  position: absolute;
+  top: calc(100% + $space-1);
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 11rem;
+  padding: $space-2;
+  background: var(--color-dropdown-bg);
+  border-radius: $radio-lg;
+  box-shadow: $shadow-lg;
+  animation: aparecer $transition forwards;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-$space-1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// OPCIONES
+// ============================================
+
+.menu-usuario__opcion {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-2;
+  background: transparent;
+  border: none;
+  border-radius: $radio-md;
+  font: $font-weight-medium #{$texto-sm}/#{$line-height-normal} $fuente-principal;
+  text-align: left;
+  color: var(--color-texto);
+  cursor: pointer;
+  transition: background $transition;
+
+  &:hover {
+    background: var(--color-opcion-hover);
+  }
+
+  &:focus-visible {
+    background: var(--color-opcion-hover);
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: -$borde-medium;
+  }
+
+  app-icono {
+    flex-shrink: 0;
+    color: var(--color-opcion-icon);
+  }
+}
+
+// ============================================
+// SEPARADOR
+// ============================================
+
+.menu-usuario__separador {
+  height: $borde-thin;
+  margin: $space-1 0;
+  background: var(--color-dropdown-separator);
+  border: none;
+}

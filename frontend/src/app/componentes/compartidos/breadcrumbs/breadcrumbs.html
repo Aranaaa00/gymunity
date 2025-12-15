@@ -1,0 +1,19 @@
+@if (mostrarBreadcrumbs()) {
+  <nav class="breadcrumbs" aria-label="Navegación por migas de pan">
+    <ol class="breadcrumbs__lista">
+      <li class="breadcrumbs__item">
+        <a class="breadcrumbs__enlace" routerLink="/">🏠 Inicio</a>
+      </li>
+      @for (breadcrumb of breadcrumbs(); track breadcrumb.url) {
+        <li class="breadcrumbs__item">
+          <span class="breadcrumbs__separador" aria-hidden="true">/</span>
+          @if ($last) {
+            <span class="breadcrumbs__actual" aria-current="page">{{ breadcrumb.label }}</span>
+          } @else {
+            <a class="breadcrumbs__enlace" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+          }
+        </li>
+      }
+    </ol>
+  </nav>
+}
