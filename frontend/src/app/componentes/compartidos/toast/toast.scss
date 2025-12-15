@@ -3,8 +3,6 @@
 // ============================================
 // VARIABLES LOCALES
 // ============================================
-
-$toast-z-index: 4;
 $toast-min-width: 18rem;
 $toast-max-width: 24rem;
 $toast-border-left-width: 4px;
@@ -23,7 +21,7 @@ $toast-progress-duration: 3s;
   position: fixed;
   right: $space-3;
   bottom: $space-3;
-  z-index: $toast-z-index;
+  z-index: $z-overlay;
   display: flex;
   align-items: center;
   gap: $space-2;

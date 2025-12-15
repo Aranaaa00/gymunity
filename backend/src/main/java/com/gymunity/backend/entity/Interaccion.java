@@ -45,6 +45,9 @@ public class Interaccion {
     @Column(length = 1000)
     private String resenia;
 
+    @Column
+    private Integer valoracion;
+
     @Column(nullable = false)
     private LocalDate fechaInteraccion;
 

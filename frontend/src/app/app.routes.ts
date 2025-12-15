@@ -70,15 +70,6 @@ export const routes: Routes = [
   },
 
   // ----------------------------------------
-  // Pruebas (desarrollo)
-  // ----------------------------------------
-  {
-    path: 'pruebas',
-    loadComponent: () => import('./paginas/pruebas/pruebas').then((m) => m.Pruebas),
-    data: { breadcrumb: 'Pruebas' },
-  },
-
-  // ----------------------------------------
   // 404 - Wildcard (DEBE IR AL FINAL)
   // ----------------------------------------
   {

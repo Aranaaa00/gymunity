@@ -1,343 +1,589 @@
 <main class="guia-estilo">
   <header class="guia-estilo__header">
-    <h1 class="guia-estilo__titulo">Guía de Estilo - Gymunity</h1>
-    <p class="guia-estilo__descripcion">
-      Catálogo completo de componentes, variantes, tamaños y estados
-    </p>
+    <h1>Guía de Estilo - Gymunity</h1>
+    <p>Sistema de diseño y componentes reutilizables</p>
   </header>
 
-  <!-- SECCIÓN: BOTONES -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Botones</h2>
+  <!-- Navegación por tabs -->
+  <nav class="guia-estilo__tabs">
+    @for (pestana of pestanas; track $index) {
+      <button
+        class="guia-estilo__tab"
+        [class.guia-estilo__tab--activo]="tabActivo() === $index"
+        (click)="cambiarTab($index)"
+      >
+        {{ pestana }}
+      </button>
+    }
+  </nav>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Variantes</h3>
-      <ul class="ejemplos ejemplos--horizontal">
-        <li><app-boton variante="primary">Primary</app-boton></li>
-        <li><app-boton variante="secondary">Secondary</app-boton></li>
-        <li><app-boton variante="ghost">Ghost</app-boton></li>
-        <li><app-boton variante="danger">Danger</app-boton></li>
-      </ul>
-    </article>
+  <section class="guia-estilo__contenido">
+    <!-- TAB 0: BOTONES -->
+    @if (tabActivo() === 0) {
+      <article class="guia-estilo__seccion">
+        <h2>Botones</h2>
+        <p class="guia-estilo__descripcion">
+          Componente principal de interacción. Soporta múltiples variantes, tamaños y estados.
+        </p>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Tamaños</h3>
-      <ul class="ejemplos ejemplos--horizontal">
-        <li><app-boton tamanio="sm">Small</app-boton></li>
-        <li><app-boton tamanio="md">Medium</app-boton></li>
-        <li><app-boton tamanio="lg">Large</app-boton></li>
-      </ul>
-    </article>
+        <!-- Variantes -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Variantes</legend>
+          <ul class="guia-estilo__fila">
+            <li class="guia-estilo__item">
+              <app-boton variante="primary">Primary</app-boton>
+              <code>variante="primary"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="secondary">Secondary</app-boton>
+              <code>variante="secondary"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="ghost">Ghost</app-boton>
+              <code>variante="ghost"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="danger">Danger</app-boton>
+              <code>variante="danger"</code>
+            </li>
+          </ul>
+        </fieldset>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Estados</h3>
-      <ul class="ejemplos ejemplos--horizontal">
-        <li><app-boton>Normal</app-boton></li>
-        <li><app-boton [disabled]="true">Disabled</app-boton></li>
-      </ul>
-    </article>
-  </section>
+        <!-- Tamaños -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Tamaños</legend>
+          <ul class="guia-estilo__fila guia-estilo__fila--alineado">
+            <li class="guia-estilo__item">
+              <app-boton tamano="sm">Small</app-boton>
+              <code>tamano="sm"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton tamano="md">Medium</app-boton>
+              <code>tamano="md"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton tamano="lg">Large</app-boton>
+              <code>tamano="lg"</code>
+            </li>
+          </ul>
+        </fieldset>
 
-  <!-- SECCIÓN: CARDS -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Cards</h2>
+        <!-- Estados -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Estados</legend>
+          <ul class="guia-estilo__fila">
+            <li class="guia-estilo__item">
+              <app-boton>Normal</app-boton>
+              <code>Normal</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton [disabled]="true">Deshabilitado</app-boton>
+              <code>[disabled]="true"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton [cargando]="true">Cargando</app-boton>
+              <code>[cargando]="true"</code>
+            </li>
+          </ul>
+        </fieldset>
+      </article>
+    }
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Card básica (sin imagen)</h3>
-      <ul class="ejemplos ejemplos--grid">
-        <li><app-card title="Gimnasio FitZone" subtitle="Musculación y Fitness" rating="4.5"></app-card></li>
-        <li><app-card title="Dojo Shaolin" subtitle="Artes Marciales" rating="4.9"></app-card></li>
-        <li><app-card title="Studio Pilates Plus" subtitle="Pilates y Yoga" rating="4.7"></app-card></li>
-      </ul>
-    </article>
+    <!-- TAB 1: CARDS -->
+    @if (tabActivo() === 1) {
+      <article class="guia-estilo__seccion">
+        <h2>Cards</h2>
+        <p class="guia-estilo__descripcion">
+          Tarjetas para mostrar información de gimnasios y contenido destacado.
+        </p>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Card vertical (imagen arriba)</h3>
-      <ul class="ejemplos ejemplos--grid">
-        <li>
-          <app-card
-            variant="vertical"
-            title="CrossFit Central"
-            subtitle="CrossFit"
-            rating="4.9"
-            imageSrc="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop"
-            imageAlt="CrossFit Central">
-          </app-card>
-        </li>
-        <li>
-          <app-card
-            variant="vertical"
-            title="Yoga Studio"
-            subtitle="Yoga"
-            rating="4.7"
-            imageSrc="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop"
-            imageAlt="Yoga Studio">
-          </app-card>
-        </li>
-        <li>
-          <app-card
-            variant="vertical"
-            title="Boxing Club"
-            subtitle="Boxeo"
-            rating="4.8"
-            imageSrc="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&h=300&fit=crop"
-            imageAlt="Boxing Club">
-          </app-card>
-        </li>
-      </ul>
-    </article>
+        <!-- Card Vertical -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Card Vertical (Por defecto)</legend>
+          <ul class="guia-estilo__grid-cards">
+            <li>
+              <app-card
+                [id]="1"
+                title="Fitness Plus"
+                subtitle="Madrid Centro"
+                rating="4.5"
+                imageSrc="/assets/img/placeholder-gym.png"
+                imageAlt="Gimnasio Fitness Plus"
+                actionText="Ver más"
+              ></app-card>
+            </li>
+            <li>
+              <app-card
+                [id]="2"
+                title="CrossFit Zone"
+                subtitle="Barcelona"
+                rating="4.8"
+                imageSrc="/assets/img/placeholder-gym.png"
+                imageAlt="Gimnasio CrossFit Zone"
+                actionText="Ver más"
+              ></app-card>
+            </li>
+          </ul>
+          <code>variant="vertical" (por defecto)</code>
+        </fieldset>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Card horizontal (imagen a la izquierda)</h3>
-      <ul class="ejemplos ejemplos--grid-cards">
-        <li>
-          <app-card
-            variant="horizontal"
-            title="Smart Fit"
-            subtitle="MMA, Boxeo"
-            rating="3.9 ⭐"
-            imageSrc="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&h=300&fit=crop"
-            imageAlt="Smart Fit">
-          </app-card>
-        </li>
-        <li>
-          <app-card
-            variant="horizontal"
-            title="Karate Dojo Tradicional"
-            subtitle="Karate, Judo"
-            rating="4.9 ⭐"
-            imageSrc="https://images.unsplash.com/photo-1555597408-26bc8e548a46?w=400&h=300&fit=crop"
-            imageAlt="Karate Dojo">
-          </app-card>
-        </li>
-      </ul>
-    </article>
-  </section>
+        <!-- Card Horizontal -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Card Horizontal</legend>
+          <figure class="guia-estilo__columna">
+            <app-card
+              [id]="3"
+              title="Power Gym"
+              subtitle="Valencia"
+              rating="4.2"
+              imageSrc="/assets/img/placeholder-gym.png"
+              imageAlt="Gimnasio Power Gym"
+              actionText="Ver más"
+              variant="horizontal"
+            ></app-card>
+            <figcaption><code>variant="horizontal"</code></figcaption>
+          </figure>
+        </fieldset>
 
-  <!-- SECCIÓN: FORMULARIOS -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Formularios</h2>
+        <!-- Card Image -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Card Image (Solo imagen)</legend>
+          <ul class="guia-estilo__grid-cards">
+            <li>
+              <app-card-image
+                src="/assets/img/placeholder-gym.png"
+                alt="Elite Training"
+                size="md"
+              ></app-card-image>
+            </li>
+            <li>
+              <app-card-image
+                src="/assets/img/placeholder-gym.png"
+                alt="Urban Fit"
+                size="lg"
+              ></app-card-image>
+            </li>
+          </ul>
+          <code>&lt;app-card-image&gt;</code>
+        </fieldset>
+      </article>
+    }
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Campo de texto</h3>
-      <ul class="ejemplos ejemplos--columna">
-        <li><app-campo-formulario label="Nombre" placeholder="Tu nombre" type="text"></app-campo-formulario></li>
-        <li>
-          <app-campo-formulario
-            label="Email"
-            placeholder="tu@email.com"
-            type="email"
-            [required]="true">
-          </app-campo-formulario>
-        </li>
-        <li>
-          <app-campo-formulario
-            label="Contraseña"
-            placeholder="••••••••"
-            type="password"
-            [required]="true">
-          </app-campo-formulario>
-        </li>
-      </ul>
-    </article>
+    <!-- TAB 2: FORMULARIOS -->
+    @if (tabActivo() === 2) {
+      <article class="guia-estilo__seccion">
+        <h2>Formularios</h2>
+        <p class="guia-estilo__descripcion">
+          Componentes de entrada de datos con validación integrada.
+        </p>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Área de texto</h3>
-      <ul class="ejemplos ejemplos--columna">
-        <li>
-          <app-area-texto
-            label="Descripción"
-            placeholder="Escribe una descripción..."
-            [rows]="4">
-          </app-area-texto>
-        </li>
-      </ul>
-    </article>
+        <!-- Campo Formulario -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Campo Formulario</legend>
+          <ul class="guia-estilo__grid-form">
+            <li>
+              <app-campo-formulario
+                label="Email"
+                type="email"
+                placeholder="usuario&#64;ejemplo.com"
+              ></app-campo-formulario>
+            </li>
+            <li>
+              <app-campo-formulario
+                label="Contraseña"
+                type="password"
+                placeholder="••••••••"
+              ></app-campo-formulario>
+            </li>
+            <li>
+              <app-campo-formulario
+                label="Teléfono"
+                type="tel"
+                placeholder="+34 600 000 000"
+              ></app-campo-formulario>
+            </li>
+          </ul>
+        </fieldset>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Selector</h3>
-      <ul class="ejemplos ejemplos--columna">
-        <li>
-          <app-selector
-            label="Disciplina"
-            [opciones]="opcionesSelector"
-            (cambio)="valorSeleccionado.set($event)">
-          </app-selector>
-        </li>
-      </ul>
-    </article>
+        <!-- Area Texto -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Área de Texto</legend>
+          <figure class="guia-estilo__columna">
+            <app-area-texto
+              label="Descripción"
+              placeholder="Escribe una descripción detallada..."
+              [rows]="4"
+            ></app-area-texto>
+            <figcaption><code>&lt;app-area-texto [rows]="4"&gt;</code></figcaption>
+          </figure>
+        </fieldset>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Buscador</h3>
-      <ul class="ejemplos ejemplos--columna">
-        <li><app-buscador placeholder="Buscar gimnasios..." /></li>
-      </ul>
-    </article>
-  </section>
+        <!-- Selector -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Selector</legend>
+          <ul class="guia-estilo__grid-form">
+            <li>
+              <app-selector
+                label="Disciplina"
+                placeholder="Selecciona disciplina"
+                [opciones]="opcionesSelector"
+              ></app-selector>
+            </li>
+          </ul>
+        </fieldset>
 
-  <!-- SECCIÓN: FEEDBACK -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Feedback</h2>
+        <!-- Buscador -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Buscador</legend>
+          <figure class="guia-estilo__columna">
+            <app-buscador placeholder="Buscar gimnasios, clases..."></app-buscador>
+            <figcaption><code>&lt;app-buscador&gt;</code></figcaption>
+          </figure>
+        </fieldset>
+      </article>
+    }
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Alertas</h3>
-      <ul class="ejemplos ejemplos--columna">
-        @if (mostrarAlertaInfo()) {
-          <li><app-alerta tipo="info" mensaje="Información importante para el usuario" (cerrar)="mostrarAlertaInfo.set(false)" /></li>
-        }
-        @if (mostrarAlertaSuccess()) {
-          <li><app-alerta tipo="success" mensaje="Operación completada exitosamente" (cerrar)="mostrarAlertaSuccess.set(false)" /></li>
-        }
-        @if (mostrarAlertaWarning()) {
-          <li><app-alerta tipo="warning" mensaje="Advertencia: revisa esta información" (cerrar)="mostrarAlertaWarning.set(false)" /></li>
-        }
-        @if (mostrarAlertaError()) {
-          <li><app-alerta tipo="error" mensaje="Error: algo salió mal" (cerrar)="mostrarAlertaError.set(false)" /></li>
-        }
-      </ul>
-    </article>
+    <!-- TAB 3: FEEDBACK -->
+    @if (tabActivo() === 3) {
+      <article class="guia-estilo__seccion">
+        <h2>Feedback</h2>
+        <p class="guia-estilo__descripcion">
+          Componentes para comunicar estados, errores y mensajes al usuario.
+        </p>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Notificaciones</h3>
-      <p class="subseccion__descripcion">Haz clic en el botón para ver una notificación de prueba</p>
-      <ul class="ejemplos ejemplos--columna">
-        <li>
-          <app-boton (click)="lanzarNotificacion()">Mostrar notificación</app-boton>
-        </li>
-      </ul>
-      @if (mostrarNotificacion()) {
-        <app-notificacion 
-          tipo="success" 
-          mensaje="¡Esta es una notificación de prueba!"
-          [visible]="mostrarNotificacion()"
-          (cerrar)="mostrarNotificacion.set(false)" />
-      }
-    </article>
-  </section>
+        <!-- Alertas -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Alertas</legend>
+          <ul class="guia-estilo__columna">
+            <li><app-alerta tipo="info" mensaje="Esta es una alerta informativa."></app-alerta></li>
+            <li><app-alerta tipo="success" mensaje="¡Operación completada con éxito!"></app-alerta></li>
+            <li><app-alerta tipo="warning" mensaje="Atención: revisa los datos introducidos."></app-alerta></li>
+            <li><app-alerta tipo="error" mensaje="Ha ocurrido un error. Inténtalo de nuevo."></app-alerta></li>
+          </ul>
+        </fieldset>
 
-  <!-- SECCIÓN: NAVEGACIÓN -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Navegación</h2>
+        <!-- Alertas descartables -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Alertas Descartables</legend>
+          <ul class="guia-estilo__columna">
+            @if (mostrarAlertaInfo()) {
+              <li>
+                <app-alerta
+                  tipo="info"
+                  mensaje="Puedes cerrar esta alerta."
+                  [cerrable]="true"
+                  (cerrar)="mostrarAlertaInfo.set(false)"
+                ></app-alerta>
+              </li>
+            }
+            @if (mostrarAlertaSuccess()) {
+              <li>
+                <app-alerta
+                  tipo="success"
+                  mensaje="Alerta de éxito descartable."
+                  [cerrable]="true"
+                  (cerrar)="mostrarAlertaSuccess.set(false)"
+                ></app-alerta>
+              </li>
+            }
+            <li>
+              <app-boton variante="secondary" (click)="resetearAlertas()">
+                Resetear alertas
+              </app-boton>
+            </li>
+          </ul>
+          <code>[descartable]="true" (cerrar)="handler()"</code>
+        </fieldset>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Botón de tema</h3>
-      <ul class="ejemplos ejemplos--horizontal">
-        <li><app-boton-tema></app-boton-tema></li>
-      </ul>
-    </article>
-  </section>
+        <!-- Spinners -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Spinners</legend>
+          <ul class="guia-estilo__fila guia-estilo__fila--alineado">
+            <li class="guia-estilo__item">
+              <app-spinner tamano="sm"></app-spinner>
+              <code>tamano="sm"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-spinner tamano="md"></app-spinner>
+              <code>tamano="md"</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-spinner tamano="lg"></app-spinner>
+              <code>tamano="lg"</code>
+            </li>
+          </ul>
+        </fieldset>
 
-  <!-- SECCIÓN: COMPONENTES INTERACTIVOS -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Componentes Interactivos</h2>
+        <!-- Carga Global -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Carga Global</legend>
+          <p>Overlay de carga para toda la aplicación.</p>
+          <app-boton variante="secondary" (click)="simularCarga()">
+            Simular carga (2s)
+          </app-boton>
+          <code>&lt;app-carga-global&gt; (inyectado en root)</code>
+        </fieldset>
+      </article>
+    }
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Tabs</h3>
-      <app-tabs [pestanas]="['Descripción', 'Servicios', 'Contacto']">
-        @switch (0) {
-          @case (0) {
-            <p>Este gimnasio ofrece las mejores instalaciones de la ciudad.</p>
-          }
-        }
-      </app-tabs>
-    </article>
+    <!-- TAB 4: NAVEGACIÓN -->
+    @if (tabActivo() === 4) {
+      <article class="guia-estilo__seccion">
+        <h2>Navegación</h2>
+        <p class="guia-estilo__descripcion">
+          Componentes para orientación y navegación del usuario.
+        </p>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Tooltips</h3>
-      <ul class="ejemplos ejemplos--horizontal">
-        <li>
-          <app-tooltip texto="Tooltip arriba" posicion="arriba">
-            <app-boton>Arriba</app-boton>
-          </app-tooltip>
-        </li>
-        <li>
-          <app-tooltip texto="Tooltip abajo" posicion="abajo">
-            <app-boton>Abajo</app-boton>
-          </app-tooltip>
-        </li>
-        <li>
-          <app-tooltip texto="Tooltip izquierda" posicion="izquierda">
-            <app-boton>Izquierda</app-boton>
-          </app-tooltip>
-        </li>
-        <li>
-          <app-tooltip texto="Tooltip derecha" posicion="derecha">
-            <app-boton>Derecha</app-boton>
-          </app-tooltip>
-        </li>
-      </ul>
-    </article>
-  </section>
+        <!-- Breadcrumbs -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Breadcrumbs</legend>
+          <figure class="guia-estilo__columna">
+            <app-breadcrumbs></app-breadcrumbs>
+            <figcaption><code>&lt;app-breadcrumbs&gt; (autom\u00e1tico desde rutas)</code></figcaption>
+          </figure>
+        </fieldset>
 
-  <!-- SECCIÓN: TIPOGRAFÍA -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Tipografía</h2>
+        <!-- Botón Tema -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Botón de Tema</legend>
+          <ul class="guia-estilo__fila">
+            <li class="guia-estilo__item">
+              <app-boton-tema></app-boton-tema>
+              <code>&lt;app-boton-tema&gt;</code>
+            </li>
+          </ul>
+          <p>Alterna entre modo claro y oscuro. El estado persiste en localStorage.</p>
+        </fieldset>
+      </article>
+    }
 
-    <article class="subseccion">
-      <ul class="ejemplos ejemplos--columna">
-        <li><h1>Título H1</h1></li>
-        <li><h2>Título H2</h2></li>
-        <li><h3>Título H3</h3></li>
-        <li><h4>Título H4</h4></li>
-        <li>
-          <p>
-            Párrafo normal con texto de ejemplo. Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </li>
-        <li><p><strong>Texto en negrita</strong></p></li>
-        <li><p><em>Texto en cursiva</em></p></li>
-        <li><p><a href="#">Enlace</a></p></li>
-      </ul>
-    </article>
-  </section>
+    <!-- TAB 5: INTERACTIVOS -->
+    @if (tabActivo() === 5) {
+      <article class="guia-estilo__seccion">
+        <h2>Interactivos</h2>
+        <p class="guia-estilo__descripcion">
+          Componentes con interactividad avanzada.
+        </p>
 
-  <!-- SECCIÓN: COLORES -->
-  <section class="seccion">
-    <h2 class="seccion__titulo">Colores</h2>
+        <!-- Tabs -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Tabs</legend>
+          <app-tabs [pestanas]="['General', 'Horarios', 'Precios', 'Contacto']">
+            <p tab-content>Contenido de la pestaña seleccionada.</p>
+          </app-tabs>
+          <code>&lt;app-tabs [pestanas]="[...]"&gt;</code>
+        </fieldset>
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Modo claro</h3>
-      <ul class="colores">
-        <li class="color">
-          <figure class="color__muestra" style="background: #34C6A0"></figure>
-          <span class="color__nombre">Botones</span>
-        </li>
-        <li class="color">
-          <figure class="color__muestra" style="background: #EAF8F4"></figure>
-          <span class="color__nombre">Fondo</span>
-        </li>
-        <li class="color">
-          <figure class="color__muestra" style="background: #1F2937"></figure>
-          <span class="color__nombre">Texto</span>
-        </li>
-        <li class="color">
-          <figure class="color__muestra" style="background: #D1D5DB"></figure>
-          <span class="color__nombre">Borde</span>
-        </li>
-      </ul>
-    </article>
+        <!-- Acordeón -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Acordeón</legend>
+          <app-acordeon-item titulo="¿Cómo me registro?">
+            <p>Para registrarte, haz clic en el botón "Registrarse" en la esquina superior derecha.</p>
+          </app-acordeon-item>
+          <app-acordeon-item titulo="¿Puedo cambiar de gimnasio?">
+            <p>Sí, puedes cambiar de gimnasio en cualquier momento desde tu perfil.</p>
+          </app-acordeon-item>
+          <app-acordeon-item titulo="¿Cómo contacto con soporte?">
+            <p>Envía un email a soporte&#64;gymunity.com o usa el formulario de contacto.</p>
+          </app-acordeon-item>
+          <code>&lt;app-acordeon-item titulo="..."&gt;</code>
+        </fieldset>
+      </article>
+    }
 
-    <article class="subseccion">
-      <h3 class="subseccion__titulo">Modo oscuro</h3>
-      <ul class="colores">
-        <li class="color">
-          <figure class="color__muestra" style="background: #00E5A0"></figure>
-          <span class="color__nombre">Botones</span>
-        </li>
-        <li class="color">
-          <figure class="color__muestra" style="background: #0F1C1C"></figure>
-          <span class="color__nombre">Fondo</span>
-        </li>
-        <li class="color">
-          <figure class="color__muestra" style="background: #F0FAF7"></figure>
-          <span class="color__nombre">Texto</span>
-        </li>
-        <li class="color">
-          <figure class="color__muestra" style="background: #2D4A4A"></figure>
-          <span class="color__nombre">Borde</span>
-        </li>
-      </ul>
-    </article>
+    <!-- TAB 6: ICONOS -->
+    @if (tabActivo() === 6) {
+      <article class="guia-estilo__seccion">
+        <h2>Iconos</h2>
+        <p class="guia-estilo__descripcion">
+          Sistema de iconos basado en Lucide Icons con wrapper semántico.
+        </p>
+
+        <!-- Tamaños -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Tamaños</legend>
+          <ul class="guia-estilo__fila guia-estilo__fila--alineado">
+            <li class="guia-estilo__item">
+              <app-icono nombre="heart" tamano="sm"></app-icono>
+              <code>sm (16px)</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-icono nombre="heart" tamano="md"></app-icono>
+              <code>md (20px)</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-icono nombre="heart" tamano="lg"></app-icono>
+              <code>lg (24px)</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-icono nombre="heart" tamano="xl"></app-icono>
+              <code>xl (32px)</code>
+            </li>
+          </ul>
+        </fieldset>
+
+        <!-- Catálogo -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Catálogo de Iconos Disponibles</legend>
+          <ul class="guia-estilo__grid-iconos">
+            @for (icono of iconosDisponibles; track icono) {
+              <li class="guia-estilo__icono-item">
+                <app-icono [nombre]="icono" tamano="lg"></app-icono>
+                <span>{{ icono }}</span>
+              </li>
+            }
+          </ul>
+        </fieldset>
+      </article>
+    }
+
+    <!-- TAB 7: TIPOGRAFÍA -->
+    @if (tabActivo() === 7) {
+      <article class="guia-estilo__seccion">
+        <h2>Tipografía</h2>
+        <p class="guia-estilo__descripcion">
+          Sistema tipográfico basado en Roboto con escala modular.
+        </p>
+
+        <!-- Encabezados -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Encabezados</legend>
+          <figure class="guia-estilo__columna guia-estilo__tipografia">
+            <h1>Heading 1 - Título Principal</h1>
+            <h2>Heading 2 - Subtítulo de Sección</h2>
+            <h3>Heading 3 - Título de Bloque</h3>
+            <h4>Heading 4 - Título Menor</h4>
+          </figure>
+        </fieldset>
+
+        <!-- Texto -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Texto</legend>
+          <figure class="guia-estilo__columna guia-estilo__tipografia">
+            <p>Párrafo normal. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p><strong>Texto en negrita</strong> para énfasis fuerte.</p>
+            <p><em>Texto en cursiva</em> para énfasis sutil.</p>
+            <p><a href="#">Enlace de ejemplo</a> con estilos hover.</p>
+            <p><small>Texto pequeño para información secundaria.</small></p>
+          </figure>
+        </fieldset>
+
+        <!-- Variables CSS -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Variables SCSS</legend>
+          <figure class="guia-estilo__codigo">
+            <pre><code>$fuente-principal: 'Roboto', Arial, sans-serif;
+$texto-xs: 0.75rem;   // 12px
+$texto-sm: 0.875rem;  // 14px
+$texto-md: 1rem;      // 16px
+$texto-lg: 1.25rem;   // 20px
+$texto-xl: 2.5rem;    // 40px</code></pre>
+          </figure>
+        </fieldset>
+      </article>
+    }
+
+    <!-- TAB 8: COLORES -->
+    @if (tabActivo() === 8) {
+      <article class="guia-estilo__seccion">
+        <h2>Colores</h2>
+        <p class="guia-estilo__descripcion">
+          Paleta de colores con soporte para modo claro y oscuro.
+        </p>
+
+        <!-- Colores Primarios -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Colores Primarios</legend>
+          <ul class="guia-estilo__grid-colores">
+            <li class="guia-estilo__color" style="--color: var(--color-botones)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Primary</span>
+              <code>--color-botones</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-botones-hover)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Primary Hover</span>
+              <code>--color-botones-hover</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-header)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Header</span>
+              <code>--color-header</code>
+            </li>
+          </ul>
+        </fieldset>
+
+        <!-- Colores Semánticos -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Colores Semánticos</legend>
+          <ul class="guia-estilo__grid-colores">
+            <li class="guia-estilo__color" style="--color: var(--color-exito)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Success</span>
+              <code>--color-exito</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-advertencia)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Warning</span>
+              <code>--color-advertencia</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-peligro)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Error</span>
+              <code>--color-peligro</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-info)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Info</span>
+              <code>--color-info</code>
+            </li>
+          </ul>
+        </fieldset>
+
+        <!-- Fondos y Superficies -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Fondos y Superficies</legend>
+          <ul class="guia-estilo__grid-colores">
+            <li class="guia-estilo__color" style="--color: var(--color-fondo)">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--border"></span>
+              <span>Background</span>
+              <code>--color-fondo</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-superficie)">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--border"></span>
+              <span>Surface</span>
+              <code>--color-superficie</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-borde)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Border</span>
+              <code>--color-borde</code>
+            </li>
+          </ul>
+        </fieldset>
+
+        <!-- Texto -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Texto</legend>
+          <ul class="guia-estilo__grid-colores">
+            <li class="guia-estilo__color" style="--color: var(--color-texto)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Text</span>
+              <code>--color-texto</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-subtitulo)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Text Secondary</span>
+              <code>--color-subtitulo</code>
+            </li>
+            <li class="guia-estilo__color" style="--color: var(--color-placeholder)">
+              <span class="guia-estilo__color-muestra"></span>
+              <span>Text Muted</span>
+              <code>--color-placeholder</code>
+            </li>
+          </ul>
+        </fieldset>
+      </article>
+    }
   </section>
 </main>

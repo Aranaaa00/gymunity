@@ -182,6 +182,7 @@ public class GimnasioService {
                 .ciudad(gimnasio.getCiudad())
                 .foto(gimnasio.getFoto())
                 .disciplinas(obtenerDisciplinas(gimnasio))
+                .valoracionMedia(interaccionRepository.calcularValoracionMedia(gimnasio.getId()))
                 .totalResenias((int) interaccionRepository.countByGimnasioIdAndReseniaIsNotNull(gimnasio.getId()))
                 .build();
     }
@@ -213,6 +214,7 @@ public class GimnasioService {
                 .descripcion(gimnasio.getDescripcion())
                 .ciudad(gimnasio.getCiudad())
                 .foto(gimnasio.getFoto())
+                .valoracionMedia(interaccionRepository.calcularValoracionMedia(gimnasio.getId()))
                 .totalResenias((int) interaccionRepository.countByGimnasioIdAndReseniaIsNotNull(gimnasio.getId()))
                 .totalApuntados((int) interaccionRepository.countByGimnasioIdAndEsApuntadoTrue(gimnasio.getId()))
                 .clases(clases)

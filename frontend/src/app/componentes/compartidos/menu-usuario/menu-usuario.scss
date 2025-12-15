@@ -65,7 +65,7 @@ $transition: 0.2s ease;
   position: absolute;
   top: calc(100% + $space-1);
   right: 0;
-  z-index: 5;
+  z-index: $z-modal;
   display: flex;
   flex-direction: column;
   gap: $space-1;

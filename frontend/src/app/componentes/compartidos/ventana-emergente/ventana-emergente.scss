@@ -22,7 +22,7 @@ $modal-slide-scale: 0.98;
 .ventana-emergente {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: $z-sticky;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,7 @@ $modal-slide-scale: 0.98;
   position: absolute;
   top: $space-2;
   right: $space-2;
-  z-index: 1;
+  z-index: $z-base;
   display: flex;
   align-items: center;
   justify-content: center;

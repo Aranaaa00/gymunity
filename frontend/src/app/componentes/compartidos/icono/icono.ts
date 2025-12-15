@@ -5,7 +5,7 @@ import { LucideAngularModule } from 'lucide-angular';
 // TIPOS
 // ============================================
 
-type NombreIcono =
+export type NombreIcono =
   | 'instagram'
   | 'discord'
   | 'twitter'

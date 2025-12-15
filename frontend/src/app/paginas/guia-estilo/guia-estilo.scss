@@ -1,155 +1,124 @@
 @use '../../../styles/00-settings/variables' as *;
 
-// ============================================
-// PÁGINA GUÍA DE ESTILO
-// ============================================
+// Mixins locales para reducir repetición
+@mixin reset-list { padding: 0; margin: 0; list-style: none; }
+@mixin code-style { font-family: monospace; font-size: $texto-xs; color: var(--color-subtitulo); }
 
 .guia-estilo {
-  width: 100%;
-  max-width: 80rem;
+  max-width: 90rem;
   margin: 0 auto;
-  padding: $space-8 $space-4;
-}
+  padding: $space-6 $space-4;
 
-.guia-estilo__header {
-  margin-bottom: $space-8;
-  padding-bottom: $space-6;
-  
-  border-bottom: $borde-thin solid var(--color-borde);
-  text-align: center;
-}
-
-.guia-estilo__titulo {
-  margin-bottom: $space-2;
-  
-  font-size: $texto-3xl;
-  font-weight: $font-weight-bold;
-  color: var(--color-texto);
-}
-
-.guia-estilo__descripcion {
-  font-size: $texto-lg;
-  color: var(--color-subtitulo);
-}
-
-.seccion {
-  margin-bottom: $space-12;
-}
-
-.seccion__titulo {
-  margin-bottom: $space-6;
-  padding-bottom: $space-3;
-  
-  border-bottom: $borde-medium solid var(--color-botones);
-  
-  font-size: $texto-2xl;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-}
-
-.subseccion {
-  margin-bottom: $space-8;
-}
-
-.subseccion__titulo {
-  margin-bottom: $space-4;
-  
-  font-size: $texto-lg;
-  font-weight: $font-weight-medium;
-  color: var(--color-texto);
-}
-
-.subseccion__descripcion {
-  margin-bottom: $space-3;
-  
-  font-size: $texto-sm;
-  color: var(--color-subtitulo);
-}
-
-.ejemplos {
-  display: flex;
-  gap: $space-4;
-  
-  padding: 0;
-  
-  list-style: none;
-}
-
-.ejemplos--horizontal {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.ejemplos--columna {
-  flex-direction: column;
-  align-items: stretch;
-  max-width: 56rem;
-}
-
-.ejemplos--grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-4;
-
-  li {
-    min-width: 0;
+  &__header {
+    margin-bottom: $space-6;
+    text-align: center;
+    h1 { margin-bottom: $space-2; font-size: $texto-3xl; font-weight: $font-weight-bold; }
+    p { font-size: $texto-lg; color: var(--color-subtitulo); }
   }
-}
 
-.ejemplos--grid-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-4;
-
-  li {
-    min-width: 0;
+  &__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    margin-bottom: $space-6;
+    padding: $space-3;
+    background: var(--color-fondo-suave);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-lg;
   }
-}
 
-.ejemplo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-2;
-  
-  padding: $space-3;
-  
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  
-  font-size: $texto-sm;
-  color: var(--color-subtitulo);
-}
+  &__tab {
+    padding: $space-2 $space-4;
+    background: transparent;
+    border: none;
+    border-radius: $radio-md;
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-subtitulo);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    &:hover { background: var(--color-superficie); color: var(--color-texto); }
+    &--activo { background: var(--color-botones); color: white; }
+  }
 
-.colores {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-  gap: $space-4;
-  
-  padding: 0;
-  
-  list-style: none;
-}
+  &__contenido { min-height: 50vh; }
 
-.color {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-}
+  &__seccion {
+    h2 { margin-bottom: $space-2; font-size: $texto-2xl; font-weight: $font-weight-bold; }
+  }
 
-.color__muestra {
-  width: 100%;
-  height: 5rem;
-  margin: 0;
-  
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-}
+  &__descripcion { margin-bottom: $space-6; color: var(--color-subtitulo); }
 
-.color__nombre {
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  text-align: center;
-  color: var(--color-texto);
+  &__bloque {
+    margin-bottom: $space-6;
+    padding: $space-4;
+    background: var(--color-superficie);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-lg;
+    legend { padding: 0 $space-2; font-weight: $font-weight-semibold; }
+    > code { display: block; margin-top: $space-3; padding: $space-2; background: var(--color-fondo-suave); border-radius: $radio-sm; @include code-style; }
+    > p { margin-bottom: $space-2; font-size: $texto-sm; color: var(--color-subtitulo); }
+    figcaption { margin-top: $space-2; code { @include code-style; } }
+  }
+
+  &__fila { display: flex; flex-wrap: wrap; gap: $space-3; @include reset-list; &--alineado { align-items: flex-end; } }
+  &__columna { display: flex; flex-direction: column; gap: $space-3; @include reset-list; }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-3;
+    min-width: 7rem;
+    background: var(--color-fondo-suave);
+    border-radius: $radio-md;
+    code { @include code-style; }
+  }
+
+  &__grid-cards, &__grid-form, &__grid-iconos, &__grid-colores {
+    display: grid;
+    gap: $space-3;
+    @include reset-list;
+  }
+  &__grid-cards { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  &__grid-form { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+  &__grid-iconos { grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); }
+  &__grid-colores { grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
+
+  &__icono-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-1;
+    padding: $space-2;
+    background: var(--color-fondo-suave);
+    border-radius: $radio-md;
+    transition: background 0.2s;
+    span { font-size: $texto-xs; text-align: center; }
+    &:hover { background: var(--color-botones); color: white; }
+  }
+
+  &__color {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    span { font-size: $texto-sm; }
+    code { @include code-style; }
+  }
+
+  &__color-muestra {
+    display: block;
+    height: 3rem;
+    background: var(--color);
+    border-radius: $radio-md;
+    &--border { border: $borde-thin solid var(--color-borde); }
+  }
+
+  &__tipografia { h1, h2, h3, h4, p { margin: 0; } }
+
+  &__codigo {
+    pre { margin: 0; padding: $space-3; background: var(--color-fondo-suave); border-radius: $radio-md; overflow-x: auto; }
+    code { font-family: monospace; font-size: $texto-sm; line-height: 1.5; }
+  }
 }

@@ -74,4 +74,13 @@ public interface InteraccionRepository extends JpaRepository<Interaccion, Long> 
            "FROM Interaccion i " +
            "WHERE i.usuario.id = :usuarioId AND i.gimnasio.id = :gimnasioId AND i.esApuntado = true")
     boolean estaApuntado(@Param("usuarioId") Long usuarioId, @Param("gimnasioId") Long gimnasioId);
+
+    /**
+     * Calcula la valoración media de un gimnasio.
+     *
+     * @param gimnasioId ID del gimnasio.
+     * @return Valoración media o null si no hay valoraciones.
+     */
+    @Query("SELECT AVG(i.valoracion) FROM Interaccion i WHERE i.gimnasio.id = :gimnasioId AND i.valoracion IS NOT NULL")
+    Double calcularValoracionMedia(@Param("gimnasioId") Long gimnasioId);
 }

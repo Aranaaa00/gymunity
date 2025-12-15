@@ -10,7 +10,7 @@
 
 .tooltip {
   position: absolute;
-  z-index: 4;
+  z-index: $z-overlay;
   max-width: 18rem;
   padding: $space-1 $space-2;
   background: var(--color-header);
