@@ -65,16 +65,6 @@ export class Toast {
     return `toast--${notificacionActual.tipo}`;
   });
 
-  readonly mensaje = computed<string>(() => {
-    const notificacionActual = this.notificacion();
-    
-    if (!notificacionActual) {
-      return '';
-    }
-    
-    return notificacionActual.mensaje;
-  });
-
   readonly notificacionId = computed<number>(() => {
     const notificacionActual = this.notificacion();
     

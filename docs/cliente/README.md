@@ -117,6 +117,28 @@ MODELOS     = Interfaces TypeScript
 | `emailUnico` | 500ms |
 | `usernameUnico` | 500ms |
 
+```typescript
+// Ejemplo real: validadores-asincronos.ts
+emailUnico(): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    const email = control.value;
+    if (!email) return of(null);
+
+    return timer(500).pipe(
+      switchMap(() => this.verificarEmailEnBD(email)),
+      map((existe) => existe ? { emailNoDisponible: true } : null),
+      catchError(() => of(null))
+    );
+  };
+}
+
+// Uso en formulario
+this.fb.group({
+  email: ['', [Validators.required, Validators.email], 
+              [this.validadores.emailUnico()]]
+});
+```
+
 ## FormArray
 
 ```typescript
@@ -174,9 +196,20 @@ cambiosSinGuardarGuard → cambios ? confirm() : true
 
 ## Lazy Loading
 
+```typescript
+// app.routes.ts - Todas las rutas usan lazy loading
+{
+  path: 'gimnasio/:id',
+  loadComponent: () => import('./paginas/gimnasio/gimnasio')
+    .then((m) => m.GimnasioPage),
+  resolve: { gimnasio: gimnasioResolver },
+}
+
+// app.config.ts - Estrategia de precarga
+provideRouter(routes, withPreloading(PreloadAllModules))
 ```
-PreloadAllModules → Carga inicial rápida + precarga background
-```
+
+**Estrategia:** `PreloadAllModules` carga el módulo inicial rápidamente y luego precarga los demás en background mientras el usuario navega.
 
 ---
 
@@ -207,18 +240,45 @@ Request → [Logging] → [Headers] → [Error] → API
 ## Interfaces
 
 ```typescript
+// Usuario con roles
 interface Usuario {
   id: number;
   nombreUsuario: string;
   email: string;
   rol: 'ALUMNO' | 'PROFESOR' | 'ADMIN';
+  ciudad?: string;
 }
 
+// Card de gimnasio (listados)
 interface GimnasioCard {
   id: number;
   nombre: string;
   ciudad: string;
+  foto: string;  // URL de imagen
+  disciplinas: string;
   valoracionMedia: number | null;
+  totalResenias: number;
+}
+
+// Detalle completo de gimnasio
+interface GimnasioDetalle {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  ciudad: string;
+  foto: string;
+  clases: Clase[];
+  resenias: Resenia[];
+  valoracionMedia: number | null;
+  totalApuntados: number;
+}
+
+// Clase de un gimnasio
+interface Clase {
+  id: number;
+  nombre: string;
+  icono: string;
+  profesorNombre: string;
 }
 ```
 

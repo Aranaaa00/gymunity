@@ -12,7 +12,21 @@
 - [1.2 Metodología CSS](#12-metodología-css)
 - [1.3 Organización de archivos](#13-organización-de-archivos)
 - [1.4 Sistema de Design Tokens](#14-sistema-de-design-tokens)
-  - Variables y utilidades de diseño
+  - Paleta de colores
+  - Tipografía
+  - Espaciado
+  - Breakpoints
+  - Sombras
+  - Z-index
+  - Bordes y radios
+- [1.5 Mixins y funciones](#15-mixins-y-funciones)
+  - respond-to
+  - flex-center
+  - box-shadow
+- [1.6 ViewEncapsulation en Angular](#16-viewencapsulation-en-angular)
+  - Modos de encapsulación
+  - Uso del selector :host
+  - Buenas prácticas
 
 ### 2. HTML semántico y estructura
 - [2.1 Elementos semánticos utilizados](#21-elementos-semánticos-utilizados)
@@ -23,8 +37,9 @@
 - [3.1 Componentes implementados](#31-componentes-implementados)
   - Botón
   - Alerta
-  - Notificación
+  - Notificación / Toast
   - Card
+  - Card Image
   - Campo de formulario
   - Área de texto
   - Selector
@@ -33,15 +48,24 @@
   - Ventana emergente
   - Icono
   - Sección bienvenida
+  - Spinner
+  - Carga global
+  - Acordeón
+  - Tabs
+  - Breadcrumbs
+  - Menu usuario
+  - Formulario login
+  - Formulario registro
+  - Formulario perfil
+  - Tooltip
 - [3.2 Nomenclatura y metodología BEM](#32-nomenclatura-y-metodología-bem)
 - [3.3 Style Guide](#33-style-guide)
   - Botones
   - Alertas
-  - Notificaciones
   - Cards
   - Formularios
   - Buscador
-  - Tema
+  - Colores
 
 ---
 
@@ -116,113 +140,330 @@ styles/
 
 ## 1.4 Sistema de Design Tokens
 
-Las variables definen los valores clave del diseño y ayudan a mantener la coherencia visual. Aquí se agrupan y se explican las decisiones principales:
+Los Design Tokens son variables que definen los valores fundamentales del sistema de diseño. Permiten mantener la coherencia visual y facilitan cambios globales desde un único lugar.
 
-**Colores:**
-Se eligieron tonos verdes y azules para transmitir frescura y confianza, junto con grises neutros para equilibrio y legibilidad. Los colores semánticos (éxito, error, advertencia) facilitan la comunicación visual de estados.
+### Paleta de colores
 
-**Tipografía:**
-La fuente principal utilizada es 'Roboto', una tipografía moderna y legible que se adapta bien a interfaces web. Se acompaña de Arial y sans-serif como alternativas seguras en caso de que Roboto no esté disponible.
+**Colores principales de marca:**
+```scss
+$color-header: #042A2B;        // Header y fondos oscuros
+$color-hover-header: #063B3D;  // Hover del header
+$color-fondo: #EAF8F4;         // Fondo principal de la app
+```
 
-### Variables y utilidades de diseño
+**Colores de acción (botones):**
+```scss
+$color-botones: #34C6A0;        // Color principal de botones
+$color-botones-hover: #2AAE8E;  // Hover
+$color-botones-active: #0C5649; // Estado activo
+```
 
-**00-settings/_variables.scss**
-
-**Colores principales (modo claro):**
-- `$color-header`: #042A2B (fondo del header)
-- `$color-hover-header`: #063B3D (hover del header)
-- `$color-fondo`: #EAF8F4 (fondo general de la aplicación)
-- `$color-buscador-bg`: #FAFCFB (fondo del buscador)
-- `$color-buscador-hover`: #E8F5F1 (hover del buscador)
-- `$color-buscador-focus`: #F5FAF8 (focus del buscador)
-- `$color-buscador-borde`: #34C6A0 (borde del buscador)
-
-**Colores modo oscuro:**
-- `$oscuro-fondo`: #0F1C1C (fondo principal oscuro)
-- `$oscuro-fondo-secundario`: #1A2D2D (fondo secundario)
-- `$oscuro-header`: #081414 (header oscuro)
-- `$oscuro-texto`: #F0FAF7 (texto principal)
-- `$oscuro-subtitulo`: #8EC5B5 (texto secundario)
-- `$oscuro-borde`: #2D4A4A (bordes)
-- `$oscuro-boton`: #00E5A0 (botones vibrantes)
-- `$oscuro-boton-hover`: #00CC8E (hover de botones)
-- `$oscuro-exito`, `$oscuro-error`, `$oscuro-warning`, `$oscuro-info`: colores semánticos adaptados
-- `$oscuro-shadow-*`: sombras con efecto glow verde
-
-**Colores secundarios:**
-- `$color-botones`: #34C6A0 (color principal de botones)
-- `$color-botones-hover`: #2AAE8E (hover de botones)
-- `$color-botones-active`: #0C5649 (estado activo de botones)
-- `$shadow-boton`: sombra para botones
-- `$shadow-boton-hover`: sombra para botones en hover
+**Escala de grises:**
+```scss
+$gris-50:  #F9FAFB;  // Fondos muy claros
+$gris-100: #F3F4F6;  // Fondos claros
+$gris-200: #E5E7EB;  // Bordes suaves
+$gris-300: #D1D5DB;  // Bordes
+$gris-400: #9CA3AF;  // Texto deshabilitado
+$gris-500: #6B7280;  // Texto secundario
+$gris-600: #4B5563;  // Texto claro
+$gris-700: #374151;  // Texto medio
+$gris-800: #1F2937;  // Texto oscuro
+$gris-900: #111827;  // Texto muy oscuro
+```
 
 **Colores semánticos:**
-- `$color-exito`: #2ECC71 (éxito/confirmación)
-- `$color-error`: #E74C3C (error/peligro)
-- `$color-warning`: #FFA726 (advertencia)
-- `$color-info`: #1976D2 (información)
+```scss
+$color-exito:   #2ECC71;  // Éxito, confirmación
+$color-error:   #E74C3C;  // Error, peligro
+$color-warning: #FFA726;  // Advertencia
+$color-info:    #1976D2;  // Información
+```
 
-**Colores neutros (grises):**
-- `$gris-50` a `$gris-900`: escala de grises para fondos, textos y bordes
+**Modo oscuro:**
+```scss
+// Fondos oscuros
+$oscuro-fondo: #0F1C1C;
+$oscuro-fondo-secundario: #1A2D2D;
+$oscuro-header: #081414;
 
-**Colores para texto:**
-- `$color-text`: color principal del texto (usa `$gris-800`)
-- `$color-subtitulo`: #4A5568 (subtítulos y texto secundario)
+// Textos en modo oscuro
+$oscuro-texto: #F0FAF7;
+$oscuro-subtitulo: #8EC5B5;
 
-**Tipografía:**
-- `$fuente-principal`: 'Roboto', Arial, sans-serif
+// Acentos vibrantes para contraste
+$oscuro-boton: #00E5A0;
+$oscuro-boton-hover: #00CC8E;
 
-**Tamaños de texto:**
-- `$texto-xxs`: 0.5rem, `$texto-xs`: 0.75rem, `$texto-s`: 1rem
-- `$texto-m`: 1.5rem, `$texto-l`: 2rem, `$texto-xl`: 2.5rem
-- `$texto-2xl`: 3rem, `$texto-3xl`: 3.5rem, `$texto-4xl`: 4rem, `$texto-5xl`: 5rem
+// Semánticos ajustados para fondos oscuros
+$oscuro-exito: #00E676;
+$oscuro-error: #FF6B6B;
+$oscuro-warning: #FFB74D;
+$oscuro-info: #40C4FF;
+```
+
+### Tipografía
+
+**Familia tipográfica:**
+```scss
+$fuente-principal: 'Roboto', Arial, sans-serif;
+```
+
+**Escala tipográfica:**
+```scss
+$texto-xs:  0.75rem;   // 12px - textos muy pequeños
+$texto-sm:  0.875rem;  // 14px - textos secundarios
+$texto-s:   1rem;      // 16px - texto base
+$texto-md:  1rem;      // 16px - texto base (alias)
+$texto-lg:  1.25rem;   // 20px - texto destacado
+$texto-m:   1.5rem;    // 24px - subtítulos
+$texto-l:   2rem;      // 32px - títulos sección
+$texto-xl:  2.5rem;    // 40px - títulos grandes
+$texto-2xl: 3rem;      // 48px - headings principales
+```
 
 **Pesos tipográficos:**
-- `$font-weight-thin`: 100, `$font-weight-light`: 300, `$font-weight-regular`: 400
-- `$font-weight-medium`: 500, `$font-weight-bold`: 700
+```scss
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+```
 
 **Alturas de línea:**
-- `$line-height-tight`: 1.1, `$line-height-normal`: 1.5, `$line-height-relaxed`: 1.75
+```scss
+$line-height-tight: 1.1;    // Títulos compactos
+$line-height-normal: 1.5;   // Texto general
+$line-height-relaxed: 1.75; // Texto largo
+```
 
-**Espaciado (base 8px):**
-- `$space-1` a `$space-12`: desde 0.5rem hasta 6rem
+### Espaciado
 
-**Breakpoints:**
-- `$breakpoint-sm`: 640px, `$breakpoint-md`: 768px
-- `$breakpoint-lg`: 1024px, `$breakpoint-xl`: 1280px
+Sistema de espaciado basado en múltiplos de 8px (0.5rem):
 
-**Sombras:**
-- `$shadow-sm`, `$shadow-md`, `$shadow-lg`, `$shadow-xl`: sombras de diferentes intensidades
-- `$shadow-buscador`: sombra específica para el componente buscador
+```scss
+$space-1:  0.5rem;   // 8px
+$space-2:  1rem;     // 16px
+$space-3:  1.5rem;   // 24px
+$space-4:  2rem;     // 32px
+$space-5:  2.5rem;   // 40px
+$space-6:  3rem;     // 48px
+$space-8:  4rem;     // 64px
+$space-10: 5rem;     // 80px
+$space-12: 6rem;     // 96px
+```
 
-**Bordes:**
-- `$borde-thin`: 1px, `$borde-medium`: 2px, `$borde-thick`: 4px
+### Breakpoints
 
-**Radios de borde:**
-- `$radio-sm`: 2px, `$radio-md`: 4px, `$radio-lg`: 8px
-- `$radio-xl`: 16px, `$radio-full`: 9999px (círculo completo)
+Media queries mobile-first:
 
-**01-tools/_mixins.scss**
-- `respond-to($breakpoint)`: Mixin para media queries
-- `flex-center`: Mixin para centrar con flexbox
-- `box-shadow($shadow)`: Mixin para aplicar sombra
+```scss
+$breakpoint-sm: 640px;   // Móviles grandes
+$breakpoint-md: 768px;   // Tablets
+$breakpoint-lg: 1024px;  // Desktop
+$breakpoint-xl: 1280px;  // Desktop grande
+```
 
-**02-generic/_reset.scss**
-- Reset global de márgenes, paddings y box-sizing
-- Normalización de estilos base para `html`, `body`, imágenes, inputs, listas y enlaces
+### Sombras
 
-**03-elements/_elements.scss**
-- Estilos base para títulos (`h1`, `h2`, ...), párrafos, subtítulos, enlaces, listas, imágenes y botones
-- Uso de variables para colores, tipografía y espaciado
+```scss
+// Sombras generales
+$shadow-sm: 0 1px 4px 0 rgba(0, 0, 0, 0.08);   // Sutil
+$shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.16);   // Media
+$shadow-lg: 0 4px 16px 0 rgba(0, 0, 0, 0.24);  // Pronunciada
 
-**04-layout/_layout.scss**
-- Sistema de grid con clases BEM: `.gym-grid`, `.gym-grid__row`, `.gym-grid__item`, `.gym-grid--section`
-- Uso de variables para espaciado, color y radios
+// Sombras de botones (con color de marca)
+$shadow-boton: 0 4px 12px 0 rgba(52, 198, 160, 0.4);
+$shadow-boton-hover: 0 6px 16px 0 rgba(42, 174, 142, 0.5);
 
-**05-components/** y **06-utilities/**
-- Actualmente vacías, reservadas para componentes específicos y utilidades futuras
+// Sombras modo oscuro (glow verde)
+$oscuro-shadow-boton: 0 4px 20px 0 rgba(0, 229, 160, 0.35);
+```
 
-Cada archivo y variable está pensado para mantener la coherencia visual y facilitar el mantenimiento del proyecto.
+### Z-index
+
+Sistema de capas ordenado:
+
+```scss
+$z-base: 1;       // Nivel base
+$z-dropdown: 2;   // Menús desplegables
+$z-sticky: 3;     // Elementos sticky
+$z-overlay: 4;    // Overlays
+$z-modal: 5;      // Modales (máxima prioridad)
+```
+
+### Bordes y radios
+
+```scss
+// Grosores de borde
+$borde-thin: 1px;
+$borde-medium: 2px;
+$borde-thick: 4px;
+
+// Radios de esquina
+$radio-sm: 2px;     // Muy sutil
+$radio-md: 4px;     // Botones, inputs
+$radio-lg: 8px;     // Cards, contenedores
+$radio-xl: 16px;    // Modales
+$radio-full: 9999px; // Círculos, pills
+```
+
+---
+
+## 1.5 Mixins y funciones
+
+Los mixins permiten reutilizar bloques de CSS de manera eficiente. Están definidos en `01-tools/_mixins.scss`.
+
+### Mixins disponibles
+
+#### **respond-to** - Media query mobile-first
+
+Aplica estilos a partir de un breakpoint determinado. Usa la estrategia mobile-first (min-width).
+
+```scss
+// Uso
+.elemento {
+  padding: $space-2; // Mobile por defecto
+
+  @include respond-to(md) {
+    padding: $space-4; // Tablet y superior
+  }
+
+  @include respond-to(lg) {
+    padding: $space-6; // Desktop y superior
+  }
+}
+```
+
+**Breakpoints disponibles:**
+- `sm`: 640px
+- `md`: 768px
+- `lg`: 1024px
+- `xl`: 1280px
+
+---
+
+#### **flex-center** - Centrar con flexbox
+
+Centra un elemento tanto horizontal como verticalmente usando flexbox.
+
+```scss
+// Definición
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Uso
+.contenedor-centrado {
+  @include flex-center;
+  height: 100vh;
+}
+```
+
+---
+
+#### **box-shadow** - Aplicar sombra
+
+Aplica una sombra predefinida o personalizada.
+
+```scss
+// Definición
+@mixin box-shadow($shadow: $shadow-md) {
+  box-shadow: $shadow;
+}
+
+// Uso con valor por defecto
+.card {
+  @include box-shadow; // Usa $shadow-md
+}
+
+// Uso con sombra personalizada
+.boton {
+  @include box-shadow($shadow-boton);
+}
+```
+
+**Sombras disponibles en variables:**
+- `$shadow-sm`: Sombra sutil
+- `$shadow-md`: Sombra media (por defecto)
+- `$shadow-lg`: Sombra pronunciada
+- `$shadow-boton`: Sombra verde para botones primarios
+
+---
+
+## 1.6 ViewEncapsulation en Angular
+
+Angular por defecto aplica **View Encapsulation** a los componentes, lo que afecta cómo se aplican los estilos CSS.
+
+### Modos de encapsulación
+
+1. **Emulated (por defecto):** Angular simula Shadow DOM añadiendo atributos únicos a los elementos
+2. **ShadowDom:** Usa Shadow DOM nativo del navegador
+3. **None:** Sin encapsulación, estilos globales
+
+### Uso del selector :host
+
+Cuando un componente tiene una clase aplicada al elemento host (mediante `@HostBinding` o `[class]`), se debe usar `:host` para estilizar:
+
+```scss
+// ❌ INCORRECTO - No funciona con ViewEncapsulation
+.acordeon-item--expandido .acordeon__contenido {
+  grid-template-rows: 1fr;
+}
+
+// ✅ CORRECTO - Funciona con ViewEncapsulation
+:host.acordeon-item--expandido .acordeon__contenido {
+  grid-template-rows: 1fr;
+}
+```
+
+### Ejemplo práctico: Componente Acordeón
+
+**TypeScript:**
+```typescript
+@Component({
+  selector: 'app-acordeon-item',
+  templateUrl: './acordeon-item.html',
+  styleUrls: ['./acordeon-item.scss']
+})
+export class AcordeonItemComponent {
+  expandido = signal(false);
+
+  @HostBinding('class.acordeon-item--expandido')
+  get claseExpandido() {
+    return this.expandido();
+  }
+}
+```
+
+**SCSS:**
+```scss
+// El host es el elemento <app-acordeon-item>
+:host {
+  display: block;
+}
+
+// Cuando el host tiene la clase --expandido
+:host.acordeon-item--expandido {
+  .acordeon__icono {
+    transform: rotate(180deg);
+  }
+  
+  .acordeon__contenido {
+    grid-template-rows: 1fr;
+  }
+}
+```
+
+### Buenas prácticas
+
+1. **Usar `:host` para clases del elemento raíz**
+2. **Evitar `::ng-deep`** - está deprecado
+3. **Usar variables CSS** para valores dinámicos desde el padre
+4. **Preferir composición** sobre herencia de estilos
 
 ---
 
@@ -734,6 +975,335 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
   textoCta="Únete gratis"
   (clickCta)="abrirRegistro()">
 </app-seccion-bienvenida>
+```
+
+---
+
+#### **Spinner** (`app-spinner`)
+
+**Nombre del componente:** Spinner
+
+**Propósito:** Indicador de carga circular animado para operaciones asíncronas.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:**
+- `sm`: Pequeño (24px)
+- `md`: Mediano (40px, por defecto)
+- `lg`: Grande (64px)
+
+**Estados que maneja:**
+- Normal (animación continua)
+- Con porcentaje (muestra progreso)
+- Con overlay (fondo oscuro)
+
+**Ejemplo de uso:**
+```html
+<app-spinner tamano="md" texto="Cargando datos..."></app-spinner>
+
+<app-spinner 
+  tamano="lg" 
+  [porcentaje]="75" 
+  [overlay]="true">
+</app-spinner>
+```
+
+---
+
+#### **Carga global** (`app-carga-global`)
+
+**Nombre del componente:** Carga global
+
+**Propósito:** Overlay de pantalla completa para operaciones de carga que bloquean la UI.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único (pantalla completa)
+
+**Estados que maneja:**
+- Visible (cargando)
+- Oculto (no cargando)
+- Con mensaje personalizado
+- Con porcentaje de progreso
+
+**Ejemplo de uso:**
+```html
+<app-carga-global></app-carga-global>
+```
+
+---
+
+#### **Acordeón** (`app-acordeon-item`)
+
+**Nombre del componente:** Acordeón
+
+**Propósito:** Panel colapsable para mostrar/ocultar contenido, ideal para FAQs o secciones extensas.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único (ancho fluido)
+
+**Estados que maneja:**
+- Colapsado (cerrado)
+- Expandido (abierto)
+- Hover en cabecera
+- Focus (navegación por teclado)
+
+**Ejemplo de uso:**
+```html
+<app-acordeon-item 
+  titulo="¿Cómo me registro?" 
+  icono="help-circle"
+  [abierto]="false">
+  <p>Para registrarte, haz clic en el botón "Registrarse"...</p>
+</app-acordeon-item>
+```
+
+---
+
+#### **Tabs** (`app-tabs`)
+
+**Nombre del componente:** Tabs
+
+**Propósito:** Navegación entre paneles de contenido mediante pestañas.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único (ancho fluido)
+
+**Estados que maneja:**
+- Tab activo
+- Tab inactivo
+- Hover
+- Focus
+- Navegación por teclado (flechas, Home, End)
+
+**Ejemplo de uso:**
+```html
+<app-tabs 
+  [pestanas]="['Información', 'Horarios', 'Precios']"
+  (tabCambiado)="onTabChange($event)">
+</app-tabs>
+```
+
+---
+
+#### **Breadcrumbs** (`app-breadcrumbs`)
+
+**Nombre del componente:** Breadcrumbs
+
+**Propósito:** Navegación jerárquica que muestra la ubicación actual del usuario en la aplicación.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único
+
+**Estados que maneja:**
+- Visible (más de un nivel)
+- Oculto (página raíz)
+- Links clicables (niveles anteriores)
+- Texto sin link (nivel actual)
+
+**Ejemplo de uso:**
+```html
+<app-breadcrumbs></app-breadcrumbs>
+<!-- Renderiza automáticamente: Inicio > Gimnasios > Smart Fit -->
+```
+
+---
+
+#### **Menu usuario** (`app-menu-usuario`)
+
+**Nombre del componente:** Menú usuario
+
+**Propósito:** Dropdown con avatar del usuario y opciones de perfil/configuración/logout.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único
+
+**Estados que maneja:**
+- Cerrado
+- Abierto (dropdown visible)
+- Cierre al hacer clic fuera
+- Cierre con tecla Escape
+
+**Ejemplo de uso:**
+```html
+<app-menu-usuario></app-menu-usuario>
+```
+
+---
+
+#### **Toast** (`app-toast`)
+
+**Nombre del componente:** Toast
+
+**Propósito:** Notificaciones temporales no intrusivas en esquina de pantalla.
+
+**Variantes disponibles:**
+- `success`: Confirmación exitosa (verde)
+- `error`: Error (rojo)
+- `warning`: Advertencia (naranja)
+- `info`: Información (azul)
+
+**Tamaños disponibles:** Tamaño único fijo
+
+**Estados que maneja:**
+- Visible con temporizador automático
+- Animación de entrada/salida
+- Cerrable manualmente
+- Pausable al hacer hover
+
+**Ejemplo de uso:**
+```html
+<app-toast></app-toast>
+<!-- Se controla mediante NotificacionService -->
+```
+
+---
+
+#### **Card Image** (`app-card-image`)
+
+**Nombre del componente:** Card Image
+
+**Propósito:** Componente de imagen optimizado para cards con fallback y lazy loading.
+
+**Variantes disponibles:**
+- `vertical`: Para cards verticales
+- `horizontal`: Para cards horizontales
+
+**Tamaños disponibles:**
+- `sm`: Pequeño
+- `md`: Mediano (por defecto)
+- `lg`: Grande
+
+**Estados que maneja:**
+- Cargando
+- Cargada
+- Error (muestra placeholder)
+
+**Ejemplo de uso:**
+```html
+<app-card-image 
+  src="assets/gimnasio.jpg" 
+  alt="Gimnasio Smart Fit"
+  size="md"
+  variant="vertical">
+</app-card-image>
+```
+
+---
+
+#### **Formulario login** (`app-formulario-login`)
+
+**Nombre del componente:** Formulario login
+
+**Propósito:** Formulario de inicio de sesión con validación.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único
+
+**Estados que maneja:**
+- Normal
+- Validando
+- Cargando (enviando)
+- Error de servidor
+- Campos con error de validación
+
+**Ejemplo de uso:**
+```html
+<app-formulario-login 
+  (enviar)="onLogin($event)"
+  (irRegistro)="mostrarRegistro()"
+  (cerrar)="cerrarModal()">
+</app-formulario-login>
+```
+
+---
+
+#### **Formulario registro** (`app-formulario-registro`)
+
+**Nombre del componente:** Formulario registro
+
+**Propósito:** Formulario de creación de cuenta con validación completa.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único
+
+**Estados que maneja:**
+- Normal
+- Validación en tiempo real
+- Validación asíncrona (username/email disponible)
+- Indicador de fuerza de contraseña
+- Cargando
+- Error de servidor
+
+**Ejemplo de uso:**
+```html
+<app-formulario-registro 
+  (enviar)="onRegistro($event)"
+  (irLogin)="mostrarLogin()"
+  (cerrar)="cerrarModal()">
+</app-formulario-registro>
+```
+
+---
+
+#### **Formulario perfil** (`app-formulario-perfil`)
+
+**Nombre del componente:** Formulario perfil
+
+**Propósito:** Formulario de edición de datos del usuario con campos dinámicos.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Tamaños disponibles:** Tamaño único
+
+**Estados que maneja:**
+- Normal
+- Editando
+- Validación de campos
+- Campos de redes sociales dinámicos (añadir/eliminar)
+- Guardando cambios
+
+**Ejemplo de uso:**
+```html
+<app-formulario-perfil 
+  [datosIniciales]="usuario"
+  (enviar)="onGuardarPerfil($event)"
+  (cancelar)="onCancelar()">
+</app-formulario-perfil>
+```
+
+---
+
+#### **Tooltip** (`app-tooltip`)
+
+**Nombre del componente:** Tooltip
+
+**Propósito:** Información contextual flotante que aparece al hacer hover sobre un elemento.
+
+**Variantes disponibles:** No tiene variantes visuales
+
+**Posiciones disponibles:**
+- `arriba`: Encima del elemento (por defecto)
+- `abajo`: Debajo del elemento
+- `izquierda`: A la izquierda
+- `derecha`: A la derecha
+
+**Estados que maneja:**
+- Oculto
+- Visible (con animación fadeIn)
+- Reposicionamiento automático si sale del viewport
+
+**Ejemplo de uso:**
+```html
+<app-tooltip texto="Más información" posicion="arriba">
+  <button>Ayuda</button>
+</app-tooltip>
 ```
 
 ---

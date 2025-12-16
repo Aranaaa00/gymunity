@@ -107,7 +107,7 @@
                 title="Fitness Plus"
                 subtitle="Madrid Centro"
                 rating="4.5"
-                imageSrc="/assets/img/placeholder-gym.png"
+                imageSrc="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop"
                 imageAlt="Gimnasio Fitness Plus"
                 actionText="Ver más"
               ></app-card>
@@ -118,7 +118,7 @@
                 title="CrossFit Zone"
                 subtitle="Barcelona"
                 rating="4.8"
-                imageSrc="/assets/img/placeholder-gym.png"
+                imageSrc="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&h=300&fit=crop"
                 imageAlt="Gimnasio CrossFit Zone"
                 actionText="Ver más"
               ></app-card>
@@ -136,7 +136,7 @@
               title="Power Gym"
               subtitle="Valencia"
               rating="4.2"
-              imageSrc="/assets/img/placeholder-gym.png"
+              imageSrc="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop"
               imageAlt="Gimnasio Power Gym"
               actionText="Ver más"
               variant="horizontal"
@@ -151,14 +151,14 @@
           <ul class="guia-estilo__grid-cards">
             <li>
               <app-card-image
-                src="/assets/img/placeholder-gym.png"
+                src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=400&h=300&fit=crop"
                 alt="Elite Training"
                 size="md"
               ></app-card-image>
             </li>
             <li>
               <app-card-image
-                src="/assets/img/placeholder-gym.png"
+                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop"
                 alt="Urban Fit"
                 size="lg"
               ></app-card-image>
@@ -323,6 +323,27 @@
           </app-boton>
           <code>&lt;app-carga-global&gt; (inyectado en root)</code>
         </fieldset>
+
+        <!-- Toasts -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Toasts (Notificaciones)</legend>
+          <p>Notificaciones flotantes auto-descartables. Haz clic para probar:</p>
+          <ul class="guia-estilo__fila">
+            <li class="guia-estilo__item">
+              <app-boton variante="primary" (click)="mostrarToastSuccess()">Success</app-boton>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="danger" (click)="mostrarToastError()">Error</app-boton>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="secondary" (click)="mostrarToastWarning()">Warning</app-boton>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="ghost" (click)="mostrarToastInfo()">Info</app-boton>
+            </li>
+          </ul>
+          <code>notificacionService.success('mensaje') | .error() | .warning() | .info()</code>
+        </fieldset>
       </article>
     }
 
@@ -338,21 +359,16 @@
         <fieldset class="guia-estilo__bloque">
           <legend>Breadcrumbs</legend>
           <figure class="guia-estilo__columna">
-            <app-breadcrumbs></app-breadcrumbs>
-            <figcaption><code>&lt;app-breadcrumbs&gt; (autom\u00e1tico desde rutas)</code></figcaption>
+            <nav class="breadcrumbs-demo" aria-label="Ejemplo de breadcrumbs">
+              <ol>
+                <li><a href="/">🏠 Inicio</a></li>
+                <li><span>/</span><a href="/busqueda">Búsqueda</a></li>
+                <li><span>/</span><span>Gimnasio Fitness Plus</span></li>
+              </ol>
+            </nav>
+            <figcaption><code>&lt;app-breadcrumbs&gt; (automático desde rutas)</code></figcaption>
           </figure>
-        </fieldset>
-
-        <!-- Botón Tema -->
-        <fieldset class="guia-estilo__bloque">
-          <legend>Botón de Tema</legend>
-          <ul class="guia-estilo__fila">
-            <li class="guia-estilo__item">
-              <app-boton-tema></app-boton-tema>
-              <code>&lt;app-boton-tema&gt;</code>
-            </li>
-          </ul>
-          <p>Alterna entre modo claro y oscuro. El estado persiste en localStorage.</p>
+          <p>Muestra la ruta de navegación actual. Se genera automáticamente desde las rutas definidas en app.routes.ts</p>
         </fieldset>
       </article>
     }
@@ -377,16 +393,18 @@
         <!-- Acordeón -->
         <fieldset class="guia-estilo__bloque">
           <legend>Acordeón</legend>
-          <app-acordeon-item titulo="¿Cómo me registro?">
-            <p>Para registrarte, haz clic en el botón "Registrarse" en la esquina superior derecha.</p>
-          </app-acordeon-item>
-          <app-acordeon-item titulo="¿Puedo cambiar de gimnasio?">
-            <p>Sí, puedes cambiar de gimnasio en cualquier momento desde tu perfil.</p>
-          </app-acordeon-item>
-          <app-acordeon-item titulo="¿Cómo contacto con soporte?">
-            <p>Envía un email a soporte&#64;gymunity.com o usa el formulario de contacto.</p>
-          </app-acordeon-item>
-          <code>&lt;app-acordeon-item titulo="..."&gt;</code>
+          <app-acordeon>
+            <app-acordeon-item titulo="¿Cómo me registro?">
+              <p>Para registrarte, haz clic en el botón "Registrarse" en la esquina superior derecha.</p>
+            </app-acordeon-item>
+            <app-acordeon-item titulo="¿Puedo cambiar de gimnasio?">
+              <p>Sí, puedes cambiar de gimnasio en cualquier momento desde tu perfil.</p>
+            </app-acordeon-item>
+            <app-acordeon-item titulo="¿Cómo contacto con soporte?">
+              <p>Envía un email a soporte&#64;gymunity.com o usa el formulario de contacto.</p>
+            </app-acordeon-item>
+          </app-acordeon>
+          <code>&lt;app-acordeon&gt; + &lt;app-acordeon-item titulo="..."&gt;</code>
         </fieldset>
       </article>
     }

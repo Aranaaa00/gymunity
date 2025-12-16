@@ -3,6 +3,7 @@
     class="toast"
     [class]="tipoClase()"
     [class.toast--saliendo]="saliendo()"
+    [attr.data-id]="notificacionId()"
     role="alert"
     aria-live="assertive"
     aria-atomic="true">
@@ -13,7 +14,7 @@
     </span>
     
     <!-- Mensaje de la notificación -->
-    <p class="toast__mensaje">{{ mensaje() }}</p>
+    <p class="toast__mensaje">{{ n.mensaje }}</p>
     
     <!-- Botón cerrar -->
     <button 
@@ -24,11 +25,12 @@
       <lucide-icon name="x" [size]="14" />
     </button>
     
-    <!-- Barra de progreso -->
-    <span 
-      class="toast__progreso" 
-      [attr.data-id]="notificacionId()" 
-      aria-hidden="true">
-    </span>
+    <!-- Barra de progreso con key única para reiniciar animación -->
+    @for (item of [notificacionId()]; track item) {
+      <span 
+        class="toast__progreso" 
+        aria-hidden="true">
+      </span>
+    }
   </aside>
 }

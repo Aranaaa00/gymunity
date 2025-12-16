@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Boton } from '../../componentes/compartidos/boton/boton';
+import { NotificacionService } from '../../servicios/notificacion';
+import { CargaService } from '../../servicios/carga';
 import { Card } from '../../componentes/compartidos/card/card';
 import { CardImage } from '../../componentes/compartidos/card-image/card-image';
 import { CampoFormulario } from '../../componentes/compartidos/campo-formulario/campo-formulario';
@@ -7,12 +9,10 @@ import { AreaTexto } from '../../componentes/compartidos/area-texto/area-texto';
 import { Selector, OpcionSelector } from '../../componentes/compartidos/selector/selector';
 import { Buscador } from '../../componentes/compartidos/buscador/buscador';
 import { Alerta } from '../../componentes/compartidos/alerta/alerta';
-import { BotonTema } from '../../componentes/compartidos/boton-tema/boton-tema';
 import { Tabs } from '../../componentes/compartidos/tabs/tabs';
 import { Spinner } from '../../componentes/compartidos/spinner/spinner';
 import { Icono, NombreIcono } from '../../componentes/compartidos/icono/icono';
-import { AcordeonItem } from '../../componentes/compartidos/acordeon/acordeon';
-import { Breadcrumbs } from '../../componentes/compartidos/breadcrumbs/breadcrumbs';
+import { Acordeon, AcordeonItem } from '../../componentes/compartidos/acordeon/acordeon';
 
 // ============================================
 // CONSTANTES
@@ -63,17 +63,22 @@ const ICONOS_DISPONIBLES: readonly NombreIcono[] = [
     Selector,
     Buscador,
     Alerta,
-    BotonTema,
     Tabs,
     Spinner,
     Icono,
+    Acordeon,
     AcordeonItem,
-    Breadcrumbs,
   ],
   templateUrl: './guia-estilo.html',
   styleUrl: './guia-estilo.scss',
 })
 export class GuiaEstilo {
+  // ----------------------------------------
+  // Dependencias
+  // ----------------------------------------
+  private readonly notificacionService = inject(NotificacionService);
+  private readonly cargaService = inject(CargaService);
+
   // ----------------------------------------
   // Datos
   // ----------------------------------------
@@ -90,7 +95,6 @@ export class GuiaEstilo {
   readonly mostrarAlertaSuccess = signal<boolean>(true);
   readonly mostrarAlertaWarning = signal<boolean>(true);
   readonly mostrarAlertaError = signal<boolean>(true);
-  readonly cargandoEjemplo = signal<boolean>(false);
 
   // ----------------------------------------
   // Métodos públicos
@@ -100,8 +104,8 @@ export class GuiaEstilo {
   }
 
   simularCarga(): void {
-    this.cargandoEjemplo.set(true);
-    setTimeout(() => this.cargandoEjemplo.set(false), 2000);
+    this.cargaService.iniciar('demo', 'Cargando demostración...');
+    setTimeout(() => this.cargaService.finalizar('demo'), 2000);
   }
 
   resetearAlertas(): void {
@@ -109,5 +113,21 @@ export class GuiaEstilo {
     this.mostrarAlertaSuccess.set(true);
     this.mostrarAlertaWarning.set(true);
     this.mostrarAlertaError.set(true);
+  }
+
+  mostrarToastSuccess(): void {
+    this.notificacionService.success('¡Operación completada con éxito!');
+  }
+
+  mostrarToastError(): void {
+    this.notificacionService.error('Ha ocurrido un error inesperado.');
+  }
+
+  mostrarToastWarning(): void {
+    this.notificacionService.warning('Atención: revisa los datos.');
+  }
+
+  mostrarToastInfo(): void {
+    this.notificacionService.info('Información importante para ti.');
   }
 }

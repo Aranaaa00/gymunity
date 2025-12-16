@@ -6,6 +6,8 @@ import { Breadcrumbs } from './componentes/compartidos/breadcrumbs/breadcrumbs';
 import { VentanaEmergente } from './componentes/compartidos/ventana-emergente/ventana-emergente';
 import { FormularioLogin, DatosLogin } from './componentes/compartidos/formulario-login/formulario-login';
 import { FormularioRegistro, DatosRegistro } from './componentes/compartidos/formulario-registro/formulario-registro';
+import { Toast } from './componentes/compartidos/toast/toast';
+import { CargaGlobal } from './componentes/compartidos/carga-global/carga-global';
 import { ModalService } from './servicios/modal';
 import { AuthService } from './servicios/auth';
 import { CargaService } from './servicios/carga';
@@ -13,7 +15,7 @@ import { CargaService } from './servicios/carga';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Header, Main, Footer, Breadcrumbs, VentanaEmergente, FormularioLogin, FormularioRegistro],
+  imports: [Header, Main, Footer, Breadcrumbs, VentanaEmergente, FormularioLogin, FormularioRegistro, Toast, CargaGlobal],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

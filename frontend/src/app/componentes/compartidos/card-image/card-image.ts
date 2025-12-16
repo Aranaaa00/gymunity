@@ -1,4 +1,4 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, signal } from '@angular/core';
 
 // ============================================
 // TIPOS
@@ -32,4 +32,16 @@ export class CardImage {
   readonly alt: InputSignal<string> = input<string>('');
   readonly size: InputSignal<TamanoImagen> = input<TamanoImagen>(TAMANO_DEFECTO);
   readonly variant: InputSignal<VarianteImagen> = input<VarianteImagen>(VARIANTE_DEFECTO);
+
+  // ----------------------------------------
+  // Estado
+  // ----------------------------------------
+  readonly imageError = signal<boolean>(false);
+
+  // ----------------------------------------
+  // Métodos
+  // ----------------------------------------
+  onImageError(): void {
+    this.imageError.set(true);
+  }
 }
