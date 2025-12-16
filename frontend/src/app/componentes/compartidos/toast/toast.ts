@@ -1,23 +1,17 @@
-import { Component, inject, signal, computed, HostListener } from '@angular/core';
-import { NotificacionService, TipoNotificacion } from '../../../servicios/notificacion';
-import { LucideAngularModule } from 'lucide-angular';
+import { Component, inject } from '@angular/core';
+import { NotificacionService, TipoNotificacion, Notificacion } from '../../../servicios/notificacion';
+import { Icono, NombreIcono } from '../icono/icono';
 
 // ============================================
 // CONFIGURACIÓN DE ICONOS POR TIPO
 // ============================================
 
-const ICONOS_TIPO: Record<TipoNotificacion, string> = {
-  success: 'check-circle',
+const ICONOS_TIPO: Record<TipoNotificacion, NombreIcono> = {
+  success: 'check',
   error: 'x-circle',
-  warning: 'alert-triangle',
-  info: 'info',
+  warning: 'bell',
+  info: 'sparkles',
 };
-
-// ============================================
-// CONSTANTES
-// ============================================
-
-const DURACION_ANIMACION_SALIDA = 100;
 
 // ============================================
 // COMPONENTE TOAST
@@ -26,7 +20,7 @@ const DURACION_ANIMACION_SALIDA = 100;
 @Component({
   selector: 'app-toast',
   standalone: true,
-  imports: [LucideAngularModule],
+  imports: [Icono],
   templateUrl: './toast.html',
   styleUrl: './toast.scss',
 })
@@ -39,72 +33,24 @@ export class Toast {
   // ----------------------------------------
   // Estado
   // ----------------------------------------
-  readonly notificacion = this.notificacionService.notificacion;
-  readonly saliendo = signal<boolean>(false);
-
-  // ----------------------------------------
-  // Propiedades computadas
-  // ----------------------------------------
-  readonly icono = computed<string>(() => {
-    const notificacionActual = this.notificacion();
-    
-    if (!notificacionActual) {
-      return ICONOS_TIPO.info;
-    }
-    
-    return ICONOS_TIPO[notificacionActual.tipo];
-  });
-
-  readonly tipoClase = computed<string>(() => {
-    const notificacionActual = this.notificacion();
-    
-    if (!notificacionActual) {
-      return '';
-    }
-    
-    return `toast--${notificacionActual.tipo}`;
-  });
-
-  readonly notificacionId = computed<number>(() => {
-    const notificacionActual = this.notificacion();
-    
-    if (!notificacionActual) {
-      return 0;
-    }
-    
-    return notificacionActual.id;
-  });
-
-  // ----------------------------------------
-  // Event Handlers
-  // ----------------------------------------
-  @HostListener('document:keydown.escape')
-  onEscapeKey(): void {
-    const tieneNotificacion = this.notificacion() !== null;
-    
-    if (!tieneNotificacion) {
-      return;
-    }
-    
-    this.cerrar();
-  }
+  readonly notificaciones = this.notificacionService.notificaciones;
 
   // ----------------------------------------
   // Métodos públicos
   // ----------------------------------------
-  cerrar(): void {
-    this.saliendo.set(true);
-    
-    setTimeout(() => {
-      this.finalizarCierre();
-    }, DURACION_ANIMACION_SALIDA);
+  getIcono(tipo: TipoNotificacion): NombreIcono {
+    return ICONOS_TIPO[tipo];
   }
 
-  // ----------------------------------------
-  // Métodos privados
-  // ----------------------------------------
-  private finalizarCierre(): void {
-    this.notificacionService.cerrar();
-    this.saliendo.set(false);
+  getTipoClase(tipo: TipoNotificacion): string {
+    return `toast--${tipo}`;
+  }
+
+  cerrar(notificacion: Notificacion): void {
+    this.notificacionService.cerrar(notificacion.id);
+  }
+
+  trackById(_index: number, notificacion: Notificacion): number {
+    return notificacion.id;
   }
 }

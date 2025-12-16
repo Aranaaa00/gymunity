@@ -120,17 +120,17 @@ $boton-danger-darken-active: -15%;
 
   // Tamaños
   &--sm {
-    padding: $space-1 $space-1;
+    padding: $space-1 $space-2;
     font-size: $texto-xs;
   }
 
   &--md {
-    padding: $space-1 $space-2;
+    padding: $space-2 $space-3;
     font-size: $texto-s;
   }
 
   &--lg {
-    padding: $space-2 $space-3;
+    padding: $space-3 $space-4;
     font-size: $texto-m;
   }
 

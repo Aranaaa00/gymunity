@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../../../../styles/00-settings/variables' as *;
 
 // ============================================
@@ -5,10 +6,8 @@
 // ============================================
 
 $card-image-transition-duration: 0.3s;
-$card-image-hover-scale: 1.05;
-$card-image-sm-size: 5rem;
-$card-image-horizontal-md-width: 7rem;
-$card-image-horizontal-md-height: 5rem;
+$card-image-hover-scale: 1.03;
+$card-image-horizontal-size: 4.5rem;
 
 // ============================================
 // CARD IMAGE (Imagen de Tarjeta)
@@ -17,13 +16,10 @@ $card-image-horizontal-md-height: 5rem;
 .card-image-wrapper {
   position: relative;
   display: block;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
-  border-radius: $radio-xl;
-  transition: 
-    box-shadow $card-image-transition-duration ease, 
-    transform $card-image-transition-duration ease;
+  background-color: var(--color-fondo-secundario);
+  border-radius: $radio-lg;
+  transition: box-shadow $card-image-transition-duration ease;
 
   img {
     display: block;
@@ -36,29 +32,24 @@ $card-image-horizontal-md-height: 5rem;
   &:hover img {
     transform: scale($card-image-hover-scale);
   }
+}
 
-  &.size-sm {
-    width: $card-image-sm-size;
-    height: $card-image-sm-size;
-    flex-shrink: 0;
-  }
+// ============================================
+// VARIANTE VERTICAL (aspect-ratio fijo)
+// ============================================
 
-  &.size-md {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-  }
+.card-image-wrapper.vertical {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
 
-  &.size-lg {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-  }
+// ============================================
+// VARIANTE HORIZONTAL (cuadrada, compacta)
+// ============================================
 
-  &.horizontal {
-    &.size-md {
-      width: $card-image-horizontal-md-width;
-      height: $card-image-horizontal-md-height;
-      border-radius: $radio-md;
-      flex-shrink: 0;
-    }
-  }
+.card-image-wrapper.horizontal {
+  flex-shrink: 0;
+  width: $card-image-horizontal-size;
+  height: $card-image-horizontal-size;
+  border-radius: $radio-md;
 }

@@ -4,97 +4,126 @@
 // VARIABLES LOCALES
 // ============================================
 
-$alerta-transition-duration: 0.2s;
-$alerta-cerrar-size: 2.25rem;
-$alerta-cerrar-opacity-default: 0.65;
-$alerta-cerrar-hover-bg: rgba(0, 0, 0, 0.08);
+$alerta-transition: 0.2s ease;
+$alerta-icon-size: 1.25rem;
 
 // ============================================
-// ALERTA
+// ALERTA BASE
 // ============================================
 
 .alerta {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: $space-2;
   width: 100%;
-  padding: $space-2 $space-3;
-  border: $borde-medium solid;
+  padding: $space-3;
+  background: linear-gradient(
+    135deg,
+    var(--color-fondo-secundario) 0%,
+    var(--color-fondo) 100%
+  );
+  border: $borde-thin solid var(--color-borde);
+  border-left: 0.25rem solid var(--color-boton);
   border-radius: $radio-md;
-  font-size: $texto-xs;
-  font-weight: $font-weight-semibold;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
   line-height: $line-height-normal;
+  color: var(--color-texto);
   box-shadow: $shadow-sm;
+}
 
-  &--success {
-    background: var(--color-alerta-success-bg, #ecfdf5);
-    border-color: var(--color-alerta-success-border, #10b981);
-    color: var(--color-alerta-success-text, #065f46);
-  }
+// ============================================
+// ICONO
+// ============================================
 
-  &--error {
-    background: var(--color-alerta-error-bg, #fef2f2);
-    border-color: var(--color-alerta-error-border, #ef4444);
-    color: var(--color-alerta-error-text, #991b1b);
-  }
+.alerta__icono {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-boton);
+}
 
-  &--warning {
-    background: var(--color-alerta-warning-bg, #fffbeb);
-    border-color: var(--color-alerta-warning-border, #f59e0b);
-    color: var(--color-alerta-warning-text, #92400e);
-  }
+// ============================================
+// VARIANTES (usando colores de la marca)
+// ============================================
 
-  &--info {
-    background: var(--color-alerta-info-bg, #eff6ff);
-    border-color: var(--color-alerta-info-border, #3b82f6);
-    color: var(--color-alerta-info-text, #1e40af);
+.alerta--success {
+  border-left-color: var(--color-boton);
+  
+  .alerta__icono {
+    color: var(--color-boton);
   }
 }
+
+.alerta--error {
+  border-left-color: var(--color-error);
+  
+  .alerta__icono {
+    color: var(--color-error);
+  }
+}
+
+.alerta--warning {
+  border-left-color: var(--color-warning);
+  
+  .alerta__icono {
+    color: var(--color-warning);
+  }
+}
+
+.alerta--info {
+  border-left-color: var(--color-subtitulo);
+  
+  .alerta__icono {
+    color: var(--color-subtitulo);
+  }
+}
+
+// ============================================
+// MENSAJE
+// ============================================
 
 .alerta__mensaje {
-  margin: 0;
   flex: 1;
+  margin: 0;
 }
+
+// ============================================
+// BOTÓN CERRAR
+// ============================================
 
 .alerta__cerrar {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: $alerta-cerrar-size;
-  height: $alerta-cerrar-size;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
-  margin: 0;
   background: transparent;
   border: none;
-  border-radius: $radio-full;
-  color: currentColor;
+  border-radius: $radio-sm;
+  color: var(--color-subtitulo);
   cursor: pointer;
-  opacity: $alerta-cerrar-opacity-default;
+  opacity: 0.7;
   transition: 
-    opacity $alerta-transition-duration ease, 
-    background $alerta-transition-duration ease, 
-    transform 0.1s ease;
-
-  lucide-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    opacity $alerta-transition,
+    background $alerta-transition;
 
   &:hover {
     opacity: 1;
-    background: $alerta-cerrar-hover-bg;
+    background: rgba(0, 0, 0, 0.05);
   }
 
   &:focus-visible {
-    outline: $borde-medium solid currentColor;
-    outline-offset: $borde-medium;
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-thin;
     opacity: 1;
   }
 
   &:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
 }

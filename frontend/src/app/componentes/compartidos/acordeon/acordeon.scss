@@ -4,35 +4,37 @@
 // VARIABLES LOCALES
 // ============================================
 
-$acordeon-indicator-size: 1.5rem;
-$acordeon-icon-size: 1rem;
-$acordeon-animation-duration: 0.2s;
-$acordeon-indicator-rotation: 45deg;
+$acordeon-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 // ============================================
-// CONTENEDOR ACORDEON
+// HOST - El componente app-acordeon-item
 // ============================================
 
-.acordeon {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+:host {
+  display: block;
   overflow: hidden;
-  background-color: var(--color-fondo);
+  background: linear-gradient(
+    135deg,
+    var(--color-fondo-secundario) 0%,
+    var(--color-fondo) 100%
+  );
   border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
+  border-left: 0.25rem solid transparent;
+  border-radius: $radio-md;
+  transition: 
+    border-color $acordeon-transition,
+    box-shadow $acordeon-transition;
+
+  &:hover {
+    border-left-color: rgba($color-botones, 0.5);
+  }
 }
 
-// ============================================
-// ITEM DEL ACORDEON
-// ============================================
-
-.acordeon-item {
-  display: block;
-
-  &:not(:last-child) {
-    border-bottom: $borde-thin solid var(--color-borde);
-  }
+:host(.acordeon-item--expandido) {
+  border-left-color: var(--color-boton);
+  box-shadow: 
+    0 0.25rem 1rem rgba($color-botones, 0.1),
+    0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
 }
 
 // ============================================
@@ -48,10 +50,10 @@ $acordeon-indicator-rotation: 45deg;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $space-2;
+  gap: $space-3;
   width: 100%;
   padding: $space-3;
-  background-color: var(--color-fondo-secundario);
+  background-color: transparent;
   border: none;
   font-family: $fuente-principal;
   font-size: $texto-sm;
@@ -60,20 +62,22 @@ $acordeon-indicator-rotation: 45deg;
   text-align: left;
   color: var(--color-texto);
   cursor: pointer;
-  transition: background-color $acordeon-animation-duration ease;
+  transition: background-color $acordeon-transition;
 
   &:hover {
-    background-color: var(--color-fondo);
+    background-color: rgba($color-botones, 0.04);
   }
 
   &:focus-visible {
     outline: none;
+    background-color: rgba($color-botones, 0.06);
     box-shadow: inset 0 0 0 $borde-medium var(--color-boton);
   }
+}
 
-  .acordeon-item--expandido & {
-    background-color: var(--color-fondo);
-  }
+:host(.acordeon-item--expandido) .acordeon-item__trigger {
+  font-weight: $font-weight-semibold;
+  color: var(--color-boton);
 }
 
 // ============================================
@@ -97,7 +101,7 @@ $acordeon-indicator-rotation: 45deg;
 }
 
 // ============================================
-// INDICADOR DE EXPANSIÓN
+// INDICADOR DE EXPANSIÓN (chevron)
 // ============================================
 
 .acordeon-item__indicador {
@@ -105,21 +109,17 @@ $acordeon-indicator-rotation: 45deg;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: $acordeon-indicator-size;
-  height: $acordeon-indicator-size;
-  background-color: rgba($color-botones, 0.1);
-  border-radius: $radio-md;
-  color: var(--color-boton);
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-subtitulo);
   transition: 
-    transform $acordeon-animation-duration ease-out,
-    background-color $acordeon-animation-duration ease,
-    color $acordeon-animation-duration ease;
+    transform $acordeon-transition,
+    color $acordeon-transition;
+}
 
-  .acordeon-item--expandido & {
-    background-color: var(--color-boton);
-    color: $gris-50;
-    transform: rotate($acordeon-indicator-rotation);
-  }
+:host(.acordeon-item--expandido) .acordeon-item__indicador {
+  color: var(--color-boton);
+  transform: rotate(180deg);
 }
 
 .acordeon-item__flecha {
@@ -133,19 +133,19 @@ $acordeon-indicator-rotation: 45deg;
 .acordeon-item__panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows $acordeon-animation-duration ease-out;
+  transition: grid-template-rows $acordeon-transition;
+}
 
-  .acordeon-item--expandido & {
-    grid-template-rows: 1fr;
-  }
+:host(.acordeon-item--expandido) .acordeon-item__panel {
+  grid-template-rows: 1fr;
 }
 
 .acordeon-item__contenido {
+  min-height: 0;
   overflow: hidden;
 
   > * {
-    padding: $space-3;
-    padding-top: 0;
+    padding: 0 $space-3 $space-3;
     margin: 0;
   }
 

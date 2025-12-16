@@ -4,14 +4,12 @@ import { Component, input, InputSignal, signal } from '@angular/core';
 // TIPOS
 // ============================================
 
-type TamanoImagen = 'sm' | 'md' | 'lg';
 type VarianteImagen = 'vertical' | 'horizontal';
 
 // ============================================
 // CONSTANTES
 // ============================================
 
-const TAMANO_DEFECTO: TamanoImagen = 'md';
 const VARIANTE_DEFECTO: VarianteImagen = 'vertical';
 
 // ============================================
@@ -30,7 +28,6 @@ export class CardImage {
   // ----------------------------------------
   readonly src: InputSignal<string> = input<string>('');
   readonly alt: InputSignal<string> = input<string>('');
-  readonly size: InputSignal<TamanoImagen> = input<TamanoImagen>(TAMANO_DEFECTO);
   readonly variant: InputSignal<VarianteImagen> = input<VarianteImagen>(VARIANTE_DEFECTO);
 
   // ----------------------------------------

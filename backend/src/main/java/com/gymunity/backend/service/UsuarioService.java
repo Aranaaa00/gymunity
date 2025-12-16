@@ -103,6 +103,18 @@ public class UsuarioService {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado con email: " + email));
     }
 
+    /**
+     * Busca usuario por email o nombre de usuario (case insensitive).
+     * Usado para login flexible.
+     */
+    @Transactional(readOnly = true)
+    public Usuario buscarPorEmailOUsername(String identifier) {
+        return usuarioRepository.findByEmailIgnoreCase(identifier)
+                .or(() -> usuarioRepository.findByNombreUsuarioIgnoreCase(identifier))
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "Usuario no encontrado con email o username: " + identifier));
+    }
+
     // ========== MÉTODOS PRIVADOS ==========
 
     private Usuario buscarPorId(Long id) {

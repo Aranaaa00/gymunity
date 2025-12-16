@@ -6,6 +6,20 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.png">
+  <style>
+    /* Estilos críticos para evitar flash de contenido blanco */
+    :root {
+      --color-fondo: #f8fafc;
+      --color-texto: #1e293b;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>

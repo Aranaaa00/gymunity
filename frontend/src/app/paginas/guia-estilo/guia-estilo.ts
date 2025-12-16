@@ -1,4 +1,5 @@
 import { Component, signal, inject } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { NotificacionService } from '../../servicios/notificacion';
 import { CargaService } from '../../servicios/carga';
@@ -55,6 +56,7 @@ const ICONOS_DISPONIBLES: readonly NombreIcono[] = [
   selector: 'app-guia-estilo',
   standalone: true,
   imports: [
+    LucideAngularModule,
     Boton,
     Card,
     CardImage,

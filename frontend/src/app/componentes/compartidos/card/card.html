@@ -17,7 +17,16 @@
       @if (subtitle()) {
         <p class="card-subtitle">{{ subtitle() }}</p>
       }
-      @if (rating()) {
+      @if (tieneValoracion()) {
+        <span class="card-rating card-rating--con-estrella">
+          <lucide-icon name="star" [size]="14" />
+          {{ valoracionFormateada() }}
+        </span>
+      } @else if (valoracion() === null && !rating()) {
+        <span class="card-rating card-rating--sin-valoracion">
+          Aún sin valoraciones
+        </span>
+      } @else if (rating()) {
         <span class="card-rating">{{ rating() }}</span>
       }
     </header>

@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 
 // ============================================
 // TIPOS
@@ -16,8 +16,8 @@ export interface Notificacion {
 // CONSTANTES
 // ============================================
 
-const DURACION_DEFAULT = 3000;
 const TIPO_DEFAULT: TipoNotificacion = 'info';
+const MAX_TOASTS = 5;
 
 // ============================================
 // SERVICIO DE NOTIFICACIONES
@@ -29,54 +29,71 @@ export class NotificacionService {
   // Estado privado
   // ----------------------------------------
   private contadorId = 0;
-  private timeoutId: ReturnType<typeof setTimeout> | undefined = undefined;
+  private readonly _notificaciones = signal<Notificacion[]>([]);
 
   // ----------------------------------------
   // Estado público (solo lectura)
   // ----------------------------------------
-  readonly notificacion = signal<Notificacion | null>(null);
+  readonly notificaciones = this._notificaciones.asReadonly();
+  
+  /** @deprecated Usar notificaciones() para múltiples toasts */
+  readonly notificacion = computed(() => {
+    const lista = this._notificaciones();
+    return lista.length > 0 ? lista[lista.length - 1] : null;
+  });
 
   // ----------------------------------------
   // Métodos públicos - Mostrar por tipo
   // ----------------------------------------
-  success(mensaje: string, duracion: number = DURACION_DEFAULT): void {
-    this.mostrar(mensaje, 'success', duracion);
+  success(mensaje: string): void {
+    this.mostrar(mensaje, 'success');
   }
 
-  error(mensaje: string, duracion: number = DURACION_DEFAULT): void {
-    this.mostrar(mensaje, 'error', duracion);
+  error(mensaje: string): void {
+    this.mostrar(mensaje, 'error');
   }
 
-  warning(mensaje: string, duracion: number = DURACION_DEFAULT): void {
-    this.mostrar(mensaje, 'warning', duracion);
+  warning(mensaje: string): void {
+    this.mostrar(mensaje, 'warning');
   }
 
-  info(mensaje: string, duracion: number = DURACION_DEFAULT): void {
-    this.mostrar(mensaje, 'info', duracion);
+  info(mensaje: string): void {
+    this.mostrar(mensaje, 'info');
   }
 
   // ----------------------------------------
   // Métodos públicos - Mostrar genérico
   // ----------------------------------------
-  mostrar(
-    mensaje: string,
-    tipo: TipoNotificacion = TIPO_DEFAULT,
-    duracion: number = DURACION_DEFAULT
-  ): void {
-    this.cancelarTimeoutPendiente();
-    
+  mostrar(mensaje: string, tipo: TipoNotificacion = TIPO_DEFAULT): void {
     const nuevaNotificacion = this.crearNotificacion(mensaje, tipo);
-    this.notificacion.set(nuevaNotificacion);
-
-    this.programarCierreAutomatico(duracion);
+    
+    this._notificaciones.update(lista => {
+      const nuevaLista = [...lista, nuevaNotificacion];
+      // Limitar cantidad máxima de toasts
+      if (nuevaLista.length > MAX_TOASTS) {
+        return nuevaLista.slice(-MAX_TOASTS);
+      }
+      return nuevaLista;
+    });
   }
 
   // ----------------------------------------
   // Métodos públicos - Cerrar
   // ----------------------------------------
-  cerrar(): void {
-    this.cancelarTimeoutPendiente();
-    this.notificacion.set(null);
+  cerrar(id?: number): void {
+    if (id === undefined) {
+      // Cerrar la última
+      this._notificaciones.update(lista => lista.slice(0, -1));
+    } else {
+      // Cerrar por ID específico
+      this._notificaciones.update(lista => 
+        lista.filter(n => n.id !== id)
+      );
+    }
+  }
+
+  cerrarTodas(): void {
+    this._notificaciones.set([]);
   }
 
   // ----------------------------------------
@@ -90,28 +107,5 @@ export class NotificacionService {
       tipo,
       mensaje,
     };
-  }
-
-  private programarCierreAutomatico(duracion: number): void {
-    const debeProgramar = duracion > 0;
-
-    if (!debeProgramar) {
-      return;
-    }
-
-    this.timeoutId = setTimeout(() => {
-      this.cerrar();
-    }, duracion);
-  }
-
-  private cancelarTimeoutPendiente(): void {
-    const hayTimeoutPendiente = this.timeoutId !== undefined;
-
-    if (!hayTimeoutPendiente) {
-      return;
-    }
-
-    clearTimeout(this.timeoutId);
-    this.timeoutId = undefined;
   }
 }

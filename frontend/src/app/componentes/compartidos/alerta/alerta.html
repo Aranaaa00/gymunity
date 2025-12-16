@@ -5,6 +5,9 @@
   [class.alerta--warning]="tipo() === 'warning'"
   [class.alerta--info]="tipo() === 'info'"
   role="alert">
+  <span class="alerta__icono">
+    <app-icono [nombre]="icono()" tamano="sm" />
+  </span>
   <p class="alerta__mensaje">{{ mensaje() }}</p>
   @if (cerrable()) {
     <button 
@@ -12,7 +15,7 @@
       class="alerta__cerrar" 
       (click)="cerrar.emit()" 
       aria-label="Cerrar alerta">
-      <app-icono nombre="x" tamano="md" />
+      <app-icono nombre="x" tamano="sm" />
     </button>
   }
 </aside>

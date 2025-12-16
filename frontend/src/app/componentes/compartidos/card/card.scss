@@ -4,136 +4,48 @@
 // VARIABLES LOCALES
 // ============================================
 
-$card-transition-duration: 0.3s;
-$card-hover-translate-y: -0.25rem;
-$card-active-translate-y: -0.125rem;
-$card-horizontal-height: 8rem;
-$card-horizontal-image-width: 7rem;
-$card-horizontal-image-height: 5rem;
-$card-shadow-hover-opacity: 0.35;
-$card-shadow-hover-horizontal-opacity: 0.2;
+$card-transition: 0.25s ease;
+$card-vertical-max-width: 18rem;
+$card-horizontal-height: 5.5rem;
 
 // ============================================
-// CARD (Tarjeta)
+// CARD BASE
 // ============================================
 
 .card {
   position: relative;
-  
   display: flex;
   flex-direction: column;
   gap: $space-1;
-  
   width: 100%;
-  
   font-family: $fuente-principal;
   color: var(--color-texto);
-  
-  transition: transform $card-transition-duration ease;
+  transition: transform $card-transition;
 }
 
 .card--clickable {
   cursor: pointer;
 
   &:hover {
-    transform: translateY($card-hover-translate-y);
+    transform: translateY(-0.125rem);
 
     .card-image-wrapper {
-      box-shadow: 0 $space-2 $space-6 rgba($color-botones, $card-shadow-hover-opacity);
+      box-shadow: 0 0.5rem 1.5rem rgba($color-botones, 0.2);
     }
   }
 
   &:active {
-    transform: translateY($card-active-translate-y);
-  }
-}
-
-// ============================================
-// VARIANTE HORIZONTAL
-// ============================================
-
-.card.horizontal {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: 1fr;
-  align-items: center;
-  gap: $space-3;
-  width: 100%;
-  height: $card-horizontal-height;
-  padding: $space-3;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
-  box-shadow: $shadow-sm;
-  transition: all $card-transition-duration ease;
-
-  &:hover {
-    border-color: var(--color-boton);
-    box-shadow: 0 $space-1 $space-5 rgba($color-botones, $card-shadow-hover-horizontal-opacity);
-    transform: translateY($card-active-translate-y);
-  }
-
-  app-card-image {
-    grid-column: 1;
-  }
-
-  .card-body {
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: $space-1;
-    padding: 0;
-    min-width: 0;
-  }
-
-  .card-header {
-    display: flex;
-    flex-direction: column;
-    gap: $space-1;
-  }
-
-  .card-title {
-    margin: 0;
-    overflow: hidden;
-    font-size: $texto-m;
-    font-weight: $font-weight-bold;
-    line-height: $line-height-tight;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: var(--color-texto);
-  }
-
-  .card-subtitle {
-    margin: 0;
-    overflow: hidden;
-    font-size: $texto-s;
-    line-height: $line-height-normal;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: var(--color-subtitulo);
-  }
-
-  .card-rating {
-    margin: 0;
-    font-size: $texto-s;
-    font-weight: $font-weight-medium;
-    color: var(--color-boton);
-    white-space: nowrap;
-  }
-
-  .card-footer {
-    grid-column: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
+    transform: translateY(0);
   }
 }
 
 // ============================================
 // VARIANTE VERTICAL
 // ============================================
+
+.card.vertical {
+  max-width: $card-vertical-max-width;
+}
 
 .card-body {
   display: flex;
@@ -150,29 +62,100 @@ $card-shadow-hover-horizontal-opacity: 0.2;
 
 .card-title {
   margin: 0;
+  overflow: hidden;
   font-size: $texto-s;
   font-weight: $font-weight-bold;
-  color: var(--color-texto);
   line-height: $line-height-tight;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-texto);
 }
 
 .card-subtitle {
   margin: 0;
+  overflow: hidden;
   font-size: $texto-xs;
   font-weight: $font-weight-regular;
-  color: var(--color-subtitulo);
   line-height: $line-height-normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-subtitulo);
 }
 
 .card-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   margin-top: $space-1;
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
   color: var(--color-boton);
 }
 
+.card-rating--con-estrella {
+  lucide-icon {
+    color: #f59e0b;
+  }
+}
+
+.card-rating--sin-valoracion {
+  font-weight: $font-weight-regular;
+  font-style: italic;
+  color: var(--color-subtitulo);
+}
+
 .card-footer {
   display: flex;
   justify-content: flex-end;
   margin-top: auto;
+}
+
+// ============================================
+// VARIANTE HORIZONTAL (compacta para búsqueda)
+// ============================================
+
+.card.horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $space-2;
+  height: $card-horizontal-height;
+  max-width: none;
+  padding: $space-2;
+  background: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+  transition: 
+    border-color $card-transition,
+    box-shadow $card-transition;
+
+  &:hover {
+    border-color: var(--color-boton);
+    box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.12);
+  }
+
+  .card-body {
+    flex: 1;
+    gap: 0.125rem;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .card-title {
+    font-size: $texto-sm;
+  }
+
+  .card-subtitle {
+    font-size: $texto-xs;
+  }
+
+  .card-rating {
+    margin-top: 0.25rem;
+    font-size: $texto-xs;
+  }
+
+  .card-footer {
+    flex-shrink: 0;
+    margin: 0;
+  }
 }

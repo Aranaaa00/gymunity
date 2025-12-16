@@ -23,6 +23,22 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmail(String email);
 
     /**
+     * Busca un usuario por email ignorando mayúsculas/minúsculas.
+     *
+     * @param email Email del usuario.
+     * @return Optional con el usuario si existe.
+     */
+    Optional<Usuario> findByEmailIgnoreCase(String email);
+
+    /**
+     * Busca un usuario por nombre de usuario ignorando mayúsculas/minúsculas.
+     *
+     * @param nombreUsuario Nombre de usuario.
+     * @return Optional con el usuario si existe.
+     */
+    Optional<Usuario> findByNombreUsuarioIgnoreCase(String nombreUsuario);
+
+    /**
      * Verifica si existe un usuario con el email indicado.
      *
      * @param email Email a verificar.

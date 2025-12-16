@@ -1,6 +1,6 @@
 <figure 
   class="card-image-wrapper" 
-  [class]="'size-' + size()" 
+  [class.vertical]="variant() === 'vertical'"
   [class.horizontal]="variant() === 'horizontal'">
   @if (src() && !imageError()) {
     <img 

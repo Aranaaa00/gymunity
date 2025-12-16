@@ -3,101 +3,90 @@
 // ============================================
 // VARIABLES LOCALES
 // ============================================
+
 $toast-min-width: 18rem;
 $toast-max-width: 24rem;
-$toast-border-left-width: 4px;
-$toast-icon-size: 2rem;
-$toast-close-size: 1.5rem;
-$toast-progress-height: 0.1875rem;
-$toast-animation-duration-enter: 0.2s;
-$toast-animation-duration-exit: 0.15s;
-$toast-progress-duration: 3s;
+$toast-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 // ============================================
-// TOAST BASE
+// CONTENEDOR DE TOASTS (apilados)
 // ============================================
 
-.toast {
+.toast-container {
   position: fixed;
   right: $space-3;
   bottom: $space-3;
   z-index: $z-overlay;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: $space-2;
+  pointer-events: none;
+}
+
+// ============================================
+// TOAST INDIVIDUAL
+// ============================================
+
+.toast {
   display: flex;
   align-items: center;
   gap: $space-2;
   min-width: $toast-min-width;
   max-width: $toast-max-width;
   padding: $space-2 $space-3;
-  overflow: hidden;
-  background-color: $gris-50;
-  border: $borde-thin solid $gris-300;
-  border-radius: $radio-lg;
-  box-shadow: $shadow-lg;
-  animation: toast-entrar $toast-animation-duration-enter ease-out;
-}
-
-.toast--saliendo {
-  animation: toast-salir $toast-animation-duration-exit ease-in forwards;
+  background: linear-gradient(
+    135deg,
+    var(--color-fondo-secundario) 0%,
+    var(--color-fondo) 100%
+  );
+  border: $borde-thin solid var(--color-borde);
+  border-left: 0.25rem solid var(--color-boton);
+  border-radius: $radio-md;
+  box-shadow: 
+    0 0.5rem 2rem rgba($color-botones, 0.15),
+    0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  animation: toast-entrar $toast-transition;
 }
 
 // ============================================
-// VARIANTES POR TIPO
+// VARIANTES (temática de marca)
 // ============================================
 
 .toast--success {
-  border-left: $toast-border-left-width solid $color-exito;
+  border-left-color: var(--color-boton);
 
   .toast__icono {
-    background-color: rgba($color-exito, 0.12);
-    color: $color-exito;
-  }
-
-  .toast__progreso {
-    background-color: $color-exito;
+    color: var(--color-boton);
   }
 }
 
 .toast--error {
-  border-left: $toast-border-left-width solid $color-error;
+  border-left-color: var(--color-error);
 
   .toast__icono {
-    background-color: rgba($color-error, 0.12);
-    color: $color-error;
-  }
-
-  .toast__progreso {
-    background-color: $color-error;
+    color: var(--color-error);
   }
 }
 
 .toast--warning {
-  border-left: $toast-border-left-width solid $color-warning;
+  border-left-color: var(--color-warning);
 
   .toast__icono {
-    background-color: rgba($color-warning, 0.12);
-    color: $color-warning;
-  }
-
-  .toast__progreso {
-    background-color: $color-warning;
+    color: var(--color-warning);
   }
 }
 
 .toast--info {
-  border-left: $toast-border-left-width solid $color-info;
+  border-left-color: var(--color-subtitulo);
 
   .toast__icono {
-    background-color: rgba($color-info, 0.12);
-    color: $color-info;
-  }
-
-  .toast__progreso {
-    background-color: $color-info;
+    color: var(--color-subtitulo);
   }
 }
 
 // ============================================
-// ELEMENTOS INTERNOS
+// ICONO
 // ============================================
 
 .toast__icono {
@@ -105,62 +94,55 @@ $toast-progress-duration: 3s;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: $toast-icon-size;
-  height: $toast-icon-size;
-  border-radius: $radio-full;
 }
+
+// ============================================
+// MENSAJE
+// ============================================
 
 .toast__mensaje {
   flex: 1;
   min-width: 0;
   margin: 0;
-  padding: 0;
   font-family: $fuente-principal;
   font-size: $texto-sm;
   font-weight: $font-weight-medium;
   line-height: $line-height-normal;
-  color: $gris-900;
+  color: var(--color-texto);
   word-break: break-word;
 }
+
+// ============================================
+// BOTÓN CERRAR
+// ============================================
 
 .toast__cerrar {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: $toast-close-size;
-  height: $toast-close-size;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-left: auto;
   padding: 0;
   background-color: transparent;
   border: none;
-  border-radius: $radio-md;
-  color: $gris-500;
+  border-radius: $radio-sm;
+  color: var(--color-subtitulo);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: 
+    color $toast-transition,
+    background-color $toast-transition;
 
   &:hover {
-    background-color: $gris-100;
-    color: $gris-700;
+    color: var(--color-texto);
+    background-color: rgba($color-botones, 0.1);
   }
 
   &:focus-visible {
-    outline: $borde-medium solid $color-botones;
+    outline: $borde-medium solid var(--color-boton);
     outline-offset: $borde-thin;
   }
-}
-
-// ============================================
-// BARRA DE PROGRESO
-// ============================================
-
-.toast__progreso {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: $toast-progress-height;
-  opacity: 0.8;
-  animation: progreso-toast $toast-progress-duration linear forwards;
 }
 
 // ============================================
@@ -170,34 +152,12 @@ $toast-progress-duration: 3s;
 @keyframes toast-entrar {
   0% {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateX(1rem);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes toast-salir {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-}
-
-@keyframes progreso-toast {
-  0% {
-    width: 100%;
-  }
-
-  100% {
-    width: 0;
+    transform: translateX(0);
   }
 }
 
@@ -206,35 +166,14 @@ $toast-progress-duration: 3s;
 // ============================================
 
 @media (max-width: $breakpoint-sm) {
-  .toast {
+  .toast-container {
     right: $space-2;
     bottom: $space-2;
     left: $space-2;
+  }
+
+  .toast {
     min-width: auto;
     max-width: none;
-  }
-}
-
-// ============================================
-// TEMA OSCURO
-// ============================================
-
-[data-tema="oscuro"] {
-  .toast {
-    background-color: $gris-800;
-    border-color: $gris-700;
-  }
-
-  .toast__mensaje {
-    color: $gris-50;
-  }
-
-  .toast__cerrar {
-    color: $gris-400;
-
-    &:hover {
-      background-color: $gris-700;
-      color: $gris-200;
-    }
   }
 }

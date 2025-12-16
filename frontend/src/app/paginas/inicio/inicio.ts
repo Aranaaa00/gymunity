@@ -51,13 +51,6 @@ export class Inicio implements OnInit {
     this.modal.abrirRegistro();
   }
 
-  formatearValoracion(valoracion: number | null, total: number): string {
-    if (valoracion === null || total === 0) {
-      return 'Sin valoraciones';
-    }
-    return `${valoracion.toFixed(1)} ⭐ (${total})`;
-  }
-
   // ----------------------------------------
   // Métodos privados
   // ----------------------------------------

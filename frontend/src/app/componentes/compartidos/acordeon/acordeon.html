@@ -14,18 +14,18 @@
         <lucide-icon 
           class="acordeon-item__icono" 
           [name]="icono()" 
-          [size]="16"
+          [size]="18"
           aria-hidden="true" />
       }
       <span class="acordeon-item__titulo">{{ titulo() }}</span>
     </span>
     
-    <!-- Indicador de expansión -->
+    <!-- Indicador de expansión (chevron que rota) -->
     <span class="acordeon-item__indicador" aria-hidden="true">
       <lucide-icon 
         class="acordeon-item__flecha" 
-        name="plus" 
-        [size]="16" />
+        name="chevron-down" 
+        [size]="18" />
     </span>
   </button>
 </header>

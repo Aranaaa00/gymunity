@@ -1,7 +1,8 @@
-import { Component, input, inject, InputSignal } from '@angular/core';
+import { Component, input, inject, InputSignal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardImage } from '../card-image/card-image';
 import { Boton } from '../boton/boton';
+import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
 // TIPOS
@@ -22,7 +23,7 @@ const VARIANTE_DEFECTO: CardVariant = 'vertical';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CardImage, Boton],
+  imports: [CardImage, Boton, LucideAngularModule],
   templateUrl: './card.html',
   styleUrls: ['./card.scss'],
 })
@@ -38,11 +39,29 @@ export class Card {
   readonly id: InputSignal<number | undefined> = input<number | undefined>();
   readonly title: InputSignal<string> = input<string>('');
   readonly subtitle: InputSignal<string> = input<string>('');
-  readonly rating: InputSignal<string> = input<string>('');
+  readonly valoracion: InputSignal<number | null> = input<number | null>(null);
+  readonly totalResenias: InputSignal<number> = input<number>(0);
   readonly imageSrc: InputSignal<string> = input<string>('');
   readonly imageAlt: InputSignal<string> = input<string>('');
   readonly actionText: InputSignal<string> = input<string>('');
   readonly variant: InputSignal<CardVariant> = input<CardVariant>(VARIANTE_DEFECTO);
+  
+  /** @deprecated Usar valoracion y totalResenias */
+  readonly rating: InputSignal<string> = input<string>('');
+
+  // ----------------------------------------
+  // Computed
+  // ----------------------------------------
+  readonly tieneValoracion = computed(() => {
+    const val = this.valoracion();
+    const total = this.totalResenias();
+    return val !== null && total > 0;
+  });
+
+  readonly valoracionFormateada = computed(() => {
+    const val = this.valoracion();
+    return val !== null ? val.toFixed(1) : '';
+  });
 
   // ----------------------------------------
   // Métodos públicos

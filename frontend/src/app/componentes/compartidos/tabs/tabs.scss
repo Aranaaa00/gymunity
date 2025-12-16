@@ -4,8 +4,8 @@
 // VARIABLES LOCALES
 // ============================================
 
-$tabs-transition-duration: 0.2s;
-$tabs-shadow-active: 0 2px 8px rgba($color-botones, 0.3);
+$tabs-transition: 0.2s ease;
+$tabs-indicator-height: 0.25rem;
 
 // ============================================
 // HOST
@@ -31,12 +31,11 @@ $tabs-shadow-active: 0 2px 8px rgba($color-botones, 0.3);
 
 .tabs__lista {
   display: flex;
-  gap: $space-1;
-  padding: $space-1;
+  gap: 0;
+  padding: 0;
   overflow-x: auto;
-  background-color: var(--color-fondo);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
+  background-color: transparent;
+  border-bottom: $borde-thin solid var(--color-borde);
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -50,25 +49,32 @@ $tabs-shadow-active: 0 2px 8px rgba($color-botones, 0.3);
 
 .tabs__tab {
   position: relative;
-  flex: 1;
+  flex: 0 0 auto;
   min-width: max-content;
   padding: $space-2 $space-3;
   background-color: transparent;
   border: none;
-  border-radius: $radio-md;
   font-family: $fuente-principal;
   font-size: $texto-sm;
   font-weight: $font-weight-medium;
   line-height: $line-height-normal;
   color: var(--color-subtitulo);
   cursor: pointer;
-  transition:
-    background-color $tabs-transition-duration ease,
-    color $tabs-transition-duration ease,
-    box-shadow $tabs-transition-duration ease;
+  transition: color $tabs-transition;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: $tabs-indicator-height;
+    background-color: transparent;
+    border-radius: $tabs-indicator-height $tabs-indicator-height 0 0;
+    transition: background-color $tabs-transition;
+  }
 
   &:hover:not(.tabs__tab--activo) {
-    background-color: var(--color-fondo-secundario);
     color: var(--color-texto);
   }
 
@@ -79,12 +85,12 @@ $tabs-shadow-active: 0 2px 8px rgba($color-botones, 0.3);
 }
 
 .tabs__tab--activo {
-  background-color: var(--color-boton);
-  box-shadow: $tabs-shadow-active;
-  color: $gris-50;
+  color: var(--color-boton);
+  font-weight: $font-weight-bold;
+  background-color: rgba($color-botones, 0.08);
 
-  &:hover {
-    background-color: var(--color-boton-hover);
+  &::after {
+    background-color: var(--color-boton);
   }
 }
 

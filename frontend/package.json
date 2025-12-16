@@ -33,6 +33,7 @@
     "@angular/ssr": "^20.3.9",
     "@phosphor-icons/web": "^2.1.2",
     "express": "^5.1.0",
+    "http-proxy-middleware": "^3.0.3",
     "lucide-angular": "^0.555.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

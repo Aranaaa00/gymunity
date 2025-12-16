@@ -60,11 +60,12 @@ export class AuthService {
   // ----------------------------------------
   // Login
   // ----------------------------------------
-  login(email: string, contrasenia: string): Observable<boolean> {
+  login(identifier: string, contrasenia: string): Observable<boolean> {
     this._cargando.set(true);
     this._error.set(null);
 
-    const request: LoginRequest = { email, contrasenia };
+    // El backend acepta email o username en el campo 'email'
+    const request: LoginRequest = { email: identifier, contrasenia };
 
     return this.http.post<AuthResponse>(`${API_URL}/login`, request).pipe(
       tap((response) => this.procesarAuthResponse(response)),

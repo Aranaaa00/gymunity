@@ -28,6 +28,7 @@
   }
 
   &__tab {
+    position: relative;
     padding: $space-2 $space-4;
     background: transparent;
     border: none;
@@ -36,9 +37,19 @@
     font-weight: $font-weight-medium;
     color: var(--color-subtitulo);
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    &:hover { background: var(--color-superficie); color: var(--color-texto); }
-    &--activo { background: var(--color-botones); color: white; }
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    
+    &:hover:not(&--activo) { 
+      background: var(--color-superficie); 
+      color: var(--color-texto); 
+    }
+    
+    &--activo { 
+      background: var(--color-boton); 
+      color: white;
+      font-weight: $font-weight-bold;
+      box-shadow: 0 0.25rem 0.75rem rgba($color-botones, 0.3);
+    }
   }
 
   &__contenido { min-height: 50vh; }
@@ -82,6 +93,12 @@
     @include reset-list;
   }
   &__grid-cards { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  &__grid-cards-horizontal { 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-3;
+    @include reset-list;
+  }
   &__grid-form { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
   &__grid-iconos { grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); }
   &__grid-colores { grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
@@ -117,8 +134,101 @@
 
   &__tipografia { h1, h2, h3, h4, p { margin: 0; } }
 
+  // Tipografía demo mejorada
+  &__tipografia-demo {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    padding: $space-3;
+    background: var(--color-fondo-suave);
+    border-radius: $radio-md;
+  }
+
+  &__tipografia-familia {
+    margin: 0;
+    font-family: $fuente-principal;
+    font-size: $texto-3xl;
+    font-weight: $font-weight-bold;
+    color: var(--color-texto);
+  }
+
+  &__tipografia-fallback {
+    margin: 0;
+    font-size: $texto-sm;
+    color: var(--color-subtitulo);
+  }
+
+  &__tipografia-escala {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__tipografia-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: $space-3;
+    padding-bottom: $space-3;
+    border-bottom: $borde-thin solid var(--color-borde);
+
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    h1, h2, h3, h4, p {
+      margin: 0;
+      flex: 1;
+    }
+
+    span {
+      flex-shrink: 0;
+      font-size: $texto-xs;
+      color: var(--color-subtitulo);
+    }
+  }
+
+  &__tipografia-pesos {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+
+    p {
+      margin: 0;
+      font-size: $texto-lg;
+    }
+  }
+
+  &__texto-xl { font-size: $texto-lg; }
+  &__texto-md { font-size: $texto-md; }
+  &__texto-sm { font-size: $texto-sm; }
+  &__texto-xs { font-size: $texto-xs; }
+
   &__codigo {
     pre { margin: 0; padding: $space-3; background: var(--color-fondo-suave); border-radius: $radio-md; overflow-x: auto; }
     code { font-family: monospace; font-size: $texto-sm; line-height: 1.5; }
+  }
+
+  // Demo de Toasts
+  &__toast-demo {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    padding: $space-3;
+    background: var(--color-fondo-suave);
+    border-radius: $radio-md;
+  }
+
+  &__toast-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+
+  &__toast-hint {
+    margin: 0;
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
   }
 }

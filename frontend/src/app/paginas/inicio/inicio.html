@@ -29,7 +29,8 @@
               [id]="gym.id"
               [title]="gym.nombre"
               [subtitle]="gym.disciplinas"
-              [rating]="formatearValoracion(gym.valoracionMedia, gym.totalResenias)"
+              [valoracion]="gym.valoracionMedia"
+              [totalResenias]="gym.totalResenias"
               [imageSrc]="gym.foto"
               variant="vertical"
             />
@@ -51,8 +52,9 @@
             <app-card
               [id]="gym.id"
               [title]="gym.nombre"
-              [subtitle]="gym.disciplinas"
-              [rating]="gym.ciudad"
+              [subtitle]="gym.ciudad"
+              [valoracion]="gym.valoracionMedia"
+              [totalResenias]="gym.totalResenias"
               [imageSrc]="gym.foto"
               variant="vertical"
             />

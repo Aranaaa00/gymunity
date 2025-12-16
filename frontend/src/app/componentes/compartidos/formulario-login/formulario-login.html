@@ -11,15 +11,15 @@
     }
     
     <app-campo-formulario
-      label="Email"
-      type="email"
-      placeholder="tu@email.com"
-      inputId="login-email"
-      name="email"
-      [formControl]="$any(emailControl)"
+      label="Email o nombre de usuario"
+      type="text"
+      placeholder="tu@email.com o tu_usuario"
+      inputId="login-identifier"
+      name="identifier"
+      [formControl]="$any(identifierControl)"
       [required]="true"
-      [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
-      [errorMessage]="getErrorMessage('email')">
+      [hasError]="!!identifierControl?.touched && !!identifierControl?.invalid"
+      [errorMessage]="getErrorMessage('identifier')">
     </app-campo-formulario>
     
     <app-campo-formulario

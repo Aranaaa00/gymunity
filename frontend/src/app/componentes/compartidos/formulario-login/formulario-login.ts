@@ -9,11 +9,11 @@ import { AuthService } from '../../../servicios/auth';
 // ============================================
 
 export interface DatosLogin {
-  readonly email: string;
+  readonly identifier: string;
   readonly password: string;
 }
 
-type CampoLogin = 'email' | 'password';
+type CampoLogin = 'identifier' | 'password';
 
 // ============================================
 // CONSTANTES
@@ -22,9 +22,8 @@ type CampoLogin = 'email' | 'password';
 const LONGITUD_MINIMA_PASSWORD = 1;
 
 const MENSAJES_ERROR: Readonly<Record<CampoLogin, Record<string, string>>> = {
-  email: {
-    required: 'El email es obligatorio',
-    email: 'El email no es válido',
+  identifier: {
+    required: 'El email o nombre de usuario es obligatorio',
   },
   password: {
     required: 'La contraseña es obligatoria',
@@ -66,15 +65,15 @@ export class FormularioLogin {
   // Formulario
   // ----------------------------------------
   readonly loginForm: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    identifier: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PASSWORD)]],
   });
 
   // ----------------------------------------
   // Getters de controles
   // ----------------------------------------
-  get emailControl(): AbstractControl | null {
-    return this.loginForm.get('email');
+  get identifierControl(): AbstractControl | null {
+    return this.loginForm.get('identifier');
   }
 
   get passwordControl(): AbstractControl | null {
@@ -109,14 +108,14 @@ export class FormularioLogin {
     }
 
     this.cargando.set(true);
-    const { email, password } = this.loginForm.value;
+    const { identifier, password } = this.loginForm.value;
 
-    this.authService.login(email, password).subscribe({
+    this.authService.login(identifier, password).subscribe({
       next: (exito) => {
         this.cargando.set(false);
         if (exito) {
           this.cerrar.emit();
-          this.enviar.emit({ email, password });
+          this.enviar.emit({ identifier, password });
         } else {
           this.errorServidor.set(this.authService.error() || 'Credenciales incorrectas');
         }

@@ -106,7 +106,8 @@
                 [id]="1"
                 title="Fitness Plus"
                 subtitle="Madrid Centro"
-                rating="4.5"
+                [valoracion]="4.5"
+                [totalResenias]="28"
                 imageSrc="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop"
                 imageAlt="Gimnasio Fitness Plus"
                 actionText="Ver más"
@@ -117,32 +118,49 @@
                 [id]="2"
                 title="CrossFit Zone"
                 subtitle="Barcelona"
-                rating="4.8"
+                [valoracion]="null"
+                [totalResenias]="0"
                 imageSrc="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&h=300&fit=crop"
                 imageAlt="Gimnasio CrossFit Zone"
                 actionText="Ver más"
               ></app-card>
             </li>
           </ul>
-          <code>variant="vertical" (por defecto)</code>
+          <code>[valoracion]="4.5" [totalResenias]="28" — o null para "Aún sin valoraciones"</code>
         </fieldset>
 
         <!-- Card Horizontal -->
         <fieldset class="guia-estilo__bloque">
           <legend>Card Horizontal</legend>
-          <figure class="guia-estilo__columna">
-            <app-card
-              [id]="3"
-              title="Power Gym"
-              subtitle="Valencia"
-              rating="4.2"
-              imageSrc="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop"
-              imageAlt="Gimnasio Power Gym"
-              actionText="Ver más"
-              variant="horizontal"
-            ></app-card>
-            <figcaption><code>variant="horizontal"</code></figcaption>
-          </figure>
+          <ul class="guia-estilo__grid-cards-horizontal">
+            <li>
+              <app-card
+                [id]="3"
+                title="Power Gym"
+                subtitle="Valencia"
+                [valoracion]="4.2"
+                [totalResenias]="15"
+                imageSrc="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop"
+                imageAlt="Gimnasio Power Gym"
+                actionText="Ver más"
+                variant="horizontal"
+              ></app-card>
+            </li>
+            <li>
+              <app-card
+                [id]="4"
+                title="CrossFit Box"
+                subtitle="Madrid"
+                [valoracion]="null"
+                [totalResenias]="0"
+                imageSrc="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop"
+                imageAlt="CrossFit Box"
+                actionText="Ver más"
+                variant="horizontal"
+              ></app-card>
+            </li>
+          </ul>
+          <code>variant="horizontal" — 2 cards por fila</code>
         </fieldset>
 
         <!-- Card Image -->
@@ -327,21 +345,26 @@
         <!-- Toasts -->
         <fieldset class="guia-estilo__bloque">
           <legend>Toasts (Notificaciones)</legend>
-          <p>Notificaciones flotantes auto-descartables. Haz clic para probar:</p>
-          <ul class="guia-estilo__fila">
-            <li class="guia-estilo__item">
-              <app-boton variante="primary" (click)="mostrarToastSuccess()">Success</app-boton>
-            </li>
-            <li class="guia-estilo__item">
-              <app-boton variante="danger" (click)="mostrarToastError()">Error</app-boton>
-            </li>
-            <li class="guia-estilo__item">
-              <app-boton variante="secondary" (click)="mostrarToastWarning()">Warning</app-boton>
-            </li>
-            <li class="guia-estilo__item">
-              <app-boton variante="ghost" (click)="mostrarToastInfo()">Info</app-boton>
-            </li>
-          </ul>
+          <p>Notificaciones flotantes que se apilan. <strong>Los nuevos aparecen abajo</strong> y puedes cerrarlos manualmente.</p>
+          <div class="guia-estilo__toast-demo">
+            <div class="guia-estilo__toast-botones">
+              <app-boton variante="primary" tamanio="sm" (click)="mostrarToastSuccess()">
+                <lucide-icon name="check" [size]="14" /> Éxito
+              </app-boton>
+              <app-boton variante="danger" tamanio="sm" (click)="mostrarToastError()">
+                <lucide-icon name="x" [size]="14" /> Error
+              </app-boton>
+              <app-boton variante="secondary" tamanio="sm" (click)="mostrarToastWarning()">
+                <lucide-icon name="alert-triangle" [size]="14" /> Aviso
+              </app-boton>
+              <app-boton variante="ghost" tamanio="sm" (click)="mostrarToastInfo()">
+                <lucide-icon name="info" [size]="14" /> Info
+              </app-boton>
+            </div>
+            <p class="guia-estilo__toast-hint">
+              💡 Haz clic en varios botones para ver cómo se apilan las notificaciones
+            </p>
+          </div>
           <code>notificacionService.success('mensaje') | .error() | .warning() | .info()</code>
         </fieldset>
       </article>
@@ -393,18 +416,42 @@
         <!-- Acordeón -->
         <fieldset class="guia-estilo__bloque">
           <legend>Acordeón</legend>
+          <p>Haz clic en cada elemento para expandir/contraer. <strong>El chevron rota 180°</strong> al expandir.</p>
           <app-acordeon>
-            <app-acordeon-item titulo="¿Cómo me registro?">
-              <p>Para registrarte, haz clic en el botón "Registrarse" en la esquina superior derecha.</p>
+            <app-acordeon-item titulo="¿Cómo me registro en Gymunity?" icono="user">
+              <p>Para registrarte, sigue estos pasos:</p>
+              <ol>
+                <li>Haz clic en <strong>"Registrarse"</strong> en la esquina superior derecha</li>
+                <li>Completa el formulario con tus datos</li>
+                <li>Confirma tu email y ¡listo!</li>
+              </ol>
             </app-acordeon-item>
-            <app-acordeon-item titulo="¿Puedo cambiar de gimnasio?">
-              <p>Sí, puedes cambiar de gimnasio en cualquier momento desde tu perfil.</p>
+            <app-acordeon-item titulo="¿Puedo cambiar de gimnasio?" icono="dumbbell">
+              <p>¡Sí! Gymunity te permite cambiar de gimnasio en cualquier momento:</p>
+              <ul>
+                <li>Ve a tu <strong>perfil</strong></li>
+                <li>Selecciona <strong>"Mis gimnasios"</strong></li>
+                <li>Añade o elimina gimnasios según tus preferencias</li>
+              </ul>
             </app-acordeon-item>
-            <app-acordeon-item titulo="¿Cómo contacto con soporte?">
-              <p>Envía un email a soporte&#64;gymunity.com o usa el formulario de contacto.</p>
+            <app-acordeon-item titulo="¿Cómo puedo valorar un gimnasio?" icono="star">
+              <p>Después de visitar un gimnasio, puedes dejar tu valoración:</p>
+              <ul>
+                <li>Accede a la ficha del gimnasio</li>
+                <li>Haz clic en <strong>"Escribir reseña"</strong></li>
+                <li>Puntúa y añade tu comentario</li>
+              </ul>
+            </app-acordeon-item>
+            <app-acordeon-item titulo="¿Cómo contacto con soporte?" icono="message-circle">
+              <p>Tenemos varios canales de atención:</p>
+              <ul>
+                <li>📧 Email: <a href="mailto:soporte@gymunity.com">soporte&#64;gymunity.com</a></li>
+                <li>💬 Chat en vivo (disponible 9:00 - 21:00)</li>
+                <li>📱 Formulario de contacto en la web</li>
+              </ul>
             </app-acordeon-item>
           </app-acordeon>
-          <code>&lt;app-acordeon&gt; + &lt;app-acordeon-item titulo="..."&gt;</code>
+          <code>&lt;app-acordeon-item titulo="..." icono="user"&gt;</code>
         </fieldset>
       </article>
     }
@@ -460,42 +507,95 @@
       <article class="guia-estilo__seccion">
         <h2>Tipografía</h2>
         <p class="guia-estilo__descripcion">
-          Sistema tipográfico basado en Roboto con escala modular.
+          Sistema tipográfico basado en <strong>Roboto</strong> con escala modular para jerarquía visual clara.
         </p>
+
+        <!-- Fuente -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Fuente Principal</legend>
+          <div class="guia-estilo__tipografia-demo">
+            <p class="guia-estilo__tipografia-familia">Roboto</p>
+            <p class="guia-estilo__tipografia-fallback">Arial, Helvetica, sans-serif</p>
+          </div>
+          <code>$fuente-principal: 'Roboto', Arial, sans-serif;</code>
+        </fieldset>
 
         <!-- Encabezados -->
         <fieldset class="guia-estilo__bloque">
           <legend>Encabezados</legend>
-          <figure class="guia-estilo__columna guia-estilo__tipografia">
-            <h1>Heading 1 - Título Principal</h1>
-            <h2>Heading 2 - Subtítulo de Sección</h2>
-            <h3>Heading 3 - Título de Bloque</h3>
-            <h4>Heading 4 - Título Menor</h4>
-          </figure>
+          <div class="guia-estilo__tipografia-escala">
+            <div class="guia-estilo__tipografia-item">
+              <h1>Heading 1</h1>
+              <span>2.5rem / 40px — Bold</span>
+            </div>
+            <div class="guia-estilo__tipografia-item">
+              <h2>Heading 2</h2>
+              <span>2rem / 32px — Bold</span>
+            </div>
+            <div class="guia-estilo__tipografia-item">
+              <h3>Heading 3</h3>
+              <span>1.5rem / 24px — Semibold</span>
+            </div>
+            <div class="guia-estilo__tipografia-item">
+              <h4>Heading 4</h4>
+              <span>1.25rem / 20px — Semibold</span>
+            </div>
+          </div>
         </fieldset>
 
         <!-- Texto -->
         <fieldset class="guia-estilo__bloque">
-          <legend>Texto</legend>
-          <figure class="guia-estilo__columna guia-estilo__tipografia">
-            <p>Párrafo normal. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p><strong>Texto en negrita</strong> para énfasis fuerte.</p>
-            <p><em>Texto en cursiva</em> para énfasis sutil.</p>
-            <p><a href="#">Enlace de ejemplo</a> con estilos hover.</p>
-            <p><small>Texto pequeño para información secundaria.</small></p>
-          </figure>
+          <legend>Cuerpo de Texto</legend>
+          <div class="guia-estilo__tipografia-escala">
+            <div class="guia-estilo__tipografia-item">
+              <p class="guia-estilo__texto-xl">Texto XL — Destacados</p>
+              <span>1.25rem / 20px</span>
+            </div>
+            <div class="guia-estilo__tipografia-item">
+              <p class="guia-estilo__texto-md">Texto MD — Párrafos normales</p>
+              <span>1rem / 16px</span>
+            </div>
+            <div class="guia-estilo__tipografia-item">
+              <p class="guia-estilo__texto-sm">Texto SM — Información secundaria</p>
+              <span>0.875rem / 14px</span>
+            </div>
+            <div class="guia-estilo__tipografia-item">
+              <p class="guia-estilo__texto-xs">Texto XS — Etiquetas y notas</p>
+              <span>0.75rem / 12px</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Pesos -->
+        <fieldset class="guia-estilo__bloque">
+          <legend>Pesos Tipográficos</legend>
+          <div class="guia-estilo__tipografia-pesos">
+            <p style="font-weight: 400;">Regular (400) — Texto base</p>
+            <p style="font-weight: 500;">Medium (500) — Labels y énfasis sutil</p>
+            <p style="font-weight: 600;">Semibold (600) — Subtítulos</p>
+            <p style="font-weight: 700;">Bold (700) — Títulos y CTA</p>
+          </div>
         </fieldset>
 
         <!-- Variables CSS -->
         <fieldset class="guia-estilo__bloque">
           <legend>Variables SCSS</legend>
           <figure class="guia-estilo__codigo">
-            <pre><code>$fuente-principal: 'Roboto', Arial, sans-serif;
-$texto-xs: 0.75rem;   // 12px
-$texto-sm: 0.875rem;  // 14px
-$texto-md: 1rem;      // 16px
-$texto-lg: 1.25rem;   // 20px
-$texto-xl: 2.5rem;    // 40px</code></pre>
+            <pre><code>// Fuente
+$fuente-principal: 'Roboto', Arial, sans-serif;
+
+// Tamaños
+$texto-xs: 0.75rem;    // 12px
+$texto-sm: 0.875rem;   // 14px
+$texto-md: 1rem;       // 16px
+$texto-lg: 1.25rem;    // 20px
+$texto-xl: 2.5rem;     // 40px
+
+// Pesos
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;</code></pre>
           </figure>
         </fieldset>
       </article>

@@ -1,36 +1,30 @@
-@if (notificacion(); as n) {
-  <aside 
-    class="toast"
-    [class]="tipoClase()"
-    [class.toast--saliendo]="saliendo()"
-    [attr.data-id]="notificacionId()"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true">
-    
-    <!-- Icono del tipo de notificación -->
-    <span class="toast__icono" aria-hidden="true">
-      <lucide-icon [name]="icono()" [size]="18" />
-    </span>
-    
-    <!-- Mensaje de la notificación -->
-    <p class="toast__mensaje">{{ n.mensaje }}</p>
-    
-    <!-- Botón cerrar -->
-    <button 
-      type="button"
-      class="toast__cerrar" 
-      (click)="cerrar()" 
-      aria-label="Cerrar notificación">
-      <lucide-icon name="x" [size]="14" />
-    </button>
-    
-    <!-- Barra de progreso con key única para reiniciar animación -->
-    @for (item of [notificacionId()]; track item) {
-      <span 
-        class="toast__progreso" 
-        aria-hidden="true">
-      </span>
+@if (notificaciones().length > 0) {
+  <div class="toast-container">
+    @for (n of notificaciones(); track trackById($index, n)) {
+      <aside 
+        class="toast"
+        [class]="getTipoClase(n.tipo)"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true">
+        
+        <!-- Icono del tipo -->
+        <span class="toast__icono" aria-hidden="true">
+          <app-icono [nombre]="getIcono(n.tipo)" tamano="sm" />
+        </span>
+        
+        <!-- Mensaje -->
+        <p class="toast__mensaje">{{ n.mensaje }}</p>
+        
+        <!-- Botón cerrar -->
+        <button 
+          type="button"
+          class="toast__cerrar" 
+          (click)="cerrar(n)" 
+          aria-label="Cerrar notificación">
+          <app-icono nombre="x" tamano="sm" />
+        </button>
+      </aside>
     }
-  </aside>
+  </div>
 }

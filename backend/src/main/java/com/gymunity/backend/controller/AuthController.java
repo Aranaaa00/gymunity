@@ -33,26 +33,29 @@ public class AuthController {
 
     /**
      * Endpoint para login de usuarios.
+     * Acepta email o nombre de usuario como identificador.
      * @param loginDTO credenciales del usuario
      * @return token JWT si las credenciales son correctas
      */
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody UsuarioLoginDTO loginDTO) {
         
-        // Autentica al usuario
+        String identifier = loginDTO.getEmail();
+        
+        // Autentica al usuario (CustomUserDetailsService busca por email o username)
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginDTO.getEmail(),
+                        identifier,
                         loginDTO.getContrasenia()
                 )
         );
 
         // Carga el usuario y genera el token
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(identifier);
         String token = jwtUtil.generateToken(userDetails);
 
-        // Obtiene datos completos del usuario
-        Usuario usuario = usuarioService.buscarPorEmail(loginDTO.getEmail());
+        // Obtiene datos completos del usuario (por email o username)
+        Usuario usuario = usuarioService.buscarPorEmailOUsername(identifier);
 
         AuthResponseDTO response = AuthResponseDTO.builder()
                 .token(token)
