@@ -163,4 +163,20 @@ public class UsuarioService {
                 .ciudad(usuario.getCiudad())
                 .build();
     }
+
+    /**
+     * Verifica si existe un usuario con el email dado.
+     */
+    @Transactional(readOnly = true)
+    public boolean existeEmail(String email) {
+        return usuarioRepository.existsByEmail(email);
+    }
+
+    /**
+     * Verifica si existe un usuario con el nombre de usuario dado.
+     */
+    @Transactional(readOnly = true)
+    public boolean existeUsername(String username) {
+        return usuarioRepository.existsByNombreUsuarioIgnoreCase(username);
+    }
 }

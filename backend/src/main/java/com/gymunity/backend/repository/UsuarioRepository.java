@@ -47,6 +47,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmail(String email);
 
     /**
+     * Verifica si existe un usuario con el nombre de usuario indicado (case insensitive).
+     *
+     * @param nombreUsuario Nombre de usuario a verificar.
+     * @return true si existe, false en caso contrario.
+     */
+    boolean existsByNombreUsuarioIgnoreCase(String nombreUsuario);
+
+    /**
      * Busca usuarios por rol (PROFESOR o ALUMNO).
      *
      * @param rol Rol del usuario.

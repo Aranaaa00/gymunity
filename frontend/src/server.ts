@@ -18,10 +18,24 @@ const angularApp = new AngularNodeAppEngine();
  * In Docker, 'backend' is the service name; locally use 'localhost'.
  */
 const backendUrl = process.env['BACKEND_URL'] || 'http://localhost:8080';
-app.use('/api', createProxyMiddleware({
+
+const apiProxy = createProxyMiddleware({
   target: backendUrl,
   changeOrigin: true,
-}));
+  secure: false,
+  pathFilter: '/api',
+  logger: console,
+  on: {
+    proxyReq: (proxyReq, req) => {
+      console.log(`[Proxy] ${req.method} ${req.url} -> ${backendUrl}${req.url}`);
+    },
+    error: (err, req, res) => {
+      console.error('[Proxy Error]', err);
+    }
+  }
+});
+
+app.use(apiProxy);
 
 /**
  * Serve static files from /browser

@@ -39,18 +39,14 @@
   />
 }
 
-@if (validando()) {
-  <small class="campo-formulario__validando" role="status">Verificando...</small>
-}
-
-@if (mensajeExito() && !hasError() && !validando()) {
-  <small class="campo-formulario__exito" role="status">{{ mensajeExito() }}</small>
-}
-
-@if (helpText() && !hasError() && !validando() && !mensajeExito()) {
-  <small class="campo-formulario__help" [id]="inputId() + '-help'">{{ helpText() }}</small>
-}
-
-@if (hasError() && errorMessage()) {
-  <small class="campo-formulario__error" [id]="inputId() + '-error'" role="alert">{{ errorMessage() }}</small>
-}
+<div class="campo-formulario__mensaje-container">
+  @if (validando()) {
+    <small class="campo-formulario__validando" role="status">Verificando...</small>
+  } @else if (hasError() && errorMessage()) {
+    <small class="campo-formulario__error" [id]="inputId() + '-error'" role="alert">{{ errorMessage() }}</small>
+  } @else if (mensajeExito()) {
+    <small class="campo-formulario__exito" role="status">{{ mensajeExito() }}</small>
+  } @else if (helpText()) {
+    <small class="campo-formulario__help" [id]="inputId() + '-help'">{{ helpText() }}</small>
+  }
+</div>

@@ -1,29 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable, of, timer } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
+import { HttpBase } from './http-base';
 
 // ============================================
 // CONSTANTES
 // ============================================
 
 const DELAY_DEBOUNCE = 500;
-
-// Emails que ya existen (simulación)
-const EMAILS_EXISTENTES = new Set([
-  'usuario@gymunity.com',
-  'admin@gymunity.com',
-  'test@example.com',
-]);
-
-// Usernames que ya existen (simulación)
-const USERNAMES_EXISTENTES = new Set([
-  'admin',
-  'usuario',
-  'gymunity',
-  'test',
-  'demo',
-]);
+const API_URL = '/api/usuarios/verificar';
 
 // ============================================
 // SERVICIO DE VALIDADORES ASÍNCRONOS
@@ -32,12 +18,16 @@ const USERNAMES_EXISTENTES = new Set([
 @Injectable({ providedIn: 'root' })
 export class ValidadoresAsincronos {
   // ----------------------------------------
+  // Dependencias
+  // ----------------------------------------
+  private readonly http = inject(HttpBase);
+
+  // ----------------------------------------
   // Validador de email único
   // ----------------------------------------
   
   /**
    * Valida que el email no esté registrado en la base de datos.
-   * Simula una llamada a la API con debounce.
    */
   emailUnico(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -49,7 +39,7 @@ export class ValidadoresAsincronos {
       }
 
       return timer(DELAY_DEBOUNCE).pipe(
-        switchMap(() => this.verificarEmailEnBD(email)),
+        switchMap(() => this.http.get<boolean>(`${API_URL}/email/${encodeURIComponent(email)}`)),
         map((emailExiste) => {
           if (emailExiste) {
             return { emailNoDisponible: true };
@@ -67,7 +57,6 @@ export class ValidadoresAsincronos {
   
   /**
    * Valida que el username no esté registrado en la base de datos.
-   * Simula una llamada a la API con debounce.
    */
   usernameUnico(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -79,7 +68,7 @@ export class ValidadoresAsincronos {
       }
 
       return timer(DELAY_DEBOUNCE).pipe(
-        switchMap(() => this.verificarUsernameEnBD(username)),
+        switchMap(() => this.http.get<boolean>(`${API_URL}/username/${encodeURIComponent(username)}`)),
         map((usernameExiste) => {
           if (usernameExiste) {
             return { usernameNoDisponible: true };
@@ -89,32 +78,6 @@ export class ValidadoresAsincronos {
         catchError(() => of(null))
       );
     };
-  }
-
-  // ----------------------------------------
-  // Métodos privados (simulan llamadas a API)
-  // ----------------------------------------
-  
-  /**
-   * Simula verificación de email en base de datos
-   * En producción, esto sería una llamada HTTP real
-   */
-  private verificarEmailEnBD(email: string): Observable<boolean> {
-    const emailNormalizado = email.toLowerCase().trim();
-    const existe = EMAILS_EXISTENTES.has(emailNormalizado);
-    
-    return of(existe);
-  }
-
-  /**
-   * Simula verificación de username en base de datos
-   * En producción, esto sería una llamada HTTP real
-   */
-  private verificarUsernameEnBD(username: string): Observable<boolean> {
-    const usernameNormalizado = username.toLowerCase().trim();
-    const existe = USERNAMES_EXISTENTES.has(usernameNormalizado);
-    
-    return of(existe);
   }
 }
 

@@ -20,8 +20,8 @@
           [class.gym-header__nav--abierto]="menuAbierto()"
           role="navigation"
           [attr.aria-hidden]="!menuAbierto()">
-          <app-boton variante="ghost" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
-          <app-boton variante="primary" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
+          <app-boton variante="ghost" tamano="sm" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
+          <app-boton variante="primary" tamano="sm" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
         </nav>
       }
 

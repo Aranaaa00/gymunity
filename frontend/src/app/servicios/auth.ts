@@ -71,11 +71,28 @@ export class AuthService {
       tap((response) => this.procesarAuthResponse(response)),
       map(() => true),
       catchError((error) => {
-        this._error.set(error.mensaje || 'Error al iniciar sesión');
+        const mensajeError = this.obtenerMensajeError(error);
+        this._error.set(mensajeError);
         this._cargando.set(false);
         return of(false);
       })
     );
+  }
+
+  private obtenerMensajeError(error: { codigo?: number; mensaje?: string }): string {
+    if (error.codigo === 401 || error.codigo === 403) {
+      return 'Usuario o contraseña incorrectos';
+    }
+    if (error.codigo === 404) {
+      return 'El usuario no existe. ¿Quieres crear una cuenta?';
+    }
+    if (error.codigo === 500) {
+      return 'El usuario no existe o las credenciales son incorrectas';
+    }
+    if (error.codigo === 0) {
+      return 'No se pudo conectar con el servidor. Verifica tu conexión';
+    }
+    return error.mensaje || 'Error al iniciar sesión. Inténtalo de nuevo';
   }
 
   // ----------------------------------------

@@ -4,10 +4,10 @@
 // VARIABLES LOCALES
 // ============================================
 
-$formulario-max-width: 24rem;
-$formulario-logo-height: 3rem;
+$formulario-max-width: 100%;
+$formulario-logo-height: 2.5rem;
 $formulario-submit-max-width: 100%;
-$formulario-link-transition-duration: 0.15s;
+$formulario-link-transition-duration: 0.2s;
 
 // ============================================
 // CONTENEDOR DEL FORMULARIO
@@ -23,6 +23,7 @@ $formulario-link-transition-duration: 0.15s;
 .formulario-auth {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: $formulario-max-width;
 }
@@ -34,7 +35,7 @@ $formulario-link-transition-duration: 0.15s;
 .formulario-auth__header {
   display: flex;
   justify-content: center;
-  margin-bottom: $space-2;
+  margin-bottom: $space-1;
 }
 
 .formulario-auth__logo {
@@ -49,14 +50,19 @@ $formulario-link-transition-duration: 0.15s;
   display: flex;
   flex-direction: column;
   gap: $space-1;
+  width: 100%;
   margin: 0;
   padding: 0;
   border: none;
 }
 
 .formulario-auth__legend {
-  margin-bottom: $space-2;
-  font: $font-weight-bold #{$texto-2xl}/#{$line-height-tight} $fuente-principal;
+  width: 100%;
+  margin-bottom: $space-1;
+  font-family: $fuente-principal;
+  font-size: $texto-lg;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
   text-align: center;
   color: var(--color-texto);
 }
@@ -66,12 +72,14 @@ $formulario-link-transition-duration: 0.15s;
 // ============================================
 
 .formulario-auth__error-servidor {
-  margin: 0 0 $space-2;
+  width: 100%;
+  margin: 0 0 $space-1;
   padding: $space-2;
   border-radius: $radio-md;
-  background-color: var(--color-error-fondo);
+  background-color: rgba($color-error, 0.1);
+  border: $borde-thin solid rgba($color-error, 0.3);
   color: var(--color-error);
-  font-size: $texto-s;
+  font-size: $texto-sm;
   text-align: center;
 }
 
@@ -82,6 +90,7 @@ $formulario-link-transition-duration: 0.15s;
 .formulario-auth__submit {
   display: flex;
   justify-content: center;
+  width: 100%;
   margin-top: $space-2;
   
   app-boton {
@@ -94,20 +103,22 @@ $formulario-link-transition-duration: 0.15s;
 // ============================================
 
 .formulario-auth__alt {
-  margin-top: $space-4;
-  font-size: $texto-s;
+  margin-top: $space-2;
+  font-size: $texto-sm;
   text-align: center;
   color: var(--color-subtitulo);
 }
 
 .formulario-auth__link {
   padding: 0;
+  margin-left: 0.25rem;
   
   background: none;
   border: none;
   border-radius: $radio-sm;
   
-  font: inherit $font-weight-semibold;
+  font-size: inherit;
+  font-weight: $font-weight-semibold;
   text-decoration: none;
   color: var(--color-boton);
   

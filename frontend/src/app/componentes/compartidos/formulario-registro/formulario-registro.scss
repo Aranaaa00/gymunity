@@ -9,7 +9,7 @@
 // CONSTANTES
 // ============================================
 
-$barra-altura: 0.375rem;
+$barra-altura: 0.5rem;
 $barra-transition: 0.3s ease-in-out;
 
 // ============================================
@@ -26,8 +26,17 @@ $barra-transition: 0.3s ease-in-out;
     margin-bottom: $space-1;
   }
 
+  .formulario-auth__fieldset {
+    gap: $space-1;
+  }
+
+  .formulario-auth__submit {
+    margin-top: $space-2;
+  }
+
   .formulario-auth__alt {
     margin-top: $space-2;
+    font-size: $texto-sm;
   }
 }
 
@@ -38,14 +47,18 @@ $barra-transition: 0.3s ease-in-out;
 .formulario-registro__fuerza {
   display: flex;
   flex-direction: column;
-  gap: $space-1;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.25rem;
+  border-radius: $radio-md;
+  background: var(--color-fondo-terciario);
+  border: $borde-thin solid var(--color-borde);
 }
 
 .formulario-registro__fuerza-barra {
   position: relative;
   height: $barra-altura;
   overflow: hidden;
-  margin-top: $space-1;
   background: var(--color-borde);
   border-radius: $radio-full;
 }
@@ -54,27 +67,30 @@ $barra-transition: 0.3s ease-in-out;
   position: absolute;
   inset: 0;
   width: 0;
-  min-width: 0.125rem;
+  min-width: 0.25rem;
   transition: width $barra-transition, background-color $barra-transition;
+  border-radius: $radio-full;
 }
 
 .formulario-registro__fuerza-progreso--debil {
-  background: var(--color-error);
+  background: linear-gradient(90deg, var(--color-error), #ff6b6b);
 }
 
 .formulario-registro__fuerza-progreso--media {
-  background: var(--color-warning);
+  background: linear-gradient(90deg, var(--color-warning), #ffd43b);
 }
 
 .formulario-registro__fuerza-progreso--fuerte {
-  background: var(--color-info);
+  background: linear-gradient(90deg, var(--color-info), #74c0fc);
 }
 
 .formulario-registro__fuerza-progreso--muy-fuerte {
-  background: var(--color-exito);
+  background: linear-gradient(90deg, var(--color-exito), #69db7c);
 }
 
 .formulario-registro__fuerza-mensaje {
-  font: $font-weight-medium #{$texto-xs} $fuente-principal;
+  font-size: $texto-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1.2;
   color: var(--color-subtitulo);
 }

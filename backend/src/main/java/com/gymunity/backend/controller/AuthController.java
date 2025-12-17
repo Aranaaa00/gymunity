@@ -43,7 +43,7 @@ public class AuthController {
         String identifier = loginDTO.getEmail();
         
         // Autentica al usuario (CustomUserDetailsService busca por email o username)
-        Authentication authentication = authenticationManager.authenticate(
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         identifier,
                         loginDTO.getContrasenia()

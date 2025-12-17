@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:16-alpine
+    pull_policy: if_not_present
     restart: unless-stopped
     environment:
       POSTGRES_DB: gymunity
@@ -8,7 +9,6 @@ services:
       POSTGRES_PASSWORD: gymunity
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U gymunity"]
       interval: 5s
@@ -16,7 +16,10 @@ services:
       retries: 5
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      network: host
+    pull_policy: if_not_present
     restart: unless-stopped
     depends_on:
       db:
@@ -27,16 +30,27 @@ services:
       SPRING_DATASOURCE_PASSWORD: gymunity
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_SQL_INIT_MODE: never
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
+      SPRING_SQL_INIT_MODE: always
+      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
     ports:
       - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/gimnasios"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      network: host
+    pull_policy: if_not_present
     restart: unless-stopped
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
       BACKEND_URL: http://backend:8080
     ports:

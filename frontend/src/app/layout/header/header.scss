@@ -93,7 +93,8 @@ $header-acciones-min-width: 16rem;
   justify-self: center;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: $header-buscador-max-width;
+  min-width: $header-buscador-max-width;
   max-width: $header-buscador-max-width;
 }
 
@@ -106,10 +107,10 @@ $header-acciones-min-width: 16rem;
   align-items: center;
   justify-content: flex-end;
   gap: $space-2;
-  min-width: $header-acciones-min-width;
+  min-width: 11rem;
 
   @include respond-to(md) {
-    min-width: auto;
+    min-width: 14rem;
   }
 }
 

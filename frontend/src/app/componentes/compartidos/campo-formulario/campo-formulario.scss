@@ -4,13 +4,15 @@
 // VARIABLES LOCALES
 // ============================================
 
-$campo-focus-shadow-size: 0.1875rem;
-$campo-transition-duration: 0.15s;
+$campo-focus-shadow-size: 0.125rem;
+$campo-transition-duration: 0.2s;
 $campo-label-margin-bottom: 0.25rem;
-$campo-focus-shadow-opacity: 0.15;
+$campo-focus-shadow-opacity: 0.2;
 $campo-hover-opacity: 0.5;
 $campo-disabled-opacity: 0.5;
-$campo-placeholder-opacity: 0.7;
+$campo-placeholder-opacity: 0.5;
+$campo-input-padding-v: 0.5rem;
+$campo-input-padding-h: 0.75rem;
 
 // ============================================
 // HOST
@@ -28,15 +30,16 @@ $campo-placeholder-opacity: 0.7;
 .campo-formulario__label {
   display: flex;
   align-items: center;
-  gap: $space-1;
+  gap: 0.25rem;
   margin-bottom: $campo-label-margin-bottom;
-  font-size: $texto-xs;
+  font-size: $texto-sm;
   font-weight: $font-weight-medium;
   line-height: $line-height-normal;
   color: var(--color-texto);
 }
 
 .campo-formulario__required {
+  font-size: $texto-sm;
   font-weight: $font-weight-bold;
   text-decoration: none;
   color: var(--color-error);
@@ -48,7 +51,7 @@ $campo-placeholder-opacity: 0.7;
 
 .campo-formulario__field {
   width: 100%;
-  padding: $space-1 $space-2;
+  padding: $campo-input-padding-v $campo-input-padding-h;
   background-color: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-md;
@@ -106,6 +109,15 @@ $campo-placeholder-opacity: 0.7;
 }
 
 // ============================================
+// CONTENEDOR DE MENSAJE (altura fija)
+// ============================================
+
+.campo-formulario__mensaje-container {
+  min-height: 1.125rem;
+  margin-top: 0.125rem;
+}
+
+// ============================================
 // MENSAJES DE AYUDA Y ERROR
 // ============================================
 
@@ -114,12 +126,10 @@ $campo-placeholder-opacity: 0.7;
 .campo-formulario__validando,
 .campo-formulario__exito {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.25rem;
-  min-height: 1.25rem;
-  margin-top: $space-1;
   font-size: $texto-xs;
-  line-height: $line-height-normal;
+  line-height: 1.25;
 }
 
 .campo-formulario__help {
@@ -129,11 +139,28 @@ $campo-placeholder-opacity: 0.7;
 .campo-formulario__error {
   font-weight: $font-weight-medium;
   color: var(--color-error);
+
+  &::before {
+    content: '⚠';
+    flex-shrink: 0;
+  }
 }
 
 .campo-formulario__validando {
   font-weight: $font-weight-medium;
   color: var(--color-info);
+
+  &::before {
+    content: '⟳';
+    flex-shrink: 0;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .campo-formulario__exito {
@@ -142,5 +169,6 @@ $campo-placeholder-opacity: 0.7;
 
   &::before {
     content: '✓';
+    flex-shrink: 0;
   }
 }

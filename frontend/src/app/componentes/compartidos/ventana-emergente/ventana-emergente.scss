@@ -7,10 +7,10 @@
 
 $modal-fade-duration: 0.15s;
 $modal-slide-duration: 0.18s;
-$modal-max-width: 28rem;
+$modal-max-width: 26rem;
 $modal-backdrop-blur: 0.25rem;
 $modal-backdrop-opacity: 0.5;
-$modal-cerrar-size: 2.25rem;
+$modal-cerrar-size: 2rem;
 $modal-cerrar-transition-duration: 0.15s;
 $modal-slide-offset: 0.5rem;
 $modal-slide-scale: 0.98;
@@ -26,17 +26,10 @@ $modal-slide-scale: 0.98;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $space-4;
-  overflow-y: auto;
+  padding: $space-2;
   background: rgba(0, 0, 0, $modal-backdrop-opacity);
   backdrop-filter: blur($modal-backdrop-blur);
   animation: modal-fade $modal-fade-duration ease-out;
-
-  @media (max-height: 40rem) {
-    align-items: flex-start;
-    padding-top: $space-6;
-    padding-bottom: $space-6;
-  }
 }
 
 // ============================================
@@ -49,14 +42,14 @@ $modal-slide-scale: 0.98;
   flex-direction: column;
   width: 100%;
   max-width: $modal-max-width;
-  max-height: calc(100vh - $space-8);
-  margin: auto;
-  padding: $space-3 $space-4;
-  overflow: visible;
+  max-height: calc(100vh - #{$space-4});
+  max-height: calc(100dvh - #{$space-4});
+  padding: $space-4 $space-5;
   background: var(--color-fondo);
   border-radius: $radio-xl;
   box-shadow: $shadow-lg;
   animation: modal-slide $modal-slide-duration ease-out;
+  overflow-y: auto;
 }
 
 // ============================================
@@ -65,8 +58,8 @@ $modal-slide-scale: 0.98;
 
 .ventana-emergente__cerrar {
   position: absolute;
-  top: $space-2;
-  right: $space-2;
+  top: 0.75rem;
+  right: 0.75rem;
   z-index: $z-base;
   display: flex;
   align-items: center;

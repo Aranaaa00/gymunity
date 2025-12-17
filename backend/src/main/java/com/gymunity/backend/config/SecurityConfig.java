@@ -19,11 +19,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-/**
- * Configuración de seguridad de la aplicación.
- * Define qué rutas son públicas y cuáles requieren autenticación.
- */
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -33,43 +35,28 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
 
-    /**
-     * Configura la cadena de filtros de seguridad.
-     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configure(http))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        // Rutas públicas (sin autenticación)
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/gimnasios/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/clases/**").permitAll()
-                        
-                        // Rutas protegidas - Usuarios
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/verificar/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/usuarios").hasRole("PROFESOR")
                         .requestMatchers(HttpMethod.PUT, "/api/usuarios/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**").hasRole("PROFESOR")
-                        
-                        // Rutas protegidas - Gimnasios
                         .requestMatchers(HttpMethod.POST, "/api/gimnasios").hasRole("PROFESOR")
                         .requestMatchers(HttpMethod.PUT, "/api/gimnasios/**").hasRole("PROFESOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/gimnasios/**").hasRole("PROFESOR")
-                        
-                        // Rutas protegidas - Clases
                         .requestMatchers(HttpMethod.POST, "/api/clases").hasRole("PROFESOR")
                         .requestMatchers(HttpMethod.PUT, "/api/clases/**").hasRole("PROFESOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/clases/**").hasRole("PROFESOR")
-                        
-                        // Rutas protegidas - Inscripciones
                         .requestMatchers("/api/inscripciones/**").authenticated()
-                        
-                        // Rutas protegidas - Interacciones
                         .requestMatchers("/api/interacciones/**").authenticated()
-                        
-                        // Cualquier otra ruta requiere autenticación
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -78,14 +65,25 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin()) // Para H2 Console
+                        .frameOptions(frame -> frame.sameOrigin())
                 )
                 .build();
     }
 
-    /**
-     * Proveedor de autenticación que usa BCrypt para contraseñas.
-     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(List.of("Authorization"));
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -94,17 +92,11 @@ public class SecurityConfig {
         return provider;
     }
 
-    /**
-     * Codificador de contraseñas con BCrypt.
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * Manager de autenticación para el login.
-     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

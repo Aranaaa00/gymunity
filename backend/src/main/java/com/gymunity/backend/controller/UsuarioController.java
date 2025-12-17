@@ -59,4 +59,14 @@ public class UsuarioController {
         usuarioService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/verificar/email/{email}")
+    public ResponseEntity<Boolean> verificarEmail(@PathVariable String email) {
+        return ResponseEntity.ok(usuarioService.existeEmail(email));
+    }
+
+    @GetMapping("/verificar/username/{username}")
+    public ResponseEntity<Boolean> verificarUsername(@PathVariable String username) {
+        return ResponseEntity.ok(usuarioService.existeUsername(username));
+    }
 }
