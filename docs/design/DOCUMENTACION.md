@@ -1521,69 +1521,67 @@ La **Guía de Estilo** (`/guia-estilo`) es una página de documentación visual 
 
 5. **Onboarding:** Nuevos miembros del equipo pueden entender rápidamente qué componentes existen y cómo usarlos.
 
-#### **Componentes documentados en el Style Guide:**
+#### **Componentes documentados en el Style Guide**
 
-**Botones:**
+**Botones**
 
-![Botones - Variantes, Tamaños y Estados](./img/Variantes_botones.png)
-
-Muestra las 4 variantes (Primary, Secondary, Ghost, Danger), los 3 tamaños (Small, Medium, Large) y los estados (Normal, Disabled). Permite verificar el contraste de colores y la consistencia de espaciado.
-
----
-
-**Cards:**
-
-![Variantes de cards](./img/Variante_cards.png)
-
-Muestra las 2 variantes de tarjetas:
-- **Vertical:** Imagen arriba, ideal para grids de exploración
-- **Horizontal:** Imagen izquierda con layout grid 3×2, botón "Ver más" en esquina inferior derecha, ideal para resultados de búsqueda
-
-Permite verificar el efecto hover (elevación, borde verde, zoom en imagen) y la responsive correcta de ambas variantes.
+![Botones](./img/Botones.png)
+Muestra todas las variantes (primario, secundario, ghost, danger), tamaños y estados de los botones usados en la web.
 
 ---
 
-**Alertas y toast:**
+**Cards**
 
-![Variantes de alertas](./img/Feedback.png)
-
-Muestra los 4 tipos de alertas: Success (verde), Error (rojo), Warning (naranja), Info (azul), cada una con su icono correspondiente y opción de cierre. Permite probar la funcionalidad de cerrar alertas. Tambien muestra la notificación tipo toast posicionada en esquina superior derecha con temporizador automático. Permite verificar el comportamiento del auto-dismiss.
-
----
-
-**Formularios:**
-
-![Campos de formulario](./img/Formulario.png)
-
-Muestra inputs (campo-formulario), textarea (area-texto) y select (selector) con sus labels, estados de error y mensajes de ayuda. Permite probar la validación y los estados focus/disabled.
+![Cards](./img/Cards.png)
+Tarjetas verticales y horizontales para gimnasios, con imagen, rating y acciones.
 
 ---
 
-**Buscador:**
+**Alertas y feedback**
 
-![Buscador expandido y compacto](./img/Selector_buscador.png)
-
-Muestra el comportamiento responsive del buscador: compacto con solo icono en mobile, expandido con input visible en desktop. Permite verificar la animación de expansión.
+![Feedback](./img/Feedback.png)
+Alertas de éxito, error, advertencia, info y notificaciones toast, con iconos y cierre.
 
 ---
 
-**Colores:**
+**Formularios**
+
+![Formularios](./img/Formularios.png)
+Inputs, selects, textarea y validaciones en todos los estados (normal, error, disabled, ayuda).
+
+---
+
+**Navegación**
+
+![Navegacion](./img/Navegacion.png)
+Menú principal, menú usuario, breadcrumbs y tabs para la navegación de la app.
+
+---
+
+**Componentes interactivos**
+
+![Interactivos](./img/Interactivos.png)
+Acordeón, tooltips, buscador expandible y otros elementos UI dinámicos.
+
+---
+
+**Iconos**
+
+![Iconos](./img/Iconos.png)
+Set de iconos Lucide personalizados para acciones, menús y feedback visual.
+
+---
+
+**Colores**
 
 ![Colores](./img/Colores.png)
-
-Muestra la paleta de modo claro y oscuro usada
+Paleta de colores de marca, semánticos y modo oscuro/claro.
 
 ---
 
-#### **Implementación técnica:**
+**Tipografía**
 
-El Style Guide está implementado como una página Angular (`/guia-estilo`) que importa y renderiza todos los componentes reales del proyecto. No son mocks ni capturas estáticas, sino los componentes funcionando con sus estilos y lógica real.
-
-Estructura de secciones:
-- Cada componente tiene su propia sección (`<section class="seccion">`)
-- Subsecciones para variantes (`<article class="subseccion">`)
-- Grid o columna para mostrar múltiples ejemplos (`<ul class="ejemplos ejemplos--grid">` o `ejemplos--columna`)
-
-Esta estrategia garantiza que la documentación visual nunca se desincroniza del código real, ya que usa los mismos componentes que la aplicación.
+![Tipografia](./img/Tipografia.png)
+Jerarquía de títulos, textos y estilos tipográficos usados en la interfaz.
 
 ---
