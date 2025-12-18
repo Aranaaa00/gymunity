@@ -66,13 +66,56 @@
     background: var(--color-superficie);
     border: $borde-thin solid var(--color-borde);
     border-radius: $radio-lg;
-    legend { padding: 0 $space-2; font-weight: $font-weight-semibold; }
-    > code { display: block; margin-top: $space-3; padding: $space-2; background: var(--color-fondo-suave); border-radius: $radio-sm; @include code-style; }
-    > p { margin-bottom: $space-2; font-size: $texto-sm; color: var(--color-subtitulo); }
-    figcaption { margin-top: $space-2; code { @include code-style; } }
+    
+    legend { 
+      padding: 0 $space-2; 
+      font-weight: $font-weight-semibold; 
+    }
+    
+    > app-alerta {
+      display: block;
+      margin-bottom: $space-3;
+      
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+    
+    > app-boton {
+      margin-top: $space-3;
+    }
+    
+    > code { 
+      display: block; 
+      margin-top: $space-3; 
+      padding: $space-2; 
+      background: var(--color-fondo-suave); 
+      border-radius: $radio-sm; 
+      @include code-style; 
+    }
+    
+    > p { 
+      margin-bottom: $space-3; 
+      font-size: $texto-sm; 
+      color: var(--color-subtitulo); 
+    }
+    
+    figcaption { 
+      margin-top: $space-2; 
+      code { @include code-style; } 
+    }
   }
 
-  &__fila { display: flex; flex-wrap: wrap; gap: $space-3; @include reset-list; &--alineado { align-items: flex-end; } }
+  &__fila { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: $space-3; 
+    @include reset-list; 
+    
+    &--alineado { align-items: flex-end; }
+    &--wrap { flex-wrap: wrap; }
+  }
+  
   &__columna { display: flex; flex-direction: column; gap: $space-3; @include reset-list; }
 
   &__item {
@@ -84,7 +127,10 @@
     min-width: 7rem;
     background: var(--color-fondo-suave);
     border-radius: $radio-md;
-    code { @include code-style; }
+    
+    code { 
+      @include code-style;
+    }
   }
 
   &__grid-cards, &__grid-form, &__grid-iconos, &__grid-colores {
@@ -208,27 +254,5 @@
   &__codigo {
     pre { margin: 0; padding: $space-3; background: var(--color-fondo-suave); border-radius: $radio-md; overflow-x: auto; }
     code { font-family: monospace; font-size: $texto-sm; line-height: 1.5; }
-  }
-
-  // Demo de Toasts
-  &__toast-demo {
-    display: flex;
-    flex-direction: column;
-    gap: $space-3;
-    padding: $space-3;
-    background: var(--color-fondo-suave);
-    border-radius: $radio-md;
-  }
-
-  &__toast-botones {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-2;
-  }
-
-  &__toast-hint {
-    margin: 0;
-    font-size: $texto-xs;
-    color: var(--color-subtitulo);
   }
 }

@@ -26,6 +26,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Configuración de seguridad de Spring Security.
+ * Define las reglas de autenticación, autorización y CORS.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -35,6 +39,13 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Configura la cadena de filtros de seguridad.
+     *
+     * @param http configuración de seguridad HTTP
+     * @return cadena de filtros configurada
+     * @throws Exception si ocurre un error en la configuración
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -70,6 +81,11 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Configura CORS para permitir solicitudes desde el frontend.
+     *
+     * @return fuente de configuración CORS
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -78,12 +94,17 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Authorization"));
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
+    /**
+     * Proveedor de autenticación que utiliza UserDetailsService y PasswordEncoder.
+     *
+     * @return proveedor de autenticación configurado
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -92,11 +113,23 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Codificador de contraseñas BCrypt.
+     *
+     * @return codificador de contraseñas
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Administrador de autenticación de Spring Security.
+     *
+     * @param config configuración de autenticación
+     * @return administrador de autenticación
+     * @throws Exception si ocurre un error al obtener el administrador
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

@@ -272,45 +272,34 @@
         <!-- Alertas -->
         <fieldset class="guia-estilo__bloque">
           <legend>Alertas</legend>
-          <ul class="guia-estilo__columna">
-            <li><app-alerta tipo="info" mensaje="Esta es una alerta informativa."></app-alerta></li>
-            <li><app-alerta tipo="success" mensaje="¡Operación completada con éxito!"></app-alerta></li>
-            <li><app-alerta tipo="warning" mensaje="Atención: revisa los datos introducidos."></app-alerta></li>
-            <li><app-alerta tipo="error" mensaje="Ha ocurrido un error. Inténtalo de nuevo."></app-alerta></li>
-          </ul>
+          <app-alerta tipo="info" mensaje="Esta es una alerta informativa." [cerrable]="false"></app-alerta>
+          <app-alerta tipo="success" mensaje="¡Operación completada con éxito!" [cerrable]="false"></app-alerta>
+          <app-alerta tipo="warning" mensaje="Atención: revisa los datos introducidos." [cerrable]="false"></app-alerta>
+          <app-alerta tipo="error" mensaje="Ha ocurrido un error. Inténtalo de nuevo." [cerrable]="false"></app-alerta>
         </fieldset>
 
         <!-- Alertas descartables -->
         <fieldset class="guia-estilo__bloque">
           <legend>Alertas Descartables</legend>
-          <ul class="guia-estilo__columna">
-            @if (mostrarAlertaInfo()) {
-              <li>
-                <app-alerta
-                  tipo="info"
-                  mensaje="Puedes cerrar esta alerta."
-                  [cerrable]="true"
-                  (cerrar)="mostrarAlertaInfo.set(false)"
-                ></app-alerta>
-              </li>
-            }
-            @if (mostrarAlertaSuccess()) {
-              <li>
-                <app-alerta
-                  tipo="success"
-                  mensaje="Alerta de éxito descartable."
-                  [cerrable]="true"
-                  (cerrar)="mostrarAlertaSuccess.set(false)"
-                ></app-alerta>
-              </li>
-            }
-            <li>
-              <app-boton variante="secondary" (click)="resetearAlertas()">
-                Resetear alertas
-              </app-boton>
-            </li>
-          </ul>
-          <code>[descartable]="true" (cerrar)="handler()"</code>
+          @if (mostrarAlertaInfo()) {
+            <app-alerta
+              tipo="info"
+              mensaje="Puedes cerrar esta alerta."
+              [cerrable]="true"
+              (cerrar)="mostrarAlertaInfo.set(false)"
+            ></app-alerta>
+          }
+          @if (mostrarAlertaSuccess()) {
+            <app-alerta
+              tipo="success"
+              mensaje="Alerta de éxito descartable."
+              [cerrable]="true"
+              (cerrar)="mostrarAlertaSuccess.set(false)"
+            ></app-alerta>
+          }
+          <app-boton variante="secondary" (click)="resetearAlertas()">
+            Resetear alertas
+          </app-boton>
         </fieldset>
 
         <!-- Spinners -->
@@ -339,33 +328,30 @@
           <app-boton variante="secondary" (click)="simularCarga()">
             Simular carga (2s)
           </app-boton>
-          <code>&lt;app-carga-global&gt; (inyectado en root)</code>
         </fieldset>
 
         <!-- Toasts -->
         <fieldset class="guia-estilo__bloque">
           <legend>Toasts (Notificaciones)</legend>
-          <p>Notificaciones flotantes que se apilan. <strong>Los nuevos aparecen abajo</strong> y puedes cerrarlos manualmente.</p>
-          <div class="guia-estilo__toast-demo">
-            <div class="guia-estilo__toast-botones">
-              <app-boton variante="primary" tamanio="sm" (click)="mostrarToastSuccess()">
-                <lucide-icon name="check" [size]="14" /> Éxito
-              </app-boton>
-              <app-boton variante="danger" tamanio="sm" (click)="mostrarToastError()">
-                <lucide-icon name="x" [size]="14" /> Error
-              </app-boton>
-              <app-boton variante="secondary" tamanio="sm" (click)="mostrarToastWarning()">
-                <lucide-icon name="alert-triangle" [size]="14" /> Aviso
-              </app-boton>
-              <app-boton variante="ghost" tamanio="sm" (click)="mostrarToastInfo()">
-                <lucide-icon name="info" [size]="14" /> Info
-              </app-boton>
-            </div>
-            <p class="guia-estilo__toast-hint">
-              💡 Haz clic en varios botones para ver cómo se apilan las notificaciones
-            </p>
-          </div>
-          <code>notificacionService.success('mensaje') | .error() | .warning() | .info()</code>
+          <p>Notificaciones flotantes en la esquina inferior derecha.</p>
+          <ul class="guia-estilo__fila">
+            <li class="guia-estilo__item">
+              <app-boton variante="primary" (click)="mostrarToastSuccess()">Éxito</app-boton>
+              <code>success()</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="danger" (click)="mostrarToastError()">Error</app-boton>
+              <code>error()</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="secondary" (click)="mostrarToastWarning()">Advertencia</app-boton>
+              <code>warning()</code>
+            </li>
+            <li class="guia-estilo__item">
+              <app-boton variante="ghost" (click)="mostrarToastInfo()">Info</app-boton>
+              <code>info()</code>
+            </li>
+          </ul>
         </fieldset>
       </article>
     }
