@@ -18,32 +18,30 @@ services:
   backend:
     build:
       context: ./backend
-      network: host
     pull_policy: if_not_present
     restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/gymunity
-      SPRING_DATASOURCE_USERNAME: gymunity
-      SPRING_DATASOURCE_PASSWORD: gymunity
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
-      SPRING_JPA_HIBERNATE_DDL_AUTO: create
-      SPRING_SQL_INIT_MODE: always
-      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
+      DB_URL: jdbc:postgresql://db:5432/gymunity
+      DB_USERNAME: gymunity
+      DB_PASSWORD: gymunity
+      DB_DRIVER: org.postgresql.Driver
+      DB_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      JWT_SECRET: 5d8f7a9e4c6b3a1f8e7d4c6b3a1f8e7d4c6b3a1f8e7d4c6b3a1f8e7d4c6b3a1f
+      JWT_EXPIRATION: "86400000"
+      SERVER_PORT: "8080"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/gimnasios"]
       interval: 10s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 10
+      start_period: 60s
 
   frontend:
     build:
       context: ./frontend
-      network: host
     pull_policy: if_not_present
     restart: unless-stopped
     depends_on:
@@ -52,7 +50,7 @@ services:
     environment:
       BACKEND_URL: http://backend:8080
     ports:
-      - "80:4000"
+      - "80:8080"
 
 volumes:
   postgres_data:
