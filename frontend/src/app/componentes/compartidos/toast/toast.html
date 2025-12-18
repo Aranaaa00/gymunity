@@ -1,5 +1,5 @@
 @if (notificaciones().length > 0) {
-  <div class="toast-container">
+  <section class="toast-container">
     @for (n of notificaciones(); track trackById($index, n)) {
       <aside 
         class="toast"
@@ -8,15 +8,12 @@
         aria-live="assertive"
         aria-atomic="true">
         
-        <!-- Icono del tipo -->
         <span class="toast__icono" aria-hidden="true">
           <app-icono [nombre]="getIcono(n.tipo)" tamano="sm" />
         </span>
         
-        <!-- Mensaje -->
         <p class="toast__mensaje">{{ n.mensaje }}</p>
         
-        <!-- Botón cerrar -->
         <button 
           type="button"
           class="toast__cerrar" 
@@ -26,5 +23,5 @@
         </button>
       </aside>
     }
-  </div>
+  </section>
 }

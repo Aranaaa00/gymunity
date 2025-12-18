@@ -57,16 +57,12 @@ export class Inicio implements OnInit {
   private cargarGimnasios(): void {
     this.cargando.set(true);
     
-    // Cargar populares
     this.gimnasiosService.obtenerPopulares().subscribe({
       next: (gimnasios) => {
         this.gimnasiosPopulares.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.cargarRecientes();
       },
-      error: () => {
-        this.error.set('Error al cargar gimnasios');
-        this.cargando.set(false);
-      },
+      error: () => this.manejarError(),
     });
   }
 
@@ -76,10 +72,12 @@ export class Inicio implements OnInit {
         this.gimnasiosRecientes.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.cargando.set(false);
       },
-      error: () => {
-        this.error.set('Error al cargar gimnasios');
-        this.cargando.set(false);
-      },
+      error: () => this.manejarError(),
     });
+  }
+
+  private manejarError(): void {
+    this.error.set('Error al cargar gimnasios');
+    this.cargando.set(false);
   }
 }

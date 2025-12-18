@@ -33,8 +33,6 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: create
       SPRING_SQL_INIT_MODE: always
       SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
-    ports:
-      - "8080:8080"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/gimnasios"]
       interval: 10s
@@ -54,7 +52,7 @@ services:
     environment:
       BACKEND_URL: http://backend:8080
     ports:
-      - "4200:4000"
+      - "80:4000"
 
 volumes:
   postgres_data:
