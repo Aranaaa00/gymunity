@@ -69,13 +69,14 @@ public class InteraccionService {
      * Añade o actualiza una reseña.
      * REGLA: Solo puede dejar reseña si está apuntado al gimnasio.
      */
-    public InteraccionResponseDTO dejarResenia(Long usuarioId, Long gimnasioId, String textoResenia) {
+    public InteraccionResponseDTO dejarResenia(Long usuarioId, Long gimnasioId, String textoResenia, Integer valoracion) {
         validarApuntado(usuarioId, gimnasioId);
         
         Interaccion interaccion = interaccionRepository.findByUsuarioIdAndGimnasioId(usuarioId, gimnasioId)
                 .orElseGet(() -> crearNuevaInteraccion(usuarioId, gimnasioId));
         
         interaccion.setResenia(textoResenia);
+        interaccion.setValoracion(valoracion);
         return convertirAResponseDTO(interaccionRepository.save(interaccion));
     }
 
@@ -85,6 +86,7 @@ public class InteraccionService {
     public void eliminarResenia(Long usuarioId, Long gimnasioId) {
         Interaccion interaccion = buscarInteraccion(usuarioId, gimnasioId);
         interaccion.setResenia(null);
+        interaccion.setValoracion(null);
         interaccionRepository.save(interaccion);
     }
 
@@ -102,6 +104,14 @@ public class InteraccionService {
     @Transactional(readOnly = true)
     public long contarResenias(Long gimnasioId) {
         return interaccionRepository.countByGimnasioIdAndReseniaIsNotNull(gimnasioId);
+    }
+
+    /**
+     * Calcula la valoración media de un gimnasio.
+     */
+    @Transactional(readOnly = true)
+    public Double calcularValoracionMedia(Long gimnasioId) {
+        return interaccionRepository.calcularValoracionMedia(gimnasioId);
     }
 
     // ========== MÉTODOS PRIVADOS ==========
@@ -147,6 +157,7 @@ public class InteraccionService {
                 .nombreUsuario(interaccion.getUsuario().getNombreUsuario())
                 .avatarUsuario(interaccion.getUsuario().getAvatar())
                 .texto(interaccion.getResenia())
+                .valoracion(interaccion.getValoracion())
                 .fecha(interaccion.getFechaInteraccion())
                 .build();
     }
@@ -160,6 +171,7 @@ public class InteraccionService {
                 .nombreGimnasio(interaccion.getGimnasio().getNombre())
                 .esApuntado(interaccion.getEsApuntado())
                 .resenia(interaccion.getResenia())
+                .valoracion(interaccion.getValoracion())
                 .fechaInteraccion(interaccion.getFechaInteraccion())
                 .build();
     }

@@ -21,6 +21,8 @@ public class GimnasioDetalleDTO {
     private String nombre;
     private String descripcion;
     private String ciudad;
+    private String telefono;
+    private String email;
     private String foto;
     private Double valoracionMedia;
     private Integer totalResenias;

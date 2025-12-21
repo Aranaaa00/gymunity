@@ -47,6 +47,13 @@ public class JwtUtil {
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+    
+    /**
+     * Extrae la fecha de expiración como Instant del token.
+     */
+    public java.time.Instant extractExpirationAsInstant(String token) {
+        return extractExpiration(token).toInstant();
+    }
 
     /**
      * Extrae un claim específico del token.

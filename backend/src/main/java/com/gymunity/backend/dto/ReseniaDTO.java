@@ -20,5 +20,6 @@ public class ReseniaDTO {
     private String nombreUsuario;
     private String avatarUsuario;
     private String texto;
+    private Integer valoracion;
     private LocalDate fecha;
 }

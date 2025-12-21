@@ -1,5 +1,6 @@
 package com.gymunity.backend.security;
 
+import com.gymunity.backend.service.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 /**
  * Filtro que intercepta todas las peticiones HTTP para validar el token JWT.
- * Si el token es válido, autentica al usuario en el contexto de seguridad.
+ * Si el token es válido y no está revocado, autentica al usuario en el contexto de seguridad.
  */
 @Component
 @RequiredArgsConstructor
@@ -25,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     protected void doFilterInternal(
@@ -49,8 +51,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        // Si el token es válido y no hay autenticación previa
+        // Si el token es válido, no está revocado y no hay autenticación previa
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            
+            // Verificar si el token está en la blacklist
+            if (tokenBlacklistService.isTokenRevoked(jwt)) {
+                logger.warn("Token revocado detectado: " + jwt.substring(0, 20) + "...");
+                filterChain.doFilter(request, response);
+                return;
+            }
+            
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {

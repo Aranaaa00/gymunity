@@ -20,5 +20,6 @@ public class InteraccionResponseDTO {
     private String nombreGimnasio;
     private Boolean esApuntado;
     private String resenia;
+    private Integer valoracion;
     private LocalDate fechaInteraccion;
 }

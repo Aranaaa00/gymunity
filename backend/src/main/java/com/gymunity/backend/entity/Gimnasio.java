@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "gimnasio")
+@Table(name = "gimnasio", indexes = {
+    @Index(name = "idx_gimnasio_ciudad", columnList = "ciudad"),
+    @Index(name = "idx_gimnasio_nombre", columnList = "nombre")
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -41,6 +45,12 @@ public class Gimnasio {
 
     @Column(nullable = false)
     private String ciudad;
+
+    @Column(length = 15)
+    private String telefono;
+
+    @Column(length = 100)
+    private String email;
 
     @Builder.Default
     @OneToMany(mappedBy = "gimnasio", cascade = CascadeType.ALL, orphanRemoval = true)

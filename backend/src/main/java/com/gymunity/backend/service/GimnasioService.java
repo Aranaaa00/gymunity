@@ -25,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GimnasioService {
 
+    private static final int LIMITE_DESTACADOS = 6;
+    
     private final GimnasioRepository gimnasioRepository;
     private final InteraccionRepository interaccionRepository;
     private final AlumnoClaseRepository alumnoClaseRepository;
@@ -53,7 +55,7 @@ public class GimnasioService {
     @Transactional(readOnly = true)
     public List<GimnasioCardDTO> obtenerPopulares() {
         return gimnasioRepository.findMasPopulares().stream()
-                .limit(6)
+                .limit(LIMITE_DESTACADOS)
                 .map(this::convertirACardDTO)
                 .toList();
     }
@@ -64,7 +66,7 @@ public class GimnasioService {
     @Transactional(readOnly = true)
     public List<GimnasioCardDTO> obtenerRecientes() {
         return gimnasioRepository.findMasRecientes().stream()
-                .limit(6)
+                .limit(LIMITE_DESTACADOS)
                 .map(this::convertirACardDTO)
                 .toList();
     }

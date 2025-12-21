@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -22,7 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuario", indexes = {
+    @Index(name = "idx_usuario_ciudad", columnList = "ciudad"),
+    @Index(name = "idx_usuario_email", columnList = "email", unique = true)
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -55,6 +59,9 @@ public class Usuario {
 
     @Column(nullable = false)
     private String ciudad;
+
+    @Column(length = 15)
+    private String telefonoContacto;
 
     @Builder.Default
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)

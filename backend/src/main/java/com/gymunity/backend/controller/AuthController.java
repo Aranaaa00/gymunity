@@ -6,7 +6,9 @@ import com.gymunity.backend.dto.UsuarioRegistroDTO;
 import com.gymunity.backend.entity.Usuario;
 import com.gymunity.backend.security.CustomUserDetailsService;
 import com.gymunity.backend.security.JwtUtil;
+import com.gymunity.backend.service.TokenBlacklistService;
 import com.gymunity.backend.service.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,7 @@ public class AuthController {
     private final CustomUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
     private final UsuarioService usuarioService;
+    private final TokenBlacklistService tokenBlacklistService;
 
     /**
      * Endpoint para login de usuarios.
@@ -102,6 +105,13 @@ public class AuthController {
      */
     @GetMapping("/validate")
     public ResponseEntity<AuthResponseDTO> validateToken(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(AuthResponseDTO.builder()
+                            .mensaje("No autenticado")
+                            .build());
+        }
+        
         String email = authentication.getName();
         Usuario usuario = usuarioService.buscarPorEmail(email);
 
@@ -114,5 +124,36 @@ public class AuthController {
                 .build();
 
         return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * Endpoint para cerrar sesión (logout).
+     * Revoca el token JWT agregándolo a la blacklist.
+     * @param request solicitud HTTP para extraer el token del header
+     * @return mensaje de confirmación
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<AuthResponseDTO> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            
+            // Obtener fecha de expiración y revocar el token
+            java.time.Instant expiration = jwtUtil.extractExpirationAsInstant(token);
+            tokenBlacklistService.revokeToken(token, expiration);
+            
+            AuthResponseDTO response = AuthResponseDTO.builder()
+                    .mensaje("Sesión cerrada exitosamente")
+                    .build();
+            
+            return ResponseEntity.ok(response);
+        }
+        
+        AuthResponseDTO response = AuthResponseDTO.builder()
+                .mensaje("No se encontró token para cerrar sesión")
+                .build();
+        
+        return ResponseEntity.badRequest().body(response);
     }
 }

@@ -48,7 +48,7 @@ public class InteraccionController {
     @PostMapping("/resenia")
     public ResponseEntity<InteraccionResponseDTO> dejarResenia(@Valid @RequestBody InteraccionRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(interaccionService.dejarResenia(dto.getUsuarioId(), dto.getGimnasioId(), dto.getTexto()));
+                .body(interaccionService.dejarResenia(dto.getUsuarioId(), dto.getGimnasioId(), dto.getTexto(), dto.getValoracion()));
     }
 
     @DeleteMapping("/resenia")

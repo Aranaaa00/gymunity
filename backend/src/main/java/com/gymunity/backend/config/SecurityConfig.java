@@ -54,6 +54,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        // Swagger y Actuator públicos
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/gimnasios/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/clases/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/usuarios/verificar/**").permitAll()
