@@ -1,4 +1,4 @@
-import { Component, input, computed, InputSignal, Signal } from '@angular/core';
+import { Component, input, computed, InputSignal, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
@@ -27,6 +27,7 @@ export type NombreIcono =
   | 'log-out'
   | 'plus'
   | 'search'
+  | 'search-x'
   | 'loader'
   | 'construction'
   | 'sparkles'
@@ -40,7 +41,8 @@ export type NombreIcono =
   | 'lock'
   | 'message-circle'
   | 'check'
-  | 'x-circle';
+  | 'x-circle'
+  | 'alert-circle';
 
 type TamanoIcono = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
@@ -74,6 +76,7 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   'log-out': 'LogOut',
   plus: 'Plus',
   search: 'Search',
+  'search-x': 'X',
   loader: 'Loader2',
   construction: 'HardHat',
   sparkles: 'Sparkles',
@@ -88,6 +91,7 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   'message-circle': 'MessageCircle',
   check: 'Check',
   'x-circle': 'XCircle',
+  'alert-circle': 'AlertCircle',
 } as const;
 
 const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {
@@ -108,6 +112,7 @@ const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {
   imports: [LucideAngularModule],
   templateUrl: './icono.html',
   styleUrl: './icono.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Icono {
   // ----------------------------------------

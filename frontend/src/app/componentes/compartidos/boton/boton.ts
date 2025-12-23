@@ -1,4 +1,4 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
@@ -27,6 +27,7 @@ const TAMANO_DEFAULT: TamanoBoton = 'md';
   imports: [LucideAngularModule],
   templateUrl: './boton.html',
   styleUrl: './boton.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Boton {
   // ----------------------------------------

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../servicios/auth';
 import { ComponenteConCambios } from '../../guards/cambios-sin-guardar.guard';
 import { Icono } from '../../componentes/compartidos/icono/icono';
@@ -9,6 +9,7 @@ import { Icono } from '../../componentes/compartidos/icono/icono';
   imports: [Icono],
   templateUrl: './perfil.html',
   styleUrl: './perfil.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Perfil implements ComponenteConCambios {
   readonly usuario = inject(AuthService).usuario;

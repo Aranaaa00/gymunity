@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Icono } from '../../componentes/compartidos/icono/icono';
 
 @Component({
@@ -6,5 +6,6 @@ import { Icono } from '../../componentes/compartidos/icono/icono';
   imports: [Icono],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {}

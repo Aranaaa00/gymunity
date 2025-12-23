@@ -1,4 +1,4 @@
-import { Component, input, output, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
 
 // ============================================
 // COMPONENTE SECCIÓN BIENVENIDA
@@ -9,6 +9,7 @@ import { Component, input, output, InputSignal, OutputEmitterRef } from '@angula
   standalone: true,
   templateUrl: './seccion-bienvenida.html',
   styleUrls: ['./seccion-bienvenida.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeccionBienvenida {
   // ----------------------------------------

@@ -1,6 +1,7 @@
-import { Component, input, output, signal, inject, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, output, signal, inject, InputSignal, OutputEmitterRef, OnInit, OnDestroy, ChangeDetectionStrategy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subject, fromEvent, debounceTime, takeUntil, distinctUntilChanged, filter } from 'rxjs';
 import { Icono } from '../icono/icono';
 
 // ============================================
@@ -8,6 +9,8 @@ import { Icono } from '../icono/icono';
 // ============================================
 
 const PLACEHOLDER_DEFECTO = 'Buscar...';
+const DEBOUNCE_MS = 300;
+const MIN_CARACTERES = 2;
 
 // ============================================
 // COMPONENTE BUSCADOR
@@ -19,27 +22,51 @@ const PLACEHOLDER_DEFECTO = 'Buscar...';
   imports: [FormsModule, Icono],
   templateUrl: './buscador.html',
   styleUrl: './buscador.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Buscador {
+export class Buscador implements OnInit, OnDestroy, AfterViewInit {
+  // ----------------------------------------
+  // ViewChild
+  // ----------------------------------------
+  @ViewChild('inputBusqueda') inputBusqueda!: ElementRef<HTMLInputElement>;
+
   // ----------------------------------------
   // Inputs
   // ----------------------------------------
   readonly placeholder: InputSignal<string> = input<string>(PLACEHOLDER_DEFECTO);
+  readonly debounceMs: InputSignal<number> = input<number>(DEBOUNCE_MS);
+  readonly minCaracteres: InputSignal<number> = input<number>(MIN_CARACTERES);
 
   // ----------------------------------------
   // Outputs
   // ----------------------------------------
   readonly buscar: OutputEmitterRef<string> = output<string>();
+  readonly buscarConDebounce: OutputEmitterRef<string> = output<string>();
 
   // ----------------------------------------
   // Dependencias
   // ----------------------------------------
   private readonly router = inject(Router);
+  private readonly destruir$ = new Subject<void>();
 
   // ----------------------------------------
   // Estado
   // ----------------------------------------
   readonly valor = signal<string>('');
+
+  // ----------------------------------------
+  // Lifecycle
+  // ----------------------------------------
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.configurarDebounce();
+  }
+
+  ngOnDestroy(): void {
+    this.destruir$.next();
+    this.destruir$.complete();
+  }
 
   // ----------------------------------------
   // Métodos públicos
@@ -58,15 +85,33 @@ export class Buscador {
   // ----------------------------------------
   // Métodos privados
   // ----------------------------------------
+  private configurarDebounce(): void {
+    if (!this.inputBusqueda) {
+      return;
+    }
+
+    fromEvent<InputEvent>(this.inputBusqueda.nativeElement, 'input').pipe(
+      debounceTime(this.debounceMs()),
+      distinctUntilChanged(),
+      filter(() => {
+        const valorActual = this.valor();
+        return valorActual.length >= this.minCaracteres() || valorActual.length === 0;
+      }),
+      takeUntil(this.destruir$)
+    ).subscribe(() => {
+      this.buscarConDebounce.emit(this.valor());
+    });
+  }
+
   private navegarABusqueda(termino: string): void {
-    const noHayTermino = !termino.trim();
+    const terminoLimpio = termino.trim();
     
-    if (noHayTermino) {
+    if (!terminoLimpio) {
       return;
     }
     
     this.router.navigate(['/busqueda'], {
-      queryParams: { q: termino }
+      queryParams: { q: terminoLimpio }
     });
   }
 }

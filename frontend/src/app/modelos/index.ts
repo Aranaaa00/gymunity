@@ -154,3 +154,27 @@ export interface ErrorApi {
   readonly codigo: number;
   readonly timestamp?: string;
 }
+
+// --------------------------------------------
+// PAGINACIÓN
+// --------------------------------------------
+
+export interface PaginaInfo {
+  readonly pagina: number;
+  readonly limite: number;
+  readonly totalItems: number;
+  readonly totalPaginas: number;
+  readonly hayMas: boolean;
+}
+
+export interface RespuestaPaginada<T> {
+  readonly items: readonly T[];
+  readonly pagina: PaginaInfo;
+}
+
+export interface FiltrosBusqueda {
+  readonly nombre?: string;
+  readonly ciudad?: string;
+  readonly arteMarcial?: string;
+  readonly valoracionMinima?: number;
+}

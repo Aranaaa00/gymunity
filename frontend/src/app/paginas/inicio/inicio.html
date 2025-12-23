@@ -23,7 +23,7 @@
         </a>
       </header>
       <ul class="gimnasios-grid">
-        @for (gym of gimnasiosPopulares(); track gym.id) {
+        @for (gym of gimnasiosPopulares(); track trackByGimnasioId($index, gym)) {
           <li>
             <app-card
               [id]="gym.id"
@@ -47,7 +47,7 @@
         </a>
       </header>
       <ul class="gimnasios-grid">
-        @for (gym of gimnasiosRecientes(); track gym.id) {
+        @for (gym of gimnasiosRecientes(); track trackByGimnasioId($index, gym)) {
           <li>
             <app-card
               [id]="gym.id"

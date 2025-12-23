@@ -30,7 +30,7 @@
         <section class="gimnasio__info">
           <h2 class="gimnasio__seccion-titulo"><app-icono nombre="dumbbell" /> Clases disponibles</h2>
           <ul class="gimnasio__servicios">
-            @for (clase of gimnasio()!.clases; track clase.id) {
+            @for (clase of gimnasio()!.clases; track trackByClaseId($index, clase)) {
               <li class="gimnasio__servicio">{{ clase.icono }} {{ clase.nombre }} - {{ clase.profesorNombre }}</li>
             }
           </ul>
@@ -41,7 +41,7 @@
         <section class="gimnasio__info">
           <h2 class="gimnasio__seccion-titulo"><app-icono nombre="message-circle" /> Reseñas ({{ gimnasio()!.totalResenias }})</h2>
           <ul class="gimnasio__resenias">
-            @for (resenia of gimnasio()!.resenias; track resenia.id) {
+            @for (resenia of gimnasio()!.resenias; track trackByReseniaId($index, resenia)) {
               <li class="gimnasio__resenia">
                 <strong>{{ resenia.usuarioNombre }}</strong>
                 <p>{{ resenia.texto }}</p>

@@ -5,7 +5,7 @@
     </a>
     
     <search class="gym-header__buscador">
-      <app-buscador placeholder="Buscar..." (buscar)="alBuscar($event)" />
+      <app-buscador placeholder="Buscar..." (buscarConDebounce)="alBuscar($event)" />
     </search>
 
     <section class="gym-header__acciones">

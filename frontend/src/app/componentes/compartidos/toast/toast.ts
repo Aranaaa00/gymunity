@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NotificacionService, TipoNotificacion, Notificacion } from '../../../servicios/notificacion';
 import { Icono, NombreIcono } from '../icono/icono';
 
@@ -23,6 +23,7 @@ const ICONOS_TIPO: Record<TipoNotificacion, NombreIcono> = {
   imports: [Icono],
   templateUrl: './toast.html',
   styleUrl: './toast.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toast {
   // ----------------------------------------

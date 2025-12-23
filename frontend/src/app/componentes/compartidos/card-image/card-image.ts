@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, signal } from '@angular/core';
+import { Component, input, InputSignal, signal, ChangeDetectionStrategy } from '@angular/core';
 
 // ============================================
 // TIPOS
@@ -21,6 +21,7 @@ const VARIANTE_DEFECTO: VarianteImagen = 'vertical';
   standalone: true,
   templateUrl: './card-image.html',
   styleUrls: ['./card-image.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardImage {
   // ----------------------------------------

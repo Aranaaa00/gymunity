@@ -59,6 +59,13 @@
   --shadow-dropdown: #{$shadow-lg};
   --color-opcion-hover: #{$color-hover-suave};
   --color-opcion-icon: #{$color-subtitulo};
+
+  // Acentos y hover
+  --color-acento: #{$color-botones};
+  --color-acento-hover: #{$color-botones-hover};
+  --color-hover: #{$color-hover-suave};
+  --color-texto-inverso: #ffffff;
+  --color-error-suave: #fef2f2;
 }
 
 // --------------------------------------------
@@ -116,4 +123,11 @@
   --color-opcion-hover: rgba(0, 229, 160, 0.12);
   --color-opcion-icon: #{$oscuro-subtitulo};
   --color-texto-claro: #{$oscuro-texto};
+
+  // Acentos y hover - Modo Oscuro
+  --color-acento: #{$oscuro-boton};
+  --color-acento-hover: #{$oscuro-boton-hover};
+  --color-hover: rgba(0, 229, 160, 0.1);
+  --color-texto-inverso: #{$oscuro-fondo};
+  --color-error-suave: #7f1d1d;
 }

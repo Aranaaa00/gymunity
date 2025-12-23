@@ -1,5 +1,6 @@
 <form class="buscador" role="search" (ngSubmit)="onBuscar()">
   <input 
+    #inputBusqueda
     type="search" 
     class="buscador__input"
     [placeholder]="placeholder()" 
@@ -7,6 +8,7 @@
     (input)="onValorCambia($any($event.target).value)"
     [attr.aria-label]="placeholder()"
     name="busqueda"
+    autocomplete="off"
   >
   <button type="submit" class="buscador__boton" aria-label="Buscar">
     <app-icono nombre="buscar" tamano="md" />

@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../servicios/auth';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { ComponenteConCambios } from '../../guards/cambios-sin-guardar.guard';
@@ -20,6 +20,7 @@ const MENSAJE_GUARDADO = 'Configuración guardada correctamente';
   imports: [Boton, Icono],
   templateUrl: './configuracion.html',
   styleUrl: './configuracion.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Configuracion implements ComponenteConCambios {
   private readonly authService = inject(AuthService);

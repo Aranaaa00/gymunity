@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { Card } from '../../componentes/compartidos/card/card';
 import { SeccionBienvenida } from '../../componentes/compartidos/seccion-bienvenida/seccion-bienvenida';
 import { ModalService } from '../../servicios/modal';
@@ -21,13 +22,15 @@ const MAX_GIMNASIOS_POR_SECCION = 3;
   imports: [Card, SeccionBienvenida],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Inicio implements OnInit {
+export class Inicio implements OnInit, OnDestroy {
   // ----------------------------------------
   // Dependencias
   // ----------------------------------------
   private readonly modal = inject(ModalService);
   private readonly gimnasiosService = inject(GimnasiosApiService);
+  private readonly destruir$ = new Subject<void>();
 
   // ----------------------------------------
   // Estado
@@ -44,6 +47,18 @@ export class Inicio implements OnInit {
     this.cargarGimnasios();
   }
 
+  ngOnDestroy(): void {
+    this.destruir$.next();
+    this.destruir$.complete();
+  }
+
+  // ----------------------------------------
+  // TrackBy para ngFor
+  // ----------------------------------------
+  trackByGimnasioId(_index: number, gimnasio: GimnasioCard): number {
+    return gimnasio.id;
+  }
+
   // ----------------------------------------
   // Métodos públicos
   // ----------------------------------------
@@ -57,7 +72,9 @@ export class Inicio implements OnInit {
   private cargarGimnasios(): void {
     this.cargando.set(true);
     
-    this.gimnasiosService.obtenerPopulares().subscribe({
+    this.gimnasiosService.obtenerPopulares().pipe(
+      takeUntil(this.destruir$)
+    ).subscribe({
       next: (gimnasios) => {
         this.gimnasiosPopulares.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.cargarRecientes();
@@ -67,7 +84,9 @@ export class Inicio implements OnInit {
   }
 
   private cargarRecientes(): void {
-    this.gimnasiosService.obtenerRecientes().subscribe({
+    this.gimnasiosService.obtenerRecientes().pipe(
+      takeUntil(this.destruir$)
+    ).subscribe({
       next: (gimnasios) => {
         this.gimnasiosRecientes.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.cargando.set(false);

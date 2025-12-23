@@ -1,4 +1,4 @@
-import { Component, input, inject, InputSignal, computed } from '@angular/core';
+import { Component, input, inject, InputSignal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardImage } from '../card-image/card-image';
 import { Boton } from '../boton/boton';
@@ -26,6 +26,7 @@ const VARIANTE_DEFECTO: CardVariant = 'vertical';
   imports: [CardImage, Boton, LucideAngularModule],
   templateUrl: './card.html',
   styleUrls: ['./card.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Card {
   // ----------------------------------------

@@ -1,39 +1,84 @@
-<main class="pagina-desarrollo">
-  <section class="pagina-desarrollo__contenedor">
-    <header class="pagina-desarrollo__header">
-      <h1 class="pagina-desarrollo__titulo"><app-icono nombre="search" tamano="lg" /> Búsqueda de Gimnasios</h1>
+<main class="busqueda">
+  <section class="busqueda__contenedor">
+    <header class="busqueda__header">
+      <h1 class="busqueda__titulo"><app-icono nombre="search" tamano="lg" /> Búsqueda de Gimnasios</h1>
       @if (terminoBusqueda()) {
-        <p class="pagina-desarrollo__subtitulo">
-          Buscando: <strong>{{ terminoBusqueda() }}</strong>
+        <p class="busqueda__subtitulo">
+          Resultados para: <strong>{{ terminoBusqueda() }}</strong>
+          @if (totalResultados() > 0) {
+            <span class="busqueda__contador">({{ totalResultados() }} encontrados)</span>
+          }
         </p>
       } @else {
-        <p class="pagina-desarrollo__subtitulo">Descubre tu gimnasio ideal cerca de ti</p>
+        <p class="busqueda__subtitulo">Descubre tu gimnasio ideal cerca de ti. Usa el buscador del header para filtrar.</p>
       }
     </header>
 
+    <search class="busqueda__filtros">
+      @if (terminoBusqueda()) {
+        <button type="button" class="busqueda__limpiar" (click)="limpiarFiltros()">
+          <app-icono nombre="x" tamano="sm" /> Limpiar
+        </button>
+      }
+    </search>
+
     @if (cargando()) {
-      <article class="pagina-desarrollo__mensaje">
-        <app-icono nombre="loader" tamano="2xl" class="pagina-desarrollo__icono" />
-        <h2 class="pagina-desarrollo__mensaje-titulo">Buscando gimnasios...</h2>
+      <article class="busqueda__estado">
+        <app-icono nombre="loader" tamano="2xl" class="busqueda__spinner" />
+        <p class="busqueda__estado-texto">Buscando gimnasios...</p>
       </article>
-    } @else {
-      <article class="pagina-desarrollo__mensaje">
-        <app-icono nombre="construction" tamano="2xl" class="pagina-desarrollo__icono" />
-        <h2 class="pagina-desarrollo__mensaje-titulo">Funcionalidad en construcción</h2>
-        <p class="pagina-desarrollo__mensaje-texto">
-          Estamos trabajando en un potente sistema de búsqueda que te permitirá encontrar 
-          el gimnasio perfecto según tu ubicación, presupuesto y preferencias de entrenamiento.
-        </p>
-        <section class="pagina-desarrollo__caracteristicas">
-          <h3 class="pagina-desarrollo__caracteristicas-titulo"><app-icono nombre="sparkles" /> Próximamente disponible:</h3>
-          <ul class="pagina-desarrollo__lista">
-            <li class="pagina-desarrollo__lista-item"><app-icono nombre="map-pin" /> Búsqueda por ubicación con mapa interactivo</li>
-            <li class="pagina-desarrollo__lista-item"><app-icono nombre="dumbbell" /> Filtros por equipamiento y servicios</li>
-            <li class="pagina-desarrollo__lista-item"><app-icono nombre="star" /> Ordenar por valoraciones de usuarios</li>
-            <li class="pagina-desarrollo__lista-item"><app-icono nombre="wallet" /> Comparador de precios y tarifas</li>
-            <li class="pagina-desarrollo__lista-item"><app-icono nombre="clock" /> Horarios en tiempo real</li>
-          </ul>
-        </section>
+    } @else if (error()) {
+      <article class="busqueda__estado busqueda__estado--error">
+        <app-icono nombre="alert-circle" tamano="2xl" />
+        <p class="busqueda__estado-texto">{{ error() }}</p>
+        <button type="button" class="busqueda__reintentar" (click)="limpiarFiltros()">
+          Reintentar
+        </button>
+      </article>
+    } @else if (hayResultados()) {
+      <section #contenedorResultados class="busqueda__resultados">
+        <ul class="busqueda__grid">
+          @for (gimnasio of resultados(); track trackByGimnasioId($index, gimnasio)) {
+            <li class="busqueda__item">
+              <app-card
+                [id]="gimnasio.id"
+                [title]="gimnasio.nombre"
+                [subtitle]="gimnasio.ciudad"
+                [valoracion]="gimnasio.valoracionMedia"
+                [totalResenias]="gimnasio.totalResenias"
+                [imageSrc]="gimnasio.foto"
+                variant="vertical"
+              />
+            </li>
+          }
+        </ul>
+        @if (cargandoMas()) {
+          <footer class="busqueda__cargando-mas">
+            <app-icono nombre="loader" tamano="md" class="busqueda__spinner" />
+            <span>Cargando más resultados...</span>
+          </footer>
+        } @else if (hayMas()) {
+          <footer class="busqueda__ver-mas">
+            <button type="button" class="busqueda__boton-mas" (click)="cargarMasResultados()">
+              Cargar más gimnasios
+            </button>
+          </footer>
+        }
+      </section>
+    } @else if (!hayResultados()) {
+      <article class="busqueda__estado busqueda__estado--vacio">
+        <app-icono nombre="search-x" tamano="2xl" />
+        <h2 class="busqueda__estado-titulo">No se encontraron resultados</h2>
+        @if (terminoBusqueda()) {
+          <p class="busqueda__estado-texto">
+            No hay gimnasios que coincidan con "<strong>{{ terminoBusqueda() }}</strong>".
+            Prueba con otros términos de búsqueda.
+          </p>
+        } @else {
+          <p class="busqueda__estado-texto">
+            No hay gimnasios disponibles en este momento.
+          </p>
+        }
       </article>
     }
   </section>

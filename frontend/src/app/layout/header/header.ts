@@ -8,9 +8,10 @@ import {
   ViewChild,
   ElementRef,
   OutputEmitterRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { Buscador } from '../../componentes/compartidos/buscador/buscador';
 import { BotonTema } from '../../componentes/compartidos/boton-tema/boton-tema';
@@ -35,6 +36,7 @@ const OVERFLOW_NORMAL = '';
   imports: [RouterLink, Boton, Buscador, BotonTema, Icono, MenuUsuario],
   templateUrl: './header.html',
   styleUrl: './header.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   // ----------------------------------------
@@ -55,6 +57,7 @@ export class Header {
   private readonly documento = inject(DOCUMENT);
   private readonly esBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   // ----------------------------------------
   // Estado
@@ -109,8 +112,16 @@ export class Header {
   }
 
   alBuscar(termino: string): void {
-    console.log('Buscando:', termino);
     this.cerrarMenu();
+    
+    if (!termino.trim()) {
+      this.router.navigate(['/busqueda']);
+      return;
+    }
+    
+    this.router.navigate(['/busqueda'], {
+      queryParams: { q: termino.trim() }
+    });
   }
 
   ejecutarYCerrar(accion: () => void): void {

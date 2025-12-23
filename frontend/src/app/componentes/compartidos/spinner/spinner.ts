@@ -1,4 +1,4 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
@@ -29,6 +29,7 @@ const TAMANOS_ICONO: Record<SpinnerTamano, number> = {
   imports: [LucideAngularModule],
   templateUrl: './spinner.html',
   styleUrl: './spinner.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Spinner {
   // ----------------------------------------
