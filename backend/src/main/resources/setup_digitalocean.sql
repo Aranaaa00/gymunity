@@ -117,58 +117,58 @@ ON CONFLICT DO NOTHING;
 -- Clases
 INSERT INTO clase (nombre, gimnasio_id, profesor_id, icono) VALUES
 -- Fitness Park (gimnasio 1)
-('Karate', 1, 1, '🥋'),
-('Muay Thai', 1, 2, '🥊'),
-('Jiu-Jitsu', 1, 3, '🤼'),
+('Karate', 1, 1, 'martial-arts'),
+('Muay Thai', 1, 2, 'boxing-glove'),
+('Jiu-Jitsu', 1, 3, 'wrestling'),
 -- Basic Fit (gimnasio 2)
-('Full Contact', 2, 2, '👊'),
-('Defensa Personal', 2, 1, '🛡️'),
-('Boxeo', 2, 3, '🥊'),
+('Full Contact', 2, 2, 'fist'),
+('Defensa Personal', 2, 1, 'shield'),
+('Boxeo', 2, 3, 'boxing-glove'),
 -- Smart Fit (gimnasio 3)
-('MMA', 3, 1, '🤼'),
-('Boxeo', 3, 2, '🥊'),
-('Kickboxing', 3, 3, '🦵'),
+('MMA', 3, 1, 'wrestling'),
+('Boxeo', 3, 2, 'boxing-glove'),
+('Kickboxing', 3, 3, 'kick'),
 -- Iron Gym (gimnasio 4)
-('Crossfit', 4, 4, '💪'),
-('Boxeo', 4, 1, '🥊'),
-('MMA', 4, 2, '🤼'),
+('Crossfit', 4, 4, 'dumbbell'),
+('Boxeo', 4, 1, 'boxing-glove'),
+('MMA', 4, 2, 'wrestling'),
 -- Fight Club Barcelona (gimnasio 5)
-('Muay Thai', 5, 2, '🥊'),
-('BJJ', 5, 4, '🥋'),
-('Wrestling', 5, 3, '🤼'),
+('Muay Thai', 5, 2, 'boxing-glove'),
+('BJJ', 5, 4, 'martial-arts'),
+('Wrestling', 5, 3, 'wrestling'),
 -- Warrior Gym (gimnasio 6)
-('Kickboxing', 6, 4, '🦵'),
-('Muay Thai', 6, 2, '🥊'),
-('Boxeo', 6, 1, '🥊'),
+('Kickboxing', 6, 4, 'kick'),
+('Muay Thai', 6, 2, 'boxing-glove'),
+('Boxeo', 6, 1, 'boxing-glove'),
 -- SynerGym (gimnasio 7)
-('MMA', 7, 5, '🤼'),
-('Judo', 7, 3, '🥋'),
+('MMA', 7, 5, 'wrestling'),
+('Judo', 7, 3, 'martial-arts'),
 -- GO! Fitness (gimnasio 8)
-('Judo', 8, 3, '🥋'),
-('Karate', 8, 1, '🥋'),
+('Judo', 8, 3, 'martial-arts'),
+('Karate', 8, 1, 'martial-arts'),
 -- Enjoy! (gimnasio 9)
-('Boxeo', 9, 2, '🥊'),
+('Boxeo', 9, 2, 'boxing-glove'),
 -- CrossFit Bahía (gimnasio 10)
-('Crossfit', 10, 4, '💪'),
+('Crossfit', 10, 4, 'dumbbell'),
 -- Dojo Central (gimnasio 11)
-('Karate', 11, 1, '🥋'),
-('Judo', 11, 3, '🥋'),
-('Aikido', 11, 6, '🥋'),
+('Karate', 11, 1, 'martial-arts'),
+('Judo', 11, 3, 'martial-arts'),
+('Aikido', 11, 6, 'martial-arts'),
 -- Power House Gym (gimnasio 12)
-('Powerlifting', 12, 4, '🏋️'),
+('Powerlifting', 12, 4, 'barbell'),
 -- Thai Boxing Academy (gimnasio 13)
-('Muay Thai', 13, 5, '🥊'),
+('Muay Thai', 13, 5, 'boxing-glove'),
 -- FitBox Valencia (gimnasio 14)
-('Boxeo', 14, 6, '🥊'),
-('Cardio Boxing', 14, 6, '🥊'),
+('Boxeo', 14, 6, 'boxing-glove'),
+('Cardio Boxing', 14, 6, 'boxing-glove'),
 -- MMA Factory (gimnasio 15)
-('MMA', 15, 5, '🤼'),
-('Striking', 15, 2, '👊'),
-('Grappling', 15, 3, '🤼'),
+('MMA', 15, 5, 'wrestling'),
+('Striking', 15, 2, 'fist'),
+('Grappling', 15, 3, 'wrestling'),
 -- Elite Training Center (gimnasio 16)
-('MMA', 16, 5, '🤼'),
-('Boxeo', 16, 1, '🥊'),
-('Crossfit', 16, 4, '💪');
+('MMA', 16, 5, 'wrestling'),
+('Boxeo', 16, 1, 'boxing-glove'),
+('Crossfit', 16, 4, 'dumbbell');
 
 -- Interacciones (usuarios apuntados a gimnasios con reseñas)
 INSERT INTO interaccion (usuario_id, gimnasio_id, es_apuntado, resenia, fecha_interaccion) VALUES
