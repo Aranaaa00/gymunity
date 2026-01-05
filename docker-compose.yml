@@ -4,13 +4,13 @@ services:
     pull_policy: if_not_present
     restart: unless-stopped
     environment:
-      POSTGRES_DB: gymunity
-      POSTGRES_USER: gymunity
-      POSTGRES_PASSWORD: gymunity
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U gymunity"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -24,14 +24,16 @@ services:
       db:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:postgresql://db:5432/gymunity
-      DB_USERNAME: gymunity
-      DB_PASSWORD: gymunity
-      DB_DRIVER: org.postgresql.Driver
-      DB_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      JWT_SECRET: 5d8f7a9e4c6b3a1f8e7d4c6b3a1f8e7d4c6b3a1f8e7d4c6b3a1f8e7d4c6b3a1f
-      JWT_EXPIRATION: "86400000"
-      SERVER_PORT: "8080"
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DRIVER: ${DB_DRIVER}
+      DB_DIALECT: ${DB_DIALECT}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      SERVER_PORT: ${SERVER_PORT}
+      DDL_AUTO: ${DDL_AUTO}
+      SQL_INIT_MODE: ${SQL_INIT_MODE}
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/gimnasios"]
       interval: 10s
@@ -48,9 +50,9 @@ services:
       backend:
         condition: service_healthy
     environment:
-      BACKEND_URL: http://backend:8080
+      BACKEND_URL: ${BACKEND_URL}
     ports:
-      - "80:8080"
+      - "${FRONTEND_PORT}:8080"
 
 volumes:
   postgres_data:

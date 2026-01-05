@@ -149,6 +149,8 @@ export class AuthService {
       nombreUsuario: response.nombreUsuario,
       email: response.email,
       rol: response.rol as Usuario['rol'],
+      ciudad: response.ciudad,
+      avatar: response.avatar,
     };
 
     this._usuario.set(usuario);

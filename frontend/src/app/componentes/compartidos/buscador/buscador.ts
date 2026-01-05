@@ -36,6 +36,7 @@ export class Buscador implements OnInit, OnDestroy, AfterViewInit {
   readonly placeholder: InputSignal<string> = input<string>(PLACEHOLDER_DEFECTO);
   readonly debounceMs: InputSignal<number> = input<number>(DEBOUNCE_MS);
   readonly minCaracteres: InputSignal<number> = input<number>(MIN_CARACTERES);
+  readonly expandido: InputSignal<boolean> = input<boolean>(false);
 
   // ----------------------------------------
   // Outputs

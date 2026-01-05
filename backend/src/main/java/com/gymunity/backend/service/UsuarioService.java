@@ -54,10 +54,11 @@ public class UsuarioService {
 
     /**
      * Registra un nuevo usuario.
-     * REGLA: No puede existir otro usuario con el mismo email.
+     * REGLA: No puede existir otro usuario con el mismo email o nombreUsuario.
      */
     public UsuarioResponseDTO registrar(UsuarioRegistroDTO dto) {
         validarEmailUnico(dto.getEmail());
+        validarNombreUsuarioUnico(dto.getNombreUsuario());
         Usuario usuario = crearUsuarioDesdeDTO(dto);
         usuario.setContrasenia(passwordEncoder.encode(dto.getContrasenia()));
         return convertirADTO(usuarioRepository.save(usuario));
@@ -68,6 +69,7 @@ public class UsuarioService {
      */
     public Usuario registrarUsuario(UsuarioRegistroDTO dto) {
         validarEmailUnico(dto.getEmail());
+        validarNombreUsuarioUnico(dto.getNombreUsuario());
         Usuario usuario = crearUsuarioDesdeDTO(dto);
         usuario.setContrasenia(passwordEncoder.encode(dto.getContrasenia()));
         return usuarioRepository.save(usuario);
@@ -128,6 +130,12 @@ public class UsuarioService {
         }
     }
 
+    private void validarNombreUsuarioUnico(String nombreUsuario) {
+        if (usuarioRepository.existsByNombreUsuarioIgnoreCase(nombreUsuario)) {
+            throw new ReglaNegocioException("Ya existe un usuario con el nombre: " + nombreUsuario);
+        }
+    }
+
     private void validarCambioEmail(String emailActual, String emailNuevo) {
         if (!emailActual.equals(emailNuevo)) {
             validarEmailUnico(emailNuevo);
@@ -135,11 +143,15 @@ public class UsuarioService {
     }
 
     private Usuario crearUsuarioDesdeDTO(UsuarioRegistroDTO dto) {
+        String ciudad = dto.getCiudad();
+        if (ciudad == null || ciudad.isBlank()) {
+            ciudad = "Sin especificar";
+        }
         return Usuario.builder()
                 .nombreUsuario(dto.getNombreUsuario())
                 .email(dto.getEmail())
                 .contrasenia(dto.getContrasenia())
-                .ciudad(dto.getCiudad())
+                .ciudad(ciudad)
                 .rol(Rol.valueOf(dto.getRol().toUpperCase()))
                 .build();
     }

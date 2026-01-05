@@ -10,7 +10,9 @@ import com.gymunity.backend.dto.ClaseDTO;
 import com.gymunity.backend.dto.GimnasioCardDTO;
 import com.gymunity.backend.dto.GimnasioDetalleDTO;
 import com.gymunity.backend.dto.GimnasioRequestDTO;
+import com.gymunity.backend.dto.ProfesorDTO;
 import com.gymunity.backend.dto.ReseniaDTO;
+import com.gymunity.backend.dto.TorneoDTO;
 import com.gymunity.backend.entity.Gimnasio;
 import com.gymunity.backend.exception.RecursoNoEncontradoException;
 import com.gymunity.backend.exception.ReglaNegocioException;
@@ -200,6 +202,48 @@ public class GimnasioService {
                         .build())
                 .toList();
         
+        // Obtener profesores únicos del gimnasio
+        List<ProfesorDTO> profesores = gimnasio.getClases().stream()
+                .filter(c -> c.getProfesor() != null)
+                .map(c -> c.getProfesor())
+                .distinct()
+                .map(p -> ProfesorDTO.builder()
+                        .id(p.getId())
+                        .nombre(p.getNombreUsuario())
+                        .especialidad(gimnasio.getClases().stream()
+                                .filter(c -> c.getProfesor() != null && c.getProfesor().getId().equals(p.getId()))
+                                .map(c -> c.getNombre())
+                                .findFirst()
+                                .orElse(""))
+                        .foto(p.getAvatar())
+                        .valoracion(4.5 + Math.random() * 0.5) // Valoración temporal
+                        .build())
+                .toList();
+        
+        // Torneos temporales (se podrían crear como entidad si se necesita)
+        List<TorneoDTO> torneos = List.of(
+                TorneoDTO.builder()
+                        .id(1L)
+                        .nombre("Campeonato de " + (clases.isEmpty() ? "MMA" : clases.get(0).getNombre()))
+                        .fecha(java.time.LocalDate.now().plusMonths(1))
+                        .disciplina(clases.isEmpty() ? "MMA" : clases.get(0).getNombre())
+                        .build(),
+                TorneoDTO.builder()
+                        .id(2L)
+                        .nombre("Campeonato de " + (clases.size() > 1 ? clases.get(1).getNombre() : "Boxeo"))
+                        .fecha(java.time.LocalDate.now().plusMonths(2))
+                        .disciplina(clases.size() > 1 ? clases.get(1).getNombre() : "Boxeo")
+                        .build()
+        );
+        
+        // Fotos adicionales de galería
+        List<String> fotosGaleria = List.of(
+                "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop",
+                "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop",
+                "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&h=300&fit=crop",
+                "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=400&h=300&fit=crop"
+        );
+        
         List<ReseniaDTO> resenias = interaccionRepository.findByGimnasioIdAndReseniaIsNotNull(gimnasio.getId()).stream()
                 .map(i -> ReseniaDTO.builder()
                         .id(i.getId())
@@ -216,10 +260,13 @@ public class GimnasioService {
                 .descripcion(gimnasio.getDescripcion())
                 .ciudad(gimnasio.getCiudad())
                 .foto(gimnasio.getFoto())
+                .fotos(fotosGaleria)
                 .valoracionMedia(interaccionRepository.calcularValoracionMedia(gimnasio.getId()))
                 .totalResenias((int) interaccionRepository.countByGimnasioIdAndReseniaIsNotNull(gimnasio.getId()))
                 .totalApuntados((int) interaccionRepository.countByGimnasioIdAndEsApuntadoTrue(gimnasio.getId()))
                 .clases(clases)
+                .profesores(profesores)
+                .torneos(torneos)
                 .resenias(resenias)
                 .build();
     }

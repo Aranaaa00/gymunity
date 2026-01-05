@@ -1,4 +1,5 @@
 @use '../../../styles/00-settings/variables' as *;
+@use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // VARIABLES LOCALES
@@ -21,6 +22,10 @@ $footer-social-translate-y: -0.125rem;
   padding: $space-4 0 $space-3;
   background: var(--color-header);
   transition: background-color $footer-transition-duration ease;
+
+  @include respond-down(sm) {
+    padding: $space-3 0 $space-2;
+  }
 }
 
 // ============================================
@@ -29,14 +34,20 @@ $footer-social-translate-y: -0.125rem;
 
 .gym-footer__container {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: $space-3;
   width: 100%;
   max-width: $max-width-contenido;
   margin: 0 auto $space-3;
   padding: 0 $space-3;
+
+  @include respond-down(sm) {
+    flex-direction: column;
+    padding: 0 $space-2;
+  }
 }
 
 // ============================================
@@ -45,20 +56,35 @@ $footer-social-translate-y: -0.125rem;
 
 .gym-footer__brand {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: $space-2;
+
+  @include respond-down(sm) {
+    flex-direction: column;
+    gap: $space-1;
+  }
 }
 
 .gym-footer__logo {
   display: block;
   height: $footer-logo-height;
   width: auto;
+
+  @include respond-down(sm) {
+    height: 2rem;
+  }
 }
 
 .gym-footer__slogan {
   max-width: $footer-slogan-max-width;
   font-size: $texto-xs;
   color: $gris-300;
+  text-align: left;
+
+  @include respond-down(sm) {
+    text-align: center;
+  }
 }
 
 // ============================================
@@ -70,6 +96,10 @@ $footer-social-translate-y: -0.125rem;
   flex-direction: column;
   align-items: flex-end;
   gap: $space-2;
+
+  @include respond-down(sm) {
+    align-items: center;
+  }
 }
 
 .gym-footer__email {
@@ -129,4 +159,8 @@ $footer-social-translate-y: -0.125rem;
   font-size: $texto-xs;
   color: $gris-500;
   text-align: center;
+
+  @include respond-down(sm) {
+    padding: $space-2 $space-2 0;
+  }
 }

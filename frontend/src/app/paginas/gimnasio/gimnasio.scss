@@ -1,4 +1,5 @@
 @use '../../../styles/00-settings/variables' as *;
+@use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // GIMNASIO - CONTENEDOR PRINCIPAL
@@ -7,9 +8,14 @@
 .gimnasio {
   min-height: calc(100vh - 4rem);
   padding: $space-4 $space-3;
+
+  @include respond-down(sm) {
+    padding: $space-3 $space-2;
+  }
 }
 
-.gimnasio--cargando {
+.gimnasio--cargando,
+.gimnasio--error {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,8 +26,12 @@
   flex-direction: column;
   gap: $space-4;
   
-  max-width: 64rem;
+  max-width: $max-width-contenido;
   margin: 0 auto;
+
+  @include respond-down(md) {
+    gap: $space-3;
+  }
 }
 
 // ============================================
@@ -33,22 +43,26 @@
   flex-direction: column;
   align-items: center;
   gap: $space-3;
+
+  text-align: center;
 }
 
 .gimnasio__spinner {
-  font-size: 3rem;
-  
-  animation: girar 2s linear infinite;
+  animation: girar 1s linear infinite;
 }
 
 @keyframes girar {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .gimnasio__carga-texto {
   font-size: $texto-lg;
   color: var(--color-subtitulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-s;
+  }
 }
 
 // ============================================
@@ -57,100 +71,158 @@
 
 .gimnasio__header {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-2;
+
+  @include respond-down(sm) {
+    flex-direction: column;
+    gap: $space-1;
+  }
+}
+
+.gimnasio__titulos {
+  display: flex;
+  align-items: baseline;
   gap: $space-2;
 }
 
 .gimnasio__titulo {
-  font-size: $texto-3xl;
+  margin: 0;
+
+  font-size: $texto-l;
   font-weight: $font-weight-bold;
   color: var(--color-titulo);
+
+  @include respond-down(md) {
+    font-size: $texto-lg;
+  }
 }
 
 .gimnasio__valoracion {
-  font-size: $texto-lg;
-  font-weight: $font-weight-semibold;
-  color: var(--color-exito);
-}
-
-// ============================================
-// INFORMACIÓN
-// ============================================
-
-.gimnasio__info {
   display: flex;
-  flex-direction: column;
-  gap: $space-2;
-  
-  padding: $space-3;
-  
-  background: var(--color-fondo-secundario);
-  
-  border: $borde-thin solid var(--color-borde);
+  align-items: center;
+  gap: 0.25rem;
+
+  margin: 0;
+
+  font-size: $texto-s;
+  font-weight: $font-weight-medium;
+  color: var(--color-subtitulo);
+}
+
+.gimnasio__estrella {
+  color: #f59e0b;
+}
+
+.gimnasio__boton-resenia {
+  padding: $space-1 $space-2;
+
+  background: transparent;
+
+  border: $borde-thin solid var(--color-acento);
+  border-radius: $radio-md;
+
+  font-size: $texto-xs;
+  font-weight: $font-weight-medium;
+  color: var(--color-acento);
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: var(--color-acento);
+    color: var(--color-texto-inverso);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-acento);
+    outline-offset: 2px;
+  }
+}
+
+// ============================================
+// IMAGEN ÚNICA (sin galería)
+// ============================================
+
+.gimnasio__imagen-unica {
+  margin: 0;
+
+  overflow: hidden;
+
   border-radius: $radio-lg;
+
+  aspect-ratio: 16 / 9;
 }
 
-.gimnasio__seccion-titulo {
-  font-size: $texto-lg;
-  font-weight: $font-weight-semibold;
-  color: var(--color-titulo);
+.gimnasio__foto {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
 }
 
-.gimnasio__descripcion,
-.gimnasio__direccion {
+// ============================================
+// DESCRIPCIÓN
+// ============================================
+
+.gimnasio__descripcion {
+  padding: 0;
+}
+
+.gimnasio__descripcion-texto {
+  margin: 0;
+
   font-size: $texto-s;
   line-height: $line-height-relaxed;
   color: var(--color-texto);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }
 
-.gimnasio__servicios {
+// ============================================
+// CONTENIDO (Profesores, Torneos, Reseñas)
+// ============================================
+
+.gimnasio__contenido {
   display: flex;
   flex-direction: column;
-  gap: $space-1;
-  
+  gap: $space-4;
+
+  @include respond-down(md) {
+    gap: $space-3;
+  }
+}
+
+// ============================================
+// LISTAS
+// ============================================
+
+.gimnasio__lista-profesores,
+.gimnasio__lista-torneos,
+.gimnasio__lista-resenias {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
   margin: 0;
   padding: 0;
-  
+
   list-style: none;
-}
 
-.gimnasio__servicio {
-  font-size: $texto-s;
-  color: var(--color-texto);
-}
-
-// ============================================
-// MENSAJE
-// ============================================
-
-.gimnasio__mensaje {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  
-  padding: $space-3;
-  
-  background: var(--color-warning-fondo);
-  
-  border: $borde-thin solid var(--color-warning);
-  border-radius: $radio-md;
-}
-
-.gimnasio__icono {
-  font-size: 1.5rem;
-}
-
-.gimnasio__mensaje-texto {
-  font-size: $texto-s;
-  line-height: $line-height-normal;
-  color: var(--color-texto);
+  @include respond-down(sm) {
+    gap: $space-1;
+  }
 }
 
 // ============================================
 // ERROR
 // ============================================
 
-.gimnasio__error {
+.gimnasio__estado-error {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,19 +231,36 @@
   padding: $space-4;
   
   text-align: center;
+
+  @include respond-down(sm) {
+    gap: $space-2;
+    padding: $space-3;
+  }
 }
 
 .gimnasio__error-icono {
-  font-size: 4rem;
-}
-
-.gimnasio__error-titulo {
-  font-size: $texto-2xl;
-  font-weight: $font-weight-bold;
   color: var(--color-error);
 }
 
+.gimnasio__error-titulo {
+  margin: 0;
+
+  font-size: $texto-xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-titulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-lg;
+  }
+}
+
 .gimnasio__error-texto {
+  margin: 0;
+
   font-size: $texto-s;
   color: var(--color-subtitulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }

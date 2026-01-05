@@ -1,4 +1,5 @@
 @use '../../../styles/00-settings/variables' as *;
+@use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // BÚSQUEDA - ESTILOS
@@ -10,6 +11,10 @@
 
   min-height: calc(100vh - 4rem);
   padding: $space-4 $space-3;
+
+  @include respond-down(sm) {
+    padding: $space-3 $space-2;
+  }
 }
 
 .busqueda__contenedor {
@@ -20,123 +25,162 @@
   width: 100%;
   max-width: $max-width-contenido;
   margin: 0 auto;
+
+  @include respond-down(md) {
+    gap: $space-3;
+  }
 }
+
+// ----------------------------------------
+// Header con contador
+// ----------------------------------------
 
 .busqueda__header {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-4;
+
+  @include respond-down(md) {
+    flex-direction: column;
+    gap: $space-3;
+  }
+}
+
+.busqueda__titulos {
+  display: flex;
   flex-direction: column;
   gap: $space-1;
-
-  text-align: center;
 }
 
 .busqueda__titulo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: $space-1;
+  gap: $space-2;
 
-  font-size: $texto-l;
+  margin: 0;
+
+  font-size: $texto-xl;
   font-weight: $font-weight-bold;
   color: var(--color-titulo);
+
+  @include respond-down(md) {
+    font-size: $texto-l;
+  }
 }
 
 .busqueda__subtitulo {
+  margin: 0;
+
   font-size: $texto-s;
   color: var(--color-subtitulo);
-}
 
-.busqueda__contador {
-  font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  strong {
+    color: var(--color-acento);
+    font-weight: $font-weight-semibold;
+  }
 }
 
 // ----------------------------------------
-// Filtros y búsqueda
+// Contador mejorado
+// ----------------------------------------
+
+.busqueda__contador-box {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+
+  padding: $space-1 $space-2;
+
+  background: rgba(52, 198, 160, 0.1);
+
+  border: $borde-thin solid rgba(52, 198, 160, 0.2);
+  border-radius: $radio-md;
+
+  @include respond-down(md) {
+    align-self: flex-start;
+  }
+}
+
+.busqueda__contador-numero {
+  font-size: $texto-s;
+  font-weight: $font-weight-bold;
+  color: var(--color-acento);
+}
+
+.busqueda__contador-texto {
+  font-size: $texto-xs;
+  color: var(--color-subtitulo);
+}
+
+// ----------------------------------------
+// Filtros (chips)
 // ----------------------------------------
 
 .busqueda__filtros {
   display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.busqueda__filtro-chip {
+  display: inline-flex;
   align-items: center;
   gap: $space-2;
 
-  padding: $space-2;
+  padding: $space-1 $space-2 $space-1 $space-3;
 
-  background: var(--color-fondo-secundario);
-
-  border-radius: $radio-md;
-}
-
-.busqueda__campo {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  gap: $space-1;
-
-  padding: $space-1 $space-2;
-
-  background: var(--color-fondo);
-
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-sm;
-
-  color: var(--color-subtitulo);
-
-  transition: border-color 0.2s ease;
-
-  &:focus-within {
-    border-color: var(--color-acento);
-  }
-}
-
-.busqueda__input {
-  flex: 1;
-
-  width: 100%;
-  padding: $space-1;
-
-  background: transparent;
+  background: var(--color-acento);
 
   border: none;
+  border-radius: $radio-full;
 
   font-size: $texto-s;
-  color: var(--color-texto);
-
-  outline: none;
-
-  &::placeholder {
-    color: var(--color-subtitulo);
-  }
-}
-
-.busqueda__limpiar {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-
-  padding: $space-1 $space-2;
-
-  background: transparent;
-
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-sm;
-
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
+  font-weight: $font-weight-medium;
+  color: var(--color-texto-inverso);
 
   cursor: pointer;
 
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease;
 
   &:hover {
-    background: var(--color-error-suave);
+    background: var(--color-boton-hover);
+    transform: scale(1.02);
+  }
 
-    color: var(--color-error);
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.busqueda__filtro-texto {
+  max-width: 12rem;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.busqueda__filtro-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.125rem;
+
+  background: rgba(255, 255, 255, 0.25);
+
+  border-radius: $radio-full;
+
+  transition: background-color 0.15s ease;
+
+  .busqueda__filtro-chip:hover & {
+    background: rgba(255, 255, 255, 0.4);
   }
 }
 
 // ----------------------------------------
-// Estados
+// Estados (cargando, error, vacío)
 // ----------------------------------------
 
 .busqueda__estado {
@@ -145,12 +189,17 @@
   align-items: center;
   gap: $space-3;
 
-  padding: $space-6;
+  padding: $space-8;
 
   text-align: center;
+
+  background: var(--color-fondo-secundario);
+
+  border-radius: $radio-lg;
 }
 
 .busqueda__spinner {
+  color: var(--color-acento);
   animation: spin 1s linear infinite;
 }
 
@@ -163,14 +212,25 @@
   }
 }
 
+.busqueda__estado--error .busqueda__estado-icono {
+  color: var(--color-error);
+}
+
+.busqueda__estado--vacio .busqueda__estado-icono {
+  color: var(--color-subtitulo);
+}
+
 .busqueda__estado-titulo {
+  margin: 0;
+
   font-size: $texto-lg;
   font-weight: $font-weight-semibold;
   color: var(--color-titulo);
 }
 
 .busqueda__estado-texto {
-  max-width: 24rem;
+  max-width: 28rem;
+  margin: 0;
 
   font-size: $texto-s;
   line-height: $line-height-relaxed;
@@ -178,12 +238,16 @@
 }
 
 .busqueda__reintentar {
-  padding: $space-1 $space-3;
+  display: flex;
+  align-items: center;
+  gap: $space-1;
 
-  background: var(--color-acento);
+  padding: $space-2 $space-3;
+
+  background: var(--color-boton);
 
   border: none;
-  border-radius: $radio-sm;
+  border-radius: $radio-md;
 
   font-size: $texto-s;
   font-weight: $font-weight-medium;
@@ -194,12 +258,17 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background: var(--color-acento-hover);
+    background: var(--color-boton-hover);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-acento);
+    outline-offset: 2px;
   }
 }
 
 // ----------------------------------------
-// Resultados grid
+// Resultados (grid de tarjetas)
 // ----------------------------------------
 
 .busqueda__resultados {
@@ -210,29 +279,31 @@
 
 .busqueda__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: $space-3;
 
-  margin: 0;
-  padding: 0;
+  @include respond-down(md) {
+    gap: $space-2;
+  }
 
-  list-style: none;
+  @include respond-down(sm) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.busqueda__item {
-  display: flex;
+.busqueda__card {
+  display: block;
 }
 
 // ----------------------------------------
-// Paginación y carga
+// Paginación
 // ----------------------------------------
 
-.busqueda__cargando-mas,
-.busqueda__ver-mas {
+.busqueda__cargando-mas {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $space-1;
+  gap: $space-2;
 
   padding: $space-3;
 
@@ -240,25 +311,45 @@
   color: var(--color-subtitulo);
 }
 
+.busqueda__ver-mas {
+  display: flex;
+  justify-content: center;
+
+  padding-top: $space-2;
+}
+
 .busqueda__boton-mas {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+
   padding: $space-2 $space-4;
 
-  background: var(--color-fondo-secundario);
+  background: transparent;
 
-  border: $borde-thin solid var(--color-borde);
+  border: $borde-thin solid var(--color-acento);
   border-radius: $radio-md;
 
   font-size: $texto-s;
   font-weight: $font-weight-medium;
-  color: var(--color-texto);
+  color: var(--color-acento);
 
   cursor: pointer;
 
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 
   &:hover {
-    background: var(--color-hover);
+    background: var(--color-acento);
+    color: var(--color-texto-inverso);
+    transform: translateY(-1px);
+  }
 
-    border-color: var(--color-acento);
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-acento);
+    outline-offset: 2px;
   }
 }

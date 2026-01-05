@@ -1,11 +1,11 @@
 <header class="gym-header">
-  <section class="gym-header__container">
+  <section class="gym-header__top">
     <a class="gym-header__logo" routerLink="/" aria-label="Ir a inicio">
       <img src="assets/logo.png" alt="Gymunity">
     </a>
-    
+
     <search class="gym-header__buscador">
-      <app-buscador placeholder="Buscar..." (buscarConDebounce)="alBuscar($event)" />
+      <app-buscador placeholder="Buscar gimnasios..." (buscarConDebounce)="alBuscar($event)" />
     </search>
 
     <section class="gym-header__acciones">
@@ -44,3 +44,8 @@
     aria-hidden="true">
   </aside>
 </header>
+
+<!-- Buscador flotante para móvil (fixed en bottom) -->
+<search class="gym-buscador-flotante">
+  <app-buscador placeholder="Buscar gimnasios..." [expandido]="true" (buscarConDebounce)="alBuscar($event)" />
+</search>

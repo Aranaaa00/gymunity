@@ -1,4 +1,5 @@
 @use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // VARIABLES LOCALES
@@ -62,6 +63,11 @@ $tabs-indicator-height: 0.25rem;
   cursor: pointer;
   transition: color $tabs-transition;
 
+  @include respond-down(sm) {
+    padding: $space-1 $space-2;
+    font-size: $texto-xs;
+  }
+
   &::after {
     content: '';
     position: absolute;
@@ -100,4 +106,8 @@ $tabs-indicator-height: 0.25rem;
 
 .tabs__contenido {
   padding: $space-3 0;
+
+  @include respond-down(sm) {
+    padding: $space-2 0;
+  }
 }

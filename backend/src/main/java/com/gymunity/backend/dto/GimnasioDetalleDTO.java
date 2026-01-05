@@ -24,9 +24,12 @@ public class GimnasioDetalleDTO {
     private String telefono;
     private String email;
     private String foto;
+    private List<String> fotos;
     private Double valoracionMedia;
     private Integer totalResenias;
     private Integer totalApuntados;
     private List<ClaseDTO> clases;
+    private List<ProfesorDTO> profesores;
+    private List<TorneoDTO> torneos;
     private List<ReseniaDTO> resenias;
 }

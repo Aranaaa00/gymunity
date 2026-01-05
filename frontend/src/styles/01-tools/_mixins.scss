@@ -4,16 +4,18 @@
 // MIXINS REUTILIZABLES
 // --------------------------------------------
 
-// Mixin para media queries responsive
-@mixin respond-to($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: $breakpoint-sm) { @content; }
-  } @else if $breakpoint == md {
-    @media (min-width: $breakpoint-md) { @content; }
+// Mixin para media queries responsive (desktop-first - max-width)
+// Breakpoints: xl(1280), lg(1024), md(768), sm(640)
+// Uso: estilos base para desktop, luego @include respond-down(lg) para tablet, etc.
+@mixin respond-down($breakpoint) {
+  @if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl - 1px}) { @content; }
   } @else if $breakpoint == lg {
-    @media (min-width: $breakpoint-lg) { @content; }
-  } @else if $breakpoint == xl {
-    @media (min-width: $breakpoint-xl) { @content; }
+    @media (max-width: #{$breakpoint-lg - 1px}) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md - 1px}) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm - 1px}) { @content; }
   }
 }
 

@@ -1,10 +1,20 @@
 <article class="inicio">
-  <app-seccion-bienvenida
-    [tituloLineas]="['Encuentra el gimnasio perfecto para ti,', 'según tu estilo y tus metas.']"
-    [subtituloLineas]="['Tu entrenamiento comienza aquí.', 'Nosotros te ayudamos a dar el primer paso.']"
-    textoBoton="Únete gratis"
-    (accion)="abrirRegistro()">
-  </app-seccion-bienvenida>
+  <!-- BIENVENIDA PERSONALIZADA (usuario logueado) -->
+  @if (estaAutenticado()) {
+    <header class="inicio__bienvenida">
+      <h1 class="inicio__saludo">
+        ¡Hola <strong class="inicio__nombre-usuario">{{ nombreUsuario() }}</strong>!
+      </h1>
+      <p class="inicio__mensaje">Bienvenido de nuevo a Gymunity</p>
+    </header>
+  } @else {
+    <app-seccion-bienvenida
+      [tituloLineas]="['Encuentra el gimnasio perfecto para ti,', 'según tu estilo y tus metas.']"
+      [subtituloLineas]="['Tu entrenamiento comienza aquí.', 'Nosotros te ayudamos a dar el primer paso.']"
+      textoBoton="Únete gratis"
+      (accion)="abrirRegistro()">
+    </app-seccion-bienvenida>
+  }
 
   @if (cargando()) {
     <section class="gimnasios-section gimnasios-section--cargando">
@@ -15,9 +25,37 @@
       <p>{{ error() }}</p>
     </section>
   } @else {
+    <!-- GIMNASIOS CERCANOS (solo si el usuario está logueado y tiene ciudad) -->
+    @if (estaAutenticado() && gimnasiosCercanos().length > 0) {
+      <section class="gimnasios-section">
+        <header class="section-header">
+          <a class="section-link" routerLink="/busqueda" [queryParams]="{ciudad: ciudadUsuario()}">
+            <h2 class="section-title">Gimnasios cercanos a <strong>{{ ciudadUsuario() }}</strong></h2>
+            <span class="section-arrow">›</span>
+          </a>
+        </header>
+        <ul class="gimnasios-grid">
+          @for (gym of gimnasiosCercanos(); track trackByGimnasioId($index, gym)) {
+            <li>
+              <app-card
+                [id]="gym.id"
+                [title]="gym.nombre"
+                [subtitle]="gym.disciplinas"
+                [location]="gym.ciudad"
+                [valoracion]="gym.valoracionMedia"
+                [totalResenias]="gym.totalResenias"
+                [imageSrc]="gym.foto"
+                variant="vertical"
+              />
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
     <section class="gimnasios-section">
       <header class="section-header">
-        <a class="section-link" href="#">
+        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'popular'}">
           <h2 class="section-title">Gimnasios más populares</h2>
           <span class="section-arrow">›</span>
         </a>
@@ -29,6 +67,7 @@
               [id]="gym.id"
               [title]="gym.nombre"
               [subtitle]="gym.disciplinas"
+              [location]="gym.ciudad"
               [valoracion]="gym.valoracionMedia"
               [totalResenias]="gym.totalResenias"
               [imageSrc]="gym.foto"
@@ -41,7 +80,7 @@
 
     <section class="gimnasios-section">
       <header class="section-header">
-        <a class="section-link" href="#">
+        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'reciente'}">
           <h2 class="section-title">Nuevos gimnasios en Gymunity</h2>
           <span class="section-arrow">›</span>
         </a>
@@ -52,7 +91,8 @@
             <app-card
               [id]="gym.id"
               [title]="gym.nombre"
-              [subtitle]="gym.ciudad"
+              [subtitle]="gym.disciplinas"
+              [location]="gym.ciudad"
               [valoracion]="gym.valoracionMedia"
               [totalResenias]="gym.totalResenias"
               [imageSrc]="gym.foto"

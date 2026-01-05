@@ -18,58 +18,88 @@ $buscador-width-transition-duration: 0.3s;
 .buscador {
   display: flex;
   align-items: center;
-  width: $buscador-size;
+  width: 100%;
+  max-width: $buscador-max-width-desktop;
   height: $buscador-size;
-  max-width: none;
-  background: transparent;
-  border: none;
-  border-radius: $radio-md;
-  box-shadow: none;
+  background: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-full;
+  box-shadow: $shadow-buscador;
   transition: 
     background-color $buscador-transition-duration ease, 
     width $buscador-width-transition-duration ease, 
     border $buscador-transition-duration ease;
 
   &:hover {
-    background: rgba($gris-100, 0.1);
+    background: var(--color-fondo-secundario);
+    border-color: var(--color-boton);
   }
 
-  @include respond-to(sm) {
+  &:focus-within {
+    border-color: var(--color-boton);
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+  }
+
+  @include respond-down(md) {
     width: $buscador-max-width-tablet;
-    background: var(--color-fondo-secundario);
-    border: $borde-thin solid var(--color-borde);
-    border-radius: $radio-full;
-    box-shadow: $shadow-buscador;
+  }
+
+  @include respond-down(sm) {
+    width: $buscador-size;
+    max-width: none;
+    background: transparent;
+    border: none;
+    border-radius: $radio-md;
+    box-shadow: none;
 
     &:hover {
-      background: var(--color-fondo-secundario);
-      border-color: var(--color-boton);
+      background: rgba($gris-100, 0.1);
     }
 
     &:focus-within {
-      border-color: var(--color-boton);
-      outline: $borde-medium solid var(--color-boton);
-      outline-offset: $borde-medium;
+      outline: none;
     }
   }
 
-  @include respond-to(md) {
+  // Modificador: siempre expandido (para buscador flotante)
+  &--expandido {
     width: 100%;
-    max-width: $buscador-max-width-desktop;
+    max-width: 100%;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    box-shadow: $shadow-buscador;
+
+    @include respond-down(sm) {
+      width: 100%;
+      background: var(--color-fondo-secundario);
+      border: $borde-thin solid var(--color-borde);
+      border-radius: $radio-full;
+      box-shadow: $shadow-buscador;
+    }
+
+    .buscador__input {
+      @include respond-down(sm) {
+        width: auto;
+        flex: 1;
+        padding: $space-1 $space-2;
+        opacity: 1;
+      }
+    }
   }
 }
 
 .buscador__input {
   flex: 1;
-  width: 0;
+  width: auto;
   min-width: 0;
-  padding: 0;
+  padding: $space-1 $space-2;
   background: transparent;
   border: none;
   border-radius: $radio-full;
   font-size: $texto-s;
   color: var(--color-texto);
-  opacity: 0;
+  opacity: 1;
   outline: none;
   transition: 
     opacity $buscador-transition-duration ease, 
@@ -83,10 +113,19 @@ $buscador-width-transition-duration: 0.3s;
     appearance: none;
   }
 
-  @include respond-to(sm) {
-    width: auto;
-    padding: $space-1 $space-2;
-    opacity: 1;
+  @include respond-down(sm) {
+    width: 0;
+    padding: 0;
+    opacity: 0;
+  }
+
+  .buscador--expandido & {
+    @include respond-down(sm) {
+      width: auto;
+      flex: 1;
+      padding: $space-1 $space-2;
+      opacity: 1;
+    }
   }
 }
 
@@ -95,12 +134,12 @@ $buscador-width-transition-duration: 0.3s;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: $buscador-size;
-  height: $buscador-size;
-  padding: 0;
+  width: auto;
+  height: auto;
+  padding: $space-1 $space-2;
   background: transparent;
   border: none;
-  color: $gris-200;
+  color: var(--color-subtitulo);
   cursor: pointer;
   outline: none;
   transition: color $buscador-transition-duration ease;
@@ -121,10 +160,10 @@ $buscador-width-transition-duration: 0.3s;
     display: flex;
   }
 
-  @media (min-width: 48rem) {
-    width: auto;
-    height: auto;
-    padding: $space-1 $space-2;
-    color: var(--color-subtitulo);
+  @include respond-down(sm) {
+    width: $buscador-size;
+    height: $buscador-size;
+    padding: 0;
+    color: $gris-200;
   }
 }

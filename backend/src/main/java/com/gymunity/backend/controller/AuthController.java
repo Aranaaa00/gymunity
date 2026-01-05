@@ -66,6 +66,8 @@ public class AuthController {
                 .nombreUsuario(usuario.getNombreUsuario())
                 .rol(usuario.getRol().name())
                 .id(usuario.getId())
+                .ciudad(usuario.getCiudad())
+                .avatar(usuario.getAvatar())
                 .mensaje("Login exitoso")
                 .build();
 
@@ -93,6 +95,8 @@ public class AuthController {
                 .nombreUsuario(usuario.getNombreUsuario())
                 .rol(usuario.getRol().name())
                 .id(usuario.getId())
+                .ciudad(usuario.getCiudad())
+                .avatar(usuario.getAvatar())
                 .mensaje("Usuario registrado exitosamente")
                 .build();
 

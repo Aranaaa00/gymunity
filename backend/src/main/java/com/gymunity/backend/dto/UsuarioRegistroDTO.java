@@ -30,8 +30,7 @@ public class UsuarioRegistroDTO {
     @Size(min = 6, max = 100, message = "La contraseña debe tener entre 6 y 100 caracteres")
     private String contrasenia;
 
-    @NotBlank(message = "La ciudad es obligatoria")
-    @Size(min = 2, max = 100, message = "La ciudad debe tener entre 2 y 100 caracteres")
+    @Size(max = 100, message = "La ciudad debe tener máximo 100 caracteres")
     private String ciudad;
 
     @Pattern(regexp = "^[0-9]{9,15}$", message = "El teléfono debe tener entre 9 y 15 dígitos")

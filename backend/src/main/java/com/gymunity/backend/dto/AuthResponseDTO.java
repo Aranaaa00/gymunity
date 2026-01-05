@@ -20,5 +20,7 @@ public class AuthResponseDTO {
     private String nombreUsuario;
     private String rol;
     private Long id;
+    private String ciudad;
+    private String avatar;
     private String mensaje;
 }

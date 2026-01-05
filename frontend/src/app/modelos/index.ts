@@ -13,6 +13,7 @@ export interface Usuario {
   readonly email: string;
   readonly rol: RolUsuario;
   readonly ciudad?: string;
+  readonly avatar?: string;
   readonly fechaRegistro?: string;
 }
 
@@ -41,6 +42,8 @@ export interface AuthResponse {
   readonly nombreUsuario: string;
   readonly rol: string;
   readonly id: number;
+  readonly ciudad?: string;
+  readonly avatar?: string;
   readonly mensaje: string;
 }
 
@@ -64,11 +67,29 @@ export interface GimnasioDetalle {
   readonly descripcion: string;
   readonly ciudad: string;
   readonly foto: string;
+  readonly fotos: readonly string[];
+  readonly profesores: readonly Profesor[];
+  readonly torneos: readonly Torneo[];
   readonly clases: readonly Clase[];
   readonly resenias: readonly Resenia[];
   readonly valoracionMedia: number | null;
   readonly totalResenias: number;
   readonly totalApuntados: number;
+}
+
+export interface Profesor {
+  readonly id: number;
+  readonly nombre: string;
+  readonly especialidad: string;
+  readonly foto: string;
+  readonly valoracion: number | null;
+}
+
+export interface Torneo {
+  readonly id: number;
+  readonly nombre: string;
+  readonly fecha: string;
+  readonly disciplina: string;
 }
 
 export interface GimnasioRequest {
@@ -104,8 +125,9 @@ export interface ClaseRequest {
 export interface Resenia {
   readonly id: number;
   readonly texto: string;
-  readonly usuarioNombre: string;
-  readonly fechaInteraccion: string;
+  readonly nombreUsuario: string;
+  readonly avatarUsuario: string;
+  readonly fecha: string;
 }
 
 // --------------------------------------------

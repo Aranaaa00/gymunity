@@ -1,4 +1,5 @@
 @use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // BREADCRUMBS - NAVEGACIÓN
@@ -11,6 +12,10 @@
   background: var(--color-fondo-secundario);
   
   border-bottom: $borde-thin solid var(--color-borde);
+
+  @include respond-down(sm) {
+    padding: $space-1 $space-2;
+  }
 }
 
 .breadcrumbs__lista {
@@ -56,15 +61,27 @@
     
     border-radius: $radio-sm;
   }
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }
 
 .breadcrumbs__separador {
   font-size: $texto-s;
   color: var(--color-subtitulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }
 
 .breadcrumbs__actual {
   font-size: $texto-s;
   font-weight: $font-weight-semibold;
   color: var(--color-texto);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }

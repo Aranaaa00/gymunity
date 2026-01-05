@@ -40,6 +40,7 @@ export class Card {
   readonly id: InputSignal<number | undefined> = input<number | undefined>();
   readonly title: InputSignal<string> = input<string>('');
   readonly subtitle: InputSignal<string> = input<string>('');
+  readonly location: InputSignal<string> = input<string>('');
   readonly valoracion: InputSignal<number | null> = input<number | null>(null);
   readonly totalResenias: InputSignal<number> = input<number>(0);
   readonly imageSrc: InputSignal<string> = input<string>('');

@@ -1,258 +1,36 @@
 @use '../../../styles/00-settings/variables' as *;
-
-// Mixins locales para reducir repetición
-@mixin reset-list { padding: 0; margin: 0; list-style: none; }
-@mixin code-style { font-family: monospace; font-size: $texto-xs; color: var(--color-subtitulo); }
-
-.guia-estilo {
-  max-width: 90rem;
-  margin: 0 auto;
-  padding: $space-6 $space-4;
-
-  &__header {
-    margin-bottom: $space-6;
-    text-align: center;
-    h1 { margin-bottom: $space-2; font-size: $texto-3xl; font-weight: $font-weight-bold; }
-    p { font-size: $texto-lg; color: var(--color-subtitulo); }
-  }
-
-  &__tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-2;
-    margin-bottom: $space-6;
-    padding: $space-3;
-    background: var(--color-fondo-suave);
-    border: $borde-thin solid var(--color-borde);
-    border-radius: $radio-lg;
-  }
-
-  &__tab {
-    position: relative;
-    padding: $space-2 $space-4;
-    background: transparent;
-    border: none;
-    border-radius: $radio-md;
-    font-size: $texto-sm;
-    font-weight: $font-weight-medium;
-    color: var(--color-subtitulo);
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    
-    &:hover:not(&--activo) { 
-      background: var(--color-superficie); 
-      color: var(--color-texto); 
-    }
-    
-    &--activo { 
-      background: var(--color-boton); 
-      color: white;
-      font-weight: $font-weight-bold;
-      box-shadow: 0 0.25rem 0.75rem rgba($color-botones, 0.3);
-    }
-  }
-
-  &__contenido { min-height: 50vh; }
-
-  &__seccion {
-    h2 { margin-bottom: $space-2; font-size: $texto-2xl; font-weight: $font-weight-bold; }
-  }
-
-  &__descripcion { margin-bottom: $space-6; color: var(--color-subtitulo); }
-
-  &__bloque {
-    margin-bottom: $space-6;
-    padding: $space-4;
-    background: var(--color-superficie);
-    border: $borde-thin solid var(--color-borde);
-    border-radius: $radio-lg;
-    
-    legend { 
-      padding: 0 $space-2; 
-      font-weight: $font-weight-semibold; 
-    }
-    
-    > app-alerta {
-      display: block;
-      margin-bottom: $space-3;
-      
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-    }
-    
-    > app-boton {
-      margin-top: $space-3;
-    }
-    
-    > code { 
-      display: block; 
-      margin-top: $space-3; 
-      padding: $space-2; 
-      background: var(--color-fondo-suave); 
-      border-radius: $radio-sm; 
-      @include code-style; 
-    }
-    
-    > p { 
-      margin-bottom: $space-3; 
-      font-size: $texto-sm; 
-      color: var(--color-subtitulo); 
-    }
-    
-    figcaption { 
-      margin-top: $space-2; 
-      code { @include code-style; } 
-    }
-  }
-
-  &__fila { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: $space-3; 
-    @include reset-list; 
-    
-    &--alineado { align-items: flex-end; }
-    &--wrap { flex-wrap: wrap; }
-  }
-  
-  &__columna { display: flex; flex-direction: column; gap: $space-3; @include reset-list; }
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $space-2;
-    padding: $space-3;
-    min-width: 7rem;
-    background: var(--color-fondo-suave);
-    border-radius: $radio-md;
-    
-    code { 
-      @include code-style;
-    }
-  }
-
-  &__grid-cards, &__grid-form, &__grid-iconos, &__grid-colores {
-    display: grid;
-    gap: $space-3;
-    @include reset-list;
-  }
-  &__grid-cards { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
-  &__grid-cards-horizontal { 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: $space-3;
-    @include reset-list;
-  }
-  &__grid-form { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
-  &__grid-iconos { grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); }
-  &__grid-colores { grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
-
-  &__icono-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $space-1;
-    padding: $space-2;
-    background: var(--color-fondo-suave);
-    border-radius: $radio-md;
-    transition: background 0.2s;
-    span { font-size: $texto-xs; text-align: center; }
-    &:hover { background: var(--color-botones); color: white; }
-  }
-
-  &__color {
-    display: flex;
-    flex-direction: column;
-    gap: $space-1;
-    span { font-size: $texto-sm; }
-    code { @include code-style; }
-  }
-
-  &__color-muestra {
-    display: block;
-    height: 3rem;
-    background: var(--color);
-    border-radius: $radio-md;
-    &--border { border: $borde-thin solid var(--color-borde); }
-  }
-
-  &__tipografia { h1, h2, h3, h4, p { margin: 0; } }
-
-  // Tipografía demo mejorada
-  &__tipografia-demo {
-    display: flex;
-    flex-direction: column;
-    gap: $space-1;
-    padding: $space-3;
-    background: var(--color-fondo-suave);
-    border-radius: $radio-md;
-  }
-
-  &__tipografia-familia {
-    margin: 0;
-    font-family: $fuente-principal;
-    font-size: $texto-3xl;
-    font-weight: $font-weight-bold;
-    color: var(--color-texto);
-  }
-
-  &__tipografia-fallback {
-    margin: 0;
-    font-size: $texto-sm;
-    color: var(--color-subtitulo);
-  }
-
-  &__tipografia-escala {
-    display: flex;
-    flex-direction: column;
-    gap: $space-4;
-  }
-
-  &__tipografia-item {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: $space-3;
-    padding-bottom: $space-3;
-    border-bottom: $borde-thin solid var(--color-borde);
-
-    &:last-child {
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    h1, h2, h3, h4, p {
-      margin: 0;
-      flex: 1;
-    }
-
-    span {
-      flex-shrink: 0;
-      font-size: $texto-xs;
-      color: var(--color-subtitulo);
-    }
-  }
-
-  &__tipografia-pesos {
-    display: flex;
-    flex-direction: column;
-    gap: $space-3;
-
-    p {
-      margin: 0;
-      font-size: $texto-lg;
-    }
-  }
-
-  &__texto-xl { font-size: $texto-lg; }
-  &__texto-md { font-size: $texto-md; }
-  &__texto-sm { font-size: $texto-sm; }
-  &__texto-xs { font-size: $texto-xs; }
-
-  &__codigo {
-    pre { margin: 0; padding: $space-3; background: var(--color-fondo-suave); border-radius: $radio-md; overflow-x: auto; }
-    code { font-family: monospace; font-size: $texto-sm; line-height: 1.5; }
-  }
-}
+@use '../../../styles/01-tools/mixins' as *;
+@mixin reset-list{padding:0;margin:0;list-style:none}
+@mixin code-style{font-family:monospace;font-size:$texto-xs;color:var(--color-subtitulo)}
+.guia-estilo{max-width:90rem;margin:0 auto;padding:$space-6 $space-4;@include respond-down(md){padding:$space-4 $space-3}@include respond-down(sm){padding:$space-3 $space-2}
+&__header{margin-bottom:$space-6;text-align:center;h1{margin-bottom:$space-2;font-size:$texto-3xl;font-weight:$font-weight-bold}p{font-size:$texto-lg;color:var(--color-subtitulo)}@include respond-down(sm){margin-bottom:$space-4;h1{font-size:$texto-xl}p{font-size:$texto-s}}}
+&__tabs{display:flex;flex-wrap:wrap;gap:$space-2;margin-bottom:$space-6;padding:$space-3;background:var(--color-fondo-suave);border:$borde-thin solid var(--color-borde);border-radius:$radio-lg;@include respond-down(sm){gap:$space-1;margin-bottom:$space-4;padding:$space-2}}
+&__tab{position:relative;padding:$space-2 $space-4;background:transparent;border:none;border-radius:$radio-md;font-size:$texto-sm;font-weight:$font-weight-medium;color:var(--color-subtitulo);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s;@include respond-down(sm){padding:$space-1 $space-2;font-size:$texto-xs}&:hover:not(&--activo){background:var(--color-superficie);color:var(--color-texto)}&--activo{background:var(--color-boton);color:white;font-weight:$font-weight-bold;box-shadow:0 .25rem .75rem rgba($color-botones,.3)}}
+&__contenido{min-height:50vh}
+&__seccion h2{margin-bottom:$space-2;font-size:$texto-2xl;font-weight:$font-weight-bold;@include respond-down(sm){font-size:$texto-lg}}
+&__descripcion{margin-bottom:$space-6;color:var(--color-subtitulo);font-size:$texto-s;@include respond-down(sm){margin-bottom:$space-4;font-size:$texto-xs}}
+&__bloque{margin-bottom:$space-6;padding:$space-4;background:var(--color-superficie);border:$borde-thin solid var(--color-borde);border-radius:$radio-lg;@include respond-down(sm){margin-bottom:$space-4;padding:$space-2}legend{padding:0 $space-2;font-weight:$font-weight-semibold}>app-alerta{display:block;margin-bottom:$space-3;&:last-of-type{margin-bottom:0}}>app-boton{margin-top:$space-3}>code{display:block;margin-top:$space-3;padding:$space-2;background:var(--color-fondo-suave);border-radius:$radio-sm;@include code-style}>p{margin-bottom:$space-3;font-size:$texto-sm;color:var(--color-subtitulo)}figcaption{margin-top:$space-2;code{@include code-style}}}
+&__fila{display:flex;flex-wrap:wrap;gap:$space-3;@include reset-list;@include respond-down(sm){gap:$space-2}&--alineado{align-items:flex-end}&--wrap{flex-wrap:wrap}}
+&__columna{display:flex;flex-direction:column;gap:$space-3;@include reset-list;@include respond-down(sm){gap:$space-2}}
+&__item{display:flex;flex-direction:column;align-items:center;gap:$space-2;padding:$space-3;min-width:7rem;background:var(--color-fondo-suave);border-radius:$radio-md;@include respond-down(sm){gap:$space-1;padding:$space-2;min-width:5rem}code{@include code-style}}
+&__grid-cards,&__grid-form,&__grid-iconos,&__grid-colores{display:grid;gap:$space-3;@include reset-list;@include respond-down(sm){gap:$space-2}}
+&__grid-cards{grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));@include respond-down(lg){grid-template-columns:repeat(2,1fr)}@include respond-down(sm){grid-template-columns:1fr}}
+&__grid-cards-horizontal{display:grid;grid-template-columns:repeat(2,1fr);gap:$space-3;@include reset-list;@include respond-down(md){grid-template-columns:1fr;gap:$space-2}}
+&__grid-form{grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));@include respond-down(sm){grid-template-columns:1fr}}
+&__grid-iconos{grid-template-columns:repeat(auto-fill,minmax(6rem,1fr));@include respond-down(sm){grid-template-columns:repeat(auto-fill,minmax(4rem,1fr))}}
+&__grid-colores{grid-template-columns:repeat(auto-fill,minmax(9rem,1fr));@include respond-down(sm){grid-template-columns:repeat(2,1fr)}}
+&__icono-item{display:flex;flex-direction:column;align-items:center;gap:$space-1;padding:$space-2;background:var(--color-fondo-suave);border-radius:$radio-md;transition:background .2s;span{font-size:$texto-xs;text-align:center}&:hover{background:var(--color-botones);color:white}}
+&__color{display:flex;flex-direction:column;gap:$space-1;span{font-size:$texto-sm;@include respond-down(sm){font-size:$texto-xs}}code{@include code-style}}
+&__color-muestra{display:block;height:3rem;background:var(--color);border-radius:$radio-md;&--border{border:$borde-thin solid var(--color-borde)}@include respond-down(sm){height:2rem}}
+&__tipografia{h1,h2,h3,h4,p{margin:0}}
+&__tipografia-demo{display:flex;flex-direction:column;gap:$space-1;padding:$space-3;background:var(--color-fondo-suave);border-radius:$radio-md;@include respond-down(sm){padding:$space-2}}
+&__tipografia-familia{margin:0;font-family:$fuente-principal;font-size:$texto-3xl;font-weight:$font-weight-bold;color:var(--color-texto);@include respond-down(sm){font-size:$texto-xl}}
+&__tipografia-fallback{margin:0;font-size:$texto-sm;color:var(--color-subtitulo);@include respond-down(sm){font-size:$texto-xs}}
+&__tipografia-escala{display:flex;flex-direction:column;gap:$space-4;@include reset-list;@include respond-down(sm){gap:$space-3}}
+&__tipografia-item{display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;gap:$space-3;padding-bottom:$space-3;border-bottom:$borde-thin solid var(--color-borde);@include respond-down(sm){flex-direction:column;align-items:flex-start;gap:$space-1;padding-bottom:$space-2}&:last-child{padding-bottom:0;border-bottom:none}h1,h2,h3,h4,p{margin:0;flex:1}span{flex-shrink:0;font-size:$texto-xs;color:var(--color-subtitulo)}}
+&__tipografia-pesos{display:flex;flex-direction:column;gap:$space-3;@include reset-list;li{font-size:$texto-lg;@include respond-down(sm){font-size:$texto-s}}}
+&__texto-xl{font-size:$texto-lg;@include respond-down(sm){font-size:$texto-s}}
+&__texto-md{font-size:$texto-md;@include respond-down(sm){font-size:$texto-sm}}
+&__texto-sm{font-size:$texto-sm;@include respond-down(sm){font-size:$texto-xs}}
+&__texto-xs{font-size:$texto-xs}
+&__codigo{pre{margin:0;padding:$space-3;background:var(--color-fondo-suave);border-radius:$radio-md;overflow-x:auto;@include respond-down(sm){padding:$space-2}}code{font-family:monospace;font-size:$texto-sm;line-height:1.5;@include respond-down(sm){font-size:$texto-xs}}}}

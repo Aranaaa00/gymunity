@@ -17,6 +17,9 @@
       @if (subtitle()) {
         <p class="card-subtitle">{{ subtitle() }}</p>
       }
+      @if (location()) {
+        <p class="card-location">{{ location() }}</p>
+      }
       @if (tieneValoracion()) {
         <span class="card-rating card-rating--con-estrella">
           <lucide-icon name="star" [size]="14" />

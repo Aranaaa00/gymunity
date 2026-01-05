@@ -1,4 +1,5 @@
 @use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // VARIABLES LOCALES
@@ -7,6 +8,17 @@
 $card-transition: 0.25s ease;
 $card-vertical-max-width: 18rem;
 $card-horizontal-height: 5.5rem;
+$card-container-breakpoint: 20rem;
+
+// ============================================
+// CARD CONTAINER (para Container Queries)
+// ============================================
+
+.card-container {
+  container-type: inline-size;
+  container-name: card;
+  width: 100%;
+}
 
 // ============================================
 // CARD BASE
@@ -80,6 +92,19 @@ $card-horizontal-height: 5.5rem;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--color-subtitulo);
+}
+
+.card-location {
+  margin: 0;
+  overflow: hidden;
+  font-size: $texto-xs;
+  font-weight: $font-weight-regular;
+  font-style: italic;
+  line-height: $line-height-normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-subtitulo);
+  opacity: 0.8;
 }
 
 .card-rating {
@@ -157,5 +182,98 @@ $card-horizontal-height: 5.5rem;
   .card-footer {
     flex-shrink: 0;
     margin: 0;
+  }
+}
+
+// ============================================
+// VARIANTE ADAPTATIVA (Container Queries)
+// ============================================
+// Esta variante cambia automáticamente de vertical a horizontal
+// basándose en el espacio disponible del contenedor padre.
+// Uso: envolver el card en un elemento con clase .card-container
+
+.card.adaptive {
+  // Estado base: layout horizontal para contenedores anchos
+  flex-direction: row;
+  align-items: center;
+  gap: $space-2;
+  height: auto;
+  min-height: $card-horizontal-height;
+  max-width: none;
+  padding: $space-2;
+  background: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+  transition: 
+    border-color $card-transition,
+    box-shadow $card-transition;
+
+  &:hover {
+    border-color: var(--color-boton);
+    box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.12);
+  }
+
+  .card-body {
+    flex: 1;
+    gap: 0.125rem;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .card-title {
+    font-size: $texto-sm;
+  }
+
+  .card-subtitle {
+    font-size: $texto-xs;
+  }
+
+  .card-rating {
+    margin-top: 0.25rem;
+    font-size: $texto-xs;
+  }
+
+  .card-footer {
+    flex-shrink: 0;
+    margin: 0;
+  }
+}
+
+// Container Query: cuando el contenedor es muy estrecho,
+// el card cambia a layout vertical
+@container card (max-width: #{$card-container-breakpoint}) {
+  .card.adaptive {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $space-1;
+    height: auto;
+    min-height: auto;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    &:hover {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .card-body {
+      padding-top: $space-1;
+    }
+
+    .card-title {
+      font-size: $texto-s;
+    }
+
+    .card-rating {
+      margin-top: $space-1;
+    }
+
+    .card-footer {
+      justify-content: flex-end;
+      margin-top: auto;
+    }
   }
 }

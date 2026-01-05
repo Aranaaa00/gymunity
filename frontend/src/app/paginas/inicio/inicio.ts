@@ -1,9 +1,11 @@
-import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, inject, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { Card } from '../../componentes/compartidos/card/card';
 import { SeccionBienvenida } from '../../componentes/compartidos/seccion-bienvenida/seccion-bienvenida';
 import { ModalService } from '../../servicios/modal';
 import { GimnasiosApiService } from '../../servicios/gimnasios-api';
+import { AuthService } from '../../servicios/auth';
 import type { GimnasioCard } from '../../modelos';
 
 // ============================================
@@ -19,7 +21,7 @@ const MAX_GIMNASIOS_POR_SECCION = 3;
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [Card, SeccionBienvenida],
+  imports: [Card, SeccionBienvenida, RouterLink],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +32,7 @@ export class Inicio implements OnInit, OnDestroy {
   // ----------------------------------------
   private readonly modal = inject(ModalService);
   private readonly gimnasiosService = inject(GimnasiosApiService);
+  private readonly auth = inject(AuthService);
   private readonly destruir$ = new Subject<void>();
 
   // ----------------------------------------
@@ -37,8 +40,24 @@ export class Inicio implements OnInit, OnDestroy {
   // ----------------------------------------
   readonly gimnasiosPopulares = signal<readonly GimnasioCard[]>([]);
   readonly gimnasiosRecientes = signal<readonly GimnasioCard[]>([]);
+  readonly gimnasiosCercanos = signal<readonly GimnasioCard[]>([]);
   readonly cargando = signal<boolean>(true);
   readonly error = signal<string | null>(null);
+
+  // ----------------------------------------
+  // Computed desde autenticación
+  // ----------------------------------------
+  readonly estaAutenticado = this.auth.estaAutenticado;
+  
+  readonly nombreUsuario = computed(() => {
+    const usuario = this.auth.usuario();
+    return usuario?.nombreUsuario || 'Usuario';
+  });
+
+  readonly ciudadUsuario = computed(() => {
+    const usuario = this.auth.usuario();
+    return usuario?.ciudad || 'Jerez de la Frontera';
+  });
 
   // ----------------------------------------
   // Lifecycle
@@ -72,26 +91,41 @@ export class Inicio implements OnInit, OnDestroy {
   private cargarGimnasios(): void {
     this.cargando.set(true);
     
-    this.gimnasiosService.obtenerPopulares().pipe(
+    forkJoin({
+      populares: this.gimnasiosService.obtenerPopulares(),
+      recientes: this.gimnasiosService.obtenerRecientes()
+    }).pipe(
       takeUntil(this.destruir$)
     ).subscribe({
-      next: (gimnasios) => {
-        this.gimnasiosPopulares.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
-        this.cargarRecientes();
+      next: ({ populares, recientes }) => {
+        this.gimnasiosPopulares.set(populares.slice(0, MAX_GIMNASIOS_POR_SECCION));
+        this.gimnasiosRecientes.set(recientes.slice(0, MAX_GIMNASIOS_POR_SECCION));
+        
+        // Si el usuario está autenticado, cargar gimnasios cercanos
+        if (this.auth.estaAutenticado()) {
+          this.cargarGimnasiosCercanos();
+        } else {
+          this.cargando.set(false);
+        }
       },
       error: () => this.manejarError(),
     });
   }
 
-  private cargarRecientes(): void {
-    this.gimnasiosService.obtenerRecientes().pipe(
+  private cargarGimnasiosCercanos(): void {
+    const ciudad = this.ciudadUsuario();
+    
+    this.gimnasiosService.buscar({ ciudad }).pipe(
       takeUntil(this.destruir$)
     ).subscribe({
       next: (gimnasios) => {
-        this.gimnasiosRecientes.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
+        this.gimnasiosCercanos.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.cargando.set(false);
       },
-      error: () => this.manejarError(),
+      error: () => {
+        // Si falla, no mostramos error, solo no mostramos la sección
+        this.cargando.set(false);
+      },
     });
   }
 

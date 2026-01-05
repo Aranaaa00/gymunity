@@ -39,7 +39,7 @@
   />
 }
 
-<div class="campo-formulario__mensaje-container">
+<aside class="campo-formulario__mensaje-container">
   @if (validando()) {
     <small class="campo-formulario__validando" role="status">Verificando...</small>
   } @else if (hasError() && errorMessage()) {
@@ -49,4 +49,4 @@
   } @else if (helpText()) {
     <small class="campo-formulario__help" [id]="inputId() + '-help'">{{ helpText() }}</small>
   }
-</div>
+</aside>

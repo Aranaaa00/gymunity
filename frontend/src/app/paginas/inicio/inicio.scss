@@ -1,4 +1,5 @@
 @use '../../../styles/00-settings/variables' as *;
+@use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // VARIABLES LOCALES
@@ -17,6 +18,10 @@ $inicio-link-gap: 0.25rem;
   flex-direction: column;
   gap: $space-6;
   width: 100%;
+
+  @include respond-down(md) {
+    gap: $space-4;
+  }
 }
 
 .gimnasios-section {
@@ -66,4 +71,64 @@ $inicio-link-gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @include respond-down(lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-down(sm) {
+    grid-template-columns: 1fr;
+    gap: $space-3;
+  }
+}
+
+// ============================================
+// BIENVENIDA PERSONALIZADA (usuario logueado)
+// ============================================
+
+.inicio__bienvenida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+
+  padding: $space-8 $space-4;
+
+  text-align: center;
+  background: linear-gradient(135deg, var(--color-fondo-elevado) 0%, var(--color-fondo) 100%);
+  border-radius: $radio-lg;
+
+  @include respond-down(md) {
+    padding: $space-6 $space-3;
+    gap: $space-1;
+  }
+}
+
+.inicio__saludo {
+  margin: 0;
+
+  font-size: $texto-3xl;
+  font-weight: $font-weight-regular;
+  color: var(--color-texto);
+  line-height: 1.2;
+
+  @include respond-down(md) {
+    font-size: $texto-xl;
+  }
+}
+
+.inicio__nombre-usuario {
+  color: var(--color-acento);
+  font-weight: $font-weight-bold;
+}
+
+.inicio__mensaje {
+  margin: 0;
+
+  font-size: $texto-m;
+  color: var(--color-subtitulo);
+
+  @include respond-down(md) {
+    font-size: $texto-lg;
+  }
 }

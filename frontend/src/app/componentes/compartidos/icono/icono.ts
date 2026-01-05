@@ -42,9 +42,11 @@ export type NombreIcono =
   | 'message-circle'
   | 'check'
   | 'x-circle'
-  | 'alert-circle';
+  | 'alert-circle'
+  | 'tag'
+  | 'refresh-cw';
 
-type TamanoIcono = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+type TamanoIcono = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 // ============================================
 // CONSTANTES
@@ -76,7 +78,7 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   'log-out': 'LogOut',
   plus: 'Plus',
   search: 'Search',
-  'search-x': 'X',
+  'search-x': 'SearchX',
   loader: 'Loader2',
   construction: 'HardHat',
   sparkles: 'Sparkles',
@@ -92,9 +94,12 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   check: 'Check',
   'x-circle': 'XCircle',
   'alert-circle': 'AlertCircle',
+  tag: 'Tag',
+  'refresh-cw': 'RefreshCw',
 } as const;
 
 const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {
+  xs: 12,
   sm: 16,
   md: 20,
   lg: 24,

@@ -1,4 +1,5 @@
 @use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // VARIABLES LOCALES
@@ -18,16 +19,26 @@ $hero-focus-outline-offset: 0.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $space-3;
-  padding: $space-8 0;
+  gap: $space-4;
+  padding: $space-10 0;
   text-align: center;
+
+  @include respond-down(md) {
+    gap: $space-3;
+    padding: $space-8 0;
+  }
+
+  @include respond-down(sm) {
+    gap: $space-2;
+    padding: $space-6 0;
+  }
 }
 
 .hero__titulo {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-size: $texto-l;
+  font-size: $texto-3xl;
   font-weight: $font-weight-bold;
   font-style: italic;
   line-height: $line-height-tight;
@@ -36,13 +47,21 @@ $hero-focus-outline-offset: 0.25rem;
   span {
     display: block;
   }
+
+  @include respond-down(md) {
+    font-size: $texto-2xl;
+  }
+
+  @include respond-down(sm) {
+    font-size: $texto-l;
+  }
 }
 
 .hero__subtitulo {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-size: $texto-s;
+  font-size: $texto-md;
   font-weight: $font-weight-regular;
   line-height: $line-height-relaxed;
   color: var(--color-subtitulo);
@@ -50,11 +69,15 @@ $hero-focus-outline-offset: 0.25rem;
   span {
     display: block;
   }
+
+  @include respond-down(sm) {
+    font-size: $texto-s;
+  }
 }
 
 .hero__cta {
-  margin-top: $space-2;
-  padding: $space-2 $space-5;
+  margin-top: $space-3;
+  padding: $space-3 $space-6;
   background: var(--color-boton);
   border: none;
   border-radius: $radio-full;
@@ -80,5 +103,10 @@ $hero-focus-outline-offset: 0.25rem;
   &:focus-visible {
     outline: $hero-focus-outline-size solid var(--color-boton);
     outline-offset: $hero-focus-outline-offset;
+  }
+
+  @include respond-down(sm) {
+    margin-top: $space-2;
+    padding: $space-2 $space-5;
   }
 }

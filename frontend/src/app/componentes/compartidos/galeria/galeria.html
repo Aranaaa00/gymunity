@@ -1,0 +1,31 @@
+<figure class="galeria">
+  <picture class="galeria__principal">
+    <img 
+      [src]="imagenPrincipal()" 
+      [alt]="alt()" 
+      class="galeria__imagen-principal"
+      loading="eager"
+    />
+  </picture>
+
+  @if (tieneMiniaturas()) {
+    <nav class="galeria__miniaturas" aria-label="Miniaturas de la galería">
+      @for (miniatura of miniaturas(); track trackByIndex($index)) {
+        <button 
+          type="button"
+          class="galeria__miniatura"
+          [class.galeria__miniatura--activa]="$index === indiceActivo()"
+          (click)="seleccionarImagen($index)"
+          [attr.aria-label]="'Ver imagen ' + ($index + 1)"
+        >
+          <img 
+            [src]="miniatura" 
+            [alt]="alt() + ' - miniatura ' + ($index + 1)"
+            class="galeria__miniatura-img"
+            loading="lazy"
+          />
+        </button>
+      }
+    </nav>
+  }
+</figure>

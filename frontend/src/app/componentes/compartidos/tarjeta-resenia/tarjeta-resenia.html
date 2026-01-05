@@ -1,0 +1,19 @@
+<article class="tarjeta-resenia">
+  <figure class="tarjeta-resenia__avatar">
+    @if (foto()) {
+      <img [src]="foto()" [alt]="nombre()" class="tarjeta-resenia__imagen" loading="lazy" />
+    } @else {
+      <app-icono nombre="user" tamano="md" class="tarjeta-resenia__icono-default" />
+    }
+  </figure>
+
+  <section class="tarjeta-resenia__contenido">
+    <header class="tarjeta-resenia__header">
+      <h4 class="tarjeta-resenia__nombre">{{ nombre() }}</h4>
+      @if (titulo()) {
+        <strong class="tarjeta-resenia__titulo">{{ titulo() }}</strong>
+      }
+    </header>
+    <p class="tarjeta-resenia__texto">{{ texto() }}</p>
+  </section>
+</article>

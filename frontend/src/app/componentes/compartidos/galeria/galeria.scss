@@ -1,0 +1,139 @@
+@use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
+
+// ============================================
+// GALERÍA - ESTILOS (Layout Figma)
+// ============================================
+
+$galeria-miniaturas-size: 5rem;
+$galeria-gap: $space-2;
+$galeria-altura-desktop: 22rem;
+$galeria-altura-tablet: 18rem;
+
+.galeria {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: $galeria-gap;
+
+  margin: 0;
+
+  @include respond-down(md) {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+}
+
+// ============================================
+// IMAGEN PRINCIPAL (ocupa toda la altura)
+// ============================================
+
+.galeria__principal {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: $galeria-altura-desktop;
+
+  border-radius: $radio-lg;
+
+  @include respond-down(lg) {
+    height: $galeria-altura-tablet;
+  }
+
+  @include respond-down(md) {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.galeria__imagen-principal {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+
+  .galeria__principal:hover & {
+    transform: scale(1.02);
+  }
+}
+
+// ============================================
+// MINIATURAS (columna vertical al lado)
+// ============================================
+
+.galeria__miniaturas {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: $galeria-gap;
+
+  height: $galeria-altura-desktop;
+
+  @include respond-down(lg) {
+    height: $galeria-altura-tablet;
+  }
+
+  @include respond-down(md) {
+    flex-direction: row;
+    height: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.galeria__miniatura {
+  position: relative;
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  width: $galeria-miniaturas-size;
+  height: $galeria-miniaturas-size;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: $borde-medium solid transparent;
+  border-radius: $radio-md;
+
+  cursor: pointer;
+
+  transition: border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-acento);
+    outline-offset: 2px;
+  }
+
+  @include respond-down(md) {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.galeria__miniatura--activa {
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 2px rgba(52, 198, 160, 0.3);
+}
+
+.galeria__miniatura-img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: calc($radio-md - 2px);
+}

@@ -1,4 +1,5 @@
 @use '../../../styles/00-settings/variables' as *;
+@use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // NO ENCONTRADA - ESTILOS ESPECÍFICOS
@@ -11,14 +12,24 @@
   gap: $space-3;
   
   max-width: 32rem;
+  padding: 0;
   
   text-align: center;
+
+  @include respond-down(sm) {
+    gap: $space-2;
+    padding: 0 $space-2;
+  }
 }
 
 .no-encontrada__icono {
   font-size: 5rem;
   
   opacity: 0.5;
+
+  @include respond-down(sm) {
+    font-size: 3rem;
+  }
 }
 
 .no-encontrada__titulo {
@@ -26,16 +37,28 @@
   font-weight: $font-weight-black;
   line-height: 1;
   color: var(--color-boton);
+
+  @include respond-down(sm) {
+    font-size: 4rem;
+  }
 }
 
 .no-encontrada__subtitulo {
   font-size: $texto-2xl;
   font-weight: $font-weight-bold;
   color: var(--color-titulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-lg;
+  }
 }
 
 .no-encontrada__texto {
   font-size: $texto-s;
   line-height: $line-height-relaxed;
   color: var(--color-subtitulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }

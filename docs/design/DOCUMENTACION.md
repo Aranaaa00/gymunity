@@ -20,7 +20,7 @@
   - Z-index
   - Bordes y radios
 - [1.5 Mixins y funciones](#15-mixins-y-funciones)
-  - respond-to
+  - respond-down
   - flex-center
   - box-shadow
 - [1.6 ViewEncapsulation en Angular](#16-viewencapsulation-en-angular)
@@ -58,6 +58,7 @@
   - Formulario registro
   - Formulario perfil
   - Tooltip
+  - Tarjeta profesor
 - [3.2 Nomenclatura y metodología BEM](#32-nomenclatura-y-metodología-bem)
 - [3.3 Style Guide](#33-style-guide)
   - Botones
@@ -66,6 +67,13 @@
   - Formularios
   - Buscador
   - Colores
+
+### 4. Sistema Responsive
+- [4.1 Breakpoints definidos](#41-breakpoints-definidos)
+- [4.2 Estrategia responsive](#42-estrategia-responsive)
+- [4.3 Container Queries](#43-container-queries)
+- [4.4 Adaptaciones principales](#44-adaptaciones-principales)
+- [4.5 Páginas implementadas](#45-páginas-implementadas)
 
 ---
 
@@ -256,7 +264,7 @@ $space-12: 6rem;     // 96px
 
 ### Breakpoints
 
-Media queries mobile-first:
+Media queries desktop-first:
 
 ```scss
 $breakpoint-sm: 640px;   // Móviles grandes
@@ -317,30 +325,30 @@ Los mixins permiten reutilizar bloques de CSS de manera eficiente. Están defini
 
 ### Mixins disponibles
 
-#### **respond-to** - Media query mobile-first
+#### **respond-down** - Media query desktop-first
 
-Aplica estilos a partir de un breakpoint determinado. Usa la estrategia mobile-first (min-width).
+Aplica estilos hasta un breakpoint determinado. Usa la estrategia desktop-first (max-width).
 
 ```scss
 // Uso
 .elemento {
-  padding: $space-2; // Mobile por defecto
+  padding: $space-6; // Desktop por defecto
 
-  @include respond-to(md) {
-    padding: $space-4; // Tablet y superior
+  @include respond-down(lg) {
+    padding: $space-4; // Tablet y menor
   }
 
-  @include respond-to(lg) {
-    padding: $space-6; // Desktop y superior
+  @include respond-down(sm) {
+    padding: $space-2; // Móvil
   }
 }
 ```
 
 **Breakpoints disponibles:**
-- `sm`: 640px
-- `md`: 768px
-- `lg`: 1024px
-- `xl`: 1280px
+- `xl`: hasta 1279px
+- `lg`: hasta 1023px
+- `md`: hasta 767px
+- `sm`: hasta 639px
 
 ---
 
@@ -1308,6 +1316,36 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 ---
 
+#### **Tarjeta profesor** (`app-tarjeta-profesor`)
+
+**Nombre del componente:** Tarjeta profesor
+
+**Propósito:** Mostrar información de un profesor con imagen, nombre y enlace a su perfil.
+
+**Variantes disponibles:** No tiene variantes visuales (se adapta mediante Container Queries)
+
+**Tamaños disponibles:** Fluido, se adapta al contenedor padre
+
+**Estados que maneja:**
+- Normal
+- Hover (elevación sutil)
+- Adaptación automática (< 300px contenedor)
+
+**Ejemplo de uso:**
+```html
+<app-tarjeta-profesor
+  [profesor]="profesor"
+  (click)="verPerfil(profesor.id)">
+</app-tarjeta-profesor>
+```
+
+**Adaptaciones responsive:**
+- Usa Container Queries para adaptar layout según ancho del contenedor
+- En contenedores estrechos (< 300px): oculta avatar, ajusta tipografía
+- Documentado en sección 4.3 Container Queries
+
+---
+
 ### 3.2 Nomenclatura y metodología BEM
 
 **BEM (Bloque-Elemento-Modificador)** es la metodología CSS utilizada en este proyecto para estructurar las clases de forma escalable y mantenible.
@@ -1583,5 +1621,146 @@ Paleta de colores de marca, semánticos y modo oscuro/claro.
 
 ![Tipografia](./img/Tipografia.png)
 Jerarquía de títulos, textos y estilos tipográficos usados en la interfaz.
+
+---
+
+## 4. Sistema Responsive
+
+### 4.1 Breakpoints definidos
+
+| Nombre | Valor | Dispositivo | Justificación |
+|--------|-------|-------------|---------------|
+| `$breakpoint-sm` | 640px | Móvil | Abarca la mayoría de móviles actuales (320-639px) |
+| `$breakpoint-md` | 768px | Tablet vertical | Punto donde las tablets necesitan un layout diferente |
+| `$breakpoint-lg` | 1024px | Tablet horizontal / Portátil | Transición a layouts de varias columnas |
+| `$breakpoint-xl` | 1280px | Escritorio | Monitores 1080p y pantallas grandes |
+
+Estos valores están basados en los estándares más usados (Tailwind CSS, Bootstrap) y cubren prácticamente todos los dispositivos del mercado.
+
+### 4.2 Estrategia responsive
+
+**Enfoque: Desktop-First**
+
+He elegido Desktop-First por varios motivos:
+- Los usuarios de gimnasios suelen buscar y comparar opciones desde el ordenador
+- Hay mucho contenido (galerías, reseñas, clases) que se ve mejor en pantallas grandes
+- Es más fácil simplificar un diseño complejo para móvil que hacer lo contrario
+
+**Implementación con el mixin `respond-down`:**
+
+```scss
+// styles/01-tools/_mixins.scss
+@mixin respond-down($breakpoint) {
+  @if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl - 1px}) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg - 1px}) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md - 1px}) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm - 1px}) { @content; }
+  }
+}
+```
+
+**Ejemplo de uso:**
+
+```scss
+.gimnasios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  // Escritorio: 3 columnas
+  gap: $space-4;
+
+  @include respond-down(lg) {
+    grid-template-columns: repeat(2, 1fr);  // Tablet: 2 columnas
+  }
+
+  @include respond-down(sm) {
+    grid-template-columns: 1fr;  // Móvil: 1 columna
+    gap: $space-3;
+  }
+}
+```
+
+### 4.3 Container Queries
+
+Con Container Queries los componentes se adaptan según el ancho de su contenedor en vez del viewport. Esto hace que sean reutilizables en cualquier contexto.
+
+**Componentes con Container Queries:**
+
+| Componente | Archivo | Motivo |
+|------------|---------|--------|
+| `Card` | `card/card.scss` | Se usa en grids de 1, 2 o 3 columnas dependiendo de la página |
+| `TarjetaProfesor` | `tarjeta-profesor/tarjeta-profesor.scss` | Aparece en sidebars y grids con anchos distintos |
+
+**Ejemplo en Card:**
+
+```scss
+// card.scss
+.card {
+  container-type: inline-size;
+  container-name: card;
+  
+  // Estilos base...
+}
+
+// Si el contenedor tiene menos de 300px, cambia a layout vertical
+@container card (max-width: 300px) {
+  .card {
+    flex-direction: column;
+  }
+  
+  .card__imagen {
+    width: 100%;
+    height: 180px;
+  }
+}
+```
+
+**Ejemplo en TarjetaProfesor:**
+
+```scss
+// tarjeta-profesor.scss
+.tarjeta-profesor {
+  container-type: inline-size;
+  container-name: profesor-card;
+}
+
+@container profesor-card (max-width: 300px) {
+  .tarjeta-profesor {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tarjeta-profesor__boton {
+    width: 100%;
+  }
+}
+```
+
+### 4.4 Adaptaciones principales
+
+| Elemento | Móvil (< 640px) | Tablet (640-1023px) | Escritorio (≥ 1024px) |
+|----------|-----------------|---------------------|----------------------|
+| **Header** | Logo + menú hamburguesa | Logo + navegación en línea | Navegación completa + buscador |
+| **Grid gimnasios** | 1 columna | 2 columnas | 3 columnas |
+| **Galería** | Imagen + miniaturas verticales | Grid 2 columnas | Imagen grande + grid miniaturas |
+| **Cards** | Vertical a ancho completo | 2 por fila | 3 por fila / horizontal |
+| **Formularios** | Campos apilados | 2 columnas parcial | 2 columnas completo |
+| **Buscador** | Ancho completo, expandido | Ancho fijo, colapsable | Ancho fijo en header |
+| **Footer** | Enlaces apilados | 2 columnas | 4 columnas |
+| **Mensaje bienvenida** | 2.5rem, menos padding | 3rem | 3.5rem, fondo degradado |
+
+### 4.5 Páginas implementadas
+
+| Página | Ruta | Descripción |
+|--------|------|-------------|
+| **Inicio** | `/` | Bienvenida personalizada + gimnasios populares, recientes y cercanos |
+| **Búsqueda** | `/busqueda` | Grid de resultados con filtros activos y contador |
+| **Gimnasio** | `/gimnasio/:id` | Detalle completo con galería, profesores, clases y reseñas |
+| **Perfil** | `/perfil` | Datos del usuario que ha iniciado sesión |
+| **Configuración** | `/configuracion` | Ajustes de cuenta y preferencias |
+| **Guía de Estilo** | `/guia-estilo` | Documentación visual de todos los componentes |
+| **No Encontrada** | `/**` | Página 404 con enlace para volver |
 
 ---

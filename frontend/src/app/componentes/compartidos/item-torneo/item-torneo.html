@@ -1,0 +1,13 @@
+<article class="item-torneo">
+  <app-icono nombre="trophy" tamano="sm" class="item-torneo__icono" />
+  <section class="item-torneo__info">
+    <h4 class="item-torneo__nombre">
+      @if (disciplina()) {
+        Campeonato de <strong>{{ disciplina() }}</strong>
+      } @else {
+        {{ nombre() }}
+      }
+    </h4>
+    <time class="item-torneo__fecha">{{ formatearFecha() }}</time>
+  </section>
+</article>

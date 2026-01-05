@@ -1,4 +1,5 @@
 @use '../../../styles/00-settings/variables' as *;
+@use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
 // PERFIL - CONTENEDOR PRINCIPAL
@@ -7,6 +8,10 @@
 .perfil {
   min-height: calc(100vh - 4rem);
   padding: $space-4 $space-3;
+
+  @include respond-down(sm) {
+    padding: $space-3 $space-2;
+  }
 }
 
 .perfil__contenedor {
@@ -16,6 +21,10 @@
   
   max-width: 48rem;
   margin: 0 auto;
+
+  @include respond-down(md) {
+    gap: $space-3;
+  }
 }
 
 // ============================================
@@ -32,11 +41,19 @@
   font-size: $texto-3xl;
   font-weight: $font-weight-bold;
   color: var(--color-titulo);
+
+  @include respond-down(md) {
+    font-size: $texto-xl;
+  }
 }
 
 .perfil__bienvenida {
   font-size: $texto-lg;
   color: var(--color-subtitulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-s;
+  }
 }
 
 // ============================================
@@ -47,6 +64,10 @@
   display: flex;
   flex-direction: column;
   gap: $space-4;
+
+  @include respond-down(md) {
+    gap: $space-3;
+  }
 }
 
 .perfil__seccion {
@@ -60,12 +81,21 @@
   
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
+
+  @include respond-down(sm) {
+    gap: $space-2;
+    padding: $space-2;
+  }
 }
 
 .perfil__seccion-titulo {
   font-size: $texto-lg;
   font-weight: $font-weight-semibold;
   color: var(--color-titulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-s;
+  }
 }
 
 // ============================================
@@ -78,17 +108,32 @@
   gap: $space-2 $space-3;
   
   margin: 0;
+
+  @include respond-down(sm) {
+    grid-template-columns: 1fr;
+    gap: $space-1;
+  }
 }
 
 .perfil__dato-label {
+  font-size: $texto-s;
   font-weight: $font-weight-semibold;
   color: var(--color-subtitulo);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }
 
 .perfil__dato-valor {
   margin: 0;
-  
+  font-size: $texto-s;
   color: var(--color-texto);
+
+  @include respond-down(sm) {
+    margin: 0 0 $space-1 0;
+    font-size: $texto-xs;
+  }
 }
 
 // ============================================
@@ -106,6 +151,11 @@
   
   border: $borde-thin solid var(--color-info);
   border-radius: $radio-md;
+
+  @include respond-down(sm) {
+    align-items: flex-start;
+    padding: $space-2;
+  }
 }
 
 .perfil__icono {
@@ -117,4 +167,8 @@
   font-size: $texto-s;
   line-height: $line-height-normal;
   color: var(--color-texto);
+
+  @include respond-down(sm) {
+    font-size: $texto-xs;
+  }
 }

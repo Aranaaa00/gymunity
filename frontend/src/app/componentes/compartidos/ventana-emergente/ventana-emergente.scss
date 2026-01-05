@@ -50,6 +50,11 @@ $modal-slide-scale: 0.98;
   box-shadow: $shadow-lg;
   animation: modal-slide $modal-slide-duration ease-out;
   overflow-y: auto;
+
+  @include respond-down(sm) {
+    padding: $space-3 $space-3;
+    border-radius: $radio-lg;
+  }
 }
 
 // ============================================

@@ -1,0 +1,24 @@
+<article class="tarjeta-profesor">
+  <figure class="tarjeta-profesor__avatar">
+    @if (foto()) {
+      <img [src]="foto()" [alt]="nombre()" class="tarjeta-profesor__imagen" loading="lazy" />
+    } @else {
+      <app-icono nombre="user" tamano="lg" class="tarjeta-profesor__icono-default" />
+    }
+  </figure>
+
+  <section class="tarjeta-profesor__info">
+    <h4 class="tarjeta-profesor__nombre">{{ nombre() }}</h4>
+    <p class="tarjeta-profesor__especialidad">{{ especialidad() }}</p>
+    @if (valoracion() !== null) {
+      <p class="tarjeta-profesor__valoracion">
+        {{ formatearValoracion() }}
+        <app-icono nombre="star" tamano="xs" class="tarjeta-profesor__estrella" />
+      </p>
+    }
+  </section>
+
+  <button type="button" class="tarjeta-profesor__boton" (click)="onApuntarse()">
+    Apuntarse
+  </button>
+</article>

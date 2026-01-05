@@ -57,7 +57,7 @@ public class Usuario {
     @Column
     private String avatar;
 
-    @Column(nullable = false)
+    @Column
     private String ciudad;
 
     @Column(length = 15)

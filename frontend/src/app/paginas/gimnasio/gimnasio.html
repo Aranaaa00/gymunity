@@ -8,60 +8,112 @@
 } @else if (gimnasio()) {
   <main class="gimnasio">
     <article class="gimnasio__contenedor">
+      <!-- HEADER: Título y valoración -->
       <header class="gimnasio__header">
-        @if (gimnasio()!.foto) {
-          <img [src]="gimnasio()!.foto" [alt]="gimnasio()!.nombre" class="gimnasio__imagen" />
-        }
-        <h1 class="gimnasio__titulo">{{ gimnasio()!.nombre }}</h1>
-        <p class="gimnasio__valoracion"><app-icono nombre="star" /> {{ formatearValoracion() }}</p>
+        <hgroup class="gimnasio__titulos">
+          <h1 class="gimnasio__titulo">{{ gimnasio()!.nombre }}</h1>
+          @if (gimnasio()!.valoracionMedia !== null) {
+            <p class="gimnasio__valoracion">
+              {{ formatearValoracion() }}
+              <app-icono nombre="star" tamano="xs" class="gimnasio__estrella" />
+            </p>
+          }
+        </hgroup>
+        <button type="button" class="gimnasio__boton-resenia" (click)="abrirResenia()">
+          Dejar reseña
+        </button>
       </header>
 
-      <section class="gimnasio__info">
-        <h2 class="gimnasio__seccion-titulo">Descripción</h2>
-        <p class="gimnasio__descripcion">{{ gimnasio()!.descripcion }}</p>
-      </section>
-
-      <section class="gimnasio__info">
-        <h2 class="gimnasio__seccion-titulo"><app-icono nombre="map-pin" /> Ubicación</h2>
-        <p class="gimnasio__direccion">{{ gimnasio()!.ciudad }}</p>
-      </section>
-
-      @if (gimnasio()!.clases.length > 0) {
-        <section class="gimnasio__info">
-          <h2 class="gimnasio__seccion-titulo"><app-icono nombre="dumbbell" /> Clases disponibles</h2>
-          <ul class="gimnasio__servicios">
-            @for (clase of gimnasio()!.clases; track trackByClaseId($index, clase)) {
-              <li class="gimnasio__servicio">{{ clase.icono }} {{ clase.nombre }} - {{ clase.profesorNombre }}</li>
-            }
-          </ul>
-        </section>
+      <!-- GALERÍA DE IMÁGENES -->
+      @if (tieneFotos()) {
+        <app-galeria [imagenes]="fotosGaleria()" [alt]="gimnasio()!.nombre" />
+      } @else if (gimnasio()!.foto) {
+        <figure class="gimnasio__imagen-unica">
+          <img [src]="gimnasio()!.foto" [alt]="gimnasio()!.nombre" class="gimnasio__foto" loading="eager" />
+        </figure>
       }
 
-      @if (gimnasio()!.resenias.length > 0) {
-        <section class="gimnasio__info">
-          <h2 class="gimnasio__seccion-titulo"><app-icono nombre="message-circle" /> Reseñas ({{ gimnasio()!.totalResenias }})</h2>
-          <ul class="gimnasio__resenias">
-            @for (resenia of gimnasio()!.resenias; track trackByReseniaId($index, resenia)) {
-              <li class="gimnasio__resenia">
-                <strong>{{ resenia.usuarioNombre }}</strong>
-                <p>{{ resenia.texto }}</p>
-              </li>
-            }
-          </ul>
-        </section>
-      }
+      <!-- DESCRIPCIÓN -->
+      <section class="gimnasio__descripcion">
+        <p class="gimnasio__descripcion-texto">{{ gimnasio()!.descripcion }}</p>
+      </section>
 
-      <p class="gimnasio__apuntados">
-        <app-icono nombre="users" /> {{ gimnasio()!.totalApuntados }} personas apuntadas
-      </p>
+      <!-- CONTENIDO PRINCIPAL -->
+      <section class="gimnasio__contenido">
+        <!-- PROFESORES -->
+        @if (gimnasio()!.profesores && gimnasio()!.profesores.length > 0) {
+          <app-seccion-lista 
+            titulo="Profesores y artes marciales:" 
+            [mostrarVerMas]="gimnasio()!.profesores.length > 3"
+            (verMas)="verMasProfesores()"
+          >
+            <ul class="gimnasio__lista-profesores">
+              @for (profesor of profesoresVisibles(); track trackByProfesorId($index, profesor)) {
+                <li>
+                  <app-tarjeta-profesor
+                    [nombre]="profesor.nombre"
+                    [especialidad]="profesor.especialidad"
+                    [foto]="profesor.foto"
+                    [valoracion]="profesor.valoracion"
+                    (apuntarse)="apuntarseProfesor(profesor)"
+                  />
+                </li>
+              }
+            </ul>
+          </app-seccion-lista>
+        }
+
+        <!-- TORNEOS -->
+        @if (gimnasio()!.torneos && gimnasio()!.torneos.length > 0) {
+          <app-seccion-lista 
+            titulo="Torneos disponibles en {{ gimnasio()!.nombre }}:" 
+            [mostrarVerMas]="gimnasio()!.torneos.length > 3"
+            (verMas)="verMasTorneos()"
+          >
+            <ul class="gimnasio__lista-torneos">
+              @for (torneo of torneosVisibles(); track trackByTorneoId($index, torneo)) {
+                <li>
+                  <app-item-torneo
+                    [nombre]="torneo.nombre"
+                    [fecha]="torneo.fecha"
+                    [disciplina]="torneo.disciplina"
+                  />
+                </li>
+              }
+            </ul>
+          </app-seccion-lista>
+        }
+
+        <!-- RESEÑAS -->
+        @if (gimnasio()!.resenias && gimnasio()!.resenias.length > 0) {
+          <app-seccion-lista 
+            titulo="Reseñas de otros alumnos:" 
+            [mostrarVerMas]="gimnasio()!.resenias.length > 3"
+            (verMas)="verMasResenias()"
+          >
+            <ul class="gimnasio__lista-resenias">
+              @for (resenia of reseniasVisibles(); track trackByReseniaId($index, resenia)) {
+                <li>
+                  <app-tarjeta-resenia
+                    [nombre]="resenia.nombreUsuario"
+                    [texto]="resenia.texto"
+                    [foto]="resenia.avatarUsuario"
+                  />
+                </li>
+              }
+            </ul>
+          </app-seccion-lista>
+        }
+      </section>
     </article>
   </main>
 } @else {
-  <main class="gimnasio">
-    <section class="gimnasio__error">
+  <main class="gimnasio gimnasio--error">
+    <section class="gimnasio__estado-error">
       <app-icono nombre="x-circle" tamano="2xl" class="gimnasio__error-icono" />
       <h1 class="gimnasio__error-titulo">Gimnasio no encontrado</h1>
       <p class="gimnasio__error-texto">El gimnasio que buscas no existe o ha sido eliminado.</p>
     </section>
   </main>
 }
+

@@ -1,27 +1,44 @@
 <main class="busqueda">
   <section class="busqueda__contenedor">
+    <!-- HEADER CON ESTADÍSTICAS -->
     <header class="busqueda__header">
-      <h1 class="busqueda__titulo"><app-icono nombre="search" tamano="lg" /> Búsqueda de Gimnasios</h1>
-      @if (terminoBusqueda()) {
-        <p class="busqueda__subtitulo">
-          Resultados para: <strong>{{ terminoBusqueda() }}</strong>
-          @if (totalResultados() > 0) {
-            <span class="busqueda__contador">({{ totalResultados() }} encontrados)</span>
+      <hgroup class="busqueda__titulos">
+        <h1 class="busqueda__titulo">
+          @if (terminoBusqueda()) {
+            Resultados de búsqueda
+          } @else {
+            Explora gimnasios
           }
-        </p>
-      } @else {
-        <p class="busqueda__subtitulo">Descubre tu gimnasio ideal cerca de ti. Usa el buscador del header para filtrar.</p>
-      }
+        </h1>
+        @if (terminoBusqueda()) {
+          <p class="busqueda__subtitulo">
+            Mostrando resultados para "<strong>{{ terminoBusqueda() }}</strong>"
+          </p>
+        } @else {
+          <p class="busqueda__subtitulo">Descubre los mejores gimnasios de artes marciales cerca de ti</p>
+        }
+      </hgroup>
+
+      <!-- CONTADOR MEJORADO -->
+      <aside class="busqueda__contador-box">
+        <span class="busqueda__contador-numero">{{ totalResultados() }}</span>
+        <span class="busqueda__contador-texto">
+          {{ totalResultados() === 1 ? 'gimnasio' : 'gimnasios' }}
+        </span>
+      </aside>
     </header>
 
-    <search class="busqueda__filtros">
-      @if (terminoBusqueda()) {
-        <button type="button" class="busqueda__limpiar" (click)="limpiarFiltros()">
-          <app-icono nombre="x" tamano="sm" /> Limpiar
+    <!-- FILTROS ACTIVOS -->
+    @if (terminoBusqueda()) {
+      <nav class="busqueda__filtros" aria-label="Filtros activos">
+        <button type="button" class="busqueda__filtro-chip" (click)="limpiarFiltros()">
+          <span class="busqueda__filtro-texto">{{ terminoBusqueda() }}</span>
+          <app-icono nombre="x" tamano="xs" class="busqueda__filtro-icono" />
         </button>
-      }
-    </search>
+      </nav>
+    }
 
+    <!-- ESTADOS -->
     @if (cargando()) {
       <article class="busqueda__estado">
         <app-icono nombre="loader" tamano="2xl" class="busqueda__spinner" />
@@ -29,29 +46,33 @@
       </article>
     } @else if (error()) {
       <article class="busqueda__estado busqueda__estado--error">
-        <app-icono nombre="alert-circle" tamano="2xl" />
+        <app-icono nombre="alert-circle" tamano="2xl" class="busqueda__estado-icono" />
+        <h2 class="busqueda__estado-titulo">Ha ocurrido un error</h2>
         <p class="busqueda__estado-texto">{{ error() }}</p>
         <button type="button" class="busqueda__reintentar" (click)="limpiarFiltros()">
+          <app-icono nombre="refresh-cw" tamano="sm" />
           Reintentar
         </button>
       </article>
     } @else if (hayResultados()) {
+      <!-- RESULTADOS EN GRID -->
       <section #contenedorResultados class="busqueda__resultados">
-        <ul class="busqueda__grid">
+        <article class="busqueda__grid">
           @for (gimnasio of resultados(); track trackByGimnasioId($index, gimnasio)) {
-            <li class="busqueda__item">
-              <app-card
-                [id]="gimnasio.id"
-                [title]="gimnasio.nombre"
-                [subtitle]="gimnasio.ciudad"
-                [valoracion]="gimnasio.valoracionMedia"
-                [totalResenias]="gimnasio.totalResenias"
-                [imageSrc]="gimnasio.foto"
-                variant="vertical"
-              />
-            </li>
+            <app-card
+              [id]="gimnasio.id"
+              [title]="gimnasio.nombre"
+              [subtitle]="gimnasio.ciudad"
+              [valoracion]="gimnasio.valoracionMedia"
+              [totalResenias]="gimnasio.totalResenias"
+              [imageSrc]="gimnasio.foto"
+              variant="horizontal"
+              class="busqueda__card"
+            />
           }
-        </ul>
+        </article>
+
+        <!-- PAGINACIÓN -->
         @if (cargandoMas()) {
           <footer class="busqueda__cargando-mas">
             <app-icono nombre="loader" tamano="md" class="busqueda__spinner" />
@@ -60,23 +81,28 @@
         } @else if (hayMas()) {
           <footer class="busqueda__ver-mas">
             <button type="button" class="busqueda__boton-mas" (click)="cargarMasResultados()">
-              Cargar más gimnasios
+              <app-icono nombre="chevron-down" tamano="sm" />
+              Ver más gimnasios
             </button>
           </footer>
         }
       </section>
-    } @else if (!hayResultados()) {
+    } @else {
+      <!-- SIN RESULTADOS -->
       <article class="busqueda__estado busqueda__estado--vacio">
-        <app-icono nombre="search-x" tamano="2xl" />
+        <app-icono nombre="search-x" tamano="2xl" class="busqueda__estado-icono" />
         <h2 class="busqueda__estado-titulo">No se encontraron resultados</h2>
         @if (terminoBusqueda()) {
           <p class="busqueda__estado-texto">
             No hay gimnasios que coincidan con "<strong>{{ terminoBusqueda() }}</strong>".
-            Prueba con otros términos de búsqueda.
           </p>
+          <button type="button" class="busqueda__reintentar" (click)="limpiarFiltros()">
+            <app-icono nombre="x" tamano="sm" />
+            Limpiar búsqueda
+          </button>
         } @else {
           <p class="busqueda__estado-texto">
-            No hay gimnasios disponibles en este momento.
+            No hay gimnasios disponibles en este momento. Vuelve a intentarlo más tarde.
           </p>
         }
       </article>
