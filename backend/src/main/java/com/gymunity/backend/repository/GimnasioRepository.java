@@ -67,8 +67,7 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
      * @return Lista de gimnasios ordenados por popularidad.
      */
     @Query("SELECT g FROM Gimnasio g LEFT JOIN g.interacciones i " +
-           "WHERE i.esApuntado = true " +
-           "GROUP BY g ORDER BY COUNT(i) DESC")
+           "GROUP BY g.id ORDER BY COUNT(CASE WHEN i.esApuntado = true THEN 1 END) DESC")
     List<Gimnasio> findMasPopulares();
 
     /**
