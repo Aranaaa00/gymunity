@@ -1,7 +1,11 @@
 <header class="gym-header">
   <section class="gym-header__top">
     <a class="gym-header__logo" routerLink="/" aria-label="Ir a inicio">
-      <img src="assets/logo.png" alt="Gymunity">
+      <picture>
+        <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
+        <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
+        <img src="assets/logo-large.webp" alt="Gymunity" loading="eager">
+      </picture>
     </a>
 
     <search class="gym-header__buscador">

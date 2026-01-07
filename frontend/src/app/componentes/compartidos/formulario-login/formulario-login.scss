@@ -39,7 +39,13 @@ $formulario-link-transition-duration: 0.2s;
 }
 
 .formulario-auth__logo {
-  height: $formulario-logo-height;
+  display: block;
+
+  img {
+    display: block;
+    height: $formulario-logo-height;
+    width: auto;
+  }
 }
 
 // ============================================

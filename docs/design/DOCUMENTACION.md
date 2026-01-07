@@ -75,39 +75,46 @@
 - [4.4 Adaptaciones principales](#44-adaptaciones-principales)
 - [4.5 Páginas implementadas](#45-páginas-implementadas)
 
+### 5. Optimización multimedia
+- [5.1 Formatos elegidos](#51-formatos-elegidos)
+- [5.2 Herramientas utilizadas](#52-herramientas-utilizadas)
+- [5.3 Resultados de optimización](#53-resultados-de-optimización)
+- [5.4 Tecnologías implementadas](#54-tecnologías-implementadas)
+- [5.5 Animaciones CSS](#55-animaciones-css)
+
 ---
 
 ## 1.1 Principios de comunicación visual
 
-Los cinco principios básicos de comunicación visual ayudan a crear interfaces claras y efectivas:
+Hay cinco principios que vienen bien tener en cuenta a la hora de montar una interfaz:
 
-**Jerarquía:** Consiste en organizar los elementos visuales según su importancia. Se logra usando diferentes tamaños, pesos de fuente y espaciado, guiando la atención del usuario hacia lo más relevante primero.
+**Jerarquía:** Se trata de colocar los elementos según su importancia. Jugando con tamaños, pesos de fuente y espaciado consigues que el ojo vaya primero a lo que más importa.
 
 ![Ejemplo de Jerarquía](img/Ejemplo_jerarquia.png)
 
-**Contraste:** Permite diferenciar elementos y destacar información clave. Se utiliza el color, el tamaño y el peso visual para que ciertos componentes resalten y sean fácilmente identificables.
+**Contraste:** Sirve para que ciertas cosas destaquen sobre el resto. Cambiando colores, tamaños o pesos visuales se consigue que la información clave salte a la vista.
 
 ![Ejemplo de Contraste](img/Ejemplo_contraste.png)
 
-**Alineación:** Es la disposición ordenada de los elementos en la interfaz. Una buena alineación, ya sea a la izquierda, centrada o en cuadrícula, aporta estructura y facilita la lectura.
+**Alineación:** Ordenar los elementos de forma coherente (a la izquierda, centrados, en rejilla…) da estructura y hace que todo sea más fácil de leer.
 
 ![Ejemplo de Alineación](img/Ejemplo_alineacion.png)
 
-**Proximidad:** Agrupa elementos relacionados mediante el uso del espacio. Cuando los objetos están cerca entre sí, el usuario los percibe como parte de un mismo grupo, lo que mejora la comprensión.
+**Proximidad:** Las cosas que están cerca se entienden como relacionadas. Basta con gestionar bien el espacio para que el usuario capte qué va con qué.
 
 ![Ejemplo de Proximidad](img/Ejemplo_proximidad.png)
 
-**Repetición:** Consiste en reutilizar patrones visuales, colores y estilos a lo largo del diseño. Esto genera coherencia y refuerza la identidad visual del proyecto.
+**Repetición:** Usar los mismos patrones, colores y estilos a lo largo del diseño da coherencia y refuerza la identidad del proyecto.
 
 ![Ejemplo de Repetición](img/Ejemplo_repeticion.png)
 
 ## 1.2 Metodología CSS
 
-Para este proyecto se utiliza la metodología BEM (Bloque, Elemento, Modificador) en la nomenclatura de clases CSS. BEM ayuda a mantener el código organizado, claro y fácil de escalar, evitando confusiones y estilos globales.
+En este proyecto usamos BEM (Bloque, Elemento, Modificador) para nombrar las clases CSS. La gracia de BEM es que el código queda ordenado, se lee bien y escala sin líos.
 
-- **Bloques:** Representan componentes principales, por ejemplo: `.gym-grid`
-- **Elementos:** Partes internas del bloque, por ejemplo: `.gym-grid__item`
-- **Modificadores:** Variantes o estados, por ejemplo: `.gym-grid--section`
+- **Bloques:** Son los componentes principales. Ejemplo: `.gym-grid`
+- **Elementos:** Las partes que cuelgan de un bloque. Ejemplo: `.gym-grid__item`
+- **Modificadores:** Variantes o estados. Ejemplo: `.gym-grid--section`
 
 **Ejemplo:**
 ```scss
@@ -122,11 +129,11 @@ Para este proyecto se utiliza la metodología BEM (Bloque, Elemento, Modificador
 }
 ```
 
-Esta metodología facilita la lectura y el mantenimiento del CSS en proyectos grandes o colaborativos.
+Al final, cuando el proyecto crece o entra gente nueva, tener las clases así nombradas es un alivio.
 
 ## 1.3 Organización de archivos
 
-El orden de las carpetas va de estilos más generales a más específicos. Así, las variables y herramientas se cargan primero, seguidos por resets, estilos base, layouts, componentes y utilidades. Esto evita conflictos y hace que el código sea más fácil de mantener y entender.
+Las carpetas van de lo más general a lo más concreto. Primero cargan variables y herramientas, luego resets, estilos base, layouts, componentes y utilidades. Así no hay conflictos y todo el mundo sabe dónde buscar cada cosa.
 
 **Árbol de carpetas:**
 ```
@@ -148,7 +155,7 @@ styles/
 
 ## 1.4 Sistema de Design Tokens
 
-Los Design Tokens son variables que definen los valores fundamentales del sistema de diseño. Permiten mantener la coherencia visual y facilitan cambios globales desde un único lugar.
+Los Design Tokens son las variables que guardan los valores base del diseño. Colores, tipografías, espaciados… todo está aquí. Si mañana hay que cambiar el verde corporativo, se toca en un sitio y listo.
 
 ### Paleta de colores
 
@@ -321,13 +328,13 @@ $radio-full: 9999px; // Círculos, pills
 
 ## 1.5 Mixins y funciones
 
-Los mixins permiten reutilizar bloques de CSS de manera eficiente. Están definidos en `01-tools/_mixins.scss`.
+Los mixins son trozos de CSS que se pueden reutilizar sin copiar y pegar. Están en `01-tools/_mixins.scss`.
 
 ### Mixins disponibles
 
 #### **respond-down** - Media query desktop-first
 
-Aplica estilos hasta un breakpoint determinado. Usa la estrategia desktop-first (max-width).
+Aplica estilos hasta cierto breakpoint. Va de escritorio hacia abajo (max-width).
 
 ```scss
 // Uso
@@ -354,7 +361,7 @@ Aplica estilos hasta un breakpoint determinado. Usa la estrategia desktop-first 
 
 #### **flex-center** - Centrar con flexbox
 
-Centra un elemento tanto horizontal como verticalmente usando flexbox.
+Centra un elemento en ambos ejes con flexbox. Simple pero útil.
 
 ```scss
 // Definición
@@ -375,7 +382,7 @@ Centra un elemento tanto horizontal como verticalmente usando flexbox.
 
 #### **box-shadow** - Aplicar sombra
 
-Aplica una sombra predefinida o personalizada.
+Mete una sombra predefinida o la que le pases como parámetro.
 
 ```scss
 // Definición
@@ -404,7 +411,7 @@ Aplica una sombra predefinida o personalizada.
 
 ## 1.6 ViewEncapsulation en Angular
 
-Angular por defecto aplica **View Encapsulation** a los componentes, lo que afecta cómo se aplican los estilos CSS.
+Angular encapsula los estilos de cada componente por defecto, lo que afecta a cómo se aplican las clases CSS.
 
 ### Modos de encapsulación
 
@@ -414,7 +421,7 @@ Angular por defecto aplica **View Encapsulation** a los componentes, lo que afec
 
 ### Uso del selector :host
 
-Cuando un componente tiene una clase aplicada al elemento host (mediante `@HostBinding` o `[class]`), se debe usar `:host` para estilizar:
+Cuando un componente tiene una clase en su elemento raíz (vía `@HostBinding` o `[class]`), hay que usar `:host` para estilizarlo:
 
 ```scss
 // ❌ INCORRECTO - No funciona con ViewEncapsulation
@@ -468,10 +475,10 @@ export class AcordeonItemComponent {
 
 ### Buenas prácticas
 
-1. **Usar `:host` para clases del elemento raíz**
-2. **Evitar `::ng-deep`** - está deprecado
-3. **Usar variables CSS** para valores dinámicos desde el padre
-4. **Preferir composición** sobre herencia de estilos
+1. **Usar `:host` cuando toque clases del elemento raíz**
+2. **No usar `::ng-deep`**, está deprecado
+3. **Variables CSS** para valores que vengan del padre
+4. **Composición antes que herencia** de estilos
 
 ---
 
@@ -479,7 +486,7 @@ export class AcordeonItemComponent {
 
 ### 2.1 Elementos semánticos utilizados
 
-Se utilizan elementos HTML5 semánticos para mejorar la accesibilidad y el SEO:
+Usamos etiquetas HTML5 semánticas para que la página sea más accesible y se posicione mejor en buscadores:
 
 | Elemento | Uso | Ejemplo en el proyecto |
 |----------|-----|------------------------|
@@ -536,11 +543,11 @@ Se utilizan elementos HTML5 semánticos para mejorar la accesibilidad y el SEO:
 
 ### 2.2 Jerarquía de headings
 
-**Reglas aplicadas:**
-- Solo un `<h1>` por página (título principal)
+**Reglas:**
+- Un solo `<h1>` por página (el título gordo)
 - `<h2>` para secciones principales
 - `<h3>` para subsecciones o tarjetas
-- NUNCA se saltan niveles
+- No saltarse niveles
 
 **Diagrama de jerarquía:**
 ```
@@ -564,12 +571,12 @@ Tarjeta de Gimnasio (detalle)
 
 ### 2.3 Estructura de formularios
 
-Los formularios siguen las mejores prácticas de accesibilidad:
+Los formularios siguen las pautas de accesibilidad al pie de la letra:
 
-- **`<fieldset>`**: Agrupa campos relacionados
-- **`<legend>`**: Describe el propósito del grupo
-- **`<label>`**: Asociado al input mediante `for` e `id`
-- **Atributos ARIA**: `aria-describedby`, `aria-invalid` para accesibilidad
+- **`<fieldset>`**: agrupa campos que van juntos
+- **`<legend>`**: describe para qué es ese grupo
+- **`<label>`**: vinculado al input con `for` e `id`
+- **Atributos ARIA**: `aria-describedby`, `aria-invalid` para lectores de pantalla
 
 **Ejemplo del componente campo-formulario:**
 ```html
@@ -624,7 +631,7 @@ Los formularios siguen las mejores prácticas de accesibilidad:
 </form>
 ```
 
-La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el input correspondiente, mejorando la usabilidad y accesibilidad.
+La asociación `for`/`id` hace que al pulsar en el label se active el input. Es un detalle que mejora mucho la usabilidad, sobre todo en móviles.
 
 ---
 
@@ -634,22 +641,22 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Botón** (`app-boton`)
 
-**Nombre del componente:** Botón
+**Nombre:** Botón
 
-**Propósito:** Ejecutar acciones interactivas como enviar formularios, abrir modales o navegar.
+**Para qué sirve:** Acciones tipo enviar formularios, abrir modales o navegar.
 
-**Variantes disponibles:**
-- `primary`: Acción principal (fondo verde brillante)
-- `secondary`: Acción secundaria (fondo gris neutro)
-- `ghost`: Acción terciaria (transparente con borde)
-- `danger`: Acción destructiva (fondo rojo)
+**Variantes:**
+- `primary`: acción principal (fondo verde)
+- `secondary`: acción secundaria (fondo gris)
+- `ghost`: terciaria (transparente con borde)
+- `danger`: acción destructiva (fondo rojo)
 
-**Tamaños disponibles:**
-- `sm`: Pequeño
-- `md`: Mediano (por defecto)
-- `lg`: Grande
+**Tamaños:**
+- `sm`: pequeño
+- `md`: mediano (por defecto)
+- `lg`: grande
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Hover
 - Active
@@ -671,19 +678,19 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Alerta** (`app-alerta`)
 
-**Nombre del componente:** Alerta
+**Nombre:** Alerta
 
-**Propósito:** Mostrar mensajes de feedback inline al usuario sobre el resultado de una acción.
+**Para qué sirve:** Mostrar mensajes de feedback al usuario después de una acción.
 
-**Variantes disponibles:**
-- `success`: Operación exitosa
-- `error`: Error o problema
-- `warning`: Advertencia
-- `info`: Información general
+**Variantes:**
+- `success`: operación correcta
+- `error`: ha habido un problema
+- `warning`: aviso
+- `info`: información general
 
-**Tamaños disponibles:** Tamaño único (se adapta al contenido)
+**Tamaños:** Uno solo, se adapta al contenido
 
-**Estados que maneja:**
+**Estados:**
 - Visible
 - Cerrable (con botón X)
 
@@ -705,21 +712,21 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Notificación** (`app-notificacion`)
 
-**Nombre del componente:** Notificación
+**Nombre:** Notificación
 
-**Propósito:** Mostrar mensajes toast temporales en la esquina de la pantalla.
+**Para qué sirve:** Mostrar mensajes toast temporales en una esquina de la pantalla.
 
-**Variantes disponibles:**
-- `success`: Confirmación exitosa
-- `error`: Error o problema
-- `warning`: Advertencia
-- `info`: Información
+**Variantes:**
+- `success`: confirmación
+- `error`: fallo
+- `warning`: aviso
+- `info`: información
 
-**Tamaños disponibles:** Tamaño único fijo
+**Tamaños:** Fijo
 
-**Estados que maneja:**
-- Visible con temporizador automático (5s por defecto)
-- Cerrable manualmente
+**Estados:**
+- Visible con temporizador (5s por defecto)
+- Se puede cerrar a mano
 
 **Ejemplo de uso:**
 ```html
@@ -736,21 +743,21 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Card** (`app-card`)
 
-**Nombre del componente:** Card (Tarjeta de gimnasio)
+**Nombre:** Card (Tarjeta de gimnasio)
 
-**Propósito:** Mostrar información de gimnasios con imagen, título, subtítulo, rating y botón de acción.
+**Para qué sirve:** Mostrar info de gimnasios con imagen, título, subtítulo, rating y botón.
 
-**Variantes disponibles:**
-- `vertical`: Tarjeta vertical con imagen arriba
-- `horizontal`: Tarjeta horizontal con imagen a la izquierda
+**Variantes:**
+- `vertical`: imagen arriba
+- `horizontal`: imagen a la izquierda
 
-**Tamaños disponibles:**
-- Vertical: Ancho fluido (se adapta al contenedor)
-- Horizontal: Max-width 56rem
+**Tamaños:**
+- Vertical: ancho fluido
+- Horizontal: max-width 56rem
 
-**Estados que maneja:**
+**Estados:**
 - Normal
-- Hover (elevación, borde verde, zoom en imagen)
+- Hover (sube un poco, borde verde, zoom en imagen)
 
 **Ejemplo de uso:**
 ```html
@@ -777,15 +784,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Campo de formulario** (`app-campo-formulario`)
 
-**Nombre del componente:** Campo de formulario
+**Nombre:** Campo de formulario
 
-**Propósito:** Input de texto con label, validación y mensajes de ayuda/error.
+**Para qué sirve:** Input de texto con label, validación y mensajes de ayuda o error.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único (ancho fluido)
+**Tamaños:** Ancho fluido
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Hover
 - Focus
@@ -809,15 +816,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Área de texto** (`app-area-texto`)
 
-**Nombre del componente:** Área de texto
+**Nombre:** Área de texto
 
-**Propósito:** Input multilínea para textos largos como comentarios o descripciones.
+**Para qué sirve:** Input multilínea para textos largos (comentarios, descripciones…).
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Altura configurable por número de filas
+**Tamaños:** Altura configurable por número de filas
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Hover
 - Focus
@@ -839,15 +846,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Selector** (`app-selector`)
 
-**Nombre del componente:** Selector
+**Nombre:** Selector
 
-**Propósito:** Dropdown para elegir una opción de una lista predefinida.
+**Para qué sirve:** Dropdown para elegir una opción de una lista.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único (ancho fluido)
+**Tamaños:** Ancho fluido
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Hover
 - Focus
@@ -869,19 +876,19 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Buscador** (`app-buscador`)
 
-**Nombre del componente:** Buscador
+**Nombre:** Buscador
 
-**Propósito:** Input de búsqueda con icono, expandible en mobile.
+**Para qué sirve:** Input de búsqueda con icono, expandible en móvil.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Responsivo (compacto en mobile, expandido en desktop)
+**Tamaños:** Compacto en móvil, expandido en escritorio
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Hover
 - Focus
-- Expandido (mobile)
+- Expandido (móvil)
 
 **Ejemplo de uso:**
 ```html
@@ -895,18 +902,18 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Botón tema** (`app-boton-tema`)
 
-**Nombre del componente:** Botón tema
+**Nombre:** Botón tema
 
-**Propósito:** Toggle para cambiar entre modo claro y oscuro.
+**Para qué sirve:** Cambiar entre modo claro y oscuro.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único
+**Tamaños:** Uno solo
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Hover
-- Active (cambia icono sun/moon según tema activo)
+- Active (cambia icono sol/luna según el tema)
 
 **Ejemplo de uso:**
 ```html
@@ -917,15 +924,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Ventana emergente** (`app-ventana-emergente`)
 
-**Nombre del componente:** Ventana emergente (Modal)
+**Nombre:** Ventana emergente (Modal)
 
-**Propósito:** Modal centrado con overlay oscuro para mostrar formularios o contenido importante.
+**Para qué sirve:** Modal centrado con fondo oscuro para mostrar formularios o contenido importante.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único con ancho máximo
+**Tamaños:** Ancho máximo fijo
 
-**Estados que maneja:**
+**Estados:**
 - Abierto (con animación fadeIn y slideUp)
 - Cerrado
 
@@ -942,16 +949,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Icono** (`app-icono`)
 
-**Nombre del componente:** Icono
+**Nombre:** Icono
 
-**Propósito:** Wrapper para iconos Lucide con tamaño y color consistentes.
+**Para qué sirve:** Wrapper para iconos Lucide con tamaño y color coherentes.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único (1.25rem × 1.25rem)
+**Tamaños:** 1.25rem × 1.25rem
 
-**Estados que maneja:**
-- Normal
+**Estados:** Normal
 
 **Ejemplo de uso:**
 ```html
@@ -964,16 +970,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Sección bienvenida** (`app-seccion-bienvenida`)
 
-**Nombre del componente:** Sección bienvenida
+**Nombre:** Sección bienvenida
 
-**Propósito:** Hero section con título, subtítulo y CTA principal para la página de inicio.
+**Para qué sirve:** Hero de la página de inicio con título, subtítulo y botón principal.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único responsivo
+**Tamaños:** Responsivo
 
-**Estados que maneja:**
-- Normal
+**Estados:** Normal
 
 **Ejemplo de uso:**
 ```html
@@ -989,20 +994,20 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Spinner** (`app-spinner`)
 
-**Nombre del componente:** Spinner
+**Nombre:** Spinner
 
-**Propósito:** Indicador de carga circular animado para operaciones asíncronas.
+**Para qué sirve:** Indicador de carga circular para operaciones asíncronas.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:**
-- `sm`: Pequeño (24px)
-- `md`: Mediano (40px, por defecto)
-- `lg`: Grande (64px)
+**Tamaños:**
+- `sm`: pequeño (24px)
+- `md`: mediano (40px, por defecto)
+- `lg`: grande (64px)
 
-**Estados que maneja:**
+**Estados:**
 - Normal (animación continua)
-- Con porcentaje (muestra progreso)
+- Con porcentaje
 - Con overlay (fondo oscuro)
 
 **Ejemplo de uso:**
@@ -1020,18 +1025,18 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Carga global** (`app-carga-global`)
 
-**Nombre del componente:** Carga global
+**Nombre:** Carga global
 
-**Propósito:** Overlay de pantalla completa para operaciones de carga que bloquean la UI.
+**Para qué sirve:** Overlay a pantalla completa para cuando hay que bloquear la interfaz mientras carga algo.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único (pantalla completa)
+**Tamaños:** Pantalla completa
 
-**Estados que maneja:**
+**Estados:**
 - Visible (cargando)
-- Oculto (no cargando)
-- Con mensaje personalizado
+- Oculto
+- Con mensaje
 - Con porcentaje de progreso
 
 **Ejemplo de uso:**
@@ -1043,17 +1048,17 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Acordeón** (`app-acordeon-item`)
 
-**Nombre del componente:** Acordeón
+**Nombre:** Acordeón
 
-**Propósito:** Panel colapsable para mostrar/ocultar contenido, ideal para FAQs o secciones extensas.
+**Para qué sirve:** Panel colapsable para mostrar u ocultar contenido, típico de FAQs o secciones largas.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único (ancho fluido)
+**Tamaños:** Ancho fluido
 
-**Estados que maneja:**
-- Colapsado (cerrado)
-- Expandido (abierto)
+**Estados:**
+- Colapsado
+- Expandido
 - Hover en cabecera
 - Focus (navegación por teclado)
 
@@ -1071,15 +1076,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Tabs** (`app-tabs`)
 
-**Nombre del componente:** Tabs
+**Nombre:** Tabs
 
-**Propósito:** Navegación entre paneles de contenido mediante pestañas.
+**Para qué sirve:** Navegar entre paneles de contenido mediante pestañas.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único (ancho fluido)
+**Tamaños:** Ancho fluido
 
-**Estados que maneja:**
+**Estados:**
 - Tab activo
 - Tab inactivo
 - Hover
@@ -1098,15 +1103,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Breadcrumbs** (`app-breadcrumbs`)
 
-**Nombre del componente:** Breadcrumbs
+**Nombre:** Breadcrumbs
 
-**Propósito:** Navegación jerárquica que muestra la ubicación actual del usuario en la aplicación.
+**Para qué sirve:** Navegación jerárquica que muestra dónde está el usuario dentro de la app.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único
+**Tamaños:** Fijo
 
-**Estados que maneja:**
+**Estados:**
 - Visible (más de un nivel)
 - Oculto (página raíz)
 - Links clicables (niveles anteriores)
@@ -1122,19 +1127,19 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Menu usuario** (`app-menu-usuario`)
 
-**Nombre del componente:** Menú usuario
+**Nombre:** Menú usuario
 
-**Propósito:** Dropdown con avatar del usuario y opciones de perfil/configuración/logout.
+**Para qué sirve:** Dropdown con avatar del usuario y opciones de perfil, configuración y cerrar sesión.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único
+**Tamaños:** Fijo
 
-**Estados que maneja:**
+**Estados:**
 - Cerrado
-- Abierto (dropdown visible)
-- Cierre al hacer clic fuera
-- Cierre con tecla Escape
+- Abierto
+- Se cierra al hacer clic fuera
+- Se cierra con Escape
 
 **Ejemplo de uso:**
 ```html
@@ -1145,23 +1150,23 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Toast** (`app-toast`)
 
-**Nombre del componente:** Toast
+**Nombre:** Toast
 
-**Propósito:** Notificaciones temporales no intrusivas en esquina de pantalla.
+**Para qué sirve:** Notificaciones temporales que no molestan, en una esquina de pantalla.
 
-**Variantes disponibles:**
-- `success`: Confirmación exitosa (verde)
-- `error`: Error (rojo)
-- `warning`: Advertencia (naranja)
-- `info`: Información (azul)
+**Variantes:**
+- `success`: confirmación (verde)
+- `error`: fallo (rojo)
+- `warning`: aviso (naranja)
+- `info`: información (azul)
 
-**Tamaños disponibles:** Tamaño único fijo
+**Tamaños:** Fijo
 
-**Estados que maneja:**
-- Visible con temporizador automático
+**Estados:**
+- Visible con temporizador
 - Animación de entrada/salida
-- Cerrable manualmente
-- Pausable al hacer hover
+- Se puede cerrar a mano
+- Se pausa al pasar el ratón por encima
 
 **Ejemplo de uso:**
 ```html
@@ -1173,20 +1178,20 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Card Image** (`app-card-image`)
 
-**Nombre del componente:** Card Image
+**Nombre:** Card Image
 
-**Propósito:** Componente de imagen optimizado para cards con fallback y lazy loading.
+**Para qué sirve:** Imagen optimizada para tarjetas con fallback y lazy loading.
 
-**Variantes disponibles:**
-- `vertical`: Para cards verticales
-- `horizontal`: Para cards horizontales
+**Variantes:**
+- `vertical`: para cards verticales
+- `horizontal`: para cards horizontales
 
-**Tamaños disponibles:**
-- `sm`: Pequeño
-- `md`: Mediano (por defecto)
-- `lg`: Grande
+**Tamaños:**
+- `sm`: pequeño
+- `md`: mediano (por defecto)
+- `lg`: grande
 
-**Estados que maneja:**
+**Estados:**
 - Cargando
 - Cargada
 - Error (muestra placeholder)
@@ -1205,15 +1210,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Formulario login** (`app-formulario-login`)
 
-**Nombre del componente:** Formulario login
+**Nombre:** Formulario login
 
-**Propósito:** Formulario de inicio de sesión con validación.
+**Para qué sirve:** Formulario de inicio de sesión con validación.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único
+**Tamaños:** Fijo
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Validando
 - Cargando (enviando)
@@ -1233,18 +1238,18 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Formulario registro** (`app-formulario-registro`)
 
-**Nombre del componente:** Formulario registro
+**Nombre:** Formulario registro
 
-**Propósito:** Formulario de creación de cuenta con validación completa.
+**Para qué sirve:** Formulario de creación de cuenta con validación completa.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único
+**Tamaños:** Fijo
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Validación en tiempo real
-- Validación asíncrona (username/email disponible)
+- Validación asíncrona (usuario/email disponible)
 - Indicador de fuerza de contraseña
 - Cargando
 - Error de servidor
@@ -1262,15 +1267,15 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Formulario perfil** (`app-formulario-perfil`)
 
-**Nombre del componente:** Formulario perfil
+**Nombre:** Formulario perfil
 
-**Propósito:** Formulario de edición de datos del usuario con campos dinámicos.
+**Para qué sirve:** Edición de datos del usuario con campos dinámicos.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Tamaños disponibles:** Tamaño único
+**Tamaños:** Fijo
 
-**Estados que maneja:**
+**Estados:**
 - Normal
 - Editando
 - Validación de campos
@@ -1290,22 +1295,22 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Tooltip** (`app-tooltip`)
 
-**Nombre del componente:** Tooltip
+**Nombre:** Tooltip
 
-**Propósito:** Información contextual flotante que aparece al hacer hover sobre un elemento.
+**Para qué sirve:** Información flotante que aparece al pasar el ratón sobre un elemento.
 
-**Variantes disponibles:** No tiene variantes visuales
+**Variantes:** Ninguna
 
-**Posiciones disponibles:**
-- `arriba`: Encima del elemento (por defecto)
-- `abajo`: Debajo del elemento
-- `izquierda`: A la izquierda
-- `derecha`: A la derecha
+**Posiciones:**
+- `arriba`: encima del elemento (por defecto)
+- `abajo`: debajo
+- `izquierda`: a la izquierda
+- `derecha`: a la derecha
 
-**Estados que maneja:**
+**Estados:**
 - Oculto
 - Visible (con animación fadeIn)
-- Reposicionamiento automático si sale del viewport
+- Se reposiciona solo si se sale del viewport
 
 **Ejemplo de uso:**
 ```html
@@ -1318,20 +1323,20 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 
 #### **Tarjeta profesor** (`app-tarjeta-profesor`)
 
-**Nombre del componente:** Tarjeta profesor
+**Nombre:** Tarjeta profesor
 
-**Propósito:** Mostrar información de un profesor con imagen, nombre y enlace a su perfil.
+**Para qué sirve:** Mostrar info de un profesor con imagen, nombre y enlace a su perfil.
 
-**Variantes disponibles:** No tiene variantes visuales (se adapta mediante Container Queries)
+**Variantes:** Ninguna (se adapta con Container Queries)
 
-**Tamaños disponibles:** Fluido, se adapta al contenedor padre
+**Tamaños:** Fluido, según el contenedor
 
-**Estados que maneja:**
+**Estados:**
 - Normal
-- Hover (elevación sutil)
-- Adaptación automática (< 300px contenedor)
+- Hover (se eleva un poco)
+- Adaptación automática (contenedor < 300px)
 
-**Ejemplo de uso:**
+**Ejemplo:**
 ```html
 <app-tarjeta-profesor
   [profesor]="profesor"
@@ -1339,42 +1344,42 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 </app-tarjeta-profesor>
 ```
 
-**Adaptaciones responsive:**
-- Usa Container Queries para adaptar layout según ancho del contenedor
+**Responsive:**
+- Usa Container Queries para adaptarse al ancho del contenedor
 - En contenedores estrechos (< 300px): oculta avatar, ajusta tipografía
-- Documentado en sección 4.3 Container Queries
+- Más info en la sección 4.3 Container Queries
 
 ---
 
 ### 3.2 Nomenclatura y metodología BEM
 
-**BEM (Bloque-Elemento-Modificador)** es la metodología CSS utilizada en este proyecto para estructurar las clases de forma escalable y mantenible.
+**BEM (Bloque-Elemento-Modificador)** es la forma de nombrar las clases CSS que usamos aquí. Básicamente, cada clase te dice qué es y dónde está.
 
-#### **Estrategia de nomenclatura:**
+#### **Cómo va:**
 
-**Block (Bloque):** Componente independiente y reutilizable. Representa la entidad raíz.
+**Block (Bloque):** El componente en sí, independiente y reutilizable.
 - Sintaxis: `.nombre-componente`
 - Ejemplo: `.boton`, `.card`, `.alerta`, `.gym-header`
 
-**Element (Elemento):** Parte interna del bloque que no tiene sentido fuera de él.
+**Element (Elemento):** Parte interna del bloque que por sí sola no tiene sentido.
 - Sintaxis: `.bloque__elemento`
 - Ejemplo: `.card__title`, `.gym-header__logo`, `.campo-formulario__label`
 
-**Modifier (Modificador):** Variación o estado del bloque o elemento.
+**Modifier (Modificador):** Variante o estado del bloque o elemento.
 - Sintaxis: `.bloque--modificador` o `.bloque__elemento--modificador`
 - Ejemplo: `.boton--primary`, `.card--horizontal`, `.campo-formulario__field--error`
 
-#### **Cuándo usar modificadores vs clases de estado:**
+#### **Cuándo usar modificadores y cuándo clases de estado:**
 
-**Modificadores (--) se usan para:**
-- Variantes visuales permanentes: `.boton--primary`, `.boton--ghost`, `.alerta--success`
+**Modificadores (--):**
+- Variantes visuales fijas: `.boton--primary`, `.boton--ghost`, `.alerta--success`
 - Tamaños: `.boton--sm`, `.boton--lg`
 - Tipos de layout: `.card--horizontal`, `.card--vertical`
 
-**Clases de estado o atributos se usan para:**
-- Estados dinámicos que cambian con JavaScript: `[disabled]`, `[aria-hidden]`
+**Clases de estado o atributos:**
+- Estados que cambian con JavaScript: `[disabled]`, `[aria-hidden]`
 - Pseudo-clases CSS: `:hover`, `:focus`, `:active`
-- Estados temporales: `.is-open`, `.is-active` (cuando no se puede usar atributos)
+- Estados temporales: `.is-open`, `.is-active` (cuando no se pueden usar atributos)
 
 #### **Ejemplos reales del proyecto:**
 
@@ -1533,80 +1538,80 @@ La asociación `for`/`id` garantiza que al hacer clic en el label se enfoque el 
 }
 ```
 
-#### **Ventajas de esta estrategia:**
+#### **Por qué mola esta forma de nombrar:**
 
-1. **Especificidad baja:** No hay conflictos de cascada CSS
-2. **Legibilidad:** La clase describe exactamente qué es y dónde está
-3. **Escalabilidad:** Fácil añadir nuevos componentes sin afectar los existentes
-4. **Mantenibilidad:** Buscar y modificar estilos es directo
-5. **Sin colisiones:** Los nombres de clase son únicos por su estructura
+1. **Especificidad baja:** no hay conflictos de cascada
+2. **Se lee bien:** la clase te dice qué es y dónde está
+3. **Escala:** añadir componentes nuevos no rompe nada
+4. **Fácil de mantener:** buscar y modificar estilos es directo
+5. **Sin colisiones:** los nombres son únicos por estructura
 
 ---
 
 ### 3.3 Style Guide
 
-La **Guía de Estilo** (`/guia-estilo`) es una página de documentación visual implementada en el proyecto que muestra todos los componentes del sistema de diseño funcionando en tiempo real.
+La **Guía de Estilo** (`/guia-estilo`) es una página que tenemos montada dentro del proyecto donde se ven todos los componentes funcionando en tiempo real.
 
-#### **Propósito:**
+#### **¿Para qué sirve?**
 
-1. **Documentación visual:** Ver todos los componentes y sus variantes en un solo lugar sin navegar por toda la aplicación.
+1. **Ver todos los componentes de un vistazo:** Sin tener que navegar por toda la app.
 
-2. **Testing manual:** Probar interacciones y estados (hover, disabled, error) de forma aislada para detectar bugs visuales.
+2. **Probar cosas:** Interacciones, estados (hover, disabled, error)… todo aislado para pillar bugs visuales.
 
-3. **Referencia de desarrollo:** Los desarrolladores pueden copiar ejemplos de código directamente desde la implementación real en lugar de documentación desactualizada.
+3. **Copiar ejemplos:** Los desarrolladores pueden ver cómo está hecho algo y copiarlo directamente del código real.
 
-4. **Control de calidad:** Detectar inconsistencias visuales entre componentes, verificar que respetan las variables de diseño y el tema oscuro/claro.
+4. **Control de calidad:** Se ven las inconsistencias entre componentes y se comprueba que respetan las variables de diseño en ambos temas.
 
-5. **Onboarding:** Nuevos miembros del equipo pueden entender rápidamente qué componentes existen y cómo usarlos.
+5. **Onboarding:** Quien llegue nuevo al proyecto ve de un vistazo qué hay y cómo usarlo.
 
-#### **Componentes documentados en el Style Guide**
+#### **Componentes en el Style Guide**
 
 **Botones**
 
 ![Botones](./img/Botones.png)
-Muestra todas las variantes (primario, secundario, ghost, danger), tamaños y estados de los botones usados en la web.
+Todas las variantes (primario, secundario, ghost, danger), tamaños y estados.
 
 ---
 
 **Cards**
 
 ![Cards](./img/Cards.png)
-Tarjetas verticales y horizontales para gimnasios, con imagen, rating y acciones.
+Tarjetas verticales y horizontales de gimnasios, con imagen, rating y acciones.
 
 ---
 
 **Alertas y feedback**
 
 ![Feedback](./img/Feedback.png)
-Alertas de éxito, error, advertencia, info y notificaciones toast, con iconos y cierre.
+Alertas (éxito, error, advertencia, info) y notificaciones toast, con iconos y cierre.
 
 ---
 
 **Formularios**
 
 ![Formularios](./img/Formularios.png)
-Inputs, selects, textarea y validaciones en todos los estados (normal, error, disabled, ayuda).
+Inputs, selects, textarea y validaciones en todos los estados.
 
 ---
 
 **Navegación**
 
 ![Navegacion](./img/Navegacion.png)
-Menú principal, menú usuario, breadcrumbs y tabs para la navegación de la app.
+Menú principal, menú de usuario, breadcrumbs y tabs.
 
 ---
 
 **Componentes interactivos**
 
 ![Interactivos](./img/Interactivos.png)
-Acordeón, tooltips, buscador expandible y otros elementos UI dinámicos.
+Acordeón, tooltips, buscador expandible y demás elementos dinámicos.
 
 ---
 
 **Iconos**
 
 ![Iconos](./img/Iconos.png)
-Set de iconos Lucide personalizados para acciones, menús y feedback visual.
+Set de iconos Lucide para acciones, menús y feedback visual.
 
 ---
 
@@ -1620,7 +1625,7 @@ Paleta de colores de marca, semánticos y modo oscuro/claro.
 **Tipografía**
 
 ![Tipografia](./img/Tipografia.png)
-Jerarquía de títulos, textos y estilos tipográficos usados en la interfaz.
+Jerarquía de títulos, textos y estilos tipográficos.
 
 ---
 
@@ -1628,23 +1633,23 @@ Jerarquía de títulos, textos y estilos tipográficos usados en la interfaz.
 
 ### 4.1 Breakpoints definidos
 
-| Nombre | Valor | Dispositivo | Justificación |
-|--------|-------|-------------|---------------|
-| `$breakpoint-sm` | 640px | Móvil | Abarca la mayoría de móviles actuales (320-639px) |
-| `$breakpoint-md` | 768px | Tablet vertical | Punto donde las tablets necesitan un layout diferente |
+| Nombre | Valor | Dispositivo | Por qué |
+|--------|-------|-------------|---------|
+| `$breakpoint-sm` | 640px | Móvil | Cubre la mayoría de móviles actuales (320-639px) |
+| `$breakpoint-md` | 768px | Tablet vertical | Punto donde las tablets necesitan otro layout |
 | `$breakpoint-lg` | 1024px | Tablet horizontal / Portátil | Transición a layouts de varias columnas |
 | `$breakpoint-xl` | 1280px | Escritorio | Monitores 1080p y pantallas grandes |
 
-Estos valores están basados en los estándares más usados (Tailwind CSS, Bootstrap) y cubren prácticamente todos los dispositivos del mercado.
+Estos valores están sacados de los estándares más usados (Tailwind, Bootstrap) y cubren prácticamente todos los dispositivos.
 
 ### 4.2 Estrategia responsive
 
 **Enfoque: Desktop-First**
 
-He elegido Desktop-First por varios motivos:
+He tirado por Desktop-First por varias razones:
 - Los usuarios de gimnasios suelen buscar y comparar opciones desde el ordenador
 - Hay mucho contenido (galerías, reseñas, clases) que se ve mejor en pantallas grandes
-- Es más fácil simplificar un diseño complejo para móvil que hacer lo contrario
+- Es más fácil simplificar un diseño complejo para móvil que al revés
 
 **Implementación con el mixin `respond-down`:**
 
@@ -1684,13 +1689,13 @@ He elegido Desktop-First por varios motivos:
 
 ### 4.3 Container Queries
 
-Con Container Queries los componentes se adaptan según el ancho de su contenedor en vez del viewport. Esto hace que sean reutilizables en cualquier contexto.
+Con Container Queries los componentes se adaptan según el ancho de su contenedor, no del viewport. Así se pueden reusar en cualquier contexto.
 
-**Componentes con Container Queries:**
+**Componentes que usan Container Queries:**
 
-| Componente | Archivo | Motivo |
-|------------|---------|--------|
-| `Card` | `card/card.scss` | Se usa en grids de 1, 2 o 3 columnas dependiendo de la página |
+| Componente | Archivo | Para qué |
+|------------|---------|----------|
+| `Card` | `card/card.scss` | Se usa en grids de 1, 2 o 3 columnas según la página |
 | `TarjetaProfesor` | `tarjeta-profesor/tarjeta-profesor.scss` | Aparece en sidebars y grids con anchos distintos |
 
 **Ejemplo en Card:**
@@ -1764,3 +1769,153 @@ Con Container Queries los componentes se adaptan según el ancho de su contenedo
 | **No Encontrada** | `/**` | Página 404 con enlace para volver |
 
 ---
+
+## 5. Optimización multimedia
+
+Aquí está todo el curro que se ha hecho para optimizar los recursos gráficos de la app. La idea ha sido bajar el peso de las imágenes sin cargarse la calidad, para que la página cargue rápido en cualquier dispositivo.
+
+### 5.1 Formatos elegidos
+
+Después de mirar las opciones del mercado, hemos ido a por formatos modernos con fallbacks para navegadores viejos.
+
+| Formato | Uso | Por qué |
+|---------|-----|---------|
+| **WebP** | Logo, favicon, imágenes de interfaz | Comprime entre un 25% y un 35% mejor que JPG con calidad prácticamente igual. Soporte en navegadores: más del 97%. |
+| **JPG** | Fallback para fotos | Compatibilidad total con cualquier navegador. Sigue valiendo para fotos donde haga falta máxima compatibilidad. |
+| **AVIF** | Para el futuro | Comprime todavía mejor que WebP, pero a día de hoy el soporte no es tan amplio. Ya lo meteremos cuando lo soporte más gente. |
+
+**Decisión:** WebP como formato principal porque es el equilibrio perfecto entre calidad, peso y compatibilidad.
+
+### 5.2 Herramientas utilizadas
+
+Para optimizar las imágenes hemos usado estas herramientas, ambas gratis y online:
+
+| Herramienta | Para qué |
+|-------------|----------|
+| **Squoosh** (squoosh.app) | Convertir a WebP, redimensionar y ajustar la calidad. Deja comparar el resultado en tiempo real. |
+| **TinyPNG** (tinypng.com) | Comprimir PNG y WebP todavía más. Viene bien para afinar el peso final después de convertir. |
+
+### 5.3 Resultados de optimización
+
+Aquí están los resultados de las imágenes principales. En todos los casos se ha bajado bastante el peso sin que se note pérdida de calidad.
+
+| Imagen | Peso original | Peso optimizado | Reducción |
+|--------|---------------|-----------------|-----------|
+| logo-large.webp | 45 KB (PNG) | 12 KB | 73% |
+| logo-medium.webp | 45 KB (PNG) | 6 KB | 87% |
+| logo-small.webp | 45 KB (PNG) | 3 KB | 93% |
+| favicon-large.webp | 15 KB (PNG) | 4 KB | 73% |
+| favicon-medium.webp | 15 KB (PNG) | 2 KB | 87% |
+
+**Requisito cumplido:** Todas las imágenes pesan menos de 200 KB ✓
+
+### 5.4 Tecnologías implementadas
+
+#### Elemento `<picture>` con srcset (Art Direction)
+
+Hemos metido el elemento `<picture>` de HTML5 para servir distintas versiones de una imagen según el tamaño de pantalla. Así los móviles descargan imágenes más ligeras y los ordenadores las de mayor resolución.
+
+```html
+<!-- Implementado en: header.html, footer.html, formulario-login, formulario-registro -->
+<picture>
+  <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
+  <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
+  <img src="assets/logo-large.webp" alt="Gymunity" loading="eager">
+</picture>
+```
+
+#### Atributo `loading`
+
+El atributo `loading` de las etiquetas `<img>` controla cuándo empieza el navegador a descargar cada imagen. Hay dos estrategias según dónde esté el elemento:
+
+| Valor | Estrategia | Dónde se usa |
+|-------|------------|--------------|
+| `eager` | Carga inmediata (lo que se ve nada más cargar) | Header, login, registro, imagen principal de galería |
+| `lazy` | Carga diferida (lo que está más abajo) | Footer, miniaturas, tarjetas de profesor, cards |
+
+```html
+<!-- Imagen visible nada más cargar -->
+<img src="logo.webp" loading="eager">
+
+<!-- Imagen que está más abajo, se carga cuando el usuario se acerca -->
+<img src="tarjeta.jpg" loading="lazy">
+```
+
+#### Favicon responsive
+
+El favicon también está preparado en varios tamaños para adaptarse a distintas densidades de pantalla y usos (pestaña del navegador, acceso directo en móvil…).
+
+```html
+<!-- index.html -->
+<link rel="icon" type="image/webp" sizes="164x170" href="favicon-large.webp">
+<link rel="icon" type="image/webp" sizes="82x85" href="favicon-medium.webp">
+<link rel="icon" type="image/webp" sizes="41x43" href="favicon-small.webp">
+```
+
+### 5.5 Animaciones CSS
+
+#### Por qué solo animamos `transform` y `opacity`
+
+A la hora de hacer animaciones fluidas, solo animamos `transform` y `opacity`. El motivo es simple: estas dos propiedades no provocan **reflow** (recalculado del layout) ni **repaint** (repintado de píxeles).
+
+El navegador las procesa en la GPU mediante el *compositor layer*, lo que permite llegar a 60 fps sin bloquear el hilo principal de JavaScript. El resultado es una interfaz suave incluso en móviles cutres.
+
+#### Animaciones que tenemos
+
+Estas son las animaciones definidas con `@keyframes`:
+
+| Animación | Componente | Qué anima | Duración |
+|-----------|------------|-----------|----------|
+| `spinner-giro` | Spinner | transform: rotate | 0.7s |
+| `modal-fade` | Ventana emergente | opacity | 0.2s |
+| `modal-slide` | Ventana emergente | opacity, transform | 0.3s |
+| `toast-entrar` | Toast | opacity, transform | 0.25s |
+| `aparecer` | Menú de usuario | opacity, transform | 0.2s |
+| `carga-aparecer` | Pantalla de carga global | opacity | 0.3s |
+
+#### Código de las animaciones
+
+```scss
+// Spinner - Rotación continua para indicar que algo está cargando
+@keyframes spinner-giro {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Modal - Fade + desplazamiento vertical
+@keyframes modal-slide {
+  from { opacity: 0; transform: translateY(-1rem) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+// Toast - Entrada desde la derecha
+@keyframes toast-entrar {
+  from { opacity: 0; transform: translateX(1rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+```
+
+#### Transiciones en hover y focus
+
+Además de las animaciones, hay transiciones suaves para los estados interactivos. Aquí están los componentes principales:
+
+| Elemento | Propiedades | Duración |
+|----------|-------------|----------|
+| Logo del header | opacity | 0.2s |
+| Botones | transform, background | 0.2s |
+| Cards | transform, box-shadow | 0.2s |
+| Enlaces del footer | transform | 0.2s |
+| Campos de formulario | transform | 0.15s |
+| Cabeceras del acordeón | background-color | 0.2s |
+| Pestañas (tabs) | color, background | 0.2s |
+
+```scss
+// Ejemplo aplicado a las tarjetas de gimnasio
+.gym-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-0.25rem);
+  }
+}
+```

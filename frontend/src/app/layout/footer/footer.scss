@@ -68,11 +68,15 @@ $footer-social-translate-y: -0.125rem;
 
 .gym-footer__logo {
   display: block;
-  height: $footer-logo-height;
-  width: auto;
 
-  @include respond-down(sm) {
-    height: 2rem;
+  img {
+    display: block;
+    height: $footer-logo-height;
+    width: auto;
+
+    @include respond-down(sm) {
+      height: 2rem;
+    }
   }
 }
 

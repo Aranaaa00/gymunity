@@ -1,5 +1,9 @@
 <header class="formulario-auth__header">
-  <img src="assets/logo.png" alt="Gymunity" class="formulario-auth__logo">
+  <picture class="formulario-auth__logo">
+    <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
+    <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
+    <img src="assets/logo-large.webp" alt="Gymunity" loading="eager">
+  </picture>
 </header>
 
 <form class="formulario-auth" [formGroup]="loginForm" (ngSubmit)="onSubmit()">

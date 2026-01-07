@@ -1,7 +1,11 @@
 <footer class="gym-footer">
   <section class="gym-footer__container">
     <article class="gym-footer__brand">
-      <img src="assets/logo.png" alt="Gymunity" class="gym-footer__logo">
+      <picture class="gym-footer__logo">
+        <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
+        <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
+        <img src="assets/logo-large.webp" alt="Gymunity" loading="lazy">
+      </picture>
       <p class="gym-footer__slogan">Conecta con los mejores gimnasios y torneos de artes marciales.</p>
     </article>
     
