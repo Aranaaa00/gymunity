@@ -1,4 +1,4 @@
-import { Component, input, signal, contentChildren, AfterContentInit } from '@angular/core';
+import { Component, input, signal, contentChildren, AfterContentInit, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
@@ -26,6 +26,7 @@ const PREFIJO_HEADER = 'acordeon-header';
   imports: [LucideAngularModule],
   templateUrl: './acordeon.html',
   styleUrl: './acordeon.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'acordeon-item',
     '[class.acordeon-item--expandido]': 'expandido()',
@@ -122,6 +123,7 @@ export class AcordeonItem {
   standalone: true,
   template: '<ng-content></ng-content>',
   styleUrl: './acordeon.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'acordeon',
     'role': 'presentation',

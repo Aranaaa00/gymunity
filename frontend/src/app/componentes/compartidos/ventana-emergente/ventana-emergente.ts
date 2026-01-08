@@ -1,4 +1,4 @@
-import { Component, output, ViewChild, ElementRef, AfterViewInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, output, ViewChild, ElementRef, AfterViewInit, inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Icono } from '../icono/icono';
 
@@ -18,6 +18,7 @@ const SELECTOR_ENFOCABLE = 'input, button, [tabindex]:not([tabindex="-1"])';
   imports: [Icono],
   templateUrl: './ventana-emergente.html',
   styleUrl: './ventana-emergente.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VentanaEmergente implements AfterViewInit {
   // ----------------------------------------

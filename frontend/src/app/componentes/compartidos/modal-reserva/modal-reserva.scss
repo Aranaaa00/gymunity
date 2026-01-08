@@ -1,0 +1,176 @@
+@use '../../../../styles/00-settings/variables' as *;
+@use '../../../../styles/01-tools/mixins' as *;
+
+// ============================================
+// MODAL RESERVA
+// ============================================
+
+.modal-reserva {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-modal;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: $space-4;
+
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(0.25rem);
+
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-reserva__contenido {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  width: 100%;
+  max-width: 24rem;
+  padding: $space-4;
+
+  background: var(--color-fondo);
+
+  border-radius: $radio-lg;
+  box-shadow: $shadow-lg;
+
+  animation: slideUp 0.25s ease;
+
+  @include respond-down(sm) {
+    gap: $space-3;
+    padding: $space-3;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-reserva__header {
+  text-align: center;
+}
+
+.modal-reserva__titulo {
+  margin: 0;
+
+  font-size: $texto-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--color-titulo);
+}
+
+.modal-reserva__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  
+  text-align: center;
+}
+
+.modal-reserva__clase {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  margin: 0;
+
+  font-size: $texto-md;
+  font-weight: $font-weight-medium;
+  color: var(--color-texto);
+}
+
+.modal-reserva__profesor {
+  font-size: $texto-s;
+  font-weight: $font-weight-regular;
+  color: var(--color-subtitulo);
+}
+
+.modal-reserva__creditos {
+  margin: 0;
+
+  font-size: $texto-s;
+  color: var(--color-subtitulo);
+}
+
+.modal-reserva__acciones {
+  display: flex;
+  gap: $space-2;
+
+  @include respond-down(sm) {
+    flex-direction: column-reverse;
+  }
+}
+
+.modal-reserva__boton {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+
+  padding: $space-2 $space-3;
+
+  border: none;
+  border-radius: $radio-md;
+
+  font-size: $texto-s;
+  font-weight: $font-weight-medium;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-acento);
+    outline-offset: 2px;
+  }
+}
+
+.modal-reserva__boton--primario {
+  background: var(--color-acento);
+  color: var(--color-texto-inverso);
+
+  &:hover:not(:disabled) {
+    background: var(--color-boton-hover);
+  }
+}
+
+.modal-reserva__boton--secundario {
+  background: var(--color-fondo-secundario);
+  color: var(--color-texto);
+
+  &:hover:not(:disabled) {
+    background: var(--color-borde);
+  }
+}
+
+.modal-reserva__spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

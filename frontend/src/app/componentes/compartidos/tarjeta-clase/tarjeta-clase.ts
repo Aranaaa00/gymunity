@@ -1,27 +1,25 @@
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
-import { Icono } from '../icono/icono';
+import { Icono, NombreIcono } from '../icono/icono';
 
 // ============================================
-// COMPONENTE TARJETA PROFESOR
+// COMPONENTE TARJETA CLASE
 // ============================================
 
 @Component({
-  selector: 'app-tarjeta-profesor',
+  selector: 'app-tarjeta-clase',
   standalone: true,
   imports: [Icono],
-  templateUrl: './tarjeta-profesor.html',
-  styleUrl: './tarjeta-profesor.scss',
+  templateUrl: './tarjeta-clase.html',
+  styleUrl: './tarjeta-clase.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TarjetaProfesor {
+export class TarjetaClase {
   // ----------------------------------------
   // Inputs
   // ----------------------------------------
   readonly nombre = input.required<string>();
-  readonly especialidad = input.required<string>();
-  readonly foto = input<string>('');
-  readonly valoracion = input<number | null>(null);
-  readonly proximaClase = input<string>('');
+  readonly profesorNombre = input<string>('');
+  readonly icono = input<NombreIcono>('dumbbell');
 
   // ----------------------------------------
   // Outputs
@@ -33,11 +31,5 @@ export class TarjetaProfesor {
   // ----------------------------------------
   onReservar(): void {
     this.reservar.emit();
-  }
-
-  formatearValoracion(): string {
-    const val = this.valoracion();
-    if (val === null) return '';
-    return val.toFixed(1);
   }
 }

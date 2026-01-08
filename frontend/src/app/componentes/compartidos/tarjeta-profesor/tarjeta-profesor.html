@@ -16,9 +16,15 @@
         <app-icono nombre="star" tamano="xs" class="tarjeta-profesor__estrella" />
       </p>
     }
+    @if (proximaClase()) {
+      <p class="tarjeta-profesor__proxima-clase">
+        <app-icono nombre="calendar" tamano="xs" />
+        {{ proximaClase() }}
+      </p>
+    }
   </section>
 
-  <button type="button" class="tarjeta-profesor__boton" (click)="onApuntarse()">
-    Apuntarse
+  <button type="button" class="tarjeta-profesor__boton" (click)="onReservar()">
+    Reservar clase
   </button>
 </article>

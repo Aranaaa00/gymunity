@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { Icono } from '../../componentes/compartidos/icono/icono';
@@ -9,5 +9,6 @@ import { Icono } from '../../componentes/compartidos/icono/icono';
   imports: [RouterLink, Boton, Icono],
   templateUrl: './no-encontrada.html',
   styleUrl: './no-encontrada.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoEncontrada {}

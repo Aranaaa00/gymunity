@@ -1,4 +1,4 @@
-import { Component, output, inject, OutputEmitterRef, signal, WritableSignal, computed, Signal, DestroyRef } from '@angular/core';
+import { Component, output, inject, OutputEmitterRef, signal, WritableSignal, computed, Signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
@@ -70,6 +70,7 @@ const MENSAJES_ERROR: Readonly<Record<CampoRegistro, Record<string, string>>> = 
   imports: [ReactiveFormsModule, CampoFormulario, Boton],
   templateUrl: './formulario-registro.html',
   styleUrl: './formulario-registro.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormularioRegistro {
   // ----------------------------------------

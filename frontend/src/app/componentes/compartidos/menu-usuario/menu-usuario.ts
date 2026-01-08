@@ -1,4 +1,4 @@
-import { Component, signal, inject, HostListener, ViewChild, ElementRef, WritableSignal } from '@angular/core';
+import { Component, signal, inject, HostListener, ViewChild, ElementRef, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Icono } from '../icono/icono';
 import { AuthService } from '../../../servicios/auth';
@@ -13,6 +13,7 @@ import { AuthService } from '../../../servicios/auth';
   imports: [Icono],
   templateUrl: './menu-usuario.html',
   styleUrl: './menu-usuario.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuUsuario {
   // ----------------------------------------

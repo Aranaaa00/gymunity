@@ -1,4 +1,4 @@
-import { Component, input, signal, forwardRef, InputSignal } from '@angular/core';
+import { Component, input, signal, forwardRef, InputSignal, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormControl } from '@angular/forms';
 
 // ============================================
@@ -26,6 +26,7 @@ const VALOR_VACIO = '';
   imports: [ReactiveFormsModule],
   templateUrl: './campo-formulario.html',
   styleUrl: './campo-formulario.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

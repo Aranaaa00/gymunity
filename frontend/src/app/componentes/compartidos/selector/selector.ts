@@ -1,4 +1,4 @@
-import { Component, input, output, InputSignal, OutputEmitterRef, forwardRef } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // ============================================
@@ -30,6 +30,7 @@ const TEXTO_AYUDA_DEFECTO = '';
   imports: [],
   templateUrl: './selector.html',
   styleUrl: './selector.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

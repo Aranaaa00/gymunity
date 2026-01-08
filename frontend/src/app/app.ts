@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Header } from './layout/header/header';
 import { Main } from './layout/main/main';
 import { Footer } from './layout/footer/footer';
@@ -17,7 +17,8 @@ import { CargaService } from './servicios/carga';
   standalone: true,
   imports: [Header, Main, Footer, Breadcrumbs, VentanaEmergente, FormularioLogin, FormularioRegistro, Toast, CargaGlobal],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   // ----------------------------------------

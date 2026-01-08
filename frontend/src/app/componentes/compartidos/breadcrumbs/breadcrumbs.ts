@@ -1,4 +1,4 @@
-import { Component, inject, Signal, computed } from '@angular/core';
+import { Component, inject, Signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
@@ -22,6 +22,7 @@ export interface Breadcrumb {
   imports: [RouterLink],
   templateUrl: './breadcrumbs.html',
   styleUrl: './breadcrumbs.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Breadcrumbs {
   private readonly router = inject(Router);

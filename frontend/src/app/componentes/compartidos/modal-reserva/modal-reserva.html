@@ -1,0 +1,50 @@
+<aside 
+  class="modal-reserva" 
+  role="dialog" 
+  aria-modal="true"
+  aria-labelledby="modal-titulo"
+  (click)="onBackdropClick($event)"
+>
+  <article class="modal-reserva__contenido">
+    <header class="modal-reserva__header">
+      <h2 id="modal-titulo" class="modal-reserva__titulo">¿Reservar esta clase?</h2>
+    </header>
+
+    <section class="modal-reserva__cuerpo">
+      <p class="modal-reserva__clase">
+        {{ claseNombre() }}
+        @if (profesorNombre()) {
+          <span class="modal-reserva__profesor">con {{ profesorNombre() }}</span>
+        }
+      </p>
+
+      <p class="modal-reserva__creditos">
+        Se usará 1 crédito · Te quedarán {{ creditosRestantes() }}
+      </p>
+    </section>
+
+    <footer class="modal-reserva__acciones">
+      <button 
+        type="button" 
+        class="modal-reserva__boton modal-reserva__boton--secundario"
+        (click)="onCancelar()"
+        [disabled]="procesando()"
+      >
+        Cancelar
+      </button>
+      <button 
+        type="button" 
+        class="modal-reserva__boton modal-reserva__boton--primario"
+        (click)="onConfirmar()"
+        [disabled]="procesando()"
+      >
+        @if (procesando()) {
+          <app-icono nombre="loader" tamano="sm" class="modal-reserva__spinner" />
+          Reservando...
+        } @else {
+          Confirmar
+        }
+      </button>
+    </footer>
+  </article>
+</aside>

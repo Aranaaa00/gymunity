@@ -55,7 +55,8 @@
                     [especialidad]="profesor.especialidad"
                     [foto]="profesor.foto"
                     [valoracion]="profesor.valoracion"
-                    (apuntarse)="apuntarseProfesor(profesor)"
+                    [proximaClase]="profesor.proximaClase ?? ''"
+                    (reservar)="reservarClaseProfesor(profesor)"
                   />
                 </li>
               }
@@ -106,6 +107,16 @@
         }
       </section>
     </article>
+
+    <!-- MODAL RESERVA -->
+    @if (mostrarModalReserva()) {
+      <app-modal-reserva
+        [claseNombre]="claseSeleccionada()!.nombre"
+        [profesorNombre]="claseSeleccionada()!.profesorNombre"
+        (confirmar)="confirmarReserva()"
+        (cancelar)="cerrarModalReserva()"
+      />
+    }
   </main>
 } @else {
   <main class="gimnasio gimnasio--error">

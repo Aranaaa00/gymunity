@@ -1,4 +1,4 @@
-import { Component, inject, computed, Signal } from '@angular/core';
+import { Component, inject, computed, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { Icono } from '../icono/icono';
 import { TemaService } from '../../../servicios/tema';
 
@@ -12,6 +12,7 @@ import { TemaService } from '../../../servicios/tema';
   imports: [Icono],
   templateUrl: './boton-tema.html',
   styleUrl: './boton-tema.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BotonTema {
   // ----------------------------------------

@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { NotificacionService } from '../../servicios/notificacion';
@@ -73,6 +73,7 @@ const ICONOS_DISPONIBLES: readonly NombreIcono[] = [
   ],
   templateUrl: './guia-estilo.html',
   styleUrl: './guia-estilo.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GuiaEstilo {
   // ----------------------------------------

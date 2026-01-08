@@ -8,6 +8,8 @@ import { SeccionLista } from '../../componentes/compartidos/seccion-lista/seccio
 import { TarjetaProfesor } from '../../componentes/compartidos/tarjeta-profesor/tarjeta-profesor';
 import { TarjetaResenia } from '../../componentes/compartidos/tarjeta-resenia/tarjeta-resenia';
 import { ItemTorneo } from '../../componentes/compartidos/item-torneo/item-torneo';
+import { ModalReserva } from '../../componentes/compartidos/modal-reserva/modal-reserva';
+import { ReservasService } from '../../servicios/reservas';
 
 // ============================================
 // CONSTANTES
@@ -24,7 +26,8 @@ const MAX_ITEMS_VISIBLES = 3;
     SeccionLista,
     TarjetaProfesor,
     TarjetaResenia,
-    ItemTorneo
+    ItemTorneo,
+    ModalReserva
   ],
   templateUrl: './gimnasio.html',
   styleUrl: './gimnasio.scss',
@@ -32,10 +35,15 @@ const MAX_ITEMS_VISIBLES = 3;
 })
 export class GimnasioPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
+  private readonly reservasService = inject(ReservasService);
   private readonly destruir$ = new Subject<void>();
   
   readonly gimnasio: WritableSignal<GimnasioDetalle | null> = signal(null);
   readonly cargando: WritableSignal<boolean> = signal(true);
+  
+  // Estado del modal de reserva
+  readonly claseSeleccionada: WritableSignal<Clase | null> = signal(null);
+  readonly mostrarModalReserva = computed(() => this.claseSeleccionada() !== null);
 
   // ----------------------------------------
   // Computed signals
@@ -61,6 +69,12 @@ export class GimnasioPage implements OnInit, OnDestroy {
     const gym = this.gimnasio();
     if (!gym?.profesores) return [];
     return gym.profesores.slice(0, MAX_ITEMS_VISIBLES);
+  });
+
+  readonly clasesVisibles = computed(() => {
+    const gym = this.gimnasio();
+    if (!gym?.clases) return [];
+    return gym.clases.slice(0, MAX_ITEMS_VISIBLES);
   });
 
   readonly torneosVisibles = computed(() => {
@@ -135,6 +149,11 @@ export class GimnasioPage implements OnInit, OnDestroy {
     console.log('Ver más profesores');
   }
 
+  verMasClases(): void {
+    // TODO: Implementar ver más clases
+    console.log('Ver más clases');
+  }
+
   verMasTorneos(): void {
     // TODO: Implementar ver más torneos
     console.log('Ver más torneos');
@@ -145,8 +164,40 @@ export class GimnasioPage implements OnInit, OnDestroy {
     console.log('Ver más reseñas');
   }
 
-  apuntarseProfesor(profesor: Profesor): void {
-    // TODO: Implementar inscripción a profesor
-    console.log('Apuntarse a profesor:', profesor.nombre);
+  // ----------------------------------------
+  // Reservas de clases
+  // ----------------------------------------
+  reservarClaseProfesor(profesor: Profesor): void {
+    // Buscar la clase asociada al profesor o crear una temporal
+    const claseExistente = this.gimnasio()?.clases?.find(
+      c => c.profesorNombre === profesor.nombre
+    );
+    
+    if (claseExistente) {
+      this.claseSeleccionada.set(claseExistente);
+    } else {
+      // Crear clase temporal con datos del profesor
+      const claseTemp: Clase = {
+        id: profesor.id,
+        nombre: profesor.especialidad,
+        icono: 'dumbbell',
+        profesorNombre: profesor.nombre,
+        gimnasioId: this.gimnasio()?.id ?? 0
+      };
+      this.claseSeleccionada.set(claseTemp);
+    }
+  }
+
+  cerrarModalReserva(): void {
+    this.claseSeleccionada.set(null);
+  }
+
+  confirmarReserva(): void {
+    const clase = this.claseSeleccionada();
+    const gimnasio = this.gimnasio();
+    if (!clase || !gimnasio) return;
+
+    this.reservasService.reservarClase(clase, gimnasio.nombre);
+    this.cerrarModalReserva();
   }
 }

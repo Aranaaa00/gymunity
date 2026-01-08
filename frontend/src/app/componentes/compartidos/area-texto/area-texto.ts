@@ -1,4 +1,4 @@
-import { Component, input, output, InputSignal, OutputEmitterRef, forwardRef } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // ============================================
@@ -17,6 +17,7 @@ const FILAS_DEFECTO = 4;
   imports: [],
   templateUrl: './area-texto.html',
   styleUrl: './area-texto.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

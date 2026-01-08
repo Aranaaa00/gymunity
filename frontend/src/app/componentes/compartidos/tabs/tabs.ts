@@ -1,4 +1,4 @@
-import { Component, input, signal, HostListener, output, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, signal, HostListener, output, InputSignal, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
 
 // ============================================
 // CONSTANTES
@@ -18,6 +18,7 @@ const TECLA_END = 'End';
   standalone: true,
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'tabs' },
 })
 export class Tabs {

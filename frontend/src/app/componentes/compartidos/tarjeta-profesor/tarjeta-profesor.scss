@@ -126,6 +126,18 @@
   color: #f59e0b;
 }
 
+.tarjeta-profesor__proxima-clase {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  margin: 0;
+  margin-top: 0.25rem;
+
+  font-size: $texto-xs;
+  color: var(--color-subtitulo);
+}
+
 // ============================================
 // BOTÓN
 // ============================================

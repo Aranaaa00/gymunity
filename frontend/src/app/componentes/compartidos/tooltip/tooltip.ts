@@ -8,6 +8,7 @@ import {
   PLATFORM_ID,
   ElementRef,
   Renderer2,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
@@ -48,6 +49,7 @@ const PREFIJO_CLASE_POSICION = 'tooltip--';
   standalone: true,
   templateUrl: './tooltip.html',
   styleUrl: './tooltip.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tooltip-contenedor',
     '[attr.aria-describedby]': 'idTooltip()',

@@ -83,6 +83,7 @@ export interface Profesor {
   readonly especialidad: string;
   readonly foto: string;
   readonly valoracion: number | null;
+  readonly proximaClase?: string;
 }
 
 export interface Torneo {

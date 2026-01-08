@@ -1,0 +1,19 @@
+<article class="tarjeta-clase">
+  <header class="tarjeta-clase__info">
+    <app-icono [nombre]="icono()" tamano="md" class="tarjeta-clase__icono" />
+    <hgroup class="tarjeta-clase__textos">
+      <h3 class="tarjeta-clase__nombre">{{ nombre() }}</h3>
+      @if (profesorNombre()) {
+        <p class="tarjeta-clase__profesor">{{ profesorNombre() }}</p>
+      }
+    </hgroup>
+  </header>
+  <button 
+    type="button" 
+    class="tarjeta-clase__boton"
+    (click)="onReservar()"
+    aria-label="Reservar plaza en {{ nombre() }}"
+  >
+    Reservar plaza
+  </button>
+</article>

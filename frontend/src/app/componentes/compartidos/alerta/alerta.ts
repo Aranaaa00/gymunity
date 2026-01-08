@@ -1,4 +1,4 @@
-import { Component, input, output, computed, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, output, computed, InputSignal, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
 import { Icono, NombreIcono } from '../icono/icono';
 
 // ============================================
@@ -30,6 +30,7 @@ const ICONOS_POR_TIPO: Record<TipoAlerta, NombreIcono> = {
   imports: [Icono],
   templateUrl: './alerta.html',
   styleUrls: ['./alerta.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Alerta {
   // ----------------------------------------

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CargaService } from '../../../servicios/carga';
 import { Spinner } from '../spinner/spinner';
 
@@ -12,6 +12,7 @@ import { Spinner } from '../spinner/spinner';
   imports: [Spinner],
   templateUrl: './carga-global.html',
   styleUrl: './carga-global.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CargaGlobal {
   // ============================================
