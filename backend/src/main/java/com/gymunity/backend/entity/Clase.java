@@ -1,5 +1,6 @@
 package com.gymunity.backend.entity;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,4 +51,13 @@ public class Clase {
 
     @Column
     private String icono;
+
+    @Column
+    private String diasSemana;
+
+    @Column
+    private LocalTime horaInicio;
+
+    @Column
+    private LocalTime horaFin;
 }

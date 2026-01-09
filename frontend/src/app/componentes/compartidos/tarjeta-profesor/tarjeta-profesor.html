@@ -24,7 +24,16 @@
     }
   </section>
 
-  <button type="button" class="tarjeta-profesor__boton" (click)="onReservar()">
-    Reservar clase
+  <button 
+    type="button" 
+    class="tarjeta-profesor__boton"
+    [class.tarjeta-profesor__boton--reservada]="reservada()"
+    [disabled]="reservada()"
+    (click)="onReservar()"
+  >
+    @if (reservada()) {
+      <app-icono nombre="check" tamano="sm" />
+    }
+    {{ textoBoton() }}
   </button>
 </article>

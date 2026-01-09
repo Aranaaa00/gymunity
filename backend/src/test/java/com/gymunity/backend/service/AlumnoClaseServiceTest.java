@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,12 +43,14 @@ class AlumnoClaseServiceTest {
     
     @InjectMocks
     private AlumnoClaseService alumnoClaseService;
+
+    private static final LocalDateTime FECHA_FUTURA = LocalDateTime.now().plusDays(7);
     
     @Test
     void inscribir_UsuarioNoExiste_LanzaExcepcion() {
         when(usuarioRepository.findById(999L)).thenReturn(Optional.empty());
         
-        assertThatThrownBy(() -> alumnoClaseService.inscribir(999L, 1L))
+        assertThatThrownBy(() -> alumnoClaseService.inscribir(999L, 1L, FECHA_FUTURA))
                 .isInstanceOf(RecursoNoEncontradoException.class)
                 .hasMessageContaining("Usuario no encontrado con ID: 999");
         
@@ -63,7 +66,7 @@ class AlumnoClaseServiceTest {
         
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(profesor));
         
-        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L))
+        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L, FECHA_FUTURA))
                 .isInstanceOf(ReglaNegocioException.class)
                 .hasMessageContaining("Solo los usuarios con rol ALUMNO pueden inscribirse en clases");
         
@@ -80,7 +83,7 @@ class AlumnoClaseServiceTest {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(alumno));
         when(claseRepository.findById(999L)).thenReturn(Optional.empty());
         
-        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 999L))
+        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 999L, FECHA_FUTURA))
                 .isInstanceOf(RecursoNoEncontradoException.class)
                 .hasMessageContaining("Clase no encontrada con ID: 999");
         
@@ -88,7 +91,7 @@ class AlumnoClaseServiceTest {
     }
     
     @Test
-    void inscribir_AlumnoYaInscrito_LanzaExcepcion() {
+    void inscribir_AlumnoYaInscritoEnFecha_LanzaExcepcion() {
         Usuario alumno = Usuario.builder()
                 .id(1L)
                 .rol(Rol.ALUMNO)
@@ -107,17 +110,17 @@ class AlumnoClaseServiceTest {
         
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(alumno));
         when(claseRepository.findById(1L)).thenReturn(Optional.of(clase));
-        when(alumnoClaseRepository.existsByAlumnoIdAndClaseId(1L, 1L)).thenReturn(true);
+        when(alumnoClaseRepository.existsByAlumnoIdAndClaseIdAndFechaClase(1L, 1L, FECHA_FUTURA)).thenReturn(true);
         
-        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L))
+        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L, FECHA_FUTURA))
                 .isInstanceOf(ReglaNegocioException.class)
-                .hasMessageContaining("El alumno ya está inscrito en esta clase");
+                .hasMessageContaining("Ya estás inscrito en esta clase para esa fecha");
         
         verify(alumnoClaseRepository, never()).save(any());
     }
-    
+
     @Test
-    void inscribir_AlumnoNoApuntadoAlGimnasio_LanzaExcepcion() {
+    void inscribir_FechaPasada_LanzaExcepcion() {
         Usuario alumno = Usuario.builder()
                 .id(1L)
                 .rol(Rol.ALUMNO)
@@ -134,20 +137,21 @@ class AlumnoClaseServiceTest {
                 .gimnasio(gimnasio)
                 .build();
         
+        LocalDateTime fechaPasada = LocalDateTime.now().minusDays(1);
+        
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(alumno));
         when(claseRepository.findById(1L)).thenReturn(Optional.of(clase));
-        when(alumnoClaseRepository.existsByAlumnoIdAndClaseId(1L, 1L)).thenReturn(false);
-        when(interaccionRepository.estaApuntado(1L, 1L)).thenReturn(false);
+        when(alumnoClaseRepository.existsByAlumnoIdAndClaseIdAndFechaClase(1L, 1L, fechaPasada)).thenReturn(false);
         
-        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L))
+        assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L, fechaPasada))
                 .isInstanceOf(ReglaNegocioException.class)
-                .hasMessageContaining("Debes apuntarte al gimnasio antes de inscribirte en sus clases");
+                .hasMessageContaining("No se puede reservar una clase para una fecha pasada");
         
         verify(alumnoClaseRepository, never()).save(any());
     }
     
     @Test
-    void inscribir_ExitosoCuandoApuntado() {
+    void inscribir_Exitoso() {
         Usuario alumno = Usuario.builder()
                 .id(1L)
                 .nombreUsuario("Juan")
@@ -169,16 +173,16 @@ class AlumnoClaseServiceTest {
                 .id(1L)
                 .alumno(alumno)
                 .clase(clase)
+                .fechaClase(FECHA_FUTURA)
                 .build();
         
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(alumno));
         when(claseRepository.findById(1L)).thenReturn(Optional.of(clase));
-        when(alumnoClaseRepository.existsByAlumnoIdAndClaseId(1L, 1L)).thenReturn(false);
-        when(interaccionRepository.estaApuntado(1L, 1L)).thenReturn(true);
+        when(alumnoClaseRepository.existsByAlumnoIdAndClaseIdAndFechaClase(1L, 1L, FECHA_FUTURA)).thenReturn(false);
         when(alumnoClaseRepository.findByAlumnoId(1L)).thenReturn(java.util.Collections.emptyList());
         when(alumnoClaseRepository.save(any(AlumnoClase.class))).thenReturn(inscripcion);
         
-        InscripcionResponseDTO resultado = alumnoClaseService.inscribir(1L, 1L);
+        InscripcionResponseDTO resultado = alumnoClaseService.inscribir(1L, 1L, FECHA_FUTURA);
         
         assertThat(resultado).isNotNull();
         assertThat(resultado.getAlumnoId()).isEqualTo(1L);

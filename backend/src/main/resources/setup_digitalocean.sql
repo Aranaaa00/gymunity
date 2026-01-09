@@ -68,7 +68,8 @@ CREATE TABLE IF NOT EXISTS alumno_clase (
     id BIGSERIAL PRIMARY KEY,
     alumno_id BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
     clase_id BIGINT NOT NULL REFERENCES clase(id) ON DELETE CASCADE,
-    fecha_inscripcion DATE NOT NULL DEFAULT CURRENT_DATE
+    fecha_inscripcion DATE NOT NULL DEFAULT CURRENT_DATE,
+    fecha_clase TIMESTAMP NOT NULL
 );
 
 -- ============================================
@@ -78,20 +79,13 @@ CREATE TABLE IF NOT EXISTS alumno_clase (
 -- Usuarios (Profesores y Alumnos)
 -- Contraseña para todos: "password123" (encriptada con BCrypt)
 INSERT INTO usuario (nombre_usuario, email, contrasenia, rol, fecha_registro, ciudad, avatar) VALUES
--- Profesores
+-- Profesores (parte del gimnasio)
 ('Carlos Martín', 'carlos@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Cádiz', 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop&crop=face'),
 ('Javier Roldán', 'javier@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Sevilla', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face'),
 ('Antonio Martínez', 'antonio@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Jerez de la Frontera', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face'),
 ('Laura Fernández', 'laura@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Madrid', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face'),
 ('Miguel Ángel Torres', 'miguel@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Barcelona', 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face'),
-('Ana García', 'ana@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Valencia', 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face'),
--- Alumnos
-('Silvia', 'silvia@email.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'ALUMNO', CURRENT_DATE, 'Cádiz', 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face'),
-('Marcos', 'marcos@email.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'ALUMNO', CURRENT_DATE, 'Jerez de la Frontera', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'),
-('Carla', 'carla@email.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'ALUMNO', CURRENT_DATE, 'Cádiz', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face'),
-('Diego Sánchez', 'diego@email.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'ALUMNO', CURRENT_DATE, 'Barcelona', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face'),
-('Elena García', 'elena@email.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'ALUMNO', CURRENT_DATE, 'Madrid', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face'),
-('Arana_00', 'arana@email.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'ALUMNO', CURRENT_DATE, 'Jerez de la Frontera', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face')
+('Ana García', 'ana@gym.com', '$2a$10$b07PRgcoB1hG8q93mzozHePYRPs4mrMx3lEgbsC.hSIka/BiMkwWW', 'PROFESOR', CURRENT_DATE, 'Valencia', 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face')
 ON CONFLICT (email) DO NOTHING;
 
 -- Gimnasios (16 gimnasios para tener resultados completos)
@@ -170,73 +164,7 @@ INSERT INTO clase (nombre, gimnasio_id, profesor_id, icono) VALUES
 ('Boxeo', 16, 1, 'boxing-glove'),
 ('Crossfit', 16, 4, 'dumbbell');
 
--- Interacciones (usuarios apuntados a gimnasios con reseñas)
-INSERT INTO interaccion (usuario_id, gimnasio_id, es_apuntado, resenia, fecha_interaccion) VALUES
--- Fitness Park (gimnasio 1)
-(7, 1, true, 'Brutales instalaciones y servicios. Mucha calidad, muy buen rollo!', CURRENT_DATE),
-(8, 1, true, 'Un lugar especial donde entrenar. Profesionales cercanos.', CURRENT_DATE),
-(9, 1, true, 'Es un gimnasio familiar con un equipo fantástico.', CURRENT_DATE),
-(10, 1, true, NULL, CURRENT_DATE),
-(11, 1, true, NULL, CURRENT_DATE),
--- Basic Fit (gimnasio 2)
-(7, 2, true, 'Muy buen gimnasio para principiantes en artes marciales.', CURRENT_DATE),
-(8, 2, true, 'Los profesores tienen mucha paciencia y experiencia.', CURRENT_DATE),
--- Smart Fit (gimnasio 3)
-(9, 3, true, 'Instalaciones modernas y muy limpias. Recomendado!', CURRENT_DATE),
-(10, 3, true, 'Las clases de MMA son intensas y muy profesionales.', CURRENT_DATE),
--- Iron Gym (gimnasio 4)
-(11, 4, true, 'Excelente para crossfit y entrenamiento funcional.', CURRENT_DATE),
-(7, 4, true, 'Muy buen ambiente de entrenamiento y compañerismo.', CURRENT_DATE),
--- Fight Club Barcelona (gimnasio 5)
-(8, 5, true, 'El mejor gimnasio de Barcelona para artes marciales.', CURRENT_DATE),
-(10, 5, true, NULL, CURRENT_DATE),
--- Warrior Gym (gimnasio 6)
-(9, 6, true, 'Especialistas en Muay Thai, muy recomendable.', CURRENT_DATE),
-(11, 6, true, 'Ambiente familiar y profesores muy atentos.', CURRENT_DATE),
--- SynerGym (gimnasio 7)
-(12, 7, true, 'El mejor gimnasio de la zona para MMA.', CURRENT_DATE),
-(7, 7, true, 'Profesores de primer nivel y buen ambiente.', CURRENT_DATE),
--- GO! Fitness (gimnasio 8)
-(8, 8, true, 'Excelente para aprender Judo desde cero.', CURRENT_DATE),
-(12, 8, true, 'Instalaciones muy completas y trato familiar.', CURRENT_DATE),
--- Enjoy! (gimnasio 9)
-(9, 9, true, 'Clases de boxeo muy divertidas y efectivas.', CURRENT_DATE),
--- CrossFit Bahía (gimnasio 10)
-(10, 10, true, 'WODs brutales y muy buen ambiente de comunidad.', CURRENT_DATE),
--- Dojo Central (gimnasio 11)
-(11, 11, true, 'Tradicional y auténtico. El mejor dojo de Sevilla.', CURRENT_DATE),
--- Power House Gym (gimnasio 12)
-(7, 12, true, 'Para amantes del powerlifting, el mejor equipamiento.', CURRENT_DATE),
--- Thai Boxing Academy (gimnasio 13)
-(8, 13, true, 'Los profesores tailandeses son increíbles. Técnica pura.', CURRENT_DATE),
--- FitBox Valencia (gimnasio 14)
-(9, 14, true, 'Perfecto para cardio boxing sin contacto.', CURRENT_DATE),
--- MMA Factory (gimnasio 15)
-(12, 15, true, 'El mejor gimnasio de MMA de Jerez. Muy completo.', CURRENT_DATE),
-(10, 15, true, 'Preparación de competición de primer nivel.', CURRENT_DATE),
--- Elite Training Center (gimnasio 16)
-(11, 16, true, 'Centro de élite, sin duda. Profesionales top.', CURRENT_DATE);
-
--- Inscripciones de alumnos en clases
-INSERT INTO alumno_clase (alumno_id, clase_id, fecha_inscripcion) VALUES
-(7, 1, CURRENT_DATE),
-(7, 2, CURRENT_DATE),
-(8, 1, CURRENT_DATE),
-(8, 3, CURRENT_DATE),
-(9, 2, CURRENT_DATE),
-(9, 3, CURRENT_DATE),
-(7, 4, CURRENT_DATE),
-(8, 5, CURRENT_DATE),
-(9, 7, CURRENT_DATE),
-(10, 8, CURRENT_DATE),
-(11, 10, CURRENT_DATE),
-(7, 11, CURRENT_DATE),
-(8, 13, CURRENT_DATE),
-(10, 14, CURRENT_DATE),
-(9, 16, CURRENT_DATE),
-(11, 17, CURRENT_DATE),
-(12, 19, CURRENT_DATE),
-(12, 21, CURRENT_DATE);
+-- Las interacciones y reseñas las crean los usuarios reales al registrarse y usar la app
 
 -- ============================================
 -- 3. VERIFICACIÓN

@@ -1,6 +1,7 @@
 package com.gymunity.backend.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,8 +43,19 @@ public class AlumnoClase {
     @Column(nullable = false)
     private LocalDate fechaInscripcion;
 
+    @Column(nullable = false)
+    private LocalDateTime fechaClase;
+
     @PrePersist
     protected void alCrear() {
         this.fechaInscripcion = LocalDate.now();
+    }
+
+    public boolean puedeCancelarConReembolso() {
+        if (fechaClase == null) {
+            return false;
+        }
+        LocalDateTime limite = fechaClase.minusHours(24);
+        return LocalDateTime.now().isBefore(limite);
     }
 }

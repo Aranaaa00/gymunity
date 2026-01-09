@@ -110,3 +110,52 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+// ============================================
+// VALORACIÓN Y CORAZÓN
+// ============================================
+
+.tarjeta-resenia__valoracion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  font-size: $texto-xs;
+  font-weight: $font-weight-medium;
+  color: var(--color-acento);
+}
+
+.tarjeta-resenia__estrella {
+  color: #facc15;
+}
+
+.tarjeta-resenia__corazon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  color: var(--color-subtitulo);
+
+  cursor: pointer;
+
+  transition: color 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    color: #ef4444;
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-acento);
+    outline-offset: 2px;
+    border-radius: $radio-sm;
+  }
+}

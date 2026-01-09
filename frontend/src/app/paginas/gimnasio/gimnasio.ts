@@ -9,13 +9,17 @@ import { TarjetaProfesor } from '../../componentes/compartidos/tarjeta-profesor/
 import { TarjetaResenia } from '../../componentes/compartidos/tarjeta-resenia/tarjeta-resenia';
 import { ItemTorneo } from '../../componentes/compartidos/item-torneo/item-torneo';
 import { ModalReserva } from '../../componentes/compartidos/modal-reserva/modal-reserva';
+import { ModalResenia } from '../../componentes/compartidos/modal-resenia/modal-resenia';
 import { ReservasService } from '../../servicios/reservas';
+import { PerfilService } from '../../servicios/perfil';
+import { AuthService } from '../../servicios/auth';
+import { ModalService } from '../../servicios/modal';
 
 // ============================================
 // CONSTANTES
 // ============================================
 
-const MAX_ITEMS_VISIBLES = 3;
+const MAX_ITEMS_VISIBLES = 5;
 
 @Component({
   selector: 'app-gimnasio',
@@ -27,7 +31,8 @@ const MAX_ITEMS_VISIBLES = 3;
     TarjetaProfesor,
     TarjetaResenia,
     ItemTorneo,
-    ModalReserva
+    ModalReserva,
+    ModalResenia
   ],
   templateUrl: './gimnasio.html',
   styleUrl: './gimnasio.scss',
@@ -36,6 +41,9 @@ const MAX_ITEMS_VISIBLES = 3;
 export class GimnasioPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly reservasService = inject(ReservasService);
+  private readonly perfilService = inject(PerfilService);
+  private readonly authService = inject(AuthService);
+  private readonly modalService = inject(ModalService);
   private readonly destruir$ = new Subject<void>();
   
   readonly gimnasio: WritableSignal<GimnasioDetalle | null> = signal(null);
@@ -44,6 +52,12 @@ export class GimnasioPage implements OnInit, OnDestroy {
   // Estado del modal de reserva
   readonly claseSeleccionada: WritableSignal<Clase | null> = signal(null);
   readonly mostrarModalReserva = computed(() => this.claseSeleccionada() !== null);
+
+  // Exponer signal de clases reservadas para reactividad en template
+  readonly clasesReservadasIds = this.reservasService.clasesReservadasIds;
+  
+  // Estado del modal de reseña
+  readonly mostrarModalResenia: WritableSignal<boolean> = signal(false);
 
   // ----------------------------------------
   // Computed signals
@@ -93,6 +107,8 @@ export class GimnasioPage implements OnInit, OnDestroy {
   // Lifecycle
   // ----------------------------------------
   ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
     this.route.data.pipe(
       takeUntil(this.destruir$)
     ).subscribe((data) => {
@@ -140,8 +156,36 @@ export class GimnasioPage implements OnInit, OnDestroy {
   // Actions (solo UI, sin implementar)
   // ----------------------------------------
   abrirResenia(): void {
-    // TODO: Implementar modal de reseña
-    console.log('Abrir modal de reseña');
+    if (!this.authService.estaAutenticado()) {
+      this.modalService.requerirRegistro();
+      return;
+    }
+    this.mostrarModalResenia.set(true);
+  }
+
+  cerrarModalResenia(): void {
+    this.mostrarModalResenia.set(false);
+  }
+
+  onReseniaEnviada(): void {
+    this.cerrarModalResenia();
+    // Recargar las reseñas del gimnasio
+    this.recargarResenias();
+  }
+
+  private recargarResenias(): void {
+    const gym = this.gimnasio();
+    if (!gym) return;
+    
+    // Llamar al API para obtener las reseñas actualizadas
+    this.perfilService.cargarReseniasGimnasio(gym.id).subscribe({
+      next: (resenias) => {
+        this.gimnasio.update(g => g ? { ...g, resenias } : null);
+      },
+      error: (err) => {
+        console.error('Error al recargar reseñas:', err);
+      }
+    });
   }
 
   verMasProfesores(): void {
@@ -167,8 +211,19 @@ export class GimnasioPage implements OnInit, OnDestroy {
   // ----------------------------------------
   // Reservas de clases
   // ----------------------------------------
+  obtenerClaseIdProfesor(profesor: Profesor): number {
+    const claseExistente = this.gimnasio()?.clases?.find(
+      c => c.profesorNombre === profesor.nombre
+    );
+    return claseExistente?.id ?? profesor.id;
+  }
+
   reservarClaseProfesor(profesor: Profesor): void {
-    // Buscar la clase asociada al profesor o crear una temporal
+    if (!this.authService.estaAutenticado()) {
+      this.modalService.requerirRegistro();
+      return;
+    }
+
     const claseExistente = this.gimnasio()?.clases?.find(
       c => c.profesorNombre === profesor.nombre
     );
@@ -176,7 +231,6 @@ export class GimnasioPage implements OnInit, OnDestroy {
     if (claseExistente) {
       this.claseSeleccionada.set(claseExistente);
     } else {
-      // Crear clase temporal con datos del profesor
       const claseTemp: Clase = {
         id: profesor.id,
         nombre: profesor.especialidad,
@@ -192,12 +246,11 @@ export class GimnasioPage implements OnInit, OnDestroy {
     this.claseSeleccionada.set(null);
   }
 
-  confirmarReserva(): void {
+  confirmarReserva(fechaClase: string): void {
     const clase = this.claseSeleccionada();
-    const gimnasio = this.gimnasio();
-    if (!clase || !gimnasio) return;
+    if (!clase) return;
 
-    this.reservasService.reservarClase(clase, gimnasio.nombre);
+    this.reservasService.reservarClase(clase.id, clase.nombre, fechaClase);
     this.cerrarModalReserva();
   }
 }

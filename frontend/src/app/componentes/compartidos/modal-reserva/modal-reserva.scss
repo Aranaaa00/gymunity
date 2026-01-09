@@ -2,16 +2,23 @@
 @use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
+// VARIABLES LOCALES
+// ============================================
+
+$modal-transition-duration: 0.2s;
+$modal-focus-offset: 0.125rem;
+
+// ============================================
 // MODAL RESERVA
 // ============================================
 
 .modal-reserva {
   position: fixed;
+  z-index: $z-modal;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $z-modal;
 
   display: flex;
   align-items: center;
@@ -22,7 +29,7 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(0.25rem);
 
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn $modal-transition-duration ease;
 }
 
 @keyframes fadeIn {
@@ -42,6 +49,7 @@
   background: var(--color-fondo);
 
   border-radius: $radio-lg;
+
   box-shadow: $shadow-lg;
 
   animation: slideUp 0.25s ease;
@@ -79,14 +87,14 @@
   display: flex;
   flex-direction: column;
   gap: $space-3;
-  
+
   text-align: center;
 }
 
 .modal-reserva__clase {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: $space-1;
 
   margin: 0;
 
@@ -101,11 +109,40 @@
   color: var(--color-subtitulo);
 }
 
-.modal-reserva__creditos {
+.modal-reserva__info {
   margin: 0;
 
   font-size: $texto-s;
   color: var(--color-subtitulo);
+}
+
+.modal-reserva__horario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+
+  margin: 0;
+
+  font-size: $texto-s;
+  color: var(--color-subtitulo);
+}
+
+.modal-reserva__fecha-proxima {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+  margin: 0;
+  padding: $space-2;
+  background: var(--color-fondo-secundario);
+  border-radius: $radio-md;
+  font-size: $texto-s;
+  color: var(--color-texto);
+
+  strong {
+    color: var(--color-acento);
+  }
 }
 
 .modal-reserva__acciones {
@@ -118,9 +155,8 @@
 }
 
 .modal-reserva__boton {
-  flex: 1;
-
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   gap: $space-1;
@@ -135,21 +171,25 @@
 
   cursor: pointer;
 
-  transition: background-color 0.2s ease, opacity 0.2s ease;
+  transition: 
+    background-color $modal-transition-duration ease, 
+    opacity $modal-transition-duration ease;
 
   &:disabled {
     opacity: 0.6;
+
     cursor: not-allowed;
   }
 
   &:focus-visible {
     outline: $borde-medium solid var(--color-acento);
-    outline-offset: 2px;
+    outline-offset: $modal-focus-offset;
   }
 }
 
 .modal-reserva__boton--primario {
   background: var(--color-acento);
+
   color: var(--color-texto-inverso);
 
   &:hover:not(:disabled) {
@@ -159,6 +199,7 @@
 
 .modal-reserva__boton--secundario {
   background: var(--color-fondo-secundario);
+
   color: var(--color-texto);
 
   &:hover:not(:disabled) {

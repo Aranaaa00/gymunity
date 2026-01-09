@@ -1,4 +1,4 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy, computed } from '@angular/core';
 import { Icono, NombreIcono } from '../icono/icono';
 
 // ============================================
@@ -14,22 +14,18 @@ import { Icono, NombreIcono } from '../icono/icono';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TarjetaClase {
-  // ----------------------------------------
-  // Inputs
-  // ----------------------------------------
   readonly nombre = input.required<string>();
   readonly profesorNombre = input<string>('');
   readonly icono = input<NombreIcono>('dumbbell');
+  readonly reservada = input<boolean>(false);
 
-  // ----------------------------------------
-  // Outputs
-  // ----------------------------------------
   readonly reservar = output<void>();
 
-  // ----------------------------------------
-  // Métodos
-  // ----------------------------------------
+  readonly textoBoton = computed(() => this.reservada() ? 'Reservada' : 'Reservar plaza');
+
   onReservar(): void {
-    this.reservar.emit();
+    if (!this.reservada()) {
+      this.reservar.emit();
+    }
   }
 }

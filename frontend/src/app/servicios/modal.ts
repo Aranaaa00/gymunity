@@ -1,5 +1,6 @@
 import { Injectable, signal, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { NotificacionService } from './notificacion';
 
 // ============================================
 // TIPOS
@@ -14,6 +15,7 @@ type ManejadorTeclado = (evento: KeyboardEvent) => void;
 // ============================================
 
 const TECLA_ESCAPE = 'Escape';
+const DELAY_MODAL_REGISTRO_MS = 2000;
 
 // ============================================
 // SERVICIO MODAL
@@ -26,6 +28,7 @@ export class ModalService {
   // ----------------------------------------
   private readonly documento = inject(DOCUMENT);
   private readonly esBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly notificacion = inject(NotificacionService);
 
   // ----------------------------------------
   // Estado privado
@@ -46,6 +49,17 @@ export class ModalService {
 
   abrirRegistro(): void {
     this.abrir('registro');
+  }
+
+  /**
+   * Muestra toast de "Debes registrarte" y abre modal de registro tras 2 segundos
+   */
+  requerirRegistro(): void {
+    this.notificacion.info('Debes registrarte para realizar esta acción');
+    
+    setTimeout(() => {
+      this.abrirRegistro();
+    }, DELAY_MODAL_REGISTRO_MS);
   }
 
   cerrar(): void {

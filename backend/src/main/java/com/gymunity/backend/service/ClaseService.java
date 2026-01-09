@@ -137,8 +137,11 @@ public class ClaseService {
                 .id(clase.getId())
                 .nombre(clase.getNombre())
                 .icono(clase.getIcono())
-                .nombreProfesor(clase.getProfesor() != null ? clase.getProfesor().getNombreUsuario() : null)
+                .profesorNombre(clase.getProfesor() != null ? clase.getProfesor().getNombreUsuario() : null)
                 .totalAlumnos((int) alumnoClaseRepository.countByClaseId(clase.getId()))
+                .diasSemana(clase.getDiasSemana())
+                .horaInicio(clase.getHoraInicio())
+                .horaFin(clase.getHoraFin())
                 .build();
     }
 }

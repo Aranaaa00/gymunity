@@ -44,7 +44,25 @@ export type NombreIcono =
   | 'x-circle'
   | 'alert-circle'
   | 'tag'
-  | 'refresh-cw';
+  | 'refresh-cw'
+  | 'award'
+  | 'medal'
+  | 'target'
+  | 'flame'
+  | 'zap'
+  | 'shield'
+  | 'crown'
+  | 'gem'
+  | 'check-circle'
+  | 'hourglass'
+  | 'pencil'
+  | 'boxing'
+  | 'sword'
+  | 'swords'
+  | 'hand'
+  | 'footprints'
+  | 'person-standing'
+  | 'activity';
 
 type TamanoIcono = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
@@ -96,6 +114,24 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   'alert-circle': 'AlertCircle',
   tag: 'Tag',
   'refresh-cw': 'RefreshCw',
+  award: 'Award',
+  medal: 'Medal',
+  target: 'Target',
+  flame: 'Flame',
+  zap: 'Zap',
+  shield: 'Shield',
+  crown: 'Crown',
+  gem: 'Gem',
+  'check-circle': 'CheckCircle',
+  hourglass: 'Hourglass',
+  pencil: 'Pencil',
+  boxing: 'Swords',
+  sword: 'Sword',
+  swords: 'Swords',
+  hand: 'Hand',
+  footprints: 'Footprints',
+  'person-standing': 'PersonStanding',
+  activity: 'Activity',
 } as const;
 
 const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {

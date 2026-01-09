@@ -1,5 +1,7 @@
 package com.gymunity.backend.dto;
 
+import java.time.LocalTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +19,9 @@ public class ClaseDTO {
     private Long id;
     private String nombre;
     private String icono;
-    private String nombreProfesor;
+    private String profesorNombre;
     private Integer totalAlumnos;
+    private String diasSemana;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
 }

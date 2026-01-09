@@ -68,7 +68,7 @@ $galeria-altura-tablet: 18rem;
 .galeria__miniaturas {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   gap: $galeria-gap;
 
   height: $galeria-altura-desktop;
@@ -79,6 +79,7 @@ $galeria-altura-tablet: 18rem;
 
   @include respond-down(md) {
     flex-direction: row;
+    justify-content: center;
     height: auto;
     overflow-x: auto;
     scrollbar-width: none;

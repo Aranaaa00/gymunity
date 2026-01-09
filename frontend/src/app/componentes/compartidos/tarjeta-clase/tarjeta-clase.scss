@@ -76,6 +76,9 @@
 }
 
 .tarjeta-clase__boton {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
   flex-shrink: 0;
 
   padding: $space-1 $space-2;
@@ -93,12 +96,12 @@
 
   transition: background-color 0.2s ease, transform 0.15s ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: var(--color-boton-hover);
     transform: scale(1.02);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: scale(0.98);
   }
 
@@ -106,4 +109,14 @@
     outline: $borde-medium solid var(--color-acento);
     outline-offset: 2px;
   }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.tarjeta-clase__boton--reservada {
+  background: rgba(52, 198, 160, 0.15);
+
+  color: var(--color-acento);
 }

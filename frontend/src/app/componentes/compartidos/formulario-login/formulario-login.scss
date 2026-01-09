@@ -6,7 +6,6 @@
 
 $formulario-max-width: 100%;
 $formulario-logo-height: 2.5rem;
-$formulario-submit-max-width: 100%;
 $formulario-link-transition-duration: 0.2s;
 
 // ============================================
@@ -29,23 +28,33 @@ $formulario-link-transition-duration: 0.2s;
 }
 
 // ============================================
-// HEADER CON LOGO
+// HEADER CON LOGO Y TAGLINE
 // ============================================
 
 .formulario-auth__header {
   display: flex;
-  justify-content: center;
-  margin-bottom: $space-1;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-1;
+  margin-bottom: $space-2;
 }
 
 .formulario-auth__logo {
   display: block;
+  margin: 0;
 
   img {
     display: block;
     height: $formulario-logo-height;
     width: auto;
   }
+}
+
+.formulario-auth__tagline {
+  margin: 0;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-acento);
 }
 
 // ============================================
@@ -105,11 +114,19 @@ $formulario-link-transition-duration: 0.2s;
 }
 
 // ============================================
-// TEXTO ALTERNATIVO
+// FOOTER Y TEXTO ALTERNATIVO
 // ============================================
 
-.formulario-auth__alt {
+.formulario-auth__footer {
+  display: flex;
+  justify-content: center;
   margin-top: $space-2;
+  padding-top: $space-2;
+  border-top: $borde-thin solid var(--color-borde);
+}
+
+.formulario-auth__alt {
+  margin: 0;
   font-size: $texto-sm;
   text-align: center;
   color: var(--color-subtitulo);

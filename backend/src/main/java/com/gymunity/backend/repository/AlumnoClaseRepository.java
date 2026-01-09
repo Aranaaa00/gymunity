@@ -1,5 +1,6 @@
 package com.gymunity.backend.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,4 +54,23 @@ public interface AlumnoClaseRepository extends JpaRepository<AlumnoClase, Long> 
      * @return Número de alumnos inscritos.
      */
     long countByClaseId(Long claseId);
+
+    /**
+     * Verifica si un alumno está inscrito en una clase para una fecha específica.
+     *
+     * @param alumnoId ID del alumno.
+     * @param claseId ID de la clase.
+     * @param fechaClase Fecha de la clase.
+     * @return true si está inscrito para esa fecha, false en caso contrario.
+     */
+    boolean existsByAlumnoIdAndClaseIdAndFechaClase(Long alumnoId, Long claseId, LocalDateTime fechaClase);
+
+    /**
+     * Verifica si un alumno ha tomado alguna clase en un gimnasio.
+     *
+     * @param alumnoId ID del alumno.
+     * @param gimnasioId ID del gimnasio.
+     * @return true si ha tomado al menos una clase, false en caso contrario.
+     */
+    boolean existsByAlumnoIdAndClaseGimnasioId(Long alumnoId, Long gimnasioId);
 }

@@ -4,16 +4,17 @@
     <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
     <img src="assets/logo-large.webp" alt="Gymunity" loading="eager">
   </picture>
+  <p class="formulario-auth__tagline">Únete a la comunidad fitness</p>
 </header>
 
 <form class="formulario-auth" [formGroup]="registroForm" (ngSubmit)="onSubmit()">
   <fieldset class="formulario-auth__fieldset">
-    <legend class="formulario-auth__legend">Crear cuenta</legend>
+    <legend class="formulario-auth__legend">Crea tu perfil</legend>
     
     <app-campo-formulario
       label="Nombre de usuario"
       type="text"
-      placeholder="tu_usuario"
+      placeholder="@tu_nombre"
       inputId="registro-username"
       name="username"
       [formControl]="$any(usernameControl)"
@@ -25,9 +26,9 @@
     </app-campo-formulario>
 
     <app-campo-formulario
-      label="Nombre completo"
+      label="Tu nombre"
       type="text"
-      placeholder="Tu Nombre Completo"
+      placeholder="Cómo te llamamos"
       inputId="registro-fullname"
       name="fullName"
       [formControl]="$any(fullNameControl)"
@@ -39,7 +40,7 @@
     <app-campo-formulario
       label="Email"
       type="email"
-      placeholder="tu@email.com"
+      placeholder="Para tu acceso seguro"
       inputId="registro-email"
       name="email"
       [formControl]="$any(emailControl)"
@@ -53,7 +54,7 @@
     <app-campo-formulario
       label="Contraseña"
       type="password"
-      placeholder="Mínimo 8 caracteres seguros"
+      placeholder="Mínimo 8 caracteres"
       inputId="registro-password"
       name="password"
       [formControl]="$any(passwordControl)"
@@ -92,7 +93,7 @@
     
     <section class="formulario-auth__submit">
       <app-boton tipo="submit" [disabled]="registroForm.invalid && registroForm.touched" [cargando]="cargando()">
-        Crear cuenta
+        Empezar mi aventura
       </app-boton>
     </section>
 
@@ -100,9 +101,11 @@
       <p class="formulario-auth__error-servidor">{{ errorServidor() }}</p>
     }
 
-    <p class="formulario-auth__alt">
-      ¿Ya tienes cuenta? 
-      <button type="button" class="formulario-auth__link" (click)="irLogin.emit()">Iniciar sesión</button>
-    </p>
+    <footer class="formulario-auth__footer">
+      <p class="formulario-auth__alt">
+        ¿Ya entrenas con nosotros? 
+        <button type="button" class="formulario-auth__link" (click)="irLogin.emit()">Accede aquí</button>
+      </p>
+    </footer>
   </fieldset>
 </form>

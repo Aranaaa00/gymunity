@@ -1,26 +1,8 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { AuthService } from './auth';
 import { NotificacionService } from './notificacion';
-import type { Clase } from '../modelos';
-
-// ============================================
-// CONSTANTES
-// ============================================
-
-const CREDITOS_INICIALES = 12;
-const CREDITOS_POR_RESERVA = 1;
-
-// ============================================
-// TIPOS
-// ============================================
-
-export interface Reserva {
-  readonly id: number;
-  readonly claseId: number;
-  readonly claseNombre: string;
-  readonly gimnasioNombre: string;
-  readonly fecha: string;
-}
+import { PerfilService } from './perfil';
+import { ModalService } from './modal';
 
 // ============================================
 // SERVICIO DE RESERVAS
@@ -28,93 +10,82 @@ export interface Reserva {
 
 @Injectable({ providedIn: 'root' })
 export class ReservasService {
-  // ----------------------------------------
-  // Dependencias
-  // ----------------------------------------
   private readonly auth = inject(AuthService);
   private readonly notificacion = inject(NotificacionService);
+  private readonly perfilService = inject(PerfilService);
+  private readonly modal = inject(ModalService);
 
-  // ----------------------------------------
-  // Estado privado
-  // ----------------------------------------
-  private contadorReservas = 0;
-  private readonly _creditos = signal<number>(CREDITOS_INICIALES);
-  private readonly _reservas = signal<Reserva[]>([]);
-  private readonly _procesando = signal<boolean>(false);
+  private readonly _procesando = signal(false);
 
-  // ----------------------------------------
-  // Estado público (readonly)
-  // ----------------------------------------
-  readonly creditos = this._creditos.asReadonly();
-  readonly reservas = this._reservas.asReadonly();
   readonly procesando = this._procesando.asReadonly();
+  readonly creditos = this.perfilService.creditos;
+  readonly creditosRestantes = this.perfilService.creditosRestantes;
+  readonly clasesReservadas = this.perfilService.clases;
 
-  // ----------------------------------------
-  // Computed
-  // ----------------------------------------
-  readonly creditosRestantes = computed(() => {
-    const actual = this._creditos();
-    return `${actual - CREDITOS_POR_RESERVA}/${CREDITOS_INICIALES}`;
+  readonly clasesReservadasIds = computed(() => {
+    return new Set(this.clasesReservadas().map(c => c.claseId));
   });
 
   readonly puedeReservar = computed(() => {
-    const tieneCreditos = this._creditos() >= CREDITOS_POR_RESERVA;
+    const tieneCreditos = this.creditos() > 0;
     const estaAutenticado = this.auth.estaAutenticado();
-    return tieneCreditos && estaAutenticado;
+    const noProcesando = !this._procesando();
+    return tieneCreditos && estaAutenticado && noProcesando;
   });
 
-  // ----------------------------------------
-  // Métodos públicos
-  // ----------------------------------------
-  reservarClase(clase: Clase, gimnasioNombre: string): boolean {
+  reservarClase(claseId: number, nombreClase: string, fechaClase: string): void {
     if (!this.puedeReservar()) {
-      this.notificacion.error('No tienes créditos suficientes');
-      return false;
+      if (!this.auth.estaAutenticado()) {
+        this.modal.requerirRegistro();
+      } else if (this.creditos() <= 0) {
+        this.notificacion.error('No te quedan créditos. Cancela una clase para recuperar créditos.');
+      }
+      return;
     }
 
-    const yaReservada = this._reservas().some(r => r.claseId === clase.id);
-    if (yaReservada) {
+    if (this.estaReservada(claseId)) {
       this.notificacion.warning('Ya tienes una reserva para esta clase');
-      return false;
+      return;
     }
 
     this._procesando.set(true);
 
-    // Simular delay de API
-    setTimeout(() => {
-      this.contadorReservas++;
-      
-      const nuevaReserva: Reserva = {
-        id: this.contadorReservas,
-        claseId: clase.id,
-        claseNombre: clase.nombre,
-        gimnasioNombre,
-        fecha: new Date().toISOString(),
-      };
-
-      this._reservas.update(lista => [...lista, nuevaReserva]);
-      this._creditos.update(c => c - CREDITOS_POR_RESERVA);
-      this._procesando.set(false);
-
-      this.notificacion.success(`¡Reserva confirmada! Te esperamos en ${clase.nombre}`);
-    }, 300);
-
-    return true;
+    this.perfilService.inscribirEnClase(claseId, fechaClase).subscribe({
+      next: () => {
+        this._procesando.set(false);
+        this.notificacion.success(`¡Reserva confirmada! Te esperamos en ${nombreClase}`);
+      },
+      error: (err) => {
+        this._procesando.set(false);
+        const mensaje = err.error?.mensaje ?? 'Error al realizar la reserva';
+        this.notificacion.error(mensaje);
+        console.error('Error en reserva:', err);
+      }
+    });
   }
 
-  cancelarReserva(reservaId: number): void {
-    const reserva = this._reservas().find(r => r.id === reservaId);
-    
-    if (!reserva) {
-      return;
-    }
+  cancelarReserva(claseId: number): void {
+    this._procesando.set(true);
 
-    this._reservas.update(lista => lista.filter(r => r.id !== reservaId));
-    this._creditos.update(c => c + CREDITOS_POR_RESERVA);
-    this.notificacion.info('Reserva cancelada. Se ha devuelto 1 crédito');
+    this.perfilService.cancelarInscripcion(claseId).subscribe({
+      next: (response) => {
+        this._procesando.set(false);
+        if (response.reembolso) {
+          this.notificacion.success('Reserva cancelada. Se ha devuelto 1 crédito.');
+        } else {
+          this.notificacion.info('Reserva cancelada. No se devuelve crédito (menos de 24h para la clase).');
+        }
+      },
+      error: (err) => {
+        this._procesando.set(false);
+        const mensaje = err.error?.mensaje ?? 'Error al cancelar la reserva';
+        this.notificacion.error(mensaje);
+        console.error('Error cancelando reserva:', err);
+      }
+    });
   }
 
   estaReservada(claseId: number): boolean {
-    return this._reservas().some(r => r.claseId === claseId);
+    return this.perfilService.estaInscrito(claseId);
   }
 }

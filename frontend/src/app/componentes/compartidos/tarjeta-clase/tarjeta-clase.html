@@ -11,9 +11,14 @@
   <button 
     type="button" 
     class="tarjeta-clase__boton"
+    [class.tarjeta-clase__boton--reservada]="reservada()"
+    [disabled]="reservada()"
     (click)="onReservar()"
-    aria-label="Reservar plaza en {{ nombre() }}"
+    [attr.aria-label]="reservada() ? 'Clase reservada' : 'Reservar plaza en ' + nombre()"
   >
-    Reservar plaza
+    @if (reservada()) {
+      <app-icono nombre="check" tamano="sm" />
+    }
+    {{ textoBoton() }}
   </button>
 </article>

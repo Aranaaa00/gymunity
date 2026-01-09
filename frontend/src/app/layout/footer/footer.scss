@@ -20,11 +20,17 @@ $footer-social-translate-y: -0.125rem;
 .gym-footer {
   margin-top: auto;
   padding: $space-4 0 $space-3;
+
   background: var(--color-header);
+
   transition: background-color $footer-transition-duration ease;
 
+  @include respond-down(md) {
+    padding-bottom: 5rem;
+  }
+
   @include respond-down(sm) {
-    padding: $space-3 0 $space-2;
+    padding: $space-3 0 5rem;
   }
 }
 

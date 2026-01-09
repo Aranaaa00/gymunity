@@ -197,8 +197,11 @@ public class GimnasioService {
                         .id(c.getId())
                         .nombre(c.getNombre())
                         .icono(c.getIcono())
-                        .nombreProfesor(c.getProfesor() != null ? c.getProfesor().getNombreUsuario() : null)
+                        .profesorNombre(c.getProfesor() != null ? c.getProfesor().getNombreUsuario() : null)
                         .totalAlumnos((int) alumnoClaseRepository.countByClaseId(c.getId()))
+                        .diasSemana(c.getDiasSemana())
+                        .horaInicio(c.getHoraInicio())
+                        .horaFin(c.getHoraFin())
                         .build())
                 .toList();
         
@@ -216,11 +219,11 @@ public class GimnasioService {
                                 .findFirst()
                                 .orElse(""))
                         .foto(p.getAvatar())
-                        .valoracion(4.5 + Math.random() * 0.5) // Valoración temporal
+                        .valoracion(4.5) // Valoración base del gimnasio
                         .build())
                 .toList();
         
-        // Torneos temporales (se podrían crear como entidad si se necesita)
+        // Torneos del gimnasio (información del gimnasio, no de usuarios)
         List<TorneoDTO> torneos = List.of(
                 TorneoDTO.builder()
                         .id(1L)
@@ -236,7 +239,7 @@ public class GimnasioService {
                         .build()
         );
         
-        // Fotos adicionales de galería
+        // Fotos adicionales de galería (parte del gimnasio, no generadas por usuarios)
         List<String> fotosGaleria = List.of(
                 "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop",
                 "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop",
@@ -250,6 +253,7 @@ public class GimnasioService {
                         .nombreUsuario(i.getUsuario().getNombreUsuario())
                         .avatarUsuario(i.getUsuario().getAvatar())
                         .texto(i.getResenia())
+                        .valoracion(i.getValoracion())
                         .fecha(i.getFechaInteraccion())
                         .build())
                 .toList();

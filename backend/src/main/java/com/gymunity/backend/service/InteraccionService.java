@@ -12,6 +12,7 @@ import com.gymunity.backend.entity.Interaccion;
 import com.gymunity.backend.entity.Usuario;
 import com.gymunity.backend.exception.RecursoNoEncontradoException;
 import com.gymunity.backend.exception.ReglaNegocioException;
+import com.gymunity.backend.repository.AlumnoClaseRepository;
 import com.gymunity.backend.repository.GimnasioRepository;
 import com.gymunity.backend.repository.InteraccionRepository;
 import com.gymunity.backend.repository.UsuarioRepository;
@@ -26,6 +27,18 @@ public class InteraccionService {
     private final InteraccionRepository interaccionRepository;
     private final UsuarioRepository usuarioRepository;
     private final GimnasioRepository gimnasioRepository;
+    private final AlumnoClaseRepository alumnoClaseRepository;
+
+    /**
+     * Obtiene las interacciones de un usuario (para su perfil).
+     */
+    @Transactional(readOnly = true)
+    public List<InteraccionResponseDTO> obtenerInteraccionesDeUsuario(Long usuarioId) {
+        return interaccionRepository.findByUsuarioId(usuarioId).stream()
+                .filter(i -> i.getResenia() != null)
+                .map(this::convertirAResponseDTO)
+                .toList();
+    }
 
     /**
      * Obtiene las reseñas de un gimnasio.
@@ -67,10 +80,10 @@ public class InteraccionService {
 
     /**
      * Añade o actualiza una reseña.
-     * REGLA: Solo puede dejar reseña si está apuntado al gimnasio.
+     * REGLA: Solo puede dejar reseña si está apuntado o ha tomado clases en el gimnasio.
      */
     public InteraccionResponseDTO dejarResenia(Long usuarioId, Long gimnasioId, String textoResenia, Integer valoracion) {
-        validarApuntado(usuarioId, gimnasioId);
+        validarPuedeDejarResenia(usuarioId, gimnasioId);
         
         Interaccion interaccion = interaccionRepository.findByUsuarioIdAndGimnasioId(usuarioId, gimnasioId)
                 .orElseGet(() -> crearNuevaInteraccion(usuarioId, gimnasioId));
@@ -137,9 +150,12 @@ public class InteraccionService {
         }
     }
 
-    private void validarApuntado(Long usuarioId, Long gimnasioId) {
-        if (!interaccionRepository.estaApuntado(usuarioId, gimnasioId)) {
-            throw new ReglaNegocioException("Debes estar apuntado al gimnasio para dejar una reseña");
+    private void validarPuedeDejarResenia(Long usuarioId, Long gimnasioId) {
+        boolean estaApuntado = interaccionRepository.estaApuntado(usuarioId, gimnasioId);
+        boolean haTomadoClase = alumnoClaseRepository.existsByAlumnoIdAndClaseGimnasioId(usuarioId, gimnasioId);
+        
+        if (!estaApuntado && !haTomadoClase) {
+            throw new ReglaNegocioException("Debes haber tomado al menos una clase en este gimnasio para dejar una reseña");
         }
     }
 

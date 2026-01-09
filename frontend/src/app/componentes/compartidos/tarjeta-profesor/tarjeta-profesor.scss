@@ -143,6 +143,10 @@
 // ============================================
 
 .tarjeta-profesor__boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
   flex-shrink: 0;
 
   padding: $space-1 $space-2;
@@ -160,7 +164,7 @@
 
   transition: background-color 0.2s ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: var(--color-boton-hover);
   }
 
@@ -169,10 +173,20 @@
     outline-offset: 2px;
   }
 
+  &:disabled {
+    cursor: default;
+  }
+
   @include respond-down(sm) {
     padding: $space-1;
     font-size: $texto-xxs;
   }
+}
+
+.tarjeta-profesor__boton--reservada {
+  background: rgba(52, 198, 160, 0.15);
+
+  color: var(--color-acento);
 }
 
 // ============================================

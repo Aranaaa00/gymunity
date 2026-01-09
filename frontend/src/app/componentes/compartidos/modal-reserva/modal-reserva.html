@@ -18,8 +18,20 @@
         }
       </p>
 
-      <p class="modal-reserva__creditos">
-        Se usará 1 crédito · Te quedarán {{ creditosRestantes() }}
+      @if (horarioTexto()) {
+        <p class="modal-reserva__horario">
+          <app-icono nombre="clock" tamano="sm" />
+          {{ horarioTexto() }}
+        </p>
+      }
+
+      <p class="modal-reserva__fecha-proxima">
+        <app-icono nombre="calendar" tamano="sm" />
+        <span>Próxima clase: <strong>{{ proximaFechaLabel() }}</strong></span>
+      </p>
+
+      <p class="modal-reserva__info">
+        Usarás 1 de tus clases disponibles · Te quedarán {{ creditosDespuesReserva() }}
       </p>
     </section>
 
@@ -42,7 +54,7 @@
           <app-icono nombre="loader" tamano="sm" class="modal-reserva__spinner" />
           Reservando...
         } @else {
-          Confirmar
+          Reservar
         }
       </button>
     </footer>

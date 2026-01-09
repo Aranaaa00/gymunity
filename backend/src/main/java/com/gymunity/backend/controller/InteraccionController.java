@@ -28,6 +28,11 @@ public class InteraccionController {
 
     private final InteraccionService interaccionService;
 
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<InteraccionResponseDTO>> obtenerInteraccionesUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(interaccionService.obtenerInteraccionesDeUsuario(usuarioId));
+    }
+
     @GetMapping("/gimnasio/{gimnasioId}/resenias")
     public ResponseEntity<List<ReseniaDTO>> obtenerResenias(@PathVariable Long gimnasioId) {
         return ResponseEntity.ok(interaccionService.obtenerReseniasDeGimnasio(gimnasioId));

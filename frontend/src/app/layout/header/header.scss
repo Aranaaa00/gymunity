@@ -233,8 +233,16 @@ $header-buscador-max-width: 28rem;
     background: rgba($gris-100, 0.1);
   }
 
+  &--oculto {
+    display: none;
+  }
+
   @include respond-down(md) {
     display: flex;
+
+    &--oculto {
+      display: none;
+    }
   }
 }
 

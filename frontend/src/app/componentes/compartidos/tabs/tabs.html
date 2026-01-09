@@ -1,20 +1,18 @@
-<section class="tabs__container">
-  <nav class="tabs__lista" role="tablist">
-    @for (pestana of pestanas(); track pestana; let i = $index) {
-      <button
-        type="button"
-        role="tab"
-        class="tabs__tab"
-        [class.tabs__tab--activo]="tabActivo() === i"
-        [attr.aria-selected]="tabActivo() === i"
-        [attr.tabindex]="tabActivo() === i ? 0 : -1"
-        (click)="seleccionarTab(i)">
-        {{ pestana }}
-      </button>
-    }
-  </nav>
-  
-  <article class="tabs__contenido" role="tabpanel">
-    <ng-content></ng-content>
-  </article>
-</section>
+<nav class="tabs__lista" role="tablist">
+  @for (pestana of pestanas(); track $index) {
+    <button
+      type="button"
+      role="tab"
+      class="tabs__tab"
+      [class.tabs__tab--activo]="tabActivo() === $index"
+      [attr.aria-selected]="tabActivo() === $index"
+      [attr.tabindex]="tabActivo() === $index ? 0 : -1"
+      (click)="seleccionarTab($index)">
+      {{ pestana }}
+    </button>
+  }
+</nav>
+
+<article class="tabs__contenido" role="tabpanel">
+  <ng-content />
+</article>

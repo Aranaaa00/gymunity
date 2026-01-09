@@ -13,7 +13,19 @@
       @if (titulo()) {
         <strong class="tarjeta-resenia__titulo">{{ titulo() }}</strong>
       }
+      @if (valoracion() > 0) {
+        <span class="tarjeta-resenia__valoracion">
+          {{ valoracion() }}
+          <app-icono nombre="star" tamano="xs" class="tarjeta-resenia__estrella" />
+        </span>
+      }
     </header>
     <p class="tarjeta-resenia__texto">{{ texto() }}</p>
   </section>
+
+  @if (mostrarCorazon()) {
+    <button type="button" class="tarjeta-resenia__corazon" aria-label="Me gusta">
+      <app-icono nombre="heart" tamano="sm" />
+    </button>
+  }
 </article>

@@ -1,0 +1,86 @@
+<aside 
+  class="modal-resenia" 
+  role="dialog" 
+  aria-modal="true"
+  aria-labelledby="modal-titulo"
+  (click)="onBackdropClick($event)"
+>
+  <article class="modal-resenia__contenido">
+    <button 
+      type="button" 
+      class="modal-resenia__cerrar" 
+      aria-label="Cerrar"
+      (click)="onCerrar()"
+    >
+      <app-icono nombre="x" tamano="md" />
+    </button>
+
+    <header class="modal-resenia__header">
+      <h2 id="modal-titulo" class="modal-resenia__titulo">Dejar reseña</h2>
+      <p class="modal-resenia__gimnasio">{{ gimnasioNombre() }}</p>
+    </header>
+
+    <section class="modal-resenia__cuerpo">
+      <fieldset class="modal-resenia__valoracion">
+        <legend class="modal-resenia__label">¿Cómo valorarías tu experiencia?</legend>
+        <span 
+          class="modal-resenia__estrellas" 
+          role="radiogroup" 
+          aria-label="Valoración"
+          (mouseleave)="salirHover()"
+        >
+          @for (estrella of estrellas; track estrella) {
+            <button
+              type="button"
+              class="modal-resenia__estrella"
+              [class.modal-resenia__estrella--activa]="esActiva(estrella)"
+              [attr.aria-checked]="valoracion() === estrella"
+              role="radio"
+              (click)="seleccionarEstrella(estrella)"
+              (mouseenter)="hoverEstrella(estrella)"
+            >
+              <app-icono nombre="star" tamano="lg" />
+            </button>
+          }
+        </span>
+      </fieldset>
+
+      <label class="modal-resenia__campo">
+        <span class="modal-resenia__label">Tu comentario</span>
+        <textarea
+          class="modal-resenia__textarea"
+          placeholder="Cuéntanos tu experiencia en este gimnasio..."
+          rows="4"
+          maxlength="1000"
+          [value]="comentario()"
+          (input)="actualizarComentario($event)"
+        ></textarea>
+        <span class="modal-resenia__contador">{{ comentario().length }}/1000</span>
+      </label>
+    </section>
+
+    <footer class="modal-resenia__acciones">
+      <button 
+        type="button" 
+        class="modal-resenia__boton modal-resenia__boton--secundario"
+        (click)="onCerrar()"
+        [disabled]="enviando()"
+      >
+        Cancelar
+      </button>
+      <button 
+        type="button" 
+        class="modal-resenia__boton modal-resenia__boton--primario"
+        [disabled]="!puedeEnviar()"
+        (click)="onEnviar()"
+      >
+        @if (enviando()) {
+          <app-icono nombre="loader" tamano="sm" class="modal-resenia__spinner" />
+          Enviando...
+        } @else {
+          Enviar reseña
+        }
+      </button>
+    </footer>
+  </article>
+</aside>

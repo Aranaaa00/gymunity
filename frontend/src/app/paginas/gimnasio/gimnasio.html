@@ -56,6 +56,7 @@
                     [foto]="profesor.foto"
                     [valoracion]="profesor.valoracion"
                     [proximaClase]="profesor.proximaClase ?? ''"
+                    [reservada]="clasesReservadasIds().has(obtenerClaseIdProfesor(profesor))"
                     (reservar)="reservarClaseProfesor(profesor)"
                   />
                 </li>
@@ -99,6 +100,8 @@
                     [nombre]="resenia.nombreUsuario"
                     [texto]="resenia.texto"
                     [foto]="resenia.avatarUsuario"
+                    [valoracion]="resenia.valoracion"
+                    [mostrarCorazon]="true"
                   />
                 </li>
               }
@@ -113,8 +116,21 @@
       <app-modal-reserva
         [claseNombre]="claseSeleccionada()!.nombre"
         [profesorNombre]="claseSeleccionada()!.profesorNombre"
-        (confirmar)="confirmarReserva()"
+        [diasSemana]="claseSeleccionada()!.diasSemana ?? ''"
+        [horaInicio]="claseSeleccionada()!.horaInicio ?? ''"
+        [horaFin]="claseSeleccionada()!.horaFin ?? ''"
+        (confirmar)="confirmarReserva($event)"
         (cancelar)="cerrarModalReserva()"
+      />
+    }
+
+    <!-- MODAL RESEÑA -->
+    @if (mostrarModalResenia()) {
+      <app-modal-resenia
+        [gimnasioId]="gimnasio()!.id"
+        [gimnasioNombre]="gimnasio()!.nombre"
+        (reseniaEnviada)="onReseniaEnviada()"
+        (cerrar)="cerrarModalResenia()"
       />
     }
   </main>

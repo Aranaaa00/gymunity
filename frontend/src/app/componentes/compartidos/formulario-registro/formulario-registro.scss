@@ -9,36 +9,8 @@
 // CONSTANTES
 // ============================================
 
-$barra-altura: 0.5rem;
-$barra-transition: 0.3s ease-in-out;
-
-// ============================================
-// AJUSTES ESPECÍFICOS
-// ============================================
-
-:host {
-  .formulario-auth__header {
-    margin-bottom: $space-2;
-  }
-
-  .formulario-auth__legend {
-    font-size: $texto-lg;
-    margin-bottom: $space-1;
-  }
-
-  .formulario-auth__fieldset {
-    gap: $space-1;
-  }
-
-  .formulario-auth__submit {
-    margin-top: $space-2;
-  }
-
-  .formulario-auth__alt {
-    margin-top: $space-2;
-    font-size: $texto-sm;
-  }
-}
+$barra-altura: 0.375rem;
+$barra-transition-duration: 0.3s;
 
 // ============================================
 // BARRA DE FUERZA
@@ -47,17 +19,17 @@ $barra-transition: 0.3s ease-in-out;
 .formulario-registro__fuerza {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
-  padding: 0.5rem 0.75rem;
-  margin-top: 0.25rem;
-  border-radius: $radio-md;
-  background: var(--color-fondo-terciario);
+  gap: 0.25rem;
+  padding: $space-1;
   border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-sm;
+  background: var(--color-fondo-secundario);
 }
 
 .formulario-registro__fuerza-barra {
   position: relative;
   height: $barra-altura;
+  margin: 0;
   overflow: hidden;
   background: var(--color-borde);
   border-radius: $radio-full;
@@ -68,8 +40,8 @@ $barra-transition: 0.3s ease-in-out;
   inset: 0;
   width: 0;
   min-width: 0.25rem;
-  transition: width $barra-transition, background-color $barra-transition;
   border-radius: $radio-full;
+  transition: width $barra-transition-duration, background-color $barra-transition-duration;
 }
 
 .formulario-registro__fuerza-progreso--debil {
@@ -90,7 +62,7 @@ $barra-transition: 0.3s ease-in-out;
 
 .formulario-registro__fuerza-mensaje {
   font-size: $texto-xs;
-  font-weight: $font-weight-semibold;
-  line-height: 1.2;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
   color: var(--color-subtitulo);
 }

@@ -21,4 +21,6 @@ export class TarjetaResenia {
   readonly titulo = input<string>('');
   readonly texto = input.required<string>();
   readonly foto = input<string>('');
+  readonly valoracion = input<number>(0);
+  readonly mostrarCorazon = input<boolean>(false);
 }

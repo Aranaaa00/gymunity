@@ -2,9 +2,9 @@
   <section class="gym-header__top">
     <a class="gym-header__logo" routerLink="/" aria-label="Ir a inicio">
       <picture>
-        <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
-        <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
-        <img src="assets/logo-large.webp" alt="Gymunity" loading="eager">
+        <source media="(max-width: 480px)" srcset="assets/logo-blanco-small.webp">
+        <source media="(max-width: 768px)" srcset="assets/logo-blanco-medium.webp">
+        <img src="assets/logo-blanco-large.webp" alt="Gymunity" loading="eager">
       </picture>
     </a>
 
@@ -34,6 +34,7 @@
         type="button"
         (click)="alternarMenu()"
         class="gym-header__hamburguesa"
+        [class.gym-header__hamburguesa--oculto]="usuarioAutenticado()"
         [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
         [attr.aria-expanded]="menuAbierto()">
         <app-icono [nombre]="menuAbierto() ? 'x' : 'menu'" />

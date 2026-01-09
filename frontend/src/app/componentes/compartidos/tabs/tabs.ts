@@ -1,4 +1,4 @@
-import { Component, input, signal, HostListener, output, InputSignal, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, HostListener, output, ChangeDetectionStrategy } from '@angular/core';
 
 // ============================================
 // CONSTANTES
@@ -25,17 +25,13 @@ export class Tabs {
   // ----------------------------------------
   // Inputs
   // ----------------------------------------
-  readonly pestanas: InputSignal<readonly string[]> = input.required<readonly string[]>();
+  readonly pestanas = input.required<readonly string[]>();
+  readonly tabActivo = input<number>(0);
 
   // ----------------------------------------
   // Outputs
   // ----------------------------------------
-  readonly tabCambiado: OutputEmitterRef<number> = output<number>();
-
-  // ----------------------------------------
-  // Estado
-  // ----------------------------------------
-  readonly tabActivo = signal<number>(0);
+  readonly tabCambiado = output<number>();
 
   // ----------------------------------------
   // Event Handlers
@@ -43,21 +39,19 @@ export class Tabs {
   @HostListener('keydown', ['$event'])
   onKeydown(evento: KeyboardEvent): void {
     const totalPestanas = this.pestanas().length;
-    const noHayPestanas = totalPestanas === 0;
-
-    if (noHayPestanas) {
+    
+    if (totalPestanas === 0) {
       return;
     }
 
     const nuevoIndice = this.calcularNuevoIndice(evento.key, totalPestanas);
-    const teclaNoReconocida = nuevoIndice === null;
-
-    if (teclaNoReconocida) {
+    
+    if (nuevoIndice === null) {
       return;
     }
 
     evento.preventDefault();
-    this.seleccionarTab(nuevoIndice);
+    this.tabCambiado.emit(nuevoIndice);
   }
 
   // ----------------------------------------
@@ -65,13 +59,11 @@ export class Tabs {
   // ----------------------------------------
   seleccionarTab(indice: number): void {
     const totalPestanas = this.pestanas().length;
-    const indiceInvalido = indice < 0 || indice >= totalPestanas;
-
-    if (indiceInvalido) {
+    
+    if (indice < 0 || indice >= totalPestanas) {
       return;
     }
 
-    this.tabActivo.set(indice);
     this.tabCambiado.emit(indice);
   }
 

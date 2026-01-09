@@ -1,6 +1,7 @@
 package com.gymunity.backend.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +16,13 @@ public class InscripcionResponseDTO {
 
     private Long id;
     private Long alumnoId;
-    private String nombreAlumno;
+    private String alumnoNombre;
     private Long claseId;
-    private String nombreClase;
+    private Long gimnasioId;
+    private String claseNombre;
+    private String gimnasioNombre;
+    private String profesorNombre;
     private LocalDate fechaInscripcion;
+    private LocalDateTime fechaClase;
+    private boolean puedeReembolsar;
 }

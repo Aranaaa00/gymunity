@@ -1,9 +1,5 @@
 package com.gymunity.backend.dto;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,15 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class InscripcionRequestDTO {
+public class CancelacionRequestDTO {
 
     @NotNull(message = "El alumno es obligatorio")
     private Long alumnoId;
     
     @NotNull(message = "La clase es obligatoria")
     private Long claseId;
-
-    @NotNull(message = "La fecha de la clase es obligatoria")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    private LocalDateTime fechaClase;
 }

@@ -8,7 +8,9 @@ import {
   X, Search, User, UserCircle, Bell, Heart, Calendar, MapPin, Users, Sun, Moon, Mail,
   Instagram, MessageCircle, Twitter, Menu, LoaderCircle, ChevronDown, Plus, Dumbbell,
   Settings, LogOut, HardHat, Sparkles, Star, Wallet, Clock, Trophy, BarChart3, Palette,
-  Lock, Check, XCircle, Loader2
+  Lock, Check, XCircle, Loader2, AlertCircle, Tag, RefreshCw, Award, Medal, Target,
+  Flame, Zap, Shield, Crown, Gem, CheckCircle, Hourglass, Pencil, Swords, Hand,
+  Footprints, PersonStanding, Activity, SearchX, Sword
 } from 'lucide-angular';
 import { httpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { httpErrorInterceptor } from './interceptors/http-error.interceptor';
@@ -53,6 +55,27 @@ const iconos = {
   Check,
   XCircle,
   Loader2,
+  AlertCircle,
+  Tag,
+  RefreshCw,
+  Award,
+  Medal,
+  Target,
+  Flame,
+  Zap,
+  Shield,
+  Crown,
+  Gem,
+  CheckCircle,
+  Hourglass,
+  Pencil,
+  Swords,
+  Hand,
+  Footprints,
+  PersonStanding,
+  Activity,
+  SearchX,
+  Sword,
 };
 
 // ============================================

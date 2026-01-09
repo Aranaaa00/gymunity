@@ -61,7 +61,10 @@ $tabs-indicator-height: 0.25rem;
   line-height: $line-height-normal;
   color: var(--color-subtitulo);
   cursor: pointer;
-  transition: color $tabs-transition;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: color $tabs-transition, background-color $tabs-transition;
 
   @include respond-down(sm) {
     padding: $space-1 $space-2;

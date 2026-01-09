@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gymunity.backend.dto.CancelacionRequestDTO;
+import com.gymunity.backend.dto.CancelacionResponseDTO;
 import com.gymunity.backend.dto.InscripcionRequestDTO;
 import com.gymunity.backend.dto.InscripcionResponseDTO;
 import com.gymunity.backend.service.AlumnoClaseService;
@@ -39,12 +41,12 @@ public class AlumnoClaseController {
     @PostMapping
     public ResponseEntity<InscripcionResponseDTO> inscribir(@Valid @RequestBody InscripcionRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(alumnoClaseService.inscribir(dto.getAlumnoId(), dto.getClaseId()));
+                .body(alumnoClaseService.inscribir(dto.getAlumnoId(), dto.getClaseId(), dto.getFechaClase()));
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> cancelarInscripcion(@Valid @RequestBody InscripcionRequestDTO dto) {
-        alumnoClaseService.cancelarInscripcion(dto.getAlumnoId(), dto.getClaseId());
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<CancelacionResponseDTO> cancelarInscripcion(@Valid @RequestBody CancelacionRequestDTO dto) {
+        CancelacionResponseDTO resultado = alumnoClaseService.cancelarInscripcion(dto.getAlumnoId(), dto.getClaseId());
+        return ResponseEntity.ok(resultado);
     }
 }

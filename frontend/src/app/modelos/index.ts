@@ -110,6 +110,9 @@ export interface Clase {
   readonly icono: string;
   readonly profesorNombre: string;
   readonly gimnasioId: number;
+  readonly diasSemana?: string;
+  readonly horaInicio?: string;
+  readonly horaFin?: string;
 }
 
 export interface ClaseRequest {
@@ -128,6 +131,7 @@ export interface Resenia {
   readonly texto: string;
   readonly nombreUsuario: string;
   readonly avatarUsuario: string;
+  readonly valoracion: number;
   readonly fecha: string;
 }
 
@@ -140,14 +144,18 @@ export interface InteraccionRequest {
   readonly gimnasioId: number;
   readonly esApuntado?: boolean;
   readonly resenia?: string;
+  readonly valoracion?: number;
 }
 
 export interface InteraccionResponse {
   readonly id: number;
-  readonly usuarioNombre: string;
-  readonly gimnasioNombre: string;
+  readonly usuarioId: number;
+  readonly nombreUsuario: string;
+  readonly gimnasioId: number;
+  readonly nombreGimnasio: string;
   readonly esApuntado: boolean;
   readonly resenia: string | null;
+  readonly valoracion: number | null;
   readonly fechaInteraccion: string;
 }
 
@@ -158,14 +166,30 @@ export interface InteraccionResponse {
 export interface InscripcionRequest {
   readonly alumnoId: number;
   readonly claseId: number;
+  readonly fechaClase: string;
+}
+
+export interface CancelacionRequest {
+  readonly alumnoId: number;
+  readonly claseId: number;
 }
 
 export interface InscripcionResponse {
   readonly id: number;
+  readonly claseId: number;
+  readonly gimnasioId: number;
   readonly alumnoNombre: string;
   readonly claseNombre: string;
   readonly gimnasioNombre: string;
+  readonly profesorNombre: string;
   readonly fechaInscripcion: string;
+  readonly fechaClase: string;
+  readonly puedeReembolsar: boolean;
+}
+
+export interface CancelacionResponse {
+  readonly reembolso: boolean;
+  readonly mensaje: string;
 }
 
 // --------------------------------------------

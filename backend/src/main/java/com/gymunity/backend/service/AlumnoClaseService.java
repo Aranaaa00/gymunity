@@ -1,10 +1,12 @@
 package com.gymunity.backend.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gymunity.backend.dto.CancelacionResponseDTO;
 import com.gymunity.backend.dto.InscripcionResponseDTO;
 import com.gymunity.backend.entity.AlumnoClase;
 import com.gymunity.backend.entity.Clase;
@@ -14,7 +16,6 @@ import com.gymunity.backend.exception.RecursoNoEncontradoException;
 import com.gymunity.backend.exception.ReglaNegocioException;
 import com.gymunity.backend.repository.AlumnoClaseRepository;
 import com.gymunity.backend.repository.ClaseRepository;
-import com.gymunity.backend.repository.InteraccionRepository;
 import com.gymunity.backend.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlumnoClaseService {
 
-    private static final int MAX_CLASES_SIN_APUNTARSE = 3;
-
     private final AlumnoClaseRepository alumnoClaseRepository;
     private final UsuarioRepository usuarioRepository;
     private final ClaseRepository claseRepository;
-    private final InteraccionRepository interaccionRepository;
 
     /**
      * Obtiene las clases de un alumno.
@@ -52,25 +50,24 @@ public class AlumnoClaseService {
     }
 
     /**
-     * Inscribe un alumno en una clase.
+     * Inscribe un alumno en una clase para una fecha específica.
      * 
      * REGLAS DE NEGOCIO:
      * 1. El usuario debe tener rol ALUMNO.
-     * 2. El alumno no puede inscribirse en la misma clase dos veces.
-     * 3. El alumno debe estar apuntado al gimnasio de la clase.
-     * 4. No puede inscribirse en más de 3 clases si no está apuntado a ningún gimnasio.
+     * 2. El alumno no puede inscribirse en la misma clase para la misma fecha.
+     * 3. La fecha de la clase debe ser futura.
      */
-    public InscripcionResponseDTO inscribir(Long alumnoId, Long claseId) {
+    public InscripcionResponseDTO inscribir(Long alumnoId, Long claseId, LocalDateTime fechaClase) {
         Usuario alumno = validarAlumno(alumnoId);
         Clase clase = buscarClase(claseId);
         
-        validarNoInscritoEnClase(alumnoId, claseId);
-        validarApuntadoAlGimnasio(alumnoId, clase.getGimnasio().getId());
-        validarLimiteClasesSinApuntarse(alumnoId);
+        validarFechaFutura(fechaClase);
+        validarNoInscritoEnFecha(alumnoId, claseId, fechaClase);
         
         AlumnoClase inscripcion = AlumnoClase.builder()
                 .alumno(alumno)
                 .clase(clase)
+                .fechaClase(fechaClase)
                 .build();
         
         return convertirADTO(alumnoClaseRepository.save(inscripcion));
@@ -78,11 +75,21 @@ public class AlumnoClaseService {
 
     /**
      * Cancela la inscripción de un alumno en una clase.
+     * Devuelve si se reembolsa el crédito (solo si cancela con más de 24h de antelación).
      */
-    public void cancelarInscripcion(Long alumnoId, Long claseId) {
+    public CancelacionResponseDTO cancelarInscripcion(Long alumnoId, Long claseId) {
         AlumnoClase inscripcion = alumnoClaseRepository.findByAlumnoIdAndClaseId(alumnoId, claseId)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Inscripción no encontrada"));
+        
+        boolean reembolso = inscripcion.puedeCancelarConReembolso();
         alumnoClaseRepository.delete(inscripcion);
+        
+        return CancelacionResponseDTO.builder()
+                .reembolso(reembolso)
+                .mensaje(reembolso 
+                        ? "Reserva cancelada. Se ha devuelto 1 crédito." 
+                        : "Reserva cancelada. No se devuelve el crédito (menos de 24h de antelación).")
+                .build();
     }
 
     // ========== MÉTODOS PRIVADOS ==========
@@ -102,34 +109,36 @@ public class AlumnoClaseService {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Clase no encontrada con ID: " + claseId));
     }
 
-    private void validarNoInscritoEnClase(Long alumnoId, Long claseId) {
-        if (alumnoClaseRepository.existsByAlumnoIdAndClaseId(alumnoId, claseId)) {
-            throw new ReglaNegocioException("El alumno ya está inscrito en esta clase");
+    private void validarFechaFutura(LocalDateTime fechaClase) {
+        if (fechaClase.isBefore(LocalDateTime.now())) {
+            throw new ReglaNegocioException("La fecha de la clase debe ser futura");
         }
     }
 
-    private void validarApuntadoAlGimnasio(Long usuarioId, Long gimnasioId) {
-        if (!interaccionRepository.estaApuntado(usuarioId, gimnasioId)) {
-            throw new ReglaNegocioException("Debes apuntarte al gimnasio antes de inscribirte en sus clases");
-        }
-    }
-
-    private void validarLimiteClasesSinApuntarse(Long alumnoId) {
-        long totalClases = alumnoClaseRepository.findByAlumnoId(alumnoId).size();
-        if (totalClases >= MAX_CLASES_SIN_APUNTARSE) {
-            throw new ReglaNegocioException("Has alcanzado el límite de " + MAX_CLASES_SIN_APUNTARSE + 
-                    " clases. Apúntate a un gimnasio para continuar.");
+    private void validarNoInscritoEnFecha(Long alumnoId, Long claseId, LocalDateTime fechaClase) {
+        if (alumnoClaseRepository.existsByAlumnoIdAndClaseIdAndFechaClase(alumnoId, claseId, fechaClase)) {
+            throw new ReglaNegocioException("Ya estás inscrito en esta clase para esa fecha");
         }
     }
 
     private InscripcionResponseDTO convertirADTO(AlumnoClase inscripcion) {
+        Clase clase = inscripcion.getClase();
+        String profesorNombre = clase.getProfesor() != null 
+                ? clase.getProfesor().getNombreUsuario() 
+                : "Sin asignar";
+        
         return InscripcionResponseDTO.builder()
                 .id(inscripcion.getId())
                 .alumnoId(inscripcion.getAlumno().getId())
-                .nombreAlumno(inscripcion.getAlumno().getNombreUsuario())
-                .claseId(inscripcion.getClase().getId())
-                .nombreClase(inscripcion.getClase().getNombre())
+                .alumnoNombre(inscripcion.getAlumno().getNombreUsuario())
+                .claseId(clase.getId())
+                .gimnasioId(clase.getGimnasio().getId())
+                .claseNombre(clase.getNombre())
+                .gimnasioNombre(clase.getGimnasio().getNombre())
+                .profesorNombre(profesorNombre)
                 .fechaInscripcion(inscripcion.getFechaInscripcion())
+                .fechaClase(inscripcion.getFechaClase())
+                .puedeReembolsar(inscripcion.puedeCancelarConReembolso())
                 .build();
     }
 }

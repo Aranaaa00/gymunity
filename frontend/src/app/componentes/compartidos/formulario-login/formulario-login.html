@@ -4,11 +4,12 @@
     <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
     <img src="assets/logo-large.webp" alt="Gymunity" loading="eager">
   </picture>
+  <p class="formulario-auth__tagline">Tu comunidad fitness te espera</p>
 </header>
 
 <form class="formulario-auth" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <fieldset class="formulario-auth__fieldset">
-    <legend class="formulario-auth__legend">Iniciar sesión</legend>
+    <legend class="formulario-auth__legend">Bienvenido de nuevo</legend>
 
     @if (errorServidor()) {
       <p class="formulario-auth__error-servidor">{{ errorServidor() }}</p>
@@ -40,13 +41,15 @@
     
     <section class="formulario-auth__submit">
       <app-boton tipo="submit" [disabled]="loginForm.invalid && loginForm.touched" [cargando]="cargando()">
-        Iniciar sesión
+        Entrar al gimnasio
       </app-boton>
     </section>
 
-    <p class="formulario-auth__alt">
-      ¿No tienes cuenta? 
-      <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Crear cuenta</button>
-    </p>
+    <footer class="formulario-auth__footer">
+      <p class="formulario-auth__alt">
+        ¿Nuevo en Gymunity? 
+        <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Únete ahora</button>
+      </p>
+    </footer>
   </fieldset>
 </form>

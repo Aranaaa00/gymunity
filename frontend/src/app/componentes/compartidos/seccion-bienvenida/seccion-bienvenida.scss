@@ -2,65 +2,134 @@
 @use '../../../../styles/01-tools/mixins' as *;
 
 // ============================================
-// VARIABLES LOCALES
+// HERO - Sección de Bienvenida
 // ============================================
 
-$hero-transition-duration: 0.2s;
-$hero-cta-hover-scale: 1.03;
-$hero-cta-active-scale: 0.98;
-$hero-focus-outline-size: 0.125rem;
-$hero-focus-outline-offset: 0.25rem;
-
-// ============================================
-// HERO (Sección de Bienvenida)
-// ============================================
+// ----------------------------------------
+// Contenedor principal
+// ----------------------------------------
 
 .hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 75vh;
+  padding: $space-10 $space-4;
+  background: var(--color-fondo);
+  overflow: hidden;
+  transition: background-color $transicion-estandar;
+
+  @include respond-down(md) {
+    min-height: 65vh;
+    padding: $space-8 $space-3;
+  }
+
+  @include respond-down(sm) {
+    min-height: 55vh;
+    padding: $space-6 $space-2;
+  }
+}
+
+// ----------------------------------------
+// Fondo con imagen
+// ----------------------------------------
+
+.hero__fondo {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  transition: opacity $transicion-estandar;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity $transicion-estandar;
+  }
+}
+
+// Modo claro: visible por defecto
+.hero__fondo--claro {
+  display: block;
+  opacity: 1;
+  transition: opacity $transicion-estandar;
+
+  img {
+    opacity: 0.06;
+    transition: opacity $transicion-estandar;
+  }
+}
+
+// Modo oscuro: oculto por defecto
+.hero__fondo--oscuro {
+  display: block;
+  opacity: 0;
+  transition: opacity $transicion-estandar;
+
+  img {
+    opacity: 0.12;
+    transition: opacity $transicion-estandar;
+  }
+}
+
+// En tema oscuro, invertir visibilidad con opacidad
+:host-context([data-tema="oscuro"]) {
+  .hero__fondo--claro {
+    opacity: 0;
+  }
+
+  .hero__fondo--oscuro {
+    opacity: 1;
+  }
+}
+
+// ----------------------------------------
+// Contenido
+// ----------------------------------------
+
+.hero__contenido {
+  position: relative;
+  z-index: $z-base;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: $space-4;
-  padding: $space-10 0;
+  max-width: $max-width-contenido;
   text-align: center;
 
-  @include respond-down(md) {
-    gap: $space-3;
-    padding: $space-8 0;
-  }
-
   @include respond-down(sm) {
-    gap: $space-2;
-    padding: $space-6 0;
+    gap: $space-3;
   }
 }
 
+// ----------------------------------------
+// Tipografía
+// ----------------------------------------
+
 .hero__titulo {
-  display: flex;
-  flex-direction: column;
   margin: 0;
-  font-size: $texto-3xl;
+  font-size: clamp($texto-xl, 5vw, $texto-3xl);
   font-weight: $font-weight-bold;
   font-style: italic;
   line-height: $line-height-tight;
   color: var(--color-texto);
+  white-space: nowrap;
 
   span {
     display: block;
   }
 
-  @include respond-down(md) {
-    font-size: $texto-2xl;
-  }
-
   @include respond-down(sm) {
-    font-size: $texto-l;
+    font-size: clamp($texto-lg, 6vw, $texto-xl);
+    white-space: normal;
   }
 }
 
 .hero__subtitulo {
-  display: flex;
-  flex-direction: column;
   margin: 0;
+  max-width: 36rem;
   font-size: $texto-md;
   font-weight: $font-weight-regular;
   line-height: $line-height-relaxed;
@@ -75,38 +144,39 @@ $hero-focus-outline-offset: 0.25rem;
   }
 }
 
+// ----------------------------------------
+// Botón CTA
+// ----------------------------------------
+
 .hero__cta {
-  margin-top: $space-3;
-  padding: $space-3 $space-6;
+  margin-top: $space-2;
+  padding: $space-2 $space-6;
   background: var(--color-boton);
   border: none;
   border-radius: $radio-full;
   font-size: $texto-s;
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-semibold;
   color: $gris-50;
   cursor: pointer;
-  transition: 
-    background $hero-transition-duration ease, 
-    box-shadow $hero-transition-duration ease, 
-    transform $hero-transition-duration ease;
+  box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.4);
+  transition: background-color $transicion-rapida, box-shadow $transicion-rapida, transform $transicion-rapida;
 
   &:hover {
     background: var(--color-boton-hover);
-    box-shadow: var(--shadow-glow);
-    transform: scale($hero-cta-hover-scale);
+    box-shadow: 0 0.375rem 1.5rem rgba($color-botones, 0.5);
+    transform: translateY(-0.125rem);
   }
 
   &:active {
-    transform: scale($hero-cta-active-scale);
+    transform: translateY(0);
   }
 
   &:focus-visible {
-    outline: $hero-focus-outline-size solid var(--color-boton);
-    outline-offset: $hero-focus-outline-offset;
+    outline: $borde-medium solid $gris-50;
+    outline-offset: $space-1;
   }
 
   @include respond-down(sm) {
-    margin-top: $space-2;
-    padding: $space-2 $space-5;
+    padding: $space-2 $space-4;
   }
 }

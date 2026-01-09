@@ -18,6 +18,7 @@ export interface Notificacion {
 
 const TIPO_DEFAULT: TipoNotificacion = 'info';
 const MAX_TOASTS = 5;
+const AUTO_CLOSE_MS = 7000;
 
 // ============================================
 // SERVICIO DE NOTIFICACIONES
@@ -69,12 +70,16 @@ export class NotificacionService {
     
     this._notificaciones.update(lista => {
       const nuevaLista = [...lista, nuevaNotificacion];
-      // Limitar cantidad máxima de toasts
       if (nuevaLista.length > MAX_TOASTS) {
         return nuevaLista.slice(-MAX_TOASTS);
       }
       return nuevaLista;
     });
+
+    // Auto-cerrar después de 7 segundos
+    setTimeout(() => {
+      this.cerrar(nuevaNotificacion.id);
+    }, AUTO_CLOSE_MS);
   }
 
   // ----------------------------------------

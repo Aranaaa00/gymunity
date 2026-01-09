@@ -1,55 +1,186 @@
-<main class="perfil">
-  <section class="perfil__contenedor">
-    <header class="perfil__header">
-      <h1 class="perfil__titulo"><app-icono nombre="user-circle" tamano="lg" /> Mi Perfil</h1>
-      @if (usuario()) {
-        <p class="perfil__bienvenida">Bienvenido, <strong>{{ usuario()!.nombreUsuario }}</strong></p>
+<section class="perfil">
+  <header class="perfil__cabecera">
+    <figure class="perfil__avatar">
+      @if (usuario()?.avatar) {
+        <img [src]="usuario()!.avatar" [alt]="usuario()!.nombreUsuario" class="perfil__avatar-img" />
+      } @else {
+        <app-icono nombre="user" tamano="2xl" class="perfil__avatar-icono" />
       }
-    </header>
+    </figure>
 
-    <article class="perfil__info">
-      <section class="perfil__seccion">
-        <h2 class="perfil__seccion-titulo">Información personal</h2>
-        @if (usuario()) {
-          <dl class="perfil__datos">
-            <dt class="perfil__dato-label">Usuario:</dt>
-            <dd class="perfil__dato-valor">{{ usuario()!.nombreUsuario }}</dd>
-            
-            <dt class="perfil__dato-label">Email:</dt>
-            <dd class="perfil__dato-valor">{{ usuario()!.email }}</dd>
-            
-            <dt class="perfil__dato-label">Rol:</dt>
-            <dd class="perfil__dato-valor">{{ usuario()!.rol }}</dd>
+    <hgroup class="perfil__info">
+      <h1 class="perfil__nombre">{{ usuario()?.nombreUsuario ?? 'Usuario' }}</h1>
+      <p class="perfil__rol">{{ rolFormateado() }}</p>
+      <p class="perfil__ubicacion">
+        <app-icono nombre="map-pin" tamano="xs" />
+        {{ ciudad() }}
+      </p>
+    </hgroup>
 
-            @if (usuario()!.ciudad) {
-              <dt class="perfil__dato-label">Ciudad:</dt>
-              <dd class="perfil__dato-valor">{{ usuario()!.ciudad }}</dd>
+    <aside class="perfil__acciones">
+      <span class="perfil__creditos">
+        <strong class="perfil__creditos-valor">{{ creditosTexto() }}</strong>
+        <span class="perfil__creditos-texto">créditos</span>
+      </span>
+      <button type="button" class="perfil__btn-editar" (click)="irAConfiguracion()">
+        <app-icono nombre="settings" tamano="sm" />
+        Editar perfil
+      </button>
+    </aside>
+  </header>
+
+  <app-tabs [pestanas]="pestanas" [tabActivo]="tabActivo()" (tabCambiado)="cambiarTab($event)">
+    @switch (tabActivo()) {
+      @case (0) {
+        <article class="perfil__logros">
+          @for (categoria of categorias; track categoria) {
+            <section class="perfil__categoria">
+              <h3 class="perfil__categoria-titulo">{{ categoria }}</h3>
+              <ul class="perfil__lista-logros">
+                @for (logro of logrosPorCategoria().get(categoria); track logro.id) {
+                  <li class="perfil__logro" [class.perfil__logro--desbloqueado]="logro.desbloqueado">
+                    <span class="perfil__logro-icono">
+                      <app-icono [nombre]="obtenerIconoLogro(logro)" tamano="sm" />
+                    </span>
+                    <span class="perfil__logro-nombre">{{ logro.nombre }}</span>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+        </article>
+      }
+      @case (1) {
+        @if (cargando()) {
+          <article class="perfil__cargando">
+            <app-icono nombre="loader" tamano="xl" class="perfil__spinner" />
+          </article>
+        } @else if (clases().length === 0) {
+          <article class="perfil__vacio">
+            <app-icono nombre="calendar" tamano="2xl" class="perfil__vacio-icono" />
+            <p class="perfil__vacio-texto">No tienes clases reservadas</p>
+            <p class="perfil__vacio-subtexto">Explora gimnasios y reserva tu primera clase</p>
+          </article>
+        } @else {
+          <ul class="perfil__lista-clases">
+            @for (clase of clasesPaginadas(); track clase.id) {
+              <li class="perfil__clase" (click)="irAGimnasio(clase)" role="button" tabindex="0" (keydown.enter)="irAGimnasio(clase)">
+                <figure class="perfil__clase-avatar">
+                  <app-icono [nombre]="obtenerIconoClase(clase.nombre)" tamano="lg" />
+                </figure>
+                <hgroup class="perfil__clase-info">
+                  <h4 class="perfil__clase-nombre">{{ clase.nombre }}</h4>
+                  <p class="perfil__clase-gimnasio">
+                    <app-icono nombre="map-pin" tamano="xs" />
+                    {{ clase.gimnasio }}
+                  </p>
+                  <p class="perfil__clase-profesor">
+                    <app-icono nombre="user" tamano="xs" />
+                    {{ clase.profesor }}
+                  </p>
+                  <time class="perfil__clase-fecha">
+                    <app-icono nombre="calendar" tamano="xs" />
+                    {{ formatearFecha(clase.fechaClase) }}
+                  </time>
+                </hgroup>
+                <aside class="perfil__clase-acciones">
+                  @if (esCompletada(clase)) {
+                    <mark class="perfil__clase-estado perfil__clase-estado--completada">
+                      <app-icono nombre="check-circle" tamano="sm" />
+                      Completada
+                    </mark>
+                  } @else {
+                    <mark class="perfil__clase-estado perfil__clase-estado--pendiente">
+                      <app-icono nombre="clock" tamano="sm" />
+                      Pendiente
+                    </mark>
+                    @if (puedeCancelar(clase)) {
+                      <button 
+                        type="button" 
+                        class="perfil__btn-cancelar"
+                        [class.perfil__btn-cancelar--sin-reembolso]="!clase.puedeReembolsar"
+                        (click)="cancelarClase(clase); $event.stopPropagation()"
+                        [title]="clase.puedeReembolsar ? 'Cancelar y recuperar crédito' : 'Cancelar sin reembolso (menos de 24h)'"
+                      >
+                        <app-icono nombre="x-circle" tamano="sm" />
+                        {{ clase.puedeReembolsar ? 'Cancelar' : 'Cancelar (sin reembolso)' }}
+                      </button>
+                    }
+                  }
+                </aside>
+              </li>
             }
-          </dl>
+          </ul>
+          @if (mostrarPaginacion()) {
+            <nav class="perfil__paginacion" aria-label="Paginación de clases">
+              <button 
+                type="button" 
+                class="perfil__paginacion-btn"
+                [disabled]="paginaClases() === 0"
+                (click)="paginaAnterior()"
+                aria-label="Página anterior">
+                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--izq" />
+              </button>
+              <span class="perfil__paginacion-info">
+                {{ paginaClases() + 1 }} / {{ totalPaginasClases() }}
+              </span>
+              <button 
+                type="button" 
+                class="perfil__paginacion-btn"
+                [disabled]="paginaClases() >= totalPaginasClases() - 1"
+                (click)="paginaSiguiente()"
+                aria-label="Página siguiente">
+                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--der" />
+              </button>
+            </nav>
+          }
         }
-      </section>
-
-      <section class="perfil__seccion">
-        <h2 class="perfil__seccion-titulo"><app-icono nombre="trophy" /> Logros</h2>
-        <article class="perfil__mensaje">
-          <app-icono nombre="construction" tamano="xl" class="perfil__icono" />
-          <p class="perfil__mensaje-texto">
-            Sistema de logros en desarrollo. Pronto verás tus medallas por asistencia, 
-            objetivos cumplidos y hitos de entrenamiento.
-          </p>
-        </article>
-      </section>
-
-      <section class="perfil__seccion">
-        <h2 class="perfil__seccion-titulo"><app-icono nombre="bar-chart" /> Estadísticas</h2>
-        <article class="perfil__mensaje">
-          <app-icono nombre="construction" tamano="xl" class="perfil__icono" />
-          <p class="perfil__mensaje-texto">
-            Seguimiento de tu progreso: asistencias mensuales, calorías quemadas, 
-            tiempo total de entrenamiento. Funcionalidad próximamente disponible.
-          </p>
-        </article>
-      </section>
-    </article>
-  </section>
-</main>
+      }
+      @case (2) {
+        @if (resenias().length === 0) {
+          <article class="perfil__vacio">
+            <app-icono nombre="message-circle" tamano="2xl" class="perfil__vacio-icono" />
+            <p class="perfil__vacio-texto">Aún no has escrito reseñas</p>
+            <p class="perfil__vacio-subtexto">Comparte tu experiencia con otros alumnos</p>
+          </article>
+        } @else {
+          <ul class="perfil__lista-resenias">
+            @for (resenia of reseniasPaginadas(); track resenia.id) {
+              <li class="perfil__resenia">
+                <header class="perfil__resenia-header">
+                  <h4 class="perfil__resenia-gimnasio">{{ resenia.gimnasioNombre }}</h4>
+                  <span class="perfil__resenia-valoracion">{{ formatearValoracion(resenia.valoracion) }}</span>
+                </header>
+                <p class="perfil__resenia-texto">{{ resenia.texto }}</p>
+                <time class="perfil__resenia-fecha">{{ formatearFecha(resenia.fecha) }}</time>
+              </li>
+            }
+          </ul>
+          @if (mostrarPaginacionResenias()) {
+            <nav class="perfil__paginacion" aria-label="Paginación de reseñas">
+              <button 
+                type="button" 
+                class="perfil__paginacion-btn"
+                [disabled]="paginaResenias() === 0"
+                (click)="paginaAnteriorResenias()"
+                aria-label="Página anterior">
+                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--izq" />
+              </button>
+              <span class="perfil__paginacion-info">
+                {{ paginaResenias() + 1 }} / {{ totalPaginasResenias() }}
+              </span>
+              <button 
+                type="button" 
+                class="perfil__paginacion-btn"
+                [disabled]="paginaResenias() >= totalPaginasResenias() - 1"
+                (click)="paginaSiguienteResenias()"
+                aria-label="Página siguiente">
+                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--der" />
+              </button>
+            </nav>
+          }
+        }
+      }
+    }
+  </app-tabs>
+</section>

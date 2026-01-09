@@ -126,10 +126,8 @@
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
   color: var(--color-acento);
-
   cursor: pointer;
-
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color $transicion-rapida, color $transicion-rapida;
 
   &:hover {
     background: var(--color-acento);
