@@ -3,6 +3,7 @@ package com.gymunity.backend.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,8 +57,7 @@ public class GimnasioService {
      */
     @Transactional(readOnly = true)
     public List<GimnasioCardDTO> obtenerPopulares() {
-        return gimnasioRepository.findMasPopulares().stream()
-                .limit(LIMITE_DESTACADOS)
+        return gimnasioRepository.findMasPopulares(PageRequest.of(0, LIMITE_DESTACADOS)).stream()
                 .map(this::convertirACardDTO)
                 .toList();
     }
@@ -67,8 +67,7 @@ public class GimnasioService {
      */
     @Transactional(readOnly = true)
     public List<GimnasioCardDTO> obtenerRecientes() {
-        return gimnasioRepository.findMasRecientes().stream()
-                .limit(LIMITE_DESTACADOS)
+        return gimnasioRepository.findMasRecientes(PageRequest.of(0, LIMITE_DESTACADOS)).stream()
                 .map(this::convertirACardDTO)
                 .toList();
     }
@@ -156,11 +155,7 @@ public class GimnasioService {
     }
 
     private void validarGimnasioUnico(String nombre, String ciudad) {
-        List<Gimnasio> existentes = gimnasioRepository.findByCiudadIgnoreCase(ciudad);
-        boolean existe = existentes.stream()
-                .anyMatch(g -> g.getNombre().equalsIgnoreCase(nombre));
-        
-        if (existe) {
+        if (gimnasioRepository.existsByNombreIgnoreCaseAndCiudadIgnoreCase(nombre, ciudad)) {
             throw new ReglaNegocioException("Ya existe un gimnasio llamado '" + nombre + "' en " + ciudad);
         }
     }

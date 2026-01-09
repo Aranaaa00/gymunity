@@ -17,10 +17,10 @@
       placeholder="@tu_nombre"
       inputId="registro-username"
       name="username"
-      [formControl]="$any(usernameControl)"
+      [formControl]="usernameControl"
       [required]="true"
       [validando]="estaValidando('username')"
-      [hasError]="!!usernameControl?.touched && !!usernameControl?.invalid"
+      [hasError]="usernameControl.touched && usernameControl.invalid"
       [errorMessage]="getErrorMessage('username')"
       [mensajeExito]="getMensajeExito('username')">
     </app-campo-formulario>
@@ -31,9 +31,9 @@
       placeholder="Cómo te llamamos"
       inputId="registro-fullname"
       name="fullName"
-      [formControl]="$any(fullNameControl)"
+      [formControl]="fullNameControl"
       [required]="true"
-      [hasError]="!!fullNameControl?.touched && !!fullNameControl?.invalid"
+      [hasError]="fullNameControl.touched && fullNameControl.invalid"
       [errorMessage]="getErrorMessage('fullName')">
     </app-campo-formulario>
     
@@ -43,10 +43,10 @@
       placeholder="Para tu acceso seguro"
       inputId="registro-email"
       name="email"
-      [formControl]="$any(emailControl)"
+      [formControl]="emailControl"
       [required]="true"
       [validando]="estaValidando('email')"
-      [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
+      [hasError]="emailControl.touched && emailControl.invalid"
       [errorMessage]="getErrorMessage('email')"
       [mensajeExito]="getMensajeExito('email')">
     </app-campo-formulario>
@@ -57,13 +57,13 @@
       placeholder="Mínimo 8 caracteres"
       inputId="registro-password"
       name="password"
-      [formControl]="$any(passwordControl)"
+      [formControl]="passwordControl"
       [required]="true"
-      [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
+      [hasError]="passwordControl.touched && passwordControl.invalid"
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
 
-    @if (passwordControl?.value) {
+    @if (passwordControl.value) {
       <section class="formulario-registro__fuerza">
         <figure class="formulario-registro__fuerza-barra">
           <span 
@@ -85,9 +85,9 @@
       placeholder="Repite tu contraseña"
       inputId="registro-password2"
       name="password2"
-      [formControl]="$any(password2Control)"
+      [formControl]="password2Control"
       [required]="true"
-      [hasError]="!!password2Control?.touched && !!password2Control?.invalid"
+      [hasError]="password2Control.touched && password2Control.invalid"
       [errorMessage]="getErrorMessage('password2')">
     </app-campo-formulario>
     

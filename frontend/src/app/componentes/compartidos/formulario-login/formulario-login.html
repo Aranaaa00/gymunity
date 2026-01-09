@@ -21,9 +21,9 @@
       placeholder="tu@email.com o tu_usuario"
       inputId="login-identifier"
       name="identifier"
-      [formControl]="$any(identifierControl)"
+      [formControl]="identifierControl"
       [required]="true"
-      [hasError]="!!identifierControl?.touched && !!identifierControl?.invalid"
+      [hasError]="identifierControl.touched && identifierControl.invalid"
       [errorMessage]="getErrorMessage('identifier')">
     </app-campo-formulario>
     
@@ -33,9 +33,9 @@
       placeholder="••••••••"
       inputId="login-password"
       name="password"
-      [formControl]="$any(passwordControl)"
+      [formControl]="passwordControl"
       [required]="true"
-      [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
+      [hasError]="passwordControl.touched && passwordControl.invalid"
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
     

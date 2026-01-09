@@ -1,5 +1,5 @@
 import { Component, output, inject, OutputEmitterRef, signal, ChangeDetectionStrategy } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { Boton } from '../boton/boton';
 import { AuthService } from '../../../servicios/auth';
@@ -63,23 +63,18 @@ export class FormularioLogin {
   readonly errorServidor = signal<string | null>(null);
 
   // ----------------------------------------
+  // Controles tipados
+  // ----------------------------------------
+  readonly identifierControl = new FormControl('', [Validators.required]);
+  readonly passwordControl = new FormControl('', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PASSWORD)]);
+
+  // ----------------------------------------
   // Formulario
   // ----------------------------------------
   readonly loginForm: FormGroup = this.formBuilder.group({
-    identifier: ['', [Validators.required]],
-    password: ['', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PASSWORD)]],
+    identifier: this.identifierControl,
+    password: this.passwordControl,
   });
-
-  // ----------------------------------------
-  // Getters de controles
-  // ----------------------------------------
-  get identifierControl(): AbstractControl | null {
-    return this.loginForm.get('identifier');
-  }
-
-  get passwordControl(): AbstractControl | null {
-    return this.loginForm.get('password');
-  }
 
   // ----------------------------------------
   // Métodos públicos

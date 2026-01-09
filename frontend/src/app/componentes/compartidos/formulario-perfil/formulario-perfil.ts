@@ -1,5 +1,5 @@
 import { Component, input, output, inject, InputSignal, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { AreaTexto } from '../area-texto/area-texto';
 import { Boton } from '../boton/boton';
@@ -178,15 +178,19 @@ export class FormularioPerfil {
   }
 
   // ----------------------------------------
-  // Getters
+  // Getters tipados
   // ----------------------------------------
   get redesSocialesArray(): FormArray {
     return this.perfilForm.get('redesSociales') as FormArray;
   }
 
-  getRedSocialControl(index: number, campo: 'plataforma' | 'url'): AbstractControl | null {
+  getControl(campo: CampoPerfil): FormControl {
+    return this.perfilForm.get(campo) as FormControl;
+  }
+
+  getRedSocialControl(index: number, campo: 'plataforma' | 'url'): FormControl {
     const grupo = this.redesSocialesArray.at(index) as FormGroup;
-    return grupo.get(campo);
+    return grupo.get(campo) as FormControl;
   }
 
   // ----------------------------------------

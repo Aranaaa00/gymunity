@@ -44,9 +44,11 @@ public class AlumnoClaseController {
                 .body(alumnoClaseService.inscribir(dto.getAlumnoId(), dto.getClaseId(), dto.getFechaClase()));
     }
 
-    @DeleteMapping
-    public ResponseEntity<CancelacionResponseDTO> cancelarInscripcion(@Valid @RequestBody CancelacionRequestDTO dto) {
-        CancelacionResponseDTO resultado = alumnoClaseService.cancelarInscripcion(dto.getAlumnoId(), dto.getClaseId());
+    @DeleteMapping("/alumno/{alumnoId}/clase/{claseId}")
+    public ResponseEntity<CancelacionResponseDTO> cancelarInscripcion(
+            @PathVariable Long alumnoId,
+            @PathVariable Long claseId) {
+        CancelacionResponseDTO resultado = alumnoClaseService.cancelarInscripcion(alumnoId, claseId);
         return ResponseEntity.ok(resultado);
     }
 }

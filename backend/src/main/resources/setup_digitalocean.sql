@@ -182,6 +182,21 @@ SELECT COUNT(*) AS total_inscripciones FROM alumno_clase;
 SELECT id, nombre, ciudad FROM gimnasio ORDER BY id;
 
 -- ============================================
+-- 4. MIGRACIONES (para bases de datos existentes)
+-- ============================================
+
+-- Si la columna fecha_clase no existe, la agregamos
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'alumno_clase' AND column_name = 'fecha_clase'
+    ) THEN
+        ALTER TABLE alumno_clase ADD COLUMN fecha_clase TIMESTAMP NOT NULL DEFAULT NOW();
+    END IF;
+END $$;
+
+-- ============================================
 -- FIN DEL SCRIPT
 -- ============================================
 -- CONTRASEÑA DE TODOS LOS USUARIOS: password123
