@@ -1,9 +1,8 @@
 <article class="inicio">
-  <!-- BIENVENIDA PERSONALIZADA (usuario logueado) -->
   @if (estaAutenticado()) {
     <header class="inicio__bienvenida">
       <h1 class="inicio__saludo">
-        ¡Hola <strong class="inicio__nombre-usuario">{{ nombreUsuario() }}</strong>!
+        ¡Hola <span class="inicio__nombre">{{ nombreUsuario() }}</span>!
       </h1>
       <p class="inicio__mensaje">Bienvenido de nuevo a Gymunity</p>
     </header>
@@ -25,8 +24,7 @@
       <p>{{ error() }}</p>
     </section>
   } @else {
-    <!-- GIMNASIOS CERCANOS (solo si el usuario está logueado y tiene ciudad) -->
-    @if (estaAutenticado() && gimnasiosCercanos().length > 0) {
+    @if (estaAutenticado() && ciudadUsuario()) {
       <section class="gimnasios-section">
         <header class="section-header">
           <a class="section-link" routerLink="/busqueda" [queryParams]="{ciudad: ciudadUsuario()}">
@@ -34,22 +32,30 @@
             <span class="section-arrow">›</span>
           </a>
         </header>
-        <ul class="gimnasios-grid">
-          @for (gym of gimnasiosCercanos(); track trackByGimnasioId($index, gym)) {
-            <li>
-              <app-card
-                [id]="gym.id"
-                [title]="gym.nombre"
-                [subtitle]="gym.disciplinas"
-                [location]="gym.ciudad"
-                [valoracion]="gym.valoracionMedia"
-                [totalResenias]="gym.totalResenias"
-                [imageSrc]="gym.foto"
-                variant="vertical"
-              />
-            </li>
-          }
-        </ul>
+        @if (cargandoCercanos()) {
+          <p class="gimnasios-section__cargando">Cargando gimnasios...</p>
+        } @else if (gimnasiosCercanos().length > 0) {
+          <ul class="gimnasios-grid">
+            @for (gym of gimnasiosCercanos(); track trackByGimnasioId($index, gym)) {
+              <li>
+                <app-card
+                  [id]="gym.id"
+                  [title]="gym.nombre"
+                  [subtitle]="gym.disciplinas"
+                  [location]="gym.ciudad"
+                  [valoracion]="gym.valoracionMedia"
+                  [totalResenias]="gym.totalResenias"
+                  [imageSrc]="gym.foto"
+                  variant="vertical"
+                />
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="gimnasios-section__vacio">
+            Aún no hay gimnasios en {{ ciudadUsuario() }}. ¡Pronto habrá más!
+          </p>
+        }
       </section>
     }
 

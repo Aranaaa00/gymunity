@@ -143,15 +143,11 @@ public class UsuarioService {
     }
 
     private Usuario crearUsuarioDesdeDTO(UsuarioRegistroDTO dto) {
-        String ciudad = dto.getCiudad();
-        if (ciudad == null || ciudad.isBlank()) {
-            ciudad = "Sin especificar";
-        }
         return Usuario.builder()
                 .nombreUsuario(dto.getNombreUsuario())
                 .email(dto.getEmail())
                 .contrasenia(dto.getContrasenia())
-                .ciudad(ciudad)
+                .ciudad(dto.getCiudad())
                 .rol(Rol.valueOf(dto.getRol().toUpperCase()))
                 .build();
     }

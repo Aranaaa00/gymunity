@@ -2,6 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { Observable, tap, finalize, catchError, of, map, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpBase } from './http-base';
+import { CacheService } from './cache';
 import type { 
   GimnasioCard, 
   GimnasioDetalle, 
@@ -9,13 +10,15 @@ import type {
   FiltrosBusqueda
 } from '../modelos';
 
-// ============================================
-// CONSTANTES
-// ============================================
-
 const API_URL = '/api/gimnasios';
 const ITEMS_POR_PAGINA = 12;
 const DEBOUNCE_BUSQUEDA_MS = 300;
+const CACHE_KEYS = {
+  POPULARES: 'gimnasios:populares',
+  RECIENTES: 'gimnasios:recientes',
+  CIUDAD: 'gimnasios:ciudad',
+  DETALLE: 'gimnasios:detalle'
+} as const;
 
 // ============================================
 // TIPOS INTERNOS
@@ -37,14 +40,10 @@ interface EstadoPaginacion {
   providedIn: 'root',
 })
 export class GimnasiosApiService {
-  // ----------------------------------------
-  // Dependencias
-  // ----------------------------------------
+  
   private readonly http = inject(HttpBase);
+  private readonly cache = inject(CacheService);
 
-  // ----------------------------------------
-  // Estado privado - Signals
-  // ----------------------------------------
   private readonly _gimnasios = signal<readonly GimnasioCard[]>([]);
   private readonly _gimnasioActual = signal<GimnasioDetalle | null>(null);
   private readonly _cargando = signal<boolean>(false);
@@ -60,12 +59,8 @@ export class GimnasiosApiService {
     hayMas: false
   });
 
-  // Subject para búsqueda con debounce
   private readonly _busquedaSubject = new Subject<string>();
 
-  // ----------------------------------------
-  // Señales públicas de solo lectura
-  // ----------------------------------------
   readonly gimnasios = this._gimnasios.asReadonly();
   readonly gimnasioActual = this._gimnasioActual.asReadonly();
   readonly cargando = this._cargando.asReadonly();
@@ -75,9 +70,6 @@ export class GimnasiosApiService {
   readonly filtros = this._filtros.asReadonly();
   readonly paginacion = this._paginacion.asReadonly();
 
-  // ----------------------------------------
-  // Computed signals
-  // ----------------------------------------
   readonly hayGimnasios = computed(() => this._gimnasios().length > 0);
   readonly totalGimnasios = computed(() => this._paginacion().totalItems);
   readonly hayMasPaginas = computed(() => this._paginacion().hayMas);
@@ -175,16 +167,18 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // GET - Obtener gimnasios populares
-  // ----------------------------------------
   obtenerPopulares(): Observable<readonly GimnasioCard[]> {
-    this._cargando.set(true);
+    const cached = this.cache.get<GimnasioCard[]>(CACHE_KEYS.POPULARES);
+    if (cached) {
+      return of(cached);
+    }
+
     this._error.set(null);
 
     return this.http.get<GimnasioCard[]>(`${API_URL}/populares`).pipe(
-      tap((gimnasios) => this._gimnasios.set(gimnasios)),
-      finalize(() => this._cargando.set(false)),
+      tap((gimnasios) => {
+        this.cache.set(CACHE_KEYS.POPULARES, gimnasios);
+      }),
       catchError((error) => {
         this._error.set(error.mensaje || 'Error al cargar gimnasios populares');
         return of([]);
@@ -192,16 +186,18 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // GET - Obtener gimnasios recientes
-  // ----------------------------------------
   obtenerRecientes(): Observable<readonly GimnasioCard[]> {
-    this._cargando.set(true);
+    const cached = this.cache.get<GimnasioCard[]>(CACHE_KEYS.RECIENTES);
+    if (cached) {
+      return of(cached);
+    }
+
     this._error.set(null);
 
     return this.http.get<GimnasioCard[]>(`${API_URL}/recientes`).pipe(
-      tap((gimnasios) => this._gimnasios.set(gimnasios)),
-      finalize(() => this._cargando.set(false)),
+      tap((gimnasios) => {
+        this.cache.set(CACHE_KEYS.RECIENTES, gimnasios);
+      }),
       catchError((error) => {
         this._error.set(error.mensaje || 'Error al cargar gimnasios recientes');
         return of([]);
@@ -209,15 +205,22 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // GET - Obtener gimnasio por ID
-  // ----------------------------------------
   obtenerPorId(id: number): Observable<GimnasioDetalle | null> {
+    const cacheKey = this.cache.generarClave(CACHE_KEYS.DETALLE, id);
+    const cached = this.cache.get<GimnasioDetalle>(cacheKey);
+    if (cached) {
+      this._gimnasioActual.set(cached);
+      return of(cached);
+    }
+
     this._cargando.set(true);
     this._error.set(null);
 
     return this.http.get<GimnasioDetalle>(`${API_URL}/${id}`).pipe(
-      tap((gimnasio) => this._gimnasioActual.set(gimnasio)),
+      tap((gimnasio) => {
+        this._gimnasioActual.set(gimnasio);
+        this.cache.set(cacheKey, gimnasio);
+      }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
         this._error.set(error.mensaje || 'Error al cargar gimnasio');
@@ -226,26 +229,26 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // Búsqueda con debounce (método público)
-  // ----------------------------------------
   buscarConDebounce(termino: string): void {
     this._busquedaSubject.next(termino);
   }
 
-  // ----------------------------------------
-  // Búsqueda inmediata
-  // ----------------------------------------
   buscar(params: FiltrosBusqueda): Observable<readonly GimnasioCard[]> {
     this._filtros.set(params);
     this.reiniciarPaginacion();
     
+    if (params.ciudad && !params.nombre && !params.arteMarcial) {
+      const cacheKey = this.cache.generarClave(CACHE_KEYS.CIUDAD, params.ciudad.toLowerCase());
+      const cached = this.cache.get<GimnasioCard[]>(cacheKey);
+      if (cached) {
+        this._gimnasios.set(cached);
+        return of(cached);
+      }
+    }
+    
     return this.ejecutarBusqueda(params.nombre || '');
   }
 
-  // ----------------------------------------
-  // Ejecutar búsqueda (privado)
-  // ----------------------------------------
   private ejecutarBusqueda(termino: string): Observable<readonly GimnasioCard[]> {
     const terminoLimpio = termino.trim();
     const filtrosActivos = this._filtros();
@@ -270,10 +273,17 @@ export class GimnasiosApiService {
       params['arteMarcial'] = filtrosActivos.arteMarcial;
     }
 
+    const soloCiudad = filtrosActivos.ciudad && !terminoLimpio && !filtrosActivos.arteMarcial;
+
     return this.http.get<GimnasioCard[]>(`${API_URL}/buscar`, { params }).pipe(
       tap((gimnasios) => {
         this._gimnasios.set(gimnasios);
         this.actualizarPaginacion(gimnasios.length, true);
+        
+        if (soloCiudad && filtrosActivos.ciudad) {
+          const cacheKey = this.cache.generarClave(CACHE_KEYS.CIUDAD, filtrosActivos.ciudad.toLowerCase());
+          this.cache.set(cacheKey, gimnasios);
+        }
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -283,24 +293,15 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // Actualizar filtros
-  // ----------------------------------------
   actualizarFiltros(nuevosFiltros: Partial<FiltrosBusqueda>): void {
     this._filtros.update((actuales) => ({ ...actuales, ...nuevosFiltros }));
   }
 
-  // ----------------------------------------
-  // Limpiar filtros
-  // ----------------------------------------
   limpiarFiltros(): void {
     this._filtros.set({});
     this._terminoBusqueda.set('');
   }
 
-  // ----------------------------------------
-  // POST - Crear gimnasio
-  // ----------------------------------------
   crear(datos: GimnasioRequest): Observable<GimnasioCard | null> {
     this._cargando.set(true);
     this._error.set(null);
@@ -312,6 +313,7 @@ export class GimnasiosApiService {
           ...p,
           totalItems: p.totalItems + 1
         }));
+        this.cache.invalidar('gimnasios');
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -321,9 +323,6 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // PUT - Actualizar gimnasio
-  // ----------------------------------------
   actualizar(id: number, datos: GimnasioRequest): Observable<GimnasioCard | null> {
     this._cargando.set(true);
     this._error.set(null);
@@ -337,6 +336,7 @@ export class GimnasiosApiService {
         if (actual && actual.id === id) {
           this.obtenerPorId(id).subscribe();
         }
+        this.cache.invalidar('gimnasios');
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -346,9 +346,6 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // DELETE - Eliminar gimnasio
-  // ----------------------------------------
   eliminar(id: number): Observable<boolean> {
     this._cargando.set(true);
     this._error.set(null);
@@ -360,6 +357,7 @@ export class GimnasiosApiService {
           ...p,
           totalItems: Math.max(0, p.totalItems - 1)
         }));
+        this.cache.invalidar('gimnasios');
       }),
       finalize(() => this._cargando.set(false)),
       map(() => true as boolean),
@@ -370,17 +368,12 @@ export class GimnasiosApiService {
     );
   }
 
-  // ----------------------------------------
-  // Limpiar gimnasio actual
-  // ----------------------------------------
   limpiarGimnasioActual(): void {
     this._gimnasioActual.set(null);
   }
 
-  // ----------------------------------------
-  // Refrescar datos actual (sin perder scroll)
-  // ----------------------------------------
   refrescar(): Observable<readonly GimnasioCard[]> {
+    this.cache.invalidar('gimnasios');
     const terminoActual = this._terminoBusqueda();
     
     if (terminoActual) {
@@ -390,9 +383,6 @@ export class GimnasiosApiService {
     return this.obtenerTodos(false);
   }
 
-  // ----------------------------------------
-  // Métodos privados de paginación
-  // ----------------------------------------
   private reiniciarPaginacion(): void {
     this._paginacion.set({
       pagina: 0,

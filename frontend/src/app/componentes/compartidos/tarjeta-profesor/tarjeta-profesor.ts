@@ -17,7 +17,6 @@ export class TarjetaProfesor {
   readonly nombre = input.required<string>();
   readonly especialidad = input.required<string>();
   readonly foto = input<string>('');
-  readonly valoracion = input<number | null>(null);
   readonly proximaClase = input<string>('');
   readonly reservada = input<boolean>(false);
 
@@ -29,11 +28,5 @@ export class TarjetaProfesor {
     if (!this.reservada()) {
       this.reservar.emit();
     }
-  }
-
-  formatearValoracion(): string {
-    const val = this.valoracion();
-    if (val === null) return '';
-    return val.toFixed(1);
   }
 }

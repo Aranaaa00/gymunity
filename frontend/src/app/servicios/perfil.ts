@@ -374,16 +374,6 @@ export class PerfilService {
   // Cargar reseñas de un gimnasio
   // ----------------------------------------
   cargarReseniasGimnasio(gimnasioId: number): Observable<Resenia[]> {
-    return this.http.get<InteraccionResponse[]>(`/api/interacciones/gimnasio/${gimnasioId}/resenias`)
-      .pipe(
-        map(interacciones => interacciones.map(i => ({
-          id: i.id,
-          texto: i.resenia ?? '',
-          nombreUsuario: i.nombreUsuario,
-          avatarUsuario: '',
-          valoracion: i.valoracion ?? 0,
-          fecha: i.fechaInteraccion
-        })))
-      );
+    return this.http.get<Resenia[]>(`/api/interacciones/gimnasio/${gimnasioId}/resenias`);
   }
 }

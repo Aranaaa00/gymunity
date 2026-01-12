@@ -19,7 +19,7 @@ export interface DatosRegistro {
   readonly password: string;
 }
 
-type CampoRegistro = 'username' | 'fullName' | 'email' | 'password' | 'password2';
+type CampoRegistro = 'username' | 'fullName' | 'email' | 'ciudad' | 'password' | 'password2';
 
 // ============================================
 // CONSTANTES
@@ -49,6 +49,12 @@ const MENSAJES_ERROR: Readonly<Record<CampoRegistro, Record<string, string>>> = 
     required: 'El email es obligatorio',
     email: 'Introduce un email válido',
     emailNoDisponible: MENSAJES_VALIDACION_ASINCRONA.emailNoDisponible,
+  },
+  ciudad: {
+    required: 'La ciudad es obligatoria para mostrarte gimnasios cercanos',
+    minlength: 'Mínimo 2 caracteres',
+    maxlength: 'Máximo 100 caracteres',
+    ciudadNoExiste: MENSAJES_VALIDACION_ASINCRONA.ciudadNoExiste,
   },
   password: {
     required: 'La contraseña es obligatoria',
@@ -85,6 +91,7 @@ export class FormularioRegistro {
   // ----------------------------------------
   readonly validandoEmail: WritableSignal<boolean> = signal(false);
   readonly validandoUsername: WritableSignal<boolean> = signal(false);
+  readonly validandoCiudad: WritableSignal<boolean> = signal(false);
   private readonly _passwordValue: WritableSignal<string> = signal('');
 
   // ----------------------------------------
@@ -136,6 +143,11 @@ export class FormularioRegistro {
         [Validators.required, Validators.email],
         [this.validadoresAsincronos.emailUnico()],
       ],
+      ciudad: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(100)],
+        [this.validadoresAsincronos.ciudadExiste()],
+      ],
       password: [
         '', 
         [Validators.required, passwordFuerte()],
@@ -158,6 +170,7 @@ export class FormularioRegistro {
   private configurarObservablesValidacion(): void {
     const emailControl = this.registroForm.get('email');
     const usernameControl = this.registroForm.get('username');
+    const ciudadControl = this.registroForm.get('ciudad');
     const passwordControl = this.registroForm.get('password');
 
     emailControl?.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((status) => {
@@ -166,6 +179,10 @@ export class FormularioRegistro {
 
     usernameControl?.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((status) => {
       this.validandoUsername.set(status === 'PENDING');
+    });
+
+    ciudadControl?.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((status) => {
+      this.validandoCiudad.set(status === 'PENDING');
     });
 
     passwordControl?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: string) => {
@@ -186,6 +203,10 @@ export class FormularioRegistro {
 
   get emailControl(): AbstractControl | null {
     return this.registroForm.get('email');
+  }
+
+  get ciudadControl(): AbstractControl | null {
+    return this.registroForm.get('ciudad');
   }
 
   get passwordControl(): AbstractControl | null {
@@ -212,21 +233,25 @@ export class FormularioRegistro {
     return mensaje;
   }
 
-  getMensajeExito(campo: 'email' | 'username'): string {
+  getMensajeExito(campo: 'email' | 'username' | 'ciudad'): string {
     const control = this.registroForm.get(campo);
     const esValido = control?.touched && !control?.invalid && !control?.pending;
     
     if (!esValido) return '';
     
-    const mensaje = campo === 'email' 
-      ? '✓ Email disponible' 
-      : '✓ Nombre de usuario disponible';
+    const mensajes: Record<'email' | 'username' | 'ciudad', string> = {
+      email: '✓ Email disponible',
+      username: '✓ Nombre de usuario disponible',
+      ciudad: '✓ Ciudad válida',
+    };
 
-    return mensaje;
+    return mensajes[campo];
   }
 
-  estaValidando(campo: 'email' | 'username'): boolean {
-    return campo === 'email' ? this.validandoEmail() : this.validandoUsername();
+  estaValidando(campo: 'email' | 'username' | 'ciudad'): boolean {
+    if (campo === 'email') return this.validandoEmail();
+    if (campo === 'username') return this.validandoUsername();
+    return this.validandoCiudad();
   }
 
   onSubmit(): void {
@@ -238,13 +263,13 @@ export class FormularioRegistro {
     if (esInvalido) return;
 
     this.cargando.set(true);
-    const { username, fullName, email, password } = this.registroForm.value;
+    const { username, fullName, email, ciudad, password } = this.registroForm.value;
     
     this.authService.registrar({
       nombreUsuario: username,
       email,
       contrasenia: password,
-      ciudad: '',
+      ciudad,
     }).subscribe({
       next: (exito) => {
         this.cargando.set(false);

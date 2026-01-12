@@ -38,8 +38,11 @@
 
 .hero__fondo {
   position: absolute;
-  z-index: 0;
-  inset: 0;
+  z-index: $z-base;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   transition: opacity $transicion-estandar;
 
   img {
@@ -50,19 +53,17 @@
   }
 }
 
-// Modo claro: visible por defecto
 .hero__fondo--claro {
   display: block;
   opacity: 1;
   transition: opacity $transicion-estandar;
 
   img {
-    opacity: 0.06;
+    opacity: 0.15;
     transition: opacity $transicion-estandar;
   }
 }
 
-// Modo oscuro: oculto por defecto
 .hero__fondo--oscuro {
   display: block;
   opacity: 0;
@@ -74,7 +75,6 @@
   }
 }
 
-// En tema oscuro, invertir visibilidad con opacidad
 :host-context([data-tema="oscuro"]) {
   .hero__fondo--claro {
     opacity: 0;
@@ -91,7 +91,7 @@
 
 .hero__contenido {
   position: relative;
-  z-index: $z-base;
+  z-index: calc($z-base + 1);
   display: flex;
   flex-direction: column;
   align-items: center;

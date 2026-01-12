@@ -97,9 +97,24 @@ export class Busqueda implements OnInit, OnDestroy {
       takeUntil(this.destruir$)
     ).subscribe((params) => {
       const termino = params['q'] || '';
+      const ciudad = params['ciudad'] || '';
+      const orden = params['orden'] || '';
+      
       this.terminoBusqueda.set(termino);
       
-      if (termino) {
+      if (orden === 'popular') {
+        this.gimnasiosService.obtenerPopulares().pipe(
+          takeUntil(this.destruir$)
+        ).subscribe();
+      } else if (orden === 'reciente') {
+        this.gimnasiosService.obtenerRecientes().pipe(
+          takeUntil(this.destruir$)
+        ).subscribe();
+      } else if (ciudad) {
+        this.gimnasiosService.buscar({ ciudad }).pipe(
+          takeUntil(this.destruir$)
+        ).subscribe();
+      } else if (termino) {
         this.gimnasiosService.buscar({ nombre: termino }).pipe(
           takeUntil(this.destruir$)
         ).subscribe();

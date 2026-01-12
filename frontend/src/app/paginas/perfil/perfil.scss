@@ -425,26 +425,175 @@
 }
 
 // ============================================
-// RESEÑAS
+// RESEÑAS - TIMELINE INNOVADOR
 // ============================================
 
-.perfil__lista-resenias {
+.perfil__timeline-resenias {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: $space-3;
+  gap: $space-4;
   margin: 0;
-  padding: 0;
+  padding: $space-3 0;
   list-style: none;
+
+  @include respond-down(md) {
+    gap: $space-3;
+    padding: $space-2 0;
+  }
 }
 
-.perfil__resenia {
+.perfil__resenia-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 2rem 1fr;
+  gap: $space-3;
+  align-items: start;
+
+  @include respond-down(md) {
+    grid-template-columns: 2rem 1fr;
+    gap: $space-2;
+  }
+}
+
+.perfil__resenia-item--par {
+  .perfil__resenia-card {
+    grid-column: 1;
+    grid-row: 1;
+
+    @include respond-down(md) {
+      grid-column: 2;
+    }
+  }
+
+  .perfil__resenia-punto {
+    grid-column: 2;
+    grid-row: 1;
+
+    @include respond-down(md) {
+      grid-column: 1;
+    }
+  }
+}
+
+.perfil__resenia-item:not(.perfil__resenia-item--par) {
+  .perfil__resenia-card {
+    grid-column: 3;
+    grid-row: 1;
+
+    @include respond-down(md) {
+      grid-column: 2;
+    }
+  }
+
+  .perfil__resenia-punto {
+    grid-column: 2;
+    grid-row: 1;
+
+    @include respond-down(md) {
+      grid-column: 1;
+    }
+  }
+}
+
+.perfil__resenia-punto {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &::before {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 0.125rem;
+    background: linear-gradient(180deg, var(--color-boton) 0%, transparent 100%);
+    content: '';
+    transform: translateX(-50%);
+  }
+
+  .perfil__resenia-item:last-child & {
+    &::before {
+      background: linear-gradient(180deg, var(--color-boton) 0%, transparent 70%);
+    }
+  }
+}
+
+.perfil__resenia-circulo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background: var(--color-boton);
+  border: 0.25rem solid var(--color-fondo);
+  border-radius: $radio-full;
+  box-shadow: 0 0 0 0.125rem var(--color-boton);
+
+  @include respond-down(md) {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-width: 0.1875rem;
+  }
+}
+
+.perfil__resenia-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: $space-2;
-  padding: $space-3;
+  gap: $space-1;
+  padding: $space-2;
   background: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
+  transition: transform $transicion-rapida, box-shadow $transicion-rapida;
+
+  &::before {
+    position: absolute;
+    top: 1.5rem;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    content: '';
+
+    @include respond-down(md) {
+      left: -0.5rem;
+      border-width: 0.5rem 0.5rem 0.5rem 0;
+      border-color: transparent var(--color-borde) transparent transparent;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  }
+
+  .perfil__resenia-item--par & {
+    &::before {
+      @media (min-width: 768px) {
+        right: -0.5rem;
+        border-width: 0.5rem 0 0.5rem 0.5rem;
+        border-color: transparent transparent transparent var(--color-borde);
+      }
+    }
+  }
+
+  .perfil__resenia-item:not(.perfil__resenia-item--par) & {
+    &::before {
+      @media (min-width: 768px) {
+        left: -0.5rem;
+        border-width: 0.5rem 0.5rem 0.5rem 0;
+        border-color: transparent var(--color-borde) transparent transparent;
+      }
+    }
+  }
+
+  @include respond-down(md) {
+    padding: $space-2;
+  }
 }
 
 .perfil__resenia-header {
@@ -457,86 +606,45 @@
 .perfil__resenia-gimnasio {
   margin: 0;
   font-size: $texto-s;
-  font-weight: $font-weight-semibold;
+  font-weight: $font-weight-bold;
   color: var(--color-titulo);
 }
 
 .perfil__resenia-valoracion {
-  font-size: $texto-s;
+  display: flex;
+  gap: 0.125rem;
+}
+
+.perfil__resenia-estrella {
+  color: $gris-300;
+  transition: color $transicion-rapida;
+}
+
+.perfil__resenia-estrella--activa {
   color: #fbbf24;
-  letter-spacing: 0.0625rem;
 }
 
 .perfil__resenia-texto {
   margin: 0;
   font-size: $texto-s;
-  line-height: $line-height-normal;
+  line-height: $line-height-relaxed;
   color: var(--color-texto);
+}
+
+.perfil__resenia-footer {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding-top: $space-1;
+  border-top: $borde-thin solid var(--color-borde);
 }
 
 .perfil__resenia-fecha {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
   font-size: $texto-xs;
   color: var(--color-subtitulo);
-}
-
-// ============================================
-// PAGINACIÓN
-// ============================================
-
-.perfil__paginacion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-2;
-  padding: $space-2 0;
-  margin-top: $space-2;
-}
-
-.perfil__paginacion-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: $space-4;
-  height: $space-4;
-  padding: 0;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  color: var(--color-texto);
-  cursor: pointer;
-  transition: background-color $transicion-rapida, border-color $transicion-rapida;
-
-  &:hover:not(:disabled) {
-    background: var(--color-boton);
-    border-color: var(--color-boton);
-    color: $gris-50;
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $borde-thin;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-}
-
-.perfil__paginacion-icono--izq {
-  transform: rotate(90deg);
-}
-
-.perfil__paginacion-icono--der {
-  transform: rotate(-90deg);
-}
-
-.perfil__paginacion-info {
-  min-width: $space-6;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  color: var(--color-subtitulo);
-  text-align: center;
 }
 
 // ============================================

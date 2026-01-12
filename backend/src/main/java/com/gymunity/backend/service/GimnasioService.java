@@ -1,5 +1,6 @@
 package com.gymunity.backend.service;
 
+import java.text.Normalizer;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,13 +85,26 @@ public class GimnasioService {
     }
 
     /**
-     * Busca gimnasios por ciudad.
+     * Busca gimnasios por ciudad (ignorando mayúsculas y tildes).
      */
     @Transactional(readOnly = true)
     public List<GimnasioCardDTO> buscarPorCiudad(String ciudad) {
-        return gimnasioRepository.findByCiudadIgnoreCase(ciudad).stream()
+        String ciudadNormalizada = normalizarTexto(ciudad);
+        
+        // Buscar todos los gimnasios y filtrar por ciudad normalizada
+        return gimnasioRepository.findAll().stream()
+                .filter(g -> normalizarTexto(g.getCiudad()).equals(ciudadNormalizada))
                 .map(this::convertirACardDTO)
                 .toList();
+    }
+    
+    /**
+     * Normaliza un texto quitando tildes y convirtiendo a minúsculas.
+     */
+    private String normalizarTexto(String texto) {
+        if (texto == null) return "";
+        return Normalizer.normalize(texto.toLowerCase().trim(), Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
     }
 
     /**

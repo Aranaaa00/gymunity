@@ -62,12 +62,12 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
     List<Gimnasio> findDistinctByClasesNombreContainingIgnoreCase(String nombre);
 
     /**
-     * Busca gimnasios con más usuarios apuntados (más populares).
+     * Busca gimnasios con mayor valoración media.
      *
-     * @return Lista de gimnasios ordenados por popularidad.
+     * @return Lista de gimnasios ordenados por valoración media descendente.
      */
     @Query("SELECT g FROM Gimnasio g LEFT JOIN g.interacciones i " +
-           "GROUP BY g.id ORDER BY COUNT(CASE WHEN i.esApuntado = true THEN 1 END) DESC")
+           "GROUP BY g.id ORDER BY AVG(COALESCE(i.valoracion, 0)) DESC, COUNT(CASE WHEN i.resenia IS NOT NULL THEN 1 END) DESC")
     List<Gimnasio> findMasPopulares();
 
     /**

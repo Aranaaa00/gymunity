@@ -51,6 +51,7 @@ export class CampoFormulario implements ControlValueAccessor {
   readonly formControl: InputSignal<FormControl | undefined> = input<FormControl | undefined>(undefined);
   readonly validando: InputSignal<boolean> = input<boolean>(false);
   readonly mensajeExito: InputSignal<string> = input<string>('');
+  readonly autocomplete: InputSignal<string> = input<string>('on');
 
   // ----------------------------------------
   // Estado interno (signals para mutabilidad)

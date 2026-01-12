@@ -7,7 +7,7 @@
   <p class="formulario-auth__tagline">Únete a la comunidad fitness</p>
 </header>
 
-<form class="formulario-auth" [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+<form class="formulario-auth" [formGroup]="registroForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <fieldset class="formulario-auth__fieldset">
     <legend class="formulario-auth__legend">Crea tu perfil</legend>
     
@@ -17,6 +17,7 @@
       placeholder="@tu_nombre"
       inputId="registro-username"
       name="username"
+      autocomplete="off"
       [formControl]="$any(usernameControl)"
       [required]="true"
       [validando]="estaValidando('username')"
@@ -31,6 +32,7 @@
       placeholder="Cómo te llamamos"
       inputId="registro-fullname"
       name="fullName"
+      autocomplete="off"
       [formControl]="$any(fullNameControl)"
       [required]="true"
       [hasError]="!!fullNameControl?.touched && !!fullNameControl?.invalid"
@@ -43,12 +45,28 @@
       placeholder="Para tu acceso seguro"
       inputId="registro-email"
       name="email"
+      autocomplete="off"
       [formControl]="$any(emailControl)"
       [required]="true"
       [validando]="estaValidando('email')"
       [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
       [errorMessage]="getErrorMessage('email')"
       [mensajeExito]="getMensajeExito('email')">
+    </app-campo-formulario>
+
+    <app-campo-formulario
+      label="Ciudad"
+      type="text"
+      placeholder="Ej: Madrid, Barcelona..."
+      inputId="registro-ciudad"
+      name="ciudad"
+      autocomplete="off"
+      [formControl]="$any(ciudadControl)"
+      [required]="true"
+      [validando]="estaValidando('ciudad')"
+      [hasError]="!!ciudadControl?.touched && !!ciudadControl?.invalid"
+      [errorMessage]="getErrorMessage('ciudad')"
+      [mensajeExito]="getMensajeExito('ciudad')">
     </app-campo-formulario>
     
     <app-campo-formulario
@@ -57,6 +75,7 @@
       placeholder="Mínimo 8 caracteres"
       inputId="registro-password"
       name="password"
+      autocomplete="new-password"
       [formControl]="$any(passwordControl)"
       [required]="true"
       [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
@@ -85,6 +104,7 @@
       placeholder="Repite tu contraseña"
       inputId="registro-password2"
       name="password2"
+      autocomplete="new-password"
       [formControl]="$any(password2Control)"
       [required]="true"
       [hasError]="!!password2Control?.touched && !!password2Control?.invalid"

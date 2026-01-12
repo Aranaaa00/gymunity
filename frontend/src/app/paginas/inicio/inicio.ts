@@ -42,6 +42,7 @@ export class Inicio implements OnInit, OnDestroy {
   readonly gimnasiosRecientes = signal<readonly GimnasioCard[]>([]);
   readonly gimnasiosCercanos = signal<readonly GimnasioCard[]>([]);
   readonly cargando = signal<boolean>(true);
+  readonly cargandoCercanos = signal<boolean>(true);
   readonly error = signal<string | null>(null);
 
   // ----------------------------------------
@@ -56,7 +57,7 @@ export class Inicio implements OnInit, OnDestroy {
 
   readonly ciudadUsuario = computed(() => {
     const usuario = this.auth.usuario();
-    return usuario?.ciudad || 'Jerez de la Frontera';
+    return usuario?.ciudad ?? '';
   });
 
   // ----------------------------------------
@@ -115,16 +116,24 @@ export class Inicio implements OnInit, OnDestroy {
   private cargarGimnasiosCercanos(): void {
     const ciudad = this.ciudadUsuario();
     
+    if (!ciudad) {
+      this.cargando.set(false);
+      this.cargandoCercanos.set(false);
+      return;
+    }
+    
+    this.cargandoCercanos.set(true);
     this.gimnasiosService.buscar({ ciudad }).pipe(
       takeUntil(this.destruir$)
     ).subscribe({
       next: (gimnasios) => {
         this.gimnasiosCercanos.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.cargando.set(false);
+        this.cargandoCercanos.set(false);
       },
       error: () => {
-        // Si falla, no mostramos error, solo no mostramos la sección
         this.cargando.set(false);
+        this.cargandoCercanos.set(false);
       },
     });
   }

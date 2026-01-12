@@ -110,22 +110,6 @@
   text-overflow: ellipsis;
 }
 
-.tarjeta-profesor__valoracion {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-
-  margin: 0;
-
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-acento);
-}
-
-.tarjeta-profesor__estrella {
-  color: #f59e0b;
-}
-
 .tarjeta-profesor__proxima-clase {
   display: flex;
   align-items: center;

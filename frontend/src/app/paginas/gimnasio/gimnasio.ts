@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal, computed, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, computed, WritableSignal, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import type { GimnasioDetalle, Clase, Resenia, Profesor, Torneo } from '../../modelos';
@@ -44,6 +44,7 @@ export class GimnasioPage implements OnInit, OnDestroy {
   private readonly perfilService = inject(PerfilService);
   private readonly authService = inject(AuthService);
   private readonly modalService = inject(ModalService);
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly destruir$ = new Subject<void>();
   
   readonly gimnasio: WritableSignal<GimnasioDetalle | null> = signal(null);
@@ -168,24 +169,37 @@ export class GimnasioPage implements OnInit, OnDestroy {
   }
 
   onReseniaEnviada(): void {
-    this.cerrarModalResenia();
-    // Recargar las reseñas del gimnasio
     this.recargarResenias();
+    this.cerrarModalResenia();
   }
 
   private recargarResenias(): void {
     const gym = this.gimnasio();
     if (!gym) return;
     
-    // Llamar al API para obtener las reseñas actualizadas
     this.perfilService.cargarReseniasGimnasio(gym.id).subscribe({
       next: (resenias) => {
-        this.gimnasio.update(g => g ? { ...g, resenias } : null);
+        this.gimnasio.update(g => {
+          if (!g) return null;
+          return {
+            ...g,
+            resenias,
+            totalResenias: resenias.length,
+            valoracionMedia: this.calcularValoracionMedia(resenias)
+          };
+        });
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Error al recargar reseñas:', err);
       }
     });
+  }
+
+  private calcularValoracionMedia(resenias: Resenia[]): number {
+    if (resenias.length === 0) return 0;
+    const suma = resenias.reduce((acc, r) => acc + r.valoracion, 0);
+    return suma / resenias.length;
   }
 
   verMasProfesores(): void {

@@ -10,12 +10,6 @@
   <section class="tarjeta-profesor__info">
     <h4 class="tarjeta-profesor__nombre">{{ nombre() }}</h4>
     <p class="tarjeta-profesor__especialidad">{{ especialidad() }}</p>
-    @if (valoracion() !== null) {
-      <p class="tarjeta-profesor__valoracion">
-        {{ formatearValoracion() }}
-        <app-icono nombre="star" tamano="xs" class="tarjeta-profesor__estrella" />
-      </p>
-    }
     @if (proximaClase()) {
       <p class="tarjeta-profesor__proxima-clase">
         <app-icono nombre="calendar" tamano="xs" />

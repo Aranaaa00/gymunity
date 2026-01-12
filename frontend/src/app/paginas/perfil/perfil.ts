@@ -6,6 +6,7 @@ import { ReservasService } from '../../servicios/reservas';
 import { ComponenteConCambios } from '../../guards/cambios-sin-guardar.guard';
 import { Icono, NombreIcono } from '../../componentes/compartidos/icono/icono';
 import { Tabs } from '../../componentes/compartidos/tabs/tabs';
+import { Paginacion } from '../../componentes/compartidos/paginacion/paginacion';
 
 // ============================================
 // CONSTANTES
@@ -49,7 +50,7 @@ const MAPEO_ICONOS_CLASE: Readonly<Record<string, NombreIcono>> = {
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [Icono, Tabs],
+  imports: [Icono, Tabs, Paginacion],
   templateUrl: './perfil.html',
   styleUrl: './perfil.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -113,7 +114,7 @@ export class Perfil implements ComponenteConCambios {
     return mapa[u.rol] ?? u.rol;
   });
 
-  readonly ciudad = computed(() => this.usuario()?.ciudad ?? 'Sin especificar');
+  readonly ciudad = computed(() => this.usuario()?.ciudad ?? '');
 
   tieneCambiosSinGuardar(): boolean {
     return false;

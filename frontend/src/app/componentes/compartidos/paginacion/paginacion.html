@@ -1,0 +1,21 @@
+<nav class="paginacion" [attr.aria-label]="ariaLabel()">
+  <button 
+    type="button" 
+    class="paginacion__btn"
+    [disabled]="!puedeIrAtras()"
+    (click)="irAnterior()"
+    aria-label="Página anterior">
+    <app-icono nombre="chevron-down" tamano="sm" class="paginacion__icono paginacion__icono--izq" />
+  </button>
+  <span class="paginacion__info">
+    {{ paginaActual() + 1 }} / {{ totalPaginas() }}
+  </span>
+  <button 
+    type="button" 
+    class="paginacion__btn"
+    [disabled]="!puedeIrAdelante()"
+    (click)="irSiguiente()"
+    aria-label="Página siguiente">
+    <app-icono nombre="chevron-down" tamano="sm" class="paginacion__icono paginacion__icono--der" />
+  </button>
+</nav>

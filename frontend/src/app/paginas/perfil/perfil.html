@@ -112,27 +112,13 @@
             }
           </ul>
           @if (mostrarPaginacion()) {
-            <nav class="perfil__paginacion" aria-label="Paginación de clases">
-              <button 
-                type="button" 
-                class="perfil__paginacion-btn"
-                [disabled]="paginaClases() === 0"
-                (click)="paginaAnterior()"
-                aria-label="Página anterior">
-                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--izq" />
-              </button>
-              <span class="perfil__paginacion-info">
-                {{ paginaClases() + 1 }} / {{ totalPaginasClases() }}
-              </span>
-              <button 
-                type="button" 
-                class="perfil__paginacion-btn"
-                [disabled]="paginaClases() >= totalPaginasClases() - 1"
-                (click)="paginaSiguiente()"
-                aria-label="Página siguiente">
-                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--der" />
-              </button>
-            </nav>
+            <app-paginacion
+              [paginaActual]="paginaClases()"
+              [totalPaginas]="totalPaginasClases()"
+              ariaLabel="Paginación de clases"
+              (anterior)="paginaAnterior()"
+              (siguiente)="paginaSiguiente()"
+            />
           }
         }
       }
@@ -144,40 +130,45 @@
             <p class="perfil__vacio-subtexto">Comparte tu experiencia con otros alumnos</p>
           </article>
         } @else {
-          <ul class="perfil__lista-resenias">
-            @for (resenia of reseniasPaginadas(); track resenia.id) {
-              <li class="perfil__resenia">
-                <header class="perfil__resenia-header">
-                  <h4 class="perfil__resenia-gimnasio">{{ resenia.gimnasioNombre }}</h4>
-                  <span class="perfil__resenia-valoracion">{{ formatearValoracion(resenia.valoracion) }}</span>
-                </header>
-                <p class="perfil__resenia-texto">{{ resenia.texto }}</p>
-                <time class="perfil__resenia-fecha">{{ formatearFecha(resenia.fecha) }}</time>
+          <ul class="perfil__timeline-resenias">
+            @for (resenia of reseniasPaginadas(); track resenia.id; let i = $index) {
+              <li class="perfil__resenia-item" [class.perfil__resenia-item--par]="i % 2 === 0">
+                <aside class="perfil__resenia-punto">
+                  <span class="perfil__resenia-circulo"></span>
+                </aside>
+                <article class="perfil__resenia-card">
+                  <header class="perfil__resenia-header">
+                    <h4 class="perfil__resenia-gimnasio">{{ resenia.gimnasioNombre }}</h4>
+                    <span class="perfil__resenia-valoracion">
+                      @for (star of [1,2,3,4,5]; track star) {
+                        <app-icono 
+                          nombre="star" 
+                          tamano="xs" 
+                          [class.perfil__resenia-estrella--activa]="star <= resenia.valoracion"
+                          class="perfil__resenia-estrella"
+                        />
+                      }
+                    </span>
+                  </header>
+                  <p class="perfil__resenia-texto">{{ resenia.texto }}</p>
+                  <footer class="perfil__resenia-footer">
+                    <time class="perfil__resenia-fecha">
+                      <app-icono nombre="calendar" tamano="xs" />
+                      {{ formatearFecha(resenia.fecha) }}
+                    </time>
+                  </footer>
+                </article>
               </li>
             }
           </ul>
           @if (mostrarPaginacionResenias()) {
-            <nav class="perfil__paginacion" aria-label="Paginación de reseñas">
-              <button 
-                type="button" 
-                class="perfil__paginacion-btn"
-                [disabled]="paginaResenias() === 0"
-                (click)="paginaAnteriorResenias()"
-                aria-label="Página anterior">
-                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--izq" />
-              </button>
-              <span class="perfil__paginacion-info">
-                {{ paginaResenias() + 1 }} / {{ totalPaginasResenias() }}
-              </span>
-              <button 
-                type="button" 
-                class="perfil__paginacion-btn"
-                [disabled]="paginaResenias() >= totalPaginasResenias() - 1"
-                (click)="paginaSiguienteResenias()"
-                aria-label="Página siguiente">
-                <app-icono nombre="chevron-down" tamano="sm" class="perfil__paginacion-icono--der" />
-              </button>
-            </nav>
+            <app-paginacion
+              [paginaActual]="paginaResenias()"
+              [totalPaginas]="totalPaginasResenias()"
+              ariaLabel="Paginación de reseñas"
+              (anterior)="paginaAnteriorResenias()"
+              (siguiente)="paginaSiguienteResenias()"
+            />
           }
         }
       }

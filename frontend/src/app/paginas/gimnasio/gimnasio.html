@@ -54,7 +54,6 @@
                     [nombre]="profesor.nombre"
                     [especialidad]="profesor.especialidad"
                     [foto]="profesor.foto"
-                    [valoracion]="profesor.valoracion"
                     [proximaClase]="profesor.proximaClase ?? ''"
                     [reservada]="clasesReservadasIds().has(obtenerClaseIdProfesor(profesor))"
                     (reservar)="reservarClaseProfesor(profesor)"
@@ -129,7 +128,7 @@
       <app-modal-resenia
         [gimnasioId]="gimnasio()!.id"
         [gimnasioNombre]="gimnasio()!.nombre"
-        (reseniaEnviada)="onReseniaEnviada()"
+        (enviada)="onReseniaEnviada()"
         (cerrar)="cerrarModalResenia()"
       />
     }
