@@ -3,18 +3,18 @@ import { Icono } from '../icono/icono';
 import { TemaService } from '../../../servicios/tema';
 
 // ============================================
-// COMPONENTE BOTÓN TEMA
+// COMPONENTE THEME SWITCHER
 // ============================================
 
 @Component({
-  selector: 'app-boton-tema',
+  selector: 'app-theme-switcher',
   standalone: true,
   imports: [Icono],
-  templateUrl: './boton-tema.html',
-  styleUrl: './boton-tema.scss',
+  templateUrl: './theme-switcher.html',
+  styleUrl: './theme-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BotonTema {
+export class ThemeSwitcher {
   // ----------------------------------------
   // Dependencias
   // ----------------------------------------

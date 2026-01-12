@@ -14,7 +14,7 @@ import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { Buscador } from '../../componentes/compartidos/buscador/buscador';
-import { BotonTema } from '../../componentes/compartidos/boton-tema/boton-tema';
+import { ThemeSwitcher } from '../../componentes/compartidos/theme-switcher/theme-switcher';
 import { Icono } from '../../componentes/compartidos/icono/icono';
 import { MenuUsuario } from '../../componentes/compartidos/menu-usuario/menu-usuario';
 import { AuthService } from '../../servicios/auth';
@@ -33,7 +33,7 @@ const OVERFLOW_NORMAL = '';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, Boton, Buscador, BotonTema, Icono, MenuUsuario],
+  imports: [RouterLink, Boton, Buscador, ThemeSwitcher, Icono, MenuUsuario],
   templateUrl: './header.html',
   styleUrl: './header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

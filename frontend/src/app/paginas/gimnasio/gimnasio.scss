@@ -71,20 +71,27 @@
 
 .gimnasio__header {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: $space-2;
 
   @include respond-down(sm) {
     flex-direction: column;
-    gap: $space-1;
+    align-items: flex-start;
+    gap: $space-2;
   }
 }
 
 .gimnasio__titulos {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: $space-2;
+
+  @include respond-down(sm) {
+    gap: $space-1;
+  }
 }
 
 .gimnasio__titulo {

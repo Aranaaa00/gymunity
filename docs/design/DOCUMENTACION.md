@@ -2,7 +2,7 @@
 
 ## Índice
 
-### 1. Fundamentos de diseño
+### 1. Arquitectura CSS y comunicación visual
 - [1.1 Principios de comunicación visual](#11-principios-de-comunicación-visual)
   - Jerarquía
   - Contraste
@@ -12,13 +12,21 @@
 - [1.2 Metodología CSS](#12-metodología-css)
 - [1.3 Organización de archivos](#13-organización-de-archivos)
 - [1.4 Sistema de Design Tokens](#14-sistema-de-design-tokens)
+  - Layout
   - Paleta de colores
+  - Colores para buscador
+  - Colores semánticos
+  - Escala de grises
+  - Colores de texto
+  - Modo oscuro
+  - Variables CSS (Custom Properties)
   - Tipografía
   - Espaciado
   - Breakpoints
   - Sombras
   - Z-index
   - Bordes y radios
+  - Transiciones
 - [1.5 Mixins y funciones](#15-mixins-y-funciones)
   - respond-down
   - flex-center
@@ -84,554 +92,643 @@
 
 ---
 
+# Sección 1: Arquitectura CSS y comunicación visual
+
+En esta sección explico cómo he organizado todo el sistema visual de Gymunity: desde los principios de diseño que guían las decisiones, hasta la estructura de archivos y los tokens que uso en todo el proyecto.
+
+---
+
 ## 1.1 Principios de comunicación visual
 
-Hay cinco principios que vienen bien tener en cuenta a la hora de montar una interfaz:
+He aplicado los cinco principios fundamentales de comunicación visual para que la interfaz sea clara, coherente y fácil de usar.
 
-**Jerarquía:** Se trata de colocar los elementos según su importancia. Jugando con tamaños, pesos de fuente y espaciado consigues que el ojo vaya primero a lo que más importa.
+### Jerarquía
 
-![Ejemplo de Jerarquía](img/Ejemplo_jerarquia.png)
+La jerarquía visual ayuda al usuario a entender qué es más importante. En Gymunity uso distintos tamaños de texto y pesos para crear niveles de importancia:
 
-**Contraste:** Sirve para que ciertas cosas destaquen sobre el resto. Cambiando colores, tamaños o pesos visuales se consigue que la información clave salte a la vista.
+- Los **títulos principales** son grandes (2rem) y en negrita para que sean lo primero que se vea
+- Los **subtítulos** usan un tamaño intermedio (1.5rem) para dividir el contenido en secciones
+- El **texto de las tarjetas** es más pequeño (1rem) y sirve para la información de detalle
+- Los **metadatos** como direcciones o valoraciones van en gris y tamaño pequeño (0.75rem)
 
-![Ejemplo de Contraste](img/Ejemplo_contraste.png)
+![Jerarquía visual en Gymunity](img/figma-jerarquia.png)
 
-**Alineación:** Ordenar los elementos de forma coherente (a la izquierda, centrados, en rejilla…) da estructura y hace que todo sea más fácil de leer.
+### Contraste
 
-![Ejemplo de Alineación](img/Ejemplo_alineacion.png)
+El contraste sirve para diferenciar elementos y destacar lo importante. En el proyecto uso:
 
-**Proximidad:** Las cosas que están cerca se entienden como relacionadas. Basta con gestionar bien el espacio para que el usuario capte qué va con qué.
+- Un **header oscuro** (#042A2B) que contrasta con el fondo claro de la página
+- **Botones verdes** (#34C6A0) que destacan sobre fondos claros para llamar la atención
+- **Colores semánticos** diferenciados: verde para éxito, rojo para errores, naranja para avisos
+- En **modo oscuro**, los colores de acento son más vibrantes (#00E5A0) para mantener el contraste
 
-![Ejemplo de Proximidad](img/Ejemplo_proximidad.png)
+![Contraste de colores en la interfaz](img/figma-contraste.png)
 
-**Repetición:** Usar los mismos patrones, colores y estilos a lo largo del diseño da coherencia y refuerza la identidad del proyecto.
+### Alineación
 
-![Ejemplo de Repetición](img/Ejemplo_repeticion.png)
+Para que el diseño se vea ordenado, uso una estrategia de alineación consistente:
+
+- El **contenido principal** está centrado con un ancho máximo de 64rem
+- Las **tarjetas** se organizan en un grid que se adapta automáticamente al espacio disponible
+- Los **formularios** están alineados a la izquierda para facilitar la lectura
+- El **header** usa `space-between` para distribuir logo, buscador y botones
+
+![Alineación en grids y formularios](img/figma-alineacion.png)
+
+### Proximidad
+
+Agrupo los elementos relacionados usando espaciado consistente:
+
+- **Dentro de las tarjetas** uso espacios pequeños (16-24px) entre elementos
+- **Entre secciones** uso espacios grandes (32-48px) para separar bloques
+- **En los grids** mantengo un gap uniforme entre tarjetas
+
+De esta forma el usuario entiende qué elementos van juntos y cuáles son independientes.
+
+![Espaciado y proximidad entre elementos](img/figma-proximidad.png)
+
+### Repetición
+
+Para crear coherencia visual, repito los mismos patrones en toda la aplicación:
+
+- La **paleta de colores** es limitada y se usa de forma consistente
+- Los **bordes redondeados** son siempre iguales (4px para botones, 8px para tarjetas)
+- Las **sombras** están estandarizadas en tres niveles (pequeña, media, grande)
+- Las **transiciones** duran lo mismo en todos los elementos interactivos
+
+![Patrones repetidos en componentes](img/figma-repeticion.png)
+
+---
 
 ## 1.2 Metodología CSS
 
-En este proyecto usamos BEM (Bloque, Elemento, Modificador) para nombrar las clases CSS. La gracia de BEM es que el código queda ordenado, se lee bien y escala sin líos.
+Uso **BEM (Bloque, Elemento, Modificador)** para nombrar las clases CSS. Esta metodología me ayuda a mantener el código organizado y predecible.
 
-- **Bloques:** Son los componentes principales. Ejemplo: `.gym-grid`
-- **Elementos:** Las partes que cuelgan de un bloque. Ejemplo: `.gym-grid__item`
-- **Modificadores:** Variantes o estados. Ejemplo: `.gym-grid--section`
+### ¿Por qué BEM?
 
-**Ejemplo:**
+- **Es claro**: con leer el nombre de la clase ya sé qué es y a qué pertenece
+- **Evita conflictos**: cada componente tiene su propio "namespace"
+- **Escala bien**: puedo añadir componentes nuevos sin romper los existentes
+
+### Cómo lo uso
+
+**Bloque**: el componente principal
 ```scss
-.gym-grid {
-  /* estilos del bloque */
-}
-.gym-grid__item {
-  /* estilos del elemento */
-}
-.gym-grid--section {
-  /* estilos del modificador */
-}
+.card { }
+.boton { }
+.gym-header { }
 ```
 
-Al final, cuando el proyecto crece o entra gente nueva, tener las clases así nombradas es un alivio.
+**Elemento**: una parte interna del bloque (con `__`)
+```scss
+.card__image { }
+.card__title { }
+.gym-header__logo { }
+```
+
+**Modificador**: una variante o estado (con `--`)
+```scss
+.card--horizontal { }
+.boton--primary { }
+.boton--disabled { }
+```
+
+### Ejemplos del proyecto
+
+```scss
+// Header
+.gym-header { }              // Bloque
+.gym-header__logo { }        // Elemento: el logo
+.gym-header__nav { }         // Elemento: la navegación
+.gym-header__nav--abierto { } // Modificador: menú abierto
+
+// Botón
+.boton { }
+.boton--primary { }
+.boton--secondary { }
+.boton--sm { }
+.boton--lg { }
+
+// Card
+.card { }
+.card__image { }
+.card__body { }
+.card__title { }
+.card--featured { }
+```
+
+---
 
 ## 1.3 Organización de archivos
 
-Las carpetas van de lo más general a lo más concreto. Primero cargan variables y herramientas, luego resets, estilos base, layouts, componentes y utilidades. Así no hay conflictos y todo el mundo sabe dónde buscar cada cosa.
+Sigo la arquitectura **ITCSS (Inverted Triangle CSS)**, que organiza los estilos de menor a mayor especificidad. Esto evita problemas con la cascada CSS.
 
-**Árbol de carpetas:**
+### Estructura de carpetas
+
 ```
-styles/
-├── 00-settings/
-│   └── _variables.scss
-├── 01-tools/
-│   └── _mixins.scss
-├── 02-generic/
-│   └── _reset.scss
-├── 03-elements/
-│   └── _elements.scss
-├── 04-layout/
-│   └── _layout.scss
-├── 05-components/
-├── 06-utilities/
-└── main.scss
+frontend/src/
+├── styles/
+│   ├── 00-settings/           ← Variables (no genera CSS)
+│   │   ├── _variables.scss
+│   │   └── _css-variables.scss
+│   ├── 01-tools/              ← Mixins (no genera CSS)
+│   │   └── _mixins.scss
+│   ├── 02-generic/            ← Reset y base
+│   │   └── _reset.scss
+│   ├── 03-elements/           ← Estilos de elementos HTML
+│   │   └── _elements.scss
+│   ├── 04-layout/             ← Grids, contenedores, globales
+│   │   ├── _layout.scss
+│   │   └── _globals.scss
+│   └── main.scss              ← Importa todo en orden
+├── styles.scss                ← Solo hace @use de main.scss
+└── app/componentes/           ← Estilos de cada componente
 ```
+
+### Por qué este orden
+
+Las capas van de menor a mayor especificidad:
+
+| Capa | Qué contiene | Ejemplo |
+|------|--------------|---------|
+| Settings | Variables, no genera CSS | `$color-botones` |
+| Tools | Mixins, no genera CSS | `@mixin respond-down` |
+| Generic | Reset, selectores generales | `*, body` |
+| Elements | Estilos de elementos HTML | `h1, p, a` |
+| Layout | Clases de estructura | `.gym-grid` |
+| Components | Estilos de componentes | `.card`, `.boton` |
+
+Importando en este orden, los estilos más específicos siempre ganan sin necesidad de `!important`.
+
+---
 
 ## 1.4 Sistema de Design Tokens
 
-Los Design Tokens son las variables que guardan los valores base del diseño. Colores, tipografías, espaciados… todo está aquí. Si mañana hay que cambiar el verde corporativo, se toca en un sitio y listo.
+Los design tokens son las variables centralizadas que definen los valores base del diseño. Si cambio un token, se actualiza toda la aplicación.
 
-### Paleta de colores
+### Colores principales
 
-**Colores principales de marca:**
-```scss
-$color-header: #042A2B;        // Header y fondos oscuros
-$color-hover-header: #063B3D;  // Hover del header
-$color-fondo: #EAF8F4;         // Fondo principal de la app
-```
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `$color-header` | #042A2B | Header y fondos oscuros |
+| `$color-fondo` | #EAF8F4 | Fondo general de la página |
+| `$color-botones` | #34C6A0 | Botones y acciones principales |
+| `$color-botones-hover` | #2AAE8E | Estado hover de botones |
 
-**Colores de acción (botones):**
-```scss
-$color-botones: #34C6A0;        // Color principal de botones
-$color-botones-hover: #2AAE8E;  // Hover
-$color-botones-active: #0C5649; // Estado activo
-```
+**¿Por qué estos colores?** La paleta verde transmite salud, energía y bienestar, conceptos asociados con gimnasios y fitness.
 
-**Escala de grises:**
-```scss
-$gris-50:  #F9FAFB;  // Fondos muy claros
-$gris-100: #F3F4F6;  // Fondos claros
-$gris-200: #E5E7EB;  // Bordes suaves
-$gris-300: #D1D5DB;  // Bordes
-$gris-400: #9CA3AF;  // Texto deshabilitado
-$gris-500: #6B7280;  // Texto secundario
-$gris-600: #4B5563;  // Texto claro
-$gris-700: #374151;  // Texto medio
-$gris-800: #1F2937;  // Texto oscuro
-$gris-900: #111827;  // Texto muy oscuro
-```
+### Colores semánticos
 
-**Colores semánticos:**
-```scss
-$color-exito:   #2ECC71;  // Éxito, confirmación
-$color-error:   #E74C3C;  // Error, peligro
-$color-warning: #FFA726;  // Advertencia
-$color-info:    #1976D2;  // Información
-```
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `$color-exito` | #2ECC71 | Mensajes de éxito |
+| `$color-error` | #E74C3C | Errores de validación |
+| `$color-warning` | #FFA726 | Advertencias |
+| `$color-info` | #1976D2 | Información neutral |
 
-**Modo oscuro:**
-```scss
-// Fondos oscuros
-$oscuro-fondo: #0F1C1C;
-$oscuro-fondo-secundario: #1A2D2D;
-$oscuro-header: #081414;
+Son los colores universales que cualquier usuario reconoce.
 
-// Textos en modo oscuro
-$oscuro-texto: #F0FAF7;
-$oscuro-subtitulo: #8EC5B5;
+### Modo oscuro
 
-// Acentos vibrantes para contraste
-$oscuro-boton: #00E5A0;
-$oscuro-boton-hover: #00CC8E;
+Para el modo oscuro uso versiones más vibrantes de los colores para mantener el contraste:
 
-// Semánticos ajustados para fondos oscuros
-$oscuro-exito: #00E676;
-$oscuro-error: #FF6B6B;
-$oscuro-warning: #FFB74D;
-$oscuro-info: #40C4FF;
-```
+| Token | Valor | Diferencia |
+|-------|-------|------------|
+| `$oscuro-fondo` | #0F1C1C | Fondo oscuro con tinte verde |
+| `$oscuro-boton` | #00E5A0 | Verde neón, más brillante |
+| `$oscuro-texto` | #F0FAF7 | Texto claro |
 
 ### Tipografía
 
-**Familia tipográfica:**
 ```scss
 $fuente-principal: 'Roboto', Arial, sans-serif;
 ```
 
-**Escala tipográfica:**
-```scss
-$texto-xs:  0.75rem;   // 12px - textos muy pequeños
-$texto-sm:  0.875rem;  // 14px - textos secundarios
-$texto-s:   1rem;      // 16px - texto base
-$texto-md:  1rem;      // 16px - texto base (alias)
-$texto-lg:  1.25rem;   // 20px - texto destacado
-$texto-m:   1.5rem;    // 24px - subtítulos
-$texto-l:   2rem;      // 32px - títulos sección
-$texto-xl:  2.5rem;    // 40px - títulos grandes
-$texto-2xl: 3rem;      // 48px - headings principales
-```
+Uso Roboto porque es una fuente moderna, legible en pantalla y con muchos pesos disponibles.
 
-**Pesos tipográficos:**
-```scss
-$font-weight-light: 300;
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
-```
+**Escala de tamaños:**
+- `$texto-xs` (12px): metadatos pequeños
+- `$texto-s` (16px): texto base
+- `$texto-m` (24px): subtítulos
+- `$texto-l` (32px): títulos de sección
+- `$texto-xl` (40px): títulos grandes
 
-**Alturas de línea:**
-```scss
-$line-height-tight: 1.1;    // Títulos compactos
-$line-height-normal: 1.5;   // Texto general
-$line-height-relaxed: 1.75; // Texto largo
-```
+**Pesos:**
+- `$font-weight-regular` (400): texto normal
+- `$font-weight-medium` (500): botones
+- `$font-weight-semibold` (600): subtítulos
+- `$font-weight-bold` (700): títulos
 
 ### Espaciado
 
-Sistema de espaciado basado en múltiplos de 8px (0.5rem):
+Sistema basado en múltiplos de 8px:
 
-```scss
-$space-1:  0.5rem;   // 8px
-$space-2:  1rem;     // 16px
-$space-3:  1.5rem;   // 24px
-$space-4:  2rem;     // 32px
-$space-5:  2.5rem;   // 40px
-$space-6:  3rem;     // 48px
-$space-8:  4rem;     // 64px
-$space-10: 5rem;     // 80px
-$space-12: 6rem;     // 96px
-```
+| Token | Valor | Uso típico |
+|-------|-------|------------|
+| `$space-1` | 8px | Espaciado mínimo |
+| `$space-2` | 16px | Espaciado estándar |
+| `$space-3` | 24px | Padding interno |
+| `$space-4` | 32px | Separación entre secciones |
+| `$space-6` | 48px | Gap en grids grandes |
+
+**¿Por qué 8px?** Es un estándar en diseño de interfaces porque se divide fácilmente (8, 4, 2) y escala bien (16, 24, 32...).
 
 ### Breakpoints
 
-Media queries desktop-first:
+Uso estrategia **desktop-first** con `max-width`:
 
-```scss
-$breakpoint-sm: 640px;   // Móviles grandes
-$breakpoint-md: 768px;   // Tablets
-$breakpoint-lg: 1024px;  // Desktop
-$breakpoint-xl: 1280px;  // Desktop grande
-```
+| Breakpoint | Valor | Dispositivo |
+|------------|-------|-------------|
+| `$breakpoint-sm` | 640px | Móviles |
+| `$breakpoint-md` | 768px | Tablets vertical |
+| `$breakpoint-lg` | 1024px | Tablets horizontal |
+| `$breakpoint-xl` | 1280px | Desktop |
 
 ### Sombras
 
-```scss
-// Sombras generales
-$shadow-sm: 0 1px 4px 0 rgba(0, 0, 0, 0.08);   // Sutil
-$shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.16);   // Media
-$shadow-lg: 0 4px 16px 0 rgba(0, 0, 0, 0.24);  // Pronunciada
-
-// Sombras de botones (con color de marca)
-$shadow-boton: 0 4px 12px 0 rgba(52, 198, 160, 0.4);
-$shadow-boton-hover: 0 6px 16px 0 rgba(42, 174, 142, 0.5);
-
-// Sombras modo oscuro (glow verde)
-$oscuro-shadow-boton: 0 4px 20px 0 rgba(0, 229, 160, 0.35);
-```
-
-### Z-index
-
-Sistema de capas ordenado:
+Tres niveles de sombra según la importancia del elemento:
 
 ```scss
-$z-base: 1;       // Nivel base
-$z-dropdown: 2;   // Menús desplegables
-$z-sticky: 3;     // Elementos sticky
-$z-overlay: 4;    // Overlays
-$z-modal: 5;      // Modales (máxima prioridad)
+$shadow-sm: 0 1px 4px rgba(0,0,0,0.08);   // Inputs, hovers suaves
+$shadow-md: 0 2px 8px rgba(0,0,0,0.16);   // Cards, dropdowns
+$shadow-lg: 0 4px 16px rgba(0,0,0,0.24);  // Modales
 ```
 
-### Bordes y radios
+Los botones tienen sombras verdes para reforzar la identidad de marca.
+
+### Transiciones
 
 ```scss
-// Grosores de borde
-$borde-thin: 1px;
-$borde-medium: 2px;
-$borde-thick: 4px;
-
-// Radios de esquina
-$radio-sm: 2px;     // Muy sutil
-$radio-md: 4px;     // Botones, inputs
-$radio-lg: 8px;     // Cards, contenedores
-$radio-xl: 16px;    // Modales
-$radio-full: 9999px; // Círculos, pills
+$transicion-rapida: 0.15s ease;   // Hovers rápidos
+$transicion-estandar: 0.3s ease;  // Cambios de estado
+$transicion-lenta: 0.5s ease;     // Animaciones de entrada
 ```
+
+Para el **cambio de tema** aplico transiciones globales de 200ms en background, border y box-shadow.
 
 ---
 
-## 1.5 Mixins y funciones
+## 1.5 Mixins
 
-Los mixins son trozos de CSS que se pueden reutilizar sin copiar y pegar. Están en `01-tools/_mixins.scss`.
+Los mixins son bloques de CSS reutilizables que defino en `_mixins.scss`.
 
-### Mixins disponibles
+### respond-down
 
-#### **respond-down** - Media query desktop-first
-
-Aplica estilos hasta cierto breakpoint. Va de escritorio hacia abajo (max-width).
+Aplica estilos responsive con enfoque desktop-first:
 
 ```scss
-// Uso
 .elemento {
-  padding: $space-6; // Desktop por defecto
+  padding: $space-6;           // Desktop por defecto
 
   @include respond-down(lg) {
-    padding: $space-4; // Tablet y menor
+    padding: $space-4;         // Hasta 1023px
+  }
+
+  @include respond-down(md) {
+    padding: $space-3;         // Hasta 767px
   }
 
   @include respond-down(sm) {
-    padding: $space-2; // Móvil
+    padding: $space-2;         // Hasta 639px
   }
 }
 ```
 
-**Breakpoints disponibles:**
-- `xl`: hasta 1279px
-- `lg`: hasta 1023px
-- `md`: hasta 767px
-- `sm`: hasta 639px
+### flex-center
 
----
-
-#### **flex-center** - Centrar con flexbox
-
-Centra un elemento en ambos ejes con flexbox. Simple pero útil.
+Centra un elemento en ambos ejes:
 
 ```scss
-// Definición
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-// Uso
-.contenedor-centrado {
+.modal__overlay {
   @include flex-center;
-  height: 100vh;
+  position: fixed;
+  inset: 0;
 }
 ```
 
----
+### box-shadow
 
-#### **box-shadow** - Aplicar sombra
-
-Mete una sombra predefinida o la que le pases como parámetro.
+Aplica sombras predefinidas:
 
 ```scss
-// Definición
-@mixin box-shadow($shadow: $shadow-md) {
-  box-shadow: $shadow;
-}
-
-// Uso con valor por defecto
 .card {
-  @include box-shadow; // Usa $shadow-md
+  @include box-shadow;              // Usa $shadow-md por defecto
 }
 
-// Uso con sombra personalizada
-.boton {
-  @include box-shadow($shadow-boton);
+.boton--primary {
+  @include box-shadow($shadow-boton);  // Sombra verde
 }
 ```
-
-**Sombras disponibles en variables:**
-- `$shadow-sm`: Sombra sutil
-- `$shadow-md`: Sombra media (por defecto)
-- `$shadow-lg`: Sombra pronunciada
-- `$shadow-boton`: Sombra verde para botones primarios
 
 ---
 
 ## 1.6 ViewEncapsulation en Angular
 
-Angular encapsula los estilos de cada componente por defecto, lo que afecta a cómo se aplican las clases CSS.
+Angular encapsula los estilos de cada componente por defecto. Esto significa que los estilos de un componente no afectan a otros.
 
-### Modos de encapsulación
+### Estrategia elegida
 
-1. **Emulated (por defecto):** Angular simula Shadow DOM añadiendo atributos únicos a los elementos
-2. **ShadowDom:** Usa Shadow DOM nativo del navegador
-3. **None:** Sin encapsulación, estilos globales
+Uso **Emulated** (el modo por defecto) porque:
 
-### Uso del selector :host
+1. **Aísla los estilos**: cada componente tiene sus propias reglas sin conflictos
+2. **Compatible con todos los navegadores**: no depende de Shadow DOM nativo
+3. **Permite usar `:host`**: para estilar el elemento raíz del componente
 
-Cuando un componente tiene una clase en su elemento raíz (vía `@HostBinding` o `[class]`), hay que usar `:host` para estilizarlo:
+### Uso de :host
+
+Cuando necesito estilar el elemento raíz del componente según una clase dinámica:
 
 ```scss
-// ❌ INCORRECTO - No funciona con ViewEncapsulation
+// INCORRECTO - no funciona con encapsulación
 .acordeon-item--expandido .acordeon__contenido {
   grid-template-rows: 1fr;
 }
 
-// ✅ CORRECTO - Funciona con ViewEncapsulation
+// CORRECTO - funciona con encapsulación
 :host.acordeon-item--expandido .acordeon__contenido {
   grid-template-rows: 1fr;
 }
 ```
 
-### Ejemplo práctico: Componente Acordeón
-
-**TypeScript:**
-```typescript
-@Component({
-  selector: 'app-acordeon-item',
-  templateUrl: './acordeon-item.html',
-  styleUrls: ['./acordeon-item.scss']
-})
-export class AcordeonItemComponent {
-  expandido = signal(false);
-
-  @HostBinding('class.acordeon-item--expandido')
-  get claseExpandido() {
-    return this.expandido();
-  }
-}
-```
-
-**SCSS:**
-```scss
-// El host es el elemento <app-acordeon-item>
-:host {
-  display: block;
-}
-
-// Cuando el host tiene la clase --expandido
-:host.acordeon-item--expandido {
-  .acordeon__icono {
-    transform: rotate(180deg);
-  }
-  
-  .acordeon__contenido {
-    grid-template-rows: 1fr;
-  }
-}
-```
-
 ### Buenas prácticas
 
-1. **Usar `:host` cuando toque clases del elemento raíz**
-2. **No usar `::ng-deep`**, está deprecado
-3. **Variables CSS** para valores que vengan del padre
-4. **Composición antes que herencia** de estilos
+- Usar `:host` para estilar el elemento raíz
+- Evitar `::ng-deep` porque está deprecado
+- Usar CSS Custom Properties para comunicar valores entre componentes
+- Preferir composición sobre herencia
 
 ---
 
 ## 2. HTML semántico y estructura
 
-### 2.1 Elementos semánticos utilizados
+En esta sección explico cómo organizo el HTML del proyecto usando etiquetas semánticas, la estrategia de headings que sigo y cómo estructuro los formularios para que sean accesibles.
 
-Usamos etiquetas HTML5 semánticas para que la página sea más accesible y se posicione mejor en buscadores:
+---
 
-| Elemento | Uso | Ejemplo en el proyecto |
-|----------|-----|------------------------|
-| `<header>` | Cabecera principal con logo, buscador y navegación | Layout header |
-| `<nav>` | Navegación y enlaces de redes sociales | Header y footer |
-| `<main>` | Contenido principal de la página | Layout main |
-| `<section>` | Agrupación de contenido relacionado | Contenedores internos |
-| `<article>` | Contenido independiente (marca, contacto) | Footer brand/contacto |
-| `<footer>` | Pie de página con información de contacto | Layout footer |
-| `<search>` | Área de búsqueda (HTML5.2) | Buscador en header |
+## 2.1 Elementos semánticos utilizados
 
-**Ejemplo de header:**
+Uso etiquetas HTML5 semánticas en lugar de `<div>` genéricos. Esto tiene dos ventajas principales: mejora la accesibilidad (los lectores de pantalla entienden mejor la estructura) y ayuda al SEO (los buscadores indexan mejor el contenido).
+
+### Elementos que uso
+
+| Elemento | Para qué lo uso |
+|----------|-----------------|
+| `<header>` | La cabecera de la página con logo, buscador y navegación |
+| `<nav>` | Zonas de navegación (menú principal, redes sociales) |
+| `<main>` | El contenido principal de cada página |
+| `<section>` | Agrupar contenido relacionado dentro de una página |
+| `<article>` | Contenido que tiene sentido por sí solo (tarjetas, posts) |
+| `<aside>` | Contenido secundario (mensajes de ayuda, sidebars) |
+| `<footer>` | El pie de página con información de contacto |
+| `<search>` | El área del buscador (elemento HTML5.2) |
+
+### Ejemplo: Header
+
+El header contiene el logo, el buscador y los botones de acción. Uso `<search>` para envolver el buscador porque semánticamente indica que ahí hay una funcionalidad de búsqueda.
+
 ```html
 <header class="gym-header">
-  <section class="gym-header__container">
-    <a class="gym-header__logo" routerLink="/">
-      <img src="assets/logo.png" alt="Gymunity">
+  <section class="gym-header__top">
+    <a class="gym-header__logo" routerLink="/" aria-label="Ir a inicio">
+      <picture>
+        <source media="(max-width: 480px)" srcset="assets/logo-blanco-small.webp">
+        <source media="(max-width: 768px)" srcset="assets/logo-blanco-medium.webp">
+        <img src="assets/logo-blanco-large.webp" alt="Gymunity" loading="eager">
+      </picture>
     </a>
+
     <search class="gym-header__buscador">
-      <app-buscador placeholder="Buscar..."></app-buscador>
+      <app-buscador placeholder="Buscar gimnasios..." />
     </search>
-    <nav class="gym-header__utils">
-      <app-boton-tema></app-boton-tema>
-      <app-boton>Iniciar Sesión</app-boton>
-    </nav>
+
+    <section class="gym-header__acciones">
+      <app-theme-switcher aria-label="Cambiar tema" />
+      <nav class="gym-header__nav" role="navigation">
+        <app-boton variante="ghost" tamano="sm">Iniciar Sesión</app-boton>
+        <app-boton variante="primary" tamano="sm">Registrarse</app-boton>
+      </nav>
+    </section>
   </section>
 </header>
 ```
 
-**Ejemplo de main:**
+### Ejemplo: Main
+
+El main es muy sencillo. Uso `<ng-content>` para proyectar el contenido de cada página dentro del layout.
+
 ```html
 <main class="gym-main">
   <ng-content></ng-content>
 </main>
 ```
 
-**Ejemplo de footer:**
+### Ejemplo: Footer
+
+El footer tiene dos `<article>`: uno para la marca (logo + slogan) y otro para el contacto. Dentro del contacto hay un `<nav>` con los enlaces a redes sociales.
+
 ```html
 <footer class="gym-footer">
   <section class="gym-footer__container">
     <article class="gym-footer__brand">
-      <img src="assets/logo.png" alt="Gymunity">
-      <p class="gym-footer__slogan">Conecta con los mejores gimnasios...</p>
+      <picture class="gym-footer__logo">
+        <source media="(max-width: 480px)" srcset="assets/logo-blanco-small.webp">
+        <img src="assets/logo-blanco-large.webp" alt="Gymunity" loading="lazy">
+      </picture>
+      <p class="gym-footer__slogan">Conecta con los mejores gimnasios y torneos de artes marciales.</p>
     </article>
+    
     <article class="gym-footer__contacto">
+      <p class="gym-footer__email">contacto@gymunity.com</p>
       <nav class="gym-footer__social" aria-label="Redes sociales">
-        <!-- Enlaces de las redes sociales -->
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <app-icono nombre="instagram" tamano="lg" />
+        </a>
+        <a href="mailto:contacto@gymunity.com" aria-label="Email">
+          <app-icono nombre="email" tamano="lg" />
+        </a>
       </nav>
     </article>
   </section>
-  <p class="gym-footer__copyright">© 2025 Gymunity</p>
+  
+  <p class="gym-footer__copyright">© 2025 Gymunity. Todos los derechos reservados.</p>
 </footer>
 ```
 
-### 2.2 Jerarquía de headings
+---
 
-**Reglas:**
-- Un solo `<h1>` por página (el título gordo)
-- `<h2>` para secciones principales
-- `<h3>` para subsecciones o tarjetas
-- No saltarse niveles
+## 2.2 Jerarquía de headings
 
-**Diagrama de jerarquía:**
+Los headings (`<h1>` a `<h6>`) estructuran el contenido de la página. Sigo unas reglas claras para mantener la jerarquía correcta:
+
+### Reglas que sigo
+
+1. **Solo un `<h1>` por página**: es el título principal, lo más importante
+2. **`<h2>` para secciones principales**: dividen el contenido en bloques grandes
+3. **`<h3>` para subsecciones**: contenido dentro de las secciones
+4. **Nunca saltar niveles**: no paso de `<h1>` a `<h3>` directamente, siempre uso `<h2>` en medio
+
+### Diagrama de jerarquía
+
+Así queda la estructura de headings en las páginas principales:
+
 ```
-Página de Inicio
-├── h1: "Encuentra el gimnasio perfecto para ti"
-│   ├── h2: "Gimnasios más populares"
-│   │   └── h3: [Nombre del gimnasio] (en cada tarjeta)
-│   └── h2: "Nuevos gimnasios en Gymunity"
-│       └── h3: [Nombre del gimnasio] (en cada tarjeta)
-
-Página de Búsqueda
-├── h1: "Estos son los gimnasios que hemos encontrado"
-│   └── h3: [Nombre del gimnasio] (en cada resultado)
-
-Tarjeta de Gimnasio (detalle)
-├── h1: [Nombre del gimnasio]
-│   ├── h2: "Profesores y artes impartidas"
-│   ├── h2: "Torneos disponibles"
-│   └── h2: "Reseñas de otros alumnos"
+PÁGINA DE INICIO
+└── h1: "Encuentra el gimnasio perfecto para ti"
+    ├── h2: "Gimnasios más populares"
+    │   ├── h3: "Smart Fit Centro"
+    │   ├── h3: "CrossFit Valencia"
+    │   └── h3: "Gimnasio Olimpia"
+    └── h2: "Nuevos gimnasios en Gymunity"
+        ├── h3: "Dojo Karate Madrid"
+        └── h3: "Fight Club BCN"
 ```
 
-### 2.3 Estructura de formularios
+```
+PÁGINA DE BÚSQUEDA
+└── h1: "Resultados de búsqueda"
+    ├── h3: "Smart Fit Centro"
+    ├── h3: "CrossFit Valencia"
+    └── h3: "Gimnasio Olimpia"
+```
 
-Los formularios siguen las pautas de accesibilidad al pie de la letra:
+```
+PÁGINA DE DETALLE DE GIMNASIO
+└── h1: "Smart Fit Centro"
+    ├── h2: "Profesores y artes impartidas"
+    ├── h2: "Torneos disponibles"
+    │   └── h3: "Torneo de Judo Primavera"
+    └── h2: "Reseñas de alumnos"
+        ├── h3: "Juan García"
+        └── h3: "María López"
+```
 
-- **`<fieldset>`**: agrupa campos que van juntos
-- **`<legend>`**: describe para qué es ese grupo
-- **`<label>`**: vinculado al input con `for` e `id`
-- **Atributos ARIA**: `aria-describedby`, `aria-invalid` para lectores de pantalla
+### Por qué es importante
 
-**Ejemplo del componente campo-formulario:**
+- Los **lectores de pantalla** usan los headings para navegar por la página
+- Los **buscadores** entienden mejor la estructura del contenido
+- El **usuario** puede escanear la página más fácilmente
+
+---
+
+## 2.3 Estructura de formularios
+
+Los formularios siguen las pautas de accesibilidad WCAG. Cada campo tiene su label asociado correctamente y uso atributos ARIA cuando es necesario.
+
+### Elementos que uso
+
+| Elemento | Para qué |
+|----------|----------|
+| `<form>` | Contenedor del formulario |
+| `<fieldset>` | Agrupa campos relacionados |
+| `<legend>` | Título del grupo de campos |
+| `<label>` | Etiqueta del campo, asociada con `for` |
+| `<input>` | Campo de entrada con `id` único |
+| `<aside>` | Mensajes de ayuda o error |
+
+### Asociación label-input
+
+La asociación entre `<label>` y `<input>` se hace mediante los atributos `for` e `id`. Cuando el usuario hace clic en el label, se activa el input correspondiente. Esto mejora mucho la usabilidad, especialmente en móviles donde los campos son pequeños.
+
 ```html
-<label class="campo-formulario__label" [for]="inputId">
-  {{ label }}
-  @if (required) {
+<!-- El for del label coincide con el id del input -->
+<label for="email-registro">Email</label>
+<input type="email" id="email-registro" name="email">
+```
+
+### Componente campo-formulario
+
+He creado un componente reutilizable que encapsula toda la lógica del campo: label, input, mensajes de error y estados de validación.
+
+```html
+<!-- Estructura del componente campo-formulario -->
+
+<label class="campo-formulario__label" [for]="inputId()">
+  {{ label() }}
+  @if (required()) {
     <abbr class="campo-formulario__required" title="Campo obligatorio">*</abbr>
   }
 </label>
 
 <input 
   class="campo-formulario__field"
-  [type]="type"
-  [id]="inputId"
-  [name]="name"
-  [required]="required"
-  [attr.aria-describedby]="helpText ? inputId + '-help' : null"
-  [attr.aria-invalid]="hasError"
+  [class.campo-formulario__field--error]="hasError()"
+  [class.campo-formulario__field--validando]="validando()"
+  [type]="type()"
+  [id]="inputId()"
+  [name]="name()"
+  [placeholder]="placeholder()"
+  [required]="required()"
+  [attr.aria-describedby]="hasError() ? inputId() + '-error' : null"
+  [attr.aria-invalid]="hasError()"
 />
 
-@if (hasError && errorMessage) {
-  <small class="campo-formulario__error" [id]="inputId + '-error'" role="alert">
-    {{ errorMessage }}
-  </small>
-}
+<aside class="campo-formulario__mensaje-container">
+  @if (validando()) {
+    <small class="campo-formulario__validando" role="status">Verificando...</small>
+  } @else if (hasError() && errorMessage()) {
+    <small class="campo-formulario__error" [id]="inputId() + '-error'" role="alert">
+      {{ errorMessage() }}
+    </small>
+  } @else if (helpText()) {
+    <small class="campo-formulario__help" [id]="inputId() + '-help'">
+      {{ helpText() }}
+    </small>
+  }
+</aside>
 ```
 
-**Ejemplo de formulario completo (registro):**
+### Atributos ARIA utilizados
+
+| Atributo | Para qué |
+|----------|----------|
+| `aria-describedby` | Vincula el input con su mensaje de ayuda o error |
+| `aria-invalid` | Indica si el campo tiene un error de validación |
+| `role="alert"` | Los lectores de pantalla anuncian el error inmediatamente |
+| `role="status"` | Anuncia cambios de estado sin interrumpir |
+
+### Ejemplo de formulario completo
+
+Así queda un formulario de registro usando el componente:
+
 ```html
-<form class="formulario-auth">
+<form class="formulario-auth" (ngSubmit)="onSubmit()">
   <fieldset class="formulario-auth__fieldset">
     <legend class="formulario-auth__legend">Crear cuenta</legend>
     
     <app-campo-formulario
-      label="Usuario o email:"
+      label="Nombre de usuario"
+      type="text"
+      inputId="registro-usuario"
+      name="usuario"
+      [required]="true"
+      helpText="Entre 3 y 20 caracteres"
+    />
+    
+    <app-campo-formulario
+      label="Email"
       type="email"
       inputId="registro-email"
       name="email"
-      [required]="true">
-    </app-campo-formulario>
+      [required]="true"
+    />
     
     <app-campo-formulario
-      label="Contraseña:"
+      label="Contraseña"
       type="password"
       inputId="registro-password"
       name="password"
-      [required]="true">
-    </app-campo-formulario>
+      [required]="true"
+      helpText="Mínimo 8 caracteres"
+    />
     
-    <app-boton tipo="submit">Registrarse</app-boton>
+    <app-boton variante="primary" tipo="submit">
+      Crear cuenta
+    </app-boton>
   </fieldset>
 </form>
 ```
 
-La asociación `for`/`id` hace que al pulsar en el label se active el input. Es un detalle que mejora mucho la usabilidad, sobre todo en móviles.
+El `<fieldset>` agrupa todos los campos del formulario y el `<legend>` indica el propósito ("Crear cuenta"). Cada campo tiene su label asociado y los mensajes de error aparecen vinculados con `aria-describedby`.
 
 ---
 

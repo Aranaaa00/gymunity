@@ -4,22 +4,22 @@
 // VARIABLES LOCALES
 // ============================================
 
-$boton-tema-size: 2.5rem;
-$boton-tema-icon-size: 1.25rem;
-$boton-tema-transition-duration: 0.2s;
-$boton-tema-hover-bg: rgba($gris-100, 0.05);
-$boton-tema-active-scale: 0.95;
+$switcher-size: 2.5rem;
+$switcher-icon-size: 1.25rem;
+$switcher-transition: 0.2s;
+$switcher-hover-bg: rgba($gris-100, 0.05);
+$switcher-active-scale: 0.95;
 
 // ============================================
-// BOTÓN TEMA (Toggle Claro/Oscuro)
+// THEME SWITCHER (Toggle Claro/Oscuro)
 // ============================================
 
-.boton-tema {
+.theme-switcher {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: $boton-tema-size;
-  height: $boton-tema-size;
+  width: $switcher-size;
+  height: $switcher-size;
   padding: 0;
   background: transparent;
   border: none;
@@ -27,23 +27,23 @@ $boton-tema-active-scale: 0.95;
   color: $gris-200;
   cursor: pointer;
   transition: 
-    color $boton-tema-transition-duration ease, 
-    background $boton-tema-transition-duration ease;
+    color $switcher-transition ease, 
+    background $switcher-transition ease;
 
   &:hover {
+    background: $switcher-hover-bg;
     color: $color-botones;
-    background: $boton-tema-hover-bg;
   }
 
   &:active {
-    transform: scale($boton-tema-active-scale);
+    transform: scale($switcher-active-scale);
   }
 
   lucide-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: $boton-tema-icon-size;
-    height: $boton-tema-icon-size;
+    width: $switcher-icon-size;
+    height: $switcher-icon-size;
   }
 }

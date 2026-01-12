@@ -68,6 +68,7 @@ $galeria-altura-tablet: 18rem;
 .galeria__miniaturas {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: $galeria-gap;
 
@@ -79,6 +80,7 @@ $galeria-altura-tablet: 18rem;
 
   @include respond-down(md) {
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     height: auto;
     overflow-x: auto;
