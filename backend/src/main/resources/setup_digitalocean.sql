@@ -45,7 +45,10 @@ CREATE TABLE IF NOT EXISTS clase (
     nombre VARCHAR(255) NOT NULL,
     profesor_id BIGINT REFERENCES usuario(id) ON DELETE SET NULL,
     gimnasio_id BIGINT NOT NULL REFERENCES gimnasio(id) ON DELETE CASCADE,
-    icono VARCHAR(255)
+    icono VARCHAR(255),
+    dias_semana VARCHAR(255),
+    hora_inicio TIME,
+    hora_fin TIME
 );
 
 -- Tabla Interaccion
@@ -180,6 +183,46 @@ SELECT COUNT(*) AS total_inscripciones FROM alumno_clase;
 
 -- Ver los gimnasios insertados
 SELECT id, nombre, ciudad FROM gimnasio ORDER BY id;
+
+-- ============================================
+-- 4. MIGRACIONES (para bases de datos existentes)
+-- ============================================
+
+-- Si la columna fecha_clase no existe, la agregamos
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'alumno_clase' AND column_name = 'fecha_clase'
+    ) THEN
+        ALTER TABLE alumno_clase ADD COLUMN fecha_clase TIMESTAMP NOT NULL DEFAULT NOW();
+    END IF;
+END $$;
+
+-- Migraciones para tabla clase (columnas añadidas posteriormente)
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'clase' AND column_name = 'dias_semana'
+    ) THEN
+        ALTER TABLE clase ADD COLUMN dias_semana VARCHAR(255);
+    END IF;
+    
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'clase' AND column_name = 'hora_inicio'
+    ) THEN
+        ALTER TABLE clase ADD COLUMN hora_inicio TIME;
+    END IF;
+    
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'clase' AND column_name = 'hora_fin'
+    ) THEN
+        ALTER TABLE clase ADD COLUMN hora_fin TIME;
+    END IF;
+END $$;
 
 -- ============================================
 -- FIN DEL SCRIPT

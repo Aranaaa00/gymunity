@@ -9,9 +9,9 @@
         placeholder="Tu nombre"
         inputId="perfil-nombre"
         name="nombre"
-        [formControl]="$any(perfilForm.get('nombre'))"
+        [formControl]="getControl('nombre')"
         [required]="true"
-        [hasError]="!!perfilForm.get('nombre')?.touched && !!perfilForm.get('nombre')?.invalid"
+        [hasError]="getControl('nombre').touched && getControl('nombre').invalid"
         [errorMessage]="getErrorMessage('nombre')">
       </app-campo-formulario>
 
@@ -21,9 +21,9 @@
         placeholder="Tus apellidos"
         inputId="perfil-apellidos"
         name="apellidos"
-        [formControl]="$any(perfilForm.get('apellidos'))"
+        [formControl]="getControl('apellidos')"
         [required]="true"
-        [hasError]="!!perfilForm.get('apellidos')?.touched && !!perfilForm.get('apellidos')?.invalid"
+        [hasError]="getControl('apellidos').touched && getControl('apellidos').invalid"
         [errorMessage]="getErrorMessage('apellidos')">
       </app-campo-formulario>
     </section>
@@ -34,10 +34,10 @@
       placeholder="tu_usuario"
       inputId="perfil-username"
       name="username"
-      [formControl]="$any(perfilForm.get('username'))"
+      [formControl]="getControl('username')"
       [required]="true"
       [validando]="estaValidando('username')"
-      [hasError]="!!perfilForm.get('username')?.touched && !!perfilForm.get('username')?.invalid"
+      [hasError]="getControl('username').touched && getControl('username').invalid"
       [errorMessage]="getErrorMessage('username')"
       [mensajeExito]="getMensajeExito('username')">
     </app-campo-formulario>
@@ -48,9 +48,9 @@
       placeholder="tu@email.com"
       inputId="perfil-email"
       name="email"
-      [formControl]="$any(perfilForm.get('email'))"
+      [formControl]="getControl('email')"
       [required]="true"
-      [hasError]="!!perfilForm.get('email')?.touched && !!perfilForm.get('email')?.invalid"
+      [hasError]="getControl('email').touched && getControl('email').invalid"
       [errorMessage]="getErrorMessage('email')">
       <small class="formulario-perfil__ayuda">El email no se puede modificar</small>
     </app-campo-formulario>
@@ -66,8 +66,8 @@
         placeholder="600123456"
         inputId="perfil-telefono"
         name="telefono"
-        [formControl]="$any(perfilForm.get('telefono'))"
-        [hasError]="!!perfilForm.get('telefono')?.touched && !!perfilForm.get('telefono')?.invalid"
+        [formControl]="getControl('telefono')"
+        [hasError]="getControl('telefono').touched && getControl('telefono').invalid"
         [errorMessage]="getErrorMessage('telefono')">
       </app-campo-formulario>
 
@@ -77,8 +77,8 @@
         placeholder="28001"
         inputId="perfil-codigoPostal"
         name="codigoPostal"
-        [formControl]="$any(perfilForm.get('codigoPostal'))"
-        [hasError]="!!perfilForm.get('codigoPostal')?.touched && !!perfilForm.get('codigoPostal')?.invalid"
+        [formControl]="getControl('codigoPostal')"
+        [hasError]="getControl('codigoPostal').touched && getControl('codigoPostal').invalid"
         [errorMessage]="getErrorMessage('codigoPostal')">
       </app-campo-formulario>
     </section>
@@ -92,8 +92,8 @@
       placeholder="Escribe una breve descripción..."
       inputId="perfil-bio"
       name="bio"
-      [formControl]="$any(perfilForm.get('bio'))"
-      [hasError]="!!perfilForm.get('bio')?.touched && !!perfilForm.get('bio')?.invalid"
+      [formControl]="getControl('bio')"
+      [hasError]="getControl('bio').touched && getControl('bio').invalid"
       [errorMessage]="getErrorMessage('bio')">
     </app-area-texto>
   </fieldset>
@@ -107,12 +107,12 @@
           <section class="formulario-perfil__red-campos">
             <section class="formulario-perfil__campo-selector">
               <label>Plataforma</label>
-              <select [formControl]="$any(getRedSocialControl($index, 'plataforma'))">
+              <select [formControl]="getRedSocialControl($index, 'plataforma')">
                 @for (plataforma of plataformasDisponibles; track plataforma) {
                   <option [value]="plataforma">{{ plataforma }}</option>
                 }
               </select>
-              @if (!!getRedSocialControl($index, 'plataforma')?.touched && !!getRedSocialControl($index, 'plataforma')?.invalid) {
+              @if (getRedSocialControl($index, 'plataforma').touched && getRedSocialControl($index, 'plataforma').invalid) {
                 <small class="error">{{ getErrorMessageRedSocial($index, 'plataforma') }}</small>
               }
             </section>
@@ -123,9 +123,9 @@
               placeholder="https://..."
               inputId="red-url-{{$index}}"
               name="url-{{$index}}"
-              [formControl]="$any(getRedSocialControl($index, 'url'))"
+              [formControl]="getRedSocialControl($index, 'url')"
               [required]="true"
-              [hasError]="!!getRedSocialControl($index, 'url')?.touched && !!getRedSocialControl($index, 'url')?.invalid"
+              [hasError]="getRedSocialControl($index, 'url').touched && getRedSocialControl($index, 'url').invalid"
               [errorMessage]="getErrorMessageRedSocial($index, 'url')">
             </app-campo-formulario>
           </section>

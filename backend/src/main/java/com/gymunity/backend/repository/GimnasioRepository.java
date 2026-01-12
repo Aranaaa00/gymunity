@@ -2,8 +2,10 @@ package com.gymunity.backend.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.gymunity.backend.entity.Gimnasio;
 
@@ -45,6 +47,15 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
     List<Gimnasio> findByCiudadIgnoreCase(String ciudad);
 
     /**
+     * Verifica si existe un gimnasio con el nombre y ciudad indicados.
+     *
+     * @param nombre Nombre del gimnasio.
+     * @param ciudad Ciudad del gimnasio.
+     * @return true si existe, false en caso contrario.
+     */
+    boolean existsByNombreIgnoreCaseAndCiudadIgnoreCase(String nombre, String ciudad);
+
+    /**
      * Busca gimnasios que tengan clases cuyo nombre empiece por el texto indicado.
      * Usa DISTINCT para evitar duplicados.
      *
@@ -62,6 +73,7 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
     List<Gimnasio> findDistinctByClasesNombreContainingIgnoreCase(String nombre);
 
     /**
+<<<<<<< HEAD
      * Busca gimnasios con mayor valoración media.
      *
      * @return Lista de gimnasios ordenados por valoración media descendente.
@@ -69,12 +81,41 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
     @Query("SELECT g FROM Gimnasio g LEFT JOIN g.interacciones i " +
            "GROUP BY g.id ORDER BY AVG(COALESCE(i.valoracion, 0)) DESC, COUNT(CASE WHEN i.resenia IS NOT NULL THEN 1 END) DESC")
     List<Gimnasio> findMasPopulares();
+=======
+     * Busca gimnasios con más usuarios apuntados (más populares) con paginación.
+     *
+     * @param pageable Configuración de paginación.
+     * @return Lista de gimnasios ordenados por popularidad.
+     */
+    @Query("SELECT g FROM Gimnasio g LEFT JOIN g.interacciones i " +
+           "GROUP BY g.id ORDER BY COUNT(CASE WHEN i.esApuntado = true THEN 1 END) DESC")
+    List<Gimnasio> findMasPopulares(Pageable pageable);
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
 
     /**
-     * Busca los gimnasios más recientes (últimos añadidos).
+     * Busca los gimnasios más recientes (últimos añadidos) con paginación.
      *
+     * @param pageable Configuración de paginación.
      * @return Lista de gimnasios ordenados por ID descendente.
      */
     @Query("SELECT g FROM Gimnasio g ORDER BY g.id DESC")
-    List<Gimnasio> findMasRecientes();
+    List<Gimnasio> findMasRecientes(Pageable pageable);
+
+    /**
+     * Obtiene la valoración media de un gimnasio.
+     *
+     * @param gimnasioId ID del gimnasio.
+     * @return Valoración media o null si no hay valoraciones.
+     */
+    @Query("SELECT COALESCE(AVG(i.valoracion), 0.0) FROM Interaccion i WHERE i.gimnasio.id = :gimnasioId AND i.valoracion IS NOT NULL")
+    Double calcularValoracionMedia(@Param("gimnasioId") Long gimnasioId);
+
+    /**
+     * Cuenta el total de reseñas de un gimnasio.
+     *
+     * @param gimnasioId ID del gimnasio.
+     * @return Número de reseñas.
+     */
+    @Query("SELECT COUNT(i) FROM Interaccion i WHERE i.gimnasio.id = :gimnasioId AND i.resenia IS NOT NULL")
+    int contarResenias(@Param("gimnasioId") Long gimnasioId);
 }

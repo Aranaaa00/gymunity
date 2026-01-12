@@ -5,7 +5,7 @@
     class="buscador__input"
     [placeholder]="placeholder()" 
     [value]="valor()"
-    (input)="onValorCambia($any($event.target).value)"
+    (input)="onValorCambia(inputBusqueda.value)"
     [attr.aria-label]="placeholder()"
     name="busqueda"
     autocomplete="off"

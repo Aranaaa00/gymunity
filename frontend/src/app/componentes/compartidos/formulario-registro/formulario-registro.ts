@@ -1,6 +1,6 @@
 import { Component, output, inject, OutputEmitterRef, signal, WritableSignal, computed, Signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { Boton } from '../boton/boton';
 import { passwordFuerte, coincidenCampos, MENSAJES_VALIDACION } from '../../../servicios/validadores';
@@ -191,30 +191,35 @@ export class FormularioRegistro {
   }
 
   // ----------------------------------------
-  // Getters de controles
+  // Getters de controles tipados
   // ----------------------------------------
-  get usernameControl(): AbstractControl | null {
-    return this.registroForm.get('username');
+  get usernameControl(): FormControl {
+    return this.registroForm.get('username') as FormControl;
   }
 
-  get fullNameControl(): AbstractControl | null {
-    return this.registroForm.get('fullName');
+  get fullNameControl(): FormControl {
+    return this.registroForm.get('fullName') as FormControl;
   }
 
-  get emailControl(): AbstractControl | null {
-    return this.registroForm.get('email');
+  get emailControl(): FormControl {
+    return this.registroForm.get('email') as FormControl;
   }
 
+<<<<<<< HEAD
   get ciudadControl(): AbstractControl | null {
     return this.registroForm.get('ciudad');
   }
 
   get passwordControl(): AbstractControl | null {
     return this.registroForm.get('password');
+=======
+  get passwordControl(): FormControl {
+    return this.registroForm.get('password') as FormControl;
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
   }
 
-  get password2Control(): AbstractControl | null {
-    return this.registroForm.get('password2');
+  get password2Control(): FormControl {
+    return this.registroForm.get('password2') as FormControl;
   }
 
   // ----------------------------------------

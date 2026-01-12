@@ -17,11 +17,15 @@
       placeholder="@tu_nombre"
       inputId="registro-username"
       name="username"
+<<<<<<< HEAD
       autocomplete="off"
       [formControl]="$any(usernameControl)"
+=======
+      [formControl]="usernameControl"
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
       [required]="true"
       [validando]="estaValidando('username')"
-      [hasError]="!!usernameControl?.touched && !!usernameControl?.invalid"
+      [hasError]="usernameControl.touched && usernameControl.invalid"
       [errorMessage]="getErrorMessage('username')"
       [mensajeExito]="getMensajeExito('username')">
     </app-campo-formulario>
@@ -32,10 +36,14 @@
       placeholder="Cómo te llamamos"
       inputId="registro-fullname"
       name="fullName"
+<<<<<<< HEAD
       autocomplete="off"
       [formControl]="$any(fullNameControl)"
+=======
+      [formControl]="fullNameControl"
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
       [required]="true"
-      [hasError]="!!fullNameControl?.touched && !!fullNameControl?.invalid"
+      [hasError]="fullNameControl.touched && fullNameControl.invalid"
       [errorMessage]="getErrorMessage('fullName')">
     </app-campo-formulario>
     
@@ -45,11 +53,15 @@
       placeholder="Para tu acceso seguro"
       inputId="registro-email"
       name="email"
+<<<<<<< HEAD
       autocomplete="off"
       [formControl]="$any(emailControl)"
+=======
+      [formControl]="emailControl"
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
       [required]="true"
       [validando]="estaValidando('email')"
-      [hasError]="!!emailControl?.touched && !!emailControl?.invalid"
+      [hasError]="emailControl.touched && emailControl.invalid"
       [errorMessage]="getErrorMessage('email')"
       [mensajeExito]="getMensajeExito('email')">
     </app-campo-formulario>
@@ -75,14 +87,18 @@
       placeholder="Mínimo 8 caracteres"
       inputId="registro-password"
       name="password"
+<<<<<<< HEAD
       autocomplete="new-password"
       [formControl]="$any(passwordControl)"
+=======
+      [formControl]="passwordControl"
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
       [required]="true"
-      [hasError]="!!passwordControl?.touched && !!passwordControl?.invalid"
+      [hasError]="passwordControl.touched && passwordControl.invalid"
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
 
-    @if (passwordControl?.value) {
+    @if (passwordControl.value) {
       <section class="formulario-registro__fuerza">
         <figure class="formulario-registro__fuerza-barra">
           <span 
@@ -104,10 +120,14 @@
       placeholder="Repite tu contraseña"
       inputId="registro-password2"
       name="password2"
+<<<<<<< HEAD
       autocomplete="new-password"
       [formControl]="$any(password2Control)"
+=======
+      [formControl]="password2Control"
+>>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
       [required]="true"
-      [hasError]="!!password2Control?.touched && !!password2Control?.invalid"
+      [hasError]="password2Control.touched && password2Control.invalid"
       [errorMessage]="getErrorMessage('password2')">
     </app-campo-formulario>
     

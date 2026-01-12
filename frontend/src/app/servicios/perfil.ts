@@ -237,12 +237,7 @@ export class PerfilService {
       throw new Error('Usuario no autenticado');
     }
 
-    const request: CancelacionRequest = {
-      alumnoId: usuario.id,
-      claseId
-    };
-
-    return this.http.delete<CancelacionResponse>('/api/inscripciones', { body: request })
+    return this.http.delete<CancelacionResponse>(`/api/inscripciones/alumno/${usuario.id}/clase/${claseId}`)
       .pipe(
         tap((response) => {
           this._clases.update(lista => lista.filter(c => c.claseId !== claseId));

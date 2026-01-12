@@ -44,9 +44,11 @@ public class InteraccionController {
                 .body(interaccionService.apuntarse(dto.getUsuarioId(), dto.getGimnasioId()));
     }
 
-    @DeleteMapping("/desapuntarse")
-    public ResponseEntity<Void> desapuntarse(@Valid @RequestBody InteraccionRequestDTO dto) {
-        interaccionService.desapuntarse(dto.getUsuarioId(), dto.getGimnasioId());
+    @DeleteMapping("/usuario/{usuarioId}/gimnasio/{gimnasioId}")
+    public ResponseEntity<Void> desapuntarse(
+            @PathVariable Long usuarioId,
+            @PathVariable Long gimnasioId) {
+        interaccionService.desapuntarse(usuarioId, gimnasioId);
         return ResponseEntity.noContent().build();
     }
 
@@ -56,9 +58,11 @@ public class InteraccionController {
                 .body(interaccionService.dejarResenia(dto.getUsuarioId(), dto.getGimnasioId(), dto.getTexto(), dto.getValoracion()));
     }
 
-    @DeleteMapping("/resenia")
-    public ResponseEntity<Void> eliminarResenia(@Valid @RequestBody InteraccionRequestDTO dto) {
-        interaccionService.eliminarResenia(dto.getUsuarioId(), dto.getGimnasioId());
+    @DeleteMapping("/resenia/usuario/{usuarioId}/gimnasio/{gimnasioId}")
+    public ResponseEntity<Void> eliminarResenia(
+            @PathVariable Long usuarioId,
+            @PathVariable Long gimnasioId) {
+        interaccionService.eliminarResenia(usuarioId, gimnasioId);
         return ResponseEntity.noContent().build();
     }
 
