@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Subject, takeUntil, forkJoin } from 'rxjs';
+import { Subject, takeUntil, forkJoin, of } from 'rxjs';
 import { Card } from '../../componentes/compartidos/card/card';
 import { SeccionBienvenida } from '../../componentes/compartidos/seccion-bienvenida/seccion-bienvenida';
 import { ModalService } from '../../servicios/modal';
@@ -90,56 +90,33 @@ export class Inicio implements OnInit, OnDestroy {
   // Métodos privados
   // ----------------------------------------
   private cargarGimnasios(): void {
-    this.cargando.set(true);
+    const ciudad = this.ciudadUsuario();
+    const estaAutenticado = this.auth.estaAutenticado();
     
+    // Cargar todo en paralelo para máxima fluidez
     forkJoin({
       populares: this.gimnasiosService.obtenerPopulares(),
-      recientes: this.gimnasiosService.obtenerRecientes()
+      recientes: this.gimnasiosService.obtenerRecientes(),
+      cercanos: estaAutenticado && ciudad 
+        ? this.gimnasiosService.obtenerPorCiudad(ciudad) 
+        : of([])
     }).pipe(
       takeUntil(this.destruir$)
     ).subscribe({
-      next: ({ populares, recientes }) => {
+      next: ({ populares, recientes, cercanos }) => {
         this.gimnasiosPopulares.set(populares.slice(0, MAX_GIMNASIOS_POR_SECCION));
         this.gimnasiosRecientes.set(recientes.slice(0, MAX_GIMNASIOS_POR_SECCION));
-        
-        // Si el usuario está autenticado, cargar gimnasios cercanos
-        if (this.auth.estaAutenticado()) {
-          this.cargarGimnasiosCercanos();
-        } else {
-          this.cargando.set(false);
-        }
+        this.gimnasiosCercanos.set(cercanos.slice(0, MAX_GIMNASIOS_POR_SECCION));
+        this.cargando.set(false);
+        this.cargandoCercanos.set(false);
       },
       error: () => this.manejarError(),
-    });
-  }
-
-  private cargarGimnasiosCercanos(): void {
-    const ciudad = this.ciudadUsuario();
-    
-    if (!ciudad) {
-      this.cargando.set(false);
-      this.cargandoCercanos.set(false);
-      return;
-    }
-    
-    this.cargandoCercanos.set(true);
-    this.gimnasiosService.buscar({ ciudad }).pipe(
-      takeUntil(this.destruir$)
-    ).subscribe({
-      next: (gimnasios) => {
-        this.gimnasiosCercanos.set(gimnasios.slice(0, MAX_GIMNASIOS_POR_SECCION));
-        this.cargando.set(false);
-        this.cargandoCercanos.set(false);
-      },
-      error: () => {
-        this.cargando.set(false);
-        this.cargandoCercanos.set(false);
-      },
     });
   }
 
   private manejarError(): void {
     this.error.set('Error al cargar gimnasios');
     this.cargando.set(false);
+    this.cargandoCercanos.set(false);
   }
 }

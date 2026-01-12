@@ -73,15 +73,6 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
     List<Gimnasio> findDistinctByClasesNombreContainingIgnoreCase(String nombre);
 
     /**
-<<<<<<< HEAD
-     * Busca gimnasios con mayor valoración media.
-     *
-     * @return Lista de gimnasios ordenados por valoración media descendente.
-     */
-    @Query("SELECT g FROM Gimnasio g LEFT JOIN g.interacciones i " +
-           "GROUP BY g.id ORDER BY AVG(COALESCE(i.valoracion, 0)) DESC, COUNT(CASE WHEN i.resenia IS NOT NULL THEN 1 END) DESC")
-    List<Gimnasio> findMasPopulares();
-=======
      * Busca gimnasios con más usuarios apuntados (más populares) con paginación.
      *
      * @param pageable Configuración de paginación.
@@ -90,7 +81,6 @@ public interface GimnasioRepository extends JpaRepository<Gimnasio, Long> {
     @Query("SELECT g FROM Gimnasio g LEFT JOIN g.interacciones i " +
            "GROUP BY g.id ORDER BY COUNT(CASE WHEN i.esApuntado = true THEN 1 END) DESC")
     List<Gimnasio> findMasPopulares(Pageable pageable);
->>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
 
     /**
      * Busca los gimnasios más recientes (últimos añadidos) con paginación.

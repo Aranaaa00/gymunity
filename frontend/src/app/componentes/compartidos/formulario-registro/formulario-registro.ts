@@ -205,17 +205,12 @@ export class FormularioRegistro {
     return this.registroForm.get('email') as FormControl;
   }
 
-<<<<<<< HEAD
-  get ciudadControl(): AbstractControl | null {
-    return this.registroForm.get('ciudad');
+  get ciudadControl(): FormControl {
+    return this.registroForm.get('ciudad') as FormControl;
   }
 
-  get passwordControl(): AbstractControl | null {
-    return this.registroForm.get('password');
-=======
   get passwordControl(): FormControl {
     return this.registroForm.get('password') as FormControl;
->>>>>>> 03bbdcc8efcc3fb46580ff6c70f5fd6451e5268e
   }
 
   get password2Control(): FormControl {

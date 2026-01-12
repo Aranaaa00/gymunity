@@ -205,6 +205,32 @@ export class GimnasiosApiService {
     );
   }
 
+  /**
+   * Obtiene gimnasios por ciudad con caché optimizado.
+   * Usado principalmente para la sección "Gimnasios cercanos" en inicio.
+   */
+  obtenerPorCiudad(ciudad: string): Observable<readonly GimnasioCard[]> {
+    const ciudadNormalizada = ciudad.toLowerCase().trim();
+    const cacheKey = this.cache.generarClave(CACHE_KEYS.CIUDAD, ciudadNormalizada);
+    const cached = this.cache.get<GimnasioCard[]>(cacheKey);
+    
+    if (cached) {
+      return of(cached);
+    }
+
+    return this.http.get<GimnasioCard[]>(`${API_URL}/buscar`, { 
+      params: { ciudad } 
+    }).pipe(
+      tap((gimnasios) => {
+        this.cache.set(cacheKey, gimnasios);
+      }),
+      catchError((error) => {
+        this._error.set(error.mensaje || 'Error al cargar gimnasios por ciudad');
+        return of([]);
+      })
+    );
+  }
+
   obtenerPorId(id: number): Observable<GimnasioDetalle | null> {
     const cacheKey = this.cache.generarClave(CACHE_KEYS.DETALLE, id);
     const cached = this.cache.get<GimnasioDetalle>(cacheKey);
