@@ -17,6 +17,9 @@ import type {
 const API_URL = '/api/auth';
 const CLAVE_TOKEN = 'gymunity_token';
 const CLAVE_USUARIO = 'gymunity_usuario';
+const CLAVE_ULTIMA_ACTIVIDAD = 'gymunity_ultima_actividad';
+const CLAVE_CREDENCIALES = 'gymunity_credenciales';
+const EXPIRACION_SESION_MS = 6 * 60 * 60 * 1000; // 6 horas
 
 // ============================================
 // SERVICIO DE AUTENTICACIÓN
@@ -164,12 +167,23 @@ export class AuthService {
 
     const tokenGuardado = localStorage.getItem(CLAVE_TOKEN);
     const usuarioGuardado = localStorage.getItem(CLAVE_USUARIO);
+    const ultimaActividad = localStorage.getItem(CLAVE_ULTIMA_ACTIVIDAD);
 
     if (tokenGuardado && usuarioGuardado) {
+      // Verificar si la sesión ha expirado (6 horas sin actividad)
+      if (ultimaActividad) {
+        const tiempoInactivo = Date.now() - parseInt(ultimaActividad, 10);
+        if (tiempoInactivo > EXPIRACION_SESION_MS) {
+          this.limpiarAlmacenamiento();
+          return;
+        }
+      }
+
       try {
         const usuario = JSON.parse(usuarioGuardado) as Usuario;
         this._usuario.set(usuario);
         this._token.set(tokenGuardado);
+        this.actualizarUltimaActividad();
       } catch {
         this.limpiarAlmacenamiento();
       }
@@ -181,6 +195,12 @@ export class AuthService {
 
     localStorage.setItem(CLAVE_TOKEN, token);
     localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+    this.actualizarUltimaActividad();
+  }
+
+  private actualizarUltimaActividad(): void {
+    if (!this.esBrowser()) return;
+    localStorage.setItem(CLAVE_ULTIMA_ACTIVIDAD, Date.now().toString());
   }
 
   private limpiarAlmacenamiento(): void {
@@ -188,6 +208,37 @@ export class AuthService {
 
     localStorage.removeItem(CLAVE_TOKEN);
     localStorage.removeItem(CLAVE_USUARIO);
+    localStorage.removeItem(CLAVE_ULTIMA_ACTIVIDAD);
+  }
+
+  // ----------------------------------------
+  // Recordar credenciales
+  // ----------------------------------------
+  guardarCredenciales(identifier: string, password: string): void {
+    if (!this.esBrowser()) return;
+    const credenciales = btoa(JSON.stringify({ identifier, password }));
+    localStorage.setItem(CLAVE_CREDENCIALES, credenciales);
+  }
+
+  obtenerCredencialesGuardadas(): { identifier: string; password: string } | null {
+    if (!this.esBrowser()) return null;
+    const credenciales = localStorage.getItem(CLAVE_CREDENCIALES);
+    if (!credenciales) return null;
+    try {
+      return JSON.parse(atob(credenciales));
+    } catch {
+      return null;
+    }
+  }
+
+  eliminarCredencialesGuardadas(): void {
+    if (!this.esBrowser()) return;
+    localStorage.removeItem(CLAVE_CREDENCIALES);
+  }
+
+  tieneCredencialesGuardadas(): boolean {
+    if (!this.esBrowser()) return false;
+    return localStorage.getItem(CLAVE_CREDENCIALES) !== null;
   }
 
   private esBrowser(): boolean {

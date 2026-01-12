@@ -1,4 +1,5 @@
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent, HttpResponse } from '@angular/common/http';
+import { isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -6,7 +7,6 @@ import { tap } from 'rxjs/operators';
 // CONSTANTES
 // ============================================
 
-const HABILITADO = true; // Cambiar a false en producción
 const COLOR_REQUEST = '#3B82F6'; // Azul
 const COLOR_SUCCESS = '#10B981'; // Verde
 const COLOR_ERROR = '#EF4444'; // Rojo
@@ -19,7 +19,8 @@ export const httpLoggingInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-  if (!HABILITADO) {
+  // Solo loguear en desarrollo
+  if (!isDevMode()) {
     return next(req);
   }
 

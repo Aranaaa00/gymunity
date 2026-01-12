@@ -38,6 +38,15 @@
       [hasError]="passwordControl.touched && passwordControl.invalid"
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
+
+    <label class="formulario-login__recordar">
+      <input 
+        type="checkbox" 
+        class="formulario-login__recordar-checkbox"
+        [checked]="recordarUsuario()"
+        (change)="toggleRecordar()">
+      <span class="formulario-login__recordar-texto">Recordar mis datos</span>
+    </label>
     
     <section class="formulario-auth__submit">
       <app-boton tipo="submit" [disabled]="loginForm.invalid && loginForm.touched" [cargando]="cargando()">

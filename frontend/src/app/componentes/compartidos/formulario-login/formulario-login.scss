@@ -90,12 +90,12 @@ $formulario-link-transition-duration: 0.2s;
   width: 100%;
   margin: 0 0 $space-1;
   padding: $space-2;
-  border-radius: $radio-md;
   background-color: rgba($color-error, 0.1);
   border: $borde-thin solid rgba($color-error, 0.3);
-  color: var(--color-error);
+  border-radius: $radio-md;
   font-size: $texto-sm;
   text-align: center;
+  color: var(--color-error);
 }
 
 // ============================================
@@ -133,18 +133,15 @@ $formulario-link-transition-duration: 0.2s;
 }
 
 .formulario-auth__link {
-  padding: 0;
   margin-left: 0.25rem;
-  
+  padding: 0;
   background: none;
   border: none;
   border-radius: $radio-sm;
-  
   font-size: inherit;
   font-weight: $font-weight-semibold;
   text-decoration: none;
   color: var(--color-boton);
-  
   cursor: pointer;
   transition: color $formulario-link-transition-duration ease;
 
@@ -157,4 +154,28 @@ $formulario-link-transition-duration: 0.2s;
     outline: $borde-medium solid var(--color-boton);
     outline-offset: $borde-thin;
   }
+}
+
+// ============================================
+// RECORDAR USUARIO
+// ============================================
+
+.formulario-login__recordar {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: $space-1;
+  cursor: pointer;
+}
+
+.formulario-login__recordar-checkbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-boton);
+  cursor: pointer;
+}
+
+.formulario-login__recordar-texto {
+  font-size: $texto-s;
+  color: var(--color-subtitulo);
 }

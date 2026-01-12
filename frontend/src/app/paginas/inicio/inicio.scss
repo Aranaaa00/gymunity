@@ -106,7 +106,7 @@ $inicio-link-gap: 0.25rem;
 .gimnasios-section__vacio {
   padding: $space-6;
 
-  border: 1px dashed var(--color-borde);
+  border: $borde-thin dashed var(--color-borde);
   border-radius: $radio-md;
 
   font-size: $texto-s;

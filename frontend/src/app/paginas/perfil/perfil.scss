@@ -573,7 +573,7 @@
 
   .perfil__resenia-item--par & {
     &::before {
-      @media (min-width: 768px) {
+      @media (min-width: $breakpoint-md) {
         right: -0.5rem;
         border-width: 0.5rem 0 0.5rem 0.5rem;
         border-color: transparent transparent transparent var(--color-borde);
@@ -583,7 +583,7 @@
 
   .perfil__resenia-item:not(.perfil__resenia-item--par) & {
     &::before {
-      @media (min-width: 768px) {
+      @media (min-width: $breakpoint-md) {
         left: -0.5rem;
         border-width: 0.5rem 0.5rem 0.5rem 0;
         border-color: transparent var(--color-borde) transparent transparent;

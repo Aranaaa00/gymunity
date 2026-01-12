@@ -1,4 +1,4 @@
-import { Component, output, inject, OutputEmitterRef, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, output, inject, OutputEmitterRef, signal, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { Boton } from '../boton/boton';
@@ -42,7 +42,7 @@ const MENSAJES_ERROR: Readonly<Record<CampoLogin, Record<string, string>>> = {
   styleUrl: './formulario-login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormularioLogin {
+export class FormularioLogin implements OnInit {
   // ----------------------------------------
   // Outputs
   // ----------------------------------------
@@ -61,6 +61,7 @@ export class FormularioLogin {
   // ----------------------------------------
   readonly cargando = signal<boolean>(false);
   readonly errorServidor = signal<string | null>(null);
+  readonly recordarUsuario = signal<boolean>(false);
 
   // ----------------------------------------
   // Controles tipados
@@ -77,8 +78,38 @@ export class FormularioLogin {
   });
 
   // ----------------------------------------
+  // Lifecycle
+  // ----------------------------------------
+  ngOnInit(): void {
+    const tieneCredenciales = this.authService.tieneCredencialesGuardadas();
+    
+    // Auto-rellenar credenciales guardadas automáticamente
+    if (tieneCredenciales) {
+      this.autoRellenarCredenciales();
+    }
+  }
+  
+  // ----------------------------------------
+  // Métodos privados
+  // ----------------------------------------
+  private autoRellenarCredenciales(): void {
+    const credenciales = this.authService.obtenerCredencialesGuardadas();
+    if (!credenciales) {
+      return;
+    }
+    
+    this.identifierControl.setValue(credenciales.identifier);
+    this.passwordControl.setValue(credenciales.password);
+    this.recordarUsuario.set(true);
+  }
+
+  // ----------------------------------------
   // Métodos públicos
   // ----------------------------------------
+  toggleRecordar(): void {
+    this.recordarUsuario.update(v => !v);
+  }
+
   getErrorMessage(campo: CampoLogin): string {
     const control = this.loginForm.get(campo);
     
@@ -110,6 +141,12 @@ export class FormularioLogin {
       next: (exito) => {
         this.cargando.set(false);
         if (exito) {
+          // Guardar o eliminar credenciales según la opción
+          if (this.recordarUsuario()) {
+            this.authService.guardarCredenciales(identifier, password);
+          } else {
+            this.authService.eliminarCredencialesGuardadas();
+          }
           this.cerrar.emit();
           this.enviar.emit({ identifier, password });
         } else {

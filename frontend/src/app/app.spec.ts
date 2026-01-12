@@ -10,7 +10,7 @@ import { CargaService } from './servicios/carga';
 import { ComunicacionService } from './servicios/comunicacion';
 import { ModalService } from './servicios/modal';
 import { EstadoService } from './servicios/estado';
-import { AutenticacionService } from './servicios/autenticacion';
+import { AuthService } from './servicios/auth';
 import { Boton } from './componentes/compartidos/boton/boton';
 import { Spinner } from './componentes/compartidos/spinner/spinner';
 import { Alerta } from './componentes/compartidos/alerta/alerta';
@@ -125,7 +125,7 @@ describe('NotificacionService', () => {
   });
 
   it('should use generic mostrar method', () => {
-    service.mostrar('Mensaje genérico', 'warning', 5000);
+    service.mostrar('Mensaje genérico', 'warning');
     expect(service.notificacion()?.tipo).toBe('warning');
     expect(service.notificacion()?.mensaje).toBe('Mensaje genérico');
   });
@@ -751,23 +751,31 @@ describe('EstadoService', () => {
 });
 
 // ============================================
-// TESTS AUTENTICACION SERVICE
+// TESTS AUTH SERVICE
 // ============================================
 
-describe('AutenticacionService', () => {
-  let service: AutenticacionService;
+import { HttpTestingController } from '@angular/common/http/testing';
+
+describe('AuthService', () => {
+  let service: AuthService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideRouter([])]
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     });
-    service = TestBed.inject(AutenticacionService);
-    localStorage.removeItem('usuario_gymunity');
+    service = TestBed.inject(AuthService);
+    httpMock = TestBed.inject(HttpTestingController);
+    localStorage.clear();
   });
 
   afterEach(() => {
-    service.cerrarSesion();
-    localStorage.removeItem('usuario_gymunity');
+    httpMock.verify();
+    localStorage.clear();
   });
 
   it('should create', () => {
@@ -779,93 +787,117 @@ describe('AutenticacionService', () => {
     expect(service.usuario()).toBeNull();
   });
 
-  it('should authenticate user with iniciarSesion', () => {
-    const usuario = {
-      id: 1,
-      username: 'testuser',
-      email: 'test@example.com',
-      nombre: 'Test User'
-    };
-    
-    service.iniciarSesion(usuario);
-    
-    expect(service.estaAutenticado()).toBeTrue();
-    expect(service.usuario()).toEqual(usuario);
+  it('should have null token initially', () => {
+    expect(service.obtenerToken()).toBeNull();
   });
 
-  it('should login user', fakeAsync(() => {
+  it('should login successfully', fakeAsync(() => {
     let resultado = false;
     
-    service.login('testuser', 'password').then(r => resultado = r);
-    expect(service.cargando()).toBeTrue();
+    service.login('test@example.com', 'password123').subscribe(r => resultado = r);
     
-    tick(1100);
+    const req = httpMock.expectOne('/api/auth/login');
+    expect(req.request.method).toBe('POST');
+    
+    req.flush({
+      id: 1,
+      nombreUsuario: 'testuser',
+      email: 'test@example.com',
+      rol: 'ALUMNO',
+      token: 'fake-jwt-token'
+    });
+    
+    tick();
     
     expect(resultado).toBeTrue();
     expect(service.estaAutenticado()).toBeTrue();
-    expect(service.cargando()).toBeFalse();
+    expect(service.usuario()?.email).toBe('test@example.com');
   }));
 
-  it('should register user', fakeAsync(() => {
+  it('should handle login error', fakeAsync(() => {
+    let resultado = true;
+    
+    service.login('wrong@example.com', 'wrongpass').subscribe(r => resultado = r);
+    
+    const req = httpMock.expectOne('/api/auth/login');
+    req.flush({ mensaje: 'Credenciales incorrectas' }, { status: 401, statusText: 'Unauthorized' });
+    
+    tick();
+    
+    expect(resultado).toBeFalse();
+    expect(service.estaAutenticado()).toBeFalse();
+  }));
+
+  it('should logout user', fakeAsync(() => {
+    service.login('test@example.com', 'password123').subscribe();
+    
+    const req = httpMock.expectOne('/api/auth/login');
+    req.flush({
+      id: 1,
+      nombreUsuario: 'testuser',
+      email: 'test@example.com',
+      rol: 'ALUMNO',
+      token: 'fake-jwt-token'
+    });
+    
+    tick();
+    expect(service.estaAutenticado()).toBeTrue();
+    
+    service.cerrarSesion();
+    
+    expect(service.estaAutenticado()).toBeFalse();
+    expect(service.usuario()).toBeNull();
+    expect(service.obtenerToken()).toBeNull();
+  }));
+
+  it('should save credentials when recordar is enabled', () => {
+    service.guardarCredenciales('test@example.com', 'password123');
+    
+    expect(service.tieneCredencialesGuardadas()).toBeTrue();
+    
+    const credenciales = service.obtenerCredencialesGuardadas();
+    expect(credenciales?.identifier).toBe('test@example.com');
+    expect(credenciales?.password).toBe('password123');
+  });
+
+  it('should delete saved credentials', () => {
+    service.guardarCredenciales('test@example.com', 'password123');
+    expect(service.tieneCredencialesGuardadas()).toBeTrue();
+    
+    service.eliminarCredencialesGuardadas();
+    
+    expect(service.tieneCredencialesGuardadas()).toBeFalse();
+    expect(service.obtenerCredencialesGuardadas()).toBeNull();
+  });
+
+  it('should register user successfully', fakeAsync(() => {
     let resultado = false;
     
-    service.registro({
-      username: 'newuser',
+    service.registrar({
+      nombreUsuario: 'newuser',
       email: 'new@example.com',
-      password: 'password123',
-      fullName: 'New User'
-    }).then(r => resultado = r);
+      contrasenia: 'password123',
+      ciudad: 'Barcelona'
+    }).subscribe(r => resultado = r);
     
-    tick(1100);
+    const req = httpMock.expectOne('/api/auth/register');
+    expect(req.request.method).toBe('POST');
+    
+    req.flush({
+      id: 2,
+      nombreUsuario: 'newuser',
+      email: 'new@example.com',
+      rol: 'ALUMNO',
+      ciudad: 'Barcelona',
+      token: 'new-jwt-token'
+    });
+    
+    tick();
     
     expect(resultado).toBeTrue();
     expect(service.estaAutenticado()).toBeTrue();
     expect(service.usuario()?.email).toBe('new@example.com');
   }));
-
-  it('should logout user', () => {
-    const usuario = {
-      id: 1,
-      username: 'testuser',
-      email: 'test@example.com',
-      nombre: 'Test User'
-    };
-    
-    service.iniciarSesion(usuario);
-    expect(service.estaAutenticado()).toBeTrue();
-    
-    service.cerrarSesion();
-    expect(service.estaAutenticado()).toBeFalse();
-    expect(service.usuario()).toBeNull();
-  });
-
-  it('should persist user in localStorage', () => {
-    const usuario = {
-      id: 1,
-      username: 'testuser',
-      email: 'test@example.com',
-      nombre: 'Test User'
-    };
-    
-    service.iniciarSesion(usuario);
-    
-    const stored = localStorage.getItem('usuario_gymunity');
-    expect(stored).toBeTruthy();
-    expect(JSON.parse(stored!)).toEqual(usuario);
-  });
-
-  it('should clear localStorage on logout', () => {
-    service.iniciarSesion({
-      id: 1,
-      username: 'testuser',
-      email: 'test@example.com',
-      nombre: 'Test User'
-    });
-    
-    service.cerrarSesion();
-    
-    expect(localStorage.getItem('usuario_gymunity')).toBeNull();
-  });
 });
 
 // ============================================

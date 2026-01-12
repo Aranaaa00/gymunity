@@ -2,7 +2,6 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { Observable, tap, finalize, catchError, of, map, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpBase } from './http-base';
-import { CacheService } from './cache';
 import type { 
   GimnasioCard, 
   GimnasioDetalle, 
@@ -13,12 +12,6 @@ import type {
 const API_URL = '/api/gimnasios';
 const ITEMS_POR_PAGINA = 12;
 const DEBOUNCE_BUSQUEDA_MS = 300;
-const CACHE_KEYS = {
-  POPULARES: 'gimnasios:populares',
-  RECIENTES: 'gimnasios:recientes',
-  CIUDAD: 'gimnasios:ciudad',
-  DETALLE: 'gimnasios:detalle'
-} as const;
 
 // ============================================
 // TIPOS INTERNOS
@@ -42,7 +35,6 @@ interface EstadoPaginacion {
 export class GimnasiosApiService {
   
   private readonly http = inject(HttpBase);
-  private readonly cache = inject(CacheService);
 
   private readonly _gimnasios = signal<readonly GimnasioCard[]>([]);
   private readonly _gimnasioActual = signal<GimnasioDetalle | null>(null);
@@ -168,17 +160,9 @@ export class GimnasiosApiService {
   }
 
   obtenerPopulares(): Observable<readonly GimnasioCard[]> {
-    const cached = this.cache.get<GimnasioCard[]>(CACHE_KEYS.POPULARES);
-    if (cached) {
-      return of(cached);
-    }
-
     this._error.set(null);
 
     return this.http.get<GimnasioCard[]>(`${API_URL}/populares`).pipe(
-      tap((gimnasios) => {
-        this.cache.set(CACHE_KEYS.POPULARES, gimnasios);
-      }),
       catchError((error) => {
         this._error.set(error.mensaje || 'Error al cargar gimnasios populares');
         return of([]);
@@ -187,17 +171,9 @@ export class GimnasiosApiService {
   }
 
   obtenerRecientes(): Observable<readonly GimnasioCard[]> {
-    const cached = this.cache.get<GimnasioCard[]>(CACHE_KEYS.RECIENTES);
-    if (cached) {
-      return of(cached);
-    }
-
     this._error.set(null);
 
     return this.http.get<GimnasioCard[]>(`${API_URL}/recientes`).pipe(
-      tap((gimnasios) => {
-        this.cache.set(CACHE_KEYS.RECIENTES, gimnasios);
-      }),
       catchError((error) => {
         this._error.set(error.mensaje || 'Error al cargar gimnasios recientes');
         return of([]);
@@ -206,24 +182,13 @@ export class GimnasiosApiService {
   }
 
   /**
-   * Obtiene gimnasios por ciudad con caché optimizado.
+   * Obtiene gimnasios por ciudad.
    * Usado principalmente para la sección "Gimnasios cercanos" en inicio.
    */
   obtenerPorCiudad(ciudad: string): Observable<readonly GimnasioCard[]> {
-    const ciudadNormalizada = ciudad.toLowerCase().trim();
-    const cacheKey = this.cache.generarClave(CACHE_KEYS.CIUDAD, ciudadNormalizada);
-    const cached = this.cache.get<GimnasioCard[]>(cacheKey);
-    
-    if (cached) {
-      return of(cached);
-    }
-
     return this.http.get<GimnasioCard[]>(`${API_URL}/buscar`, { 
       params: { ciudad } 
     }).pipe(
-      tap((gimnasios) => {
-        this.cache.set(cacheKey, gimnasios);
-      }),
       catchError((error) => {
         this._error.set(error.mensaje || 'Error al cargar gimnasios por ciudad');
         return of([]);
@@ -232,20 +197,12 @@ export class GimnasiosApiService {
   }
 
   obtenerPorId(id: number): Observable<GimnasioDetalle | null> {
-    const cacheKey = this.cache.generarClave(CACHE_KEYS.DETALLE, id);
-    const cached = this.cache.get<GimnasioDetalle>(cacheKey);
-    if (cached) {
-      this._gimnasioActual.set(cached);
-      return of(cached);
-    }
-
     this._cargando.set(true);
     this._error.set(null);
 
     return this.http.get<GimnasioDetalle>(`${API_URL}/${id}`).pipe(
       tap((gimnasio) => {
         this._gimnasioActual.set(gimnasio);
-        this.cache.set(cacheKey, gimnasio);
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -262,16 +219,6 @@ export class GimnasiosApiService {
   buscar(params: FiltrosBusqueda): Observable<readonly GimnasioCard[]> {
     this._filtros.set(params);
     this.reiniciarPaginacion();
-    
-    if (params.ciudad && !params.nombre && !params.arteMarcial) {
-      const cacheKey = this.cache.generarClave(CACHE_KEYS.CIUDAD, params.ciudad.toLowerCase());
-      const cached = this.cache.get<GimnasioCard[]>(cacheKey);
-      if (cached) {
-        this._gimnasios.set(cached);
-        return of(cached);
-      }
-    }
-    
     return this.ejecutarBusqueda(params.nombre || '');
   }
 
@@ -299,17 +246,10 @@ export class GimnasiosApiService {
       params['arteMarcial'] = filtrosActivos.arteMarcial;
     }
 
-    const soloCiudad = filtrosActivos.ciudad && !terminoLimpio && !filtrosActivos.arteMarcial;
-
     return this.http.get<GimnasioCard[]>(`${API_URL}/buscar`, { params }).pipe(
       tap((gimnasios) => {
         this._gimnasios.set(gimnasios);
         this.actualizarPaginacion(gimnasios.length, true);
-        
-        if (soloCiudad && filtrosActivos.ciudad) {
-          const cacheKey = this.cache.generarClave(CACHE_KEYS.CIUDAD, filtrosActivos.ciudad.toLowerCase());
-          this.cache.set(cacheKey, gimnasios);
-        }
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -339,7 +279,6 @@ export class GimnasiosApiService {
           ...p,
           totalItems: p.totalItems + 1
         }));
-        this.cache.invalidar('gimnasios');
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -362,7 +301,6 @@ export class GimnasiosApiService {
         if (actual && actual.id === id) {
           this.obtenerPorId(id).subscribe();
         }
-        this.cache.invalidar('gimnasios');
       }),
       finalize(() => this._cargando.set(false)),
       catchError((error) => {
@@ -383,7 +321,6 @@ export class GimnasiosApiService {
           ...p,
           totalItems: Math.max(0, p.totalItems - 1)
         }));
-        this.cache.invalidar('gimnasios');
       }),
       finalize(() => this._cargando.set(false)),
       map(() => true as boolean),
@@ -399,7 +336,6 @@ export class GimnasiosApiService {
   }
 
   refrescar(): Observable<readonly GimnasioCard[]> {
-    this.cache.invalidar('gimnasios');
     const terminoActual = this._terminoBusqueda();
     
     if (terminoActual) {
