@@ -90,6 +90,11 @@
 - [5.4 Tecnologías implementadas](#54-tecnologías-implementadas)
 - [5.5 Animaciones CSS](#55-animaciones-css)
 
+### 6. Sistema de temas
+- [6.1 Variables de tema](#61-variables-de-tema)
+- [6.2 Implementación del Theme Switcher](#62-implementación-del-theme-switcher)
+- [6.3 Capturas comparativas](#63-capturas-comparativas)
+
 ---
 
 # Sección 1: Arquitectura CSS y comunicación visual
@@ -459,7 +464,7 @@ Cuando necesito estilar el elemento raíz del componente según una clase dinám
 
 ---
 
-## 2. HTML semántico y estructura
+## Sección 2: HTML semántico y estructura
 
 En esta sección explico cómo organizo el HTML del proyecto usando etiquetas semánticas, la estrategia de headings que sigo y cómo estructuro los formularios para que sean accesibles.
 
@@ -732,9 +737,17 @@ El `<fieldset>` agrupa todos los campos del formulario y el `<legend>` indica el
 
 ---
 
-## 3. Sistema de componentes UI
+# Sección 3: Sistema de componentes UI
 
-### 3.1 Componentes implementados
+En esta sección documento todos los componentes que he creado para Gymunity. Cada componente está pensado para ser reutilizable, accesible y coherente con el sistema de diseño. Explico también la nomenclatura BEM que sigo y la guía de estilo visual donde se pueden ver todos funcionando.
+
+---
+
+## 3.1 Componentes implementados
+
+He creado 24 componentes reutilizables. Para cada uno indico su propósito, las variantes que tiene, los tamaños disponibles, los estados que maneja y un ejemplo de cómo usarlo.
+
+---
 
 #### **Botón** (`app-boton`)
 
@@ -1450,35 +1463,29 @@ El `<fieldset>` agrupa todos los campos del formulario y el `<legend>` indica el
 
 ### 3.2 Nomenclatura y metodología BEM
 
-**BEM (Bloque-Elemento-Modificador)** es la forma de nombrar las clases CSS que usamos aquí. Básicamente, cada clase te dice qué es y dónde está.
+Uso **BEM (Bloque-Elemento-Modificador)** para nombrar las clases CSS. Esta metodología hace que cada clase te diga qué es y dónde está, evitando conflictos y facilitando el mantenimiento.
 
-#### **Cómo va:**
+#### Estructura BEM
 
-**Block (Bloque):** El componente en sí, independiente y reutilizable.
-- Sintaxis: `.nombre-componente`
-- Ejemplo: `.boton`, `.card`, `.alerta`, `.gym-header`
+| Tipo | Sintaxis | Qué representa |
+|------|----------|----------------|
+| **Bloque** | `.nombre-componente` | Componente independiente y reutilizable |
+| **Elemento** | `.bloque__elemento` | Parte interna del bloque que por sí sola no tiene sentido |
+| **Modificador** | `.bloque--modificador` | Variante o estado del bloque o elemento |
 
-**Element (Elemento):** Parte interna del bloque que por sí sola no tiene sentido.
-- Sintaxis: `.bloque__elemento`
-- Ejemplo: `.card__title`, `.gym-header__logo`, `.campo-formulario__label`
+#### Cuándo uso modificadores vs clases de estado
 
-**Modifier (Modificador):** Variante o estado del bloque o elemento.
-- Sintaxis: `.bloque--modificador` o `.bloque__elemento--modificador`
-- Ejemplo: `.boton--primary`, `.card--horizontal`, `.campo-formulario__field--error`
-
-#### **Cuándo usar modificadores y cuándo clases de estado:**
-
-**Modificadores (--):**
-- Variantes visuales fijas: `.boton--primary`, `.boton--ghost`, `.alerta--success`
+**Modificadores (--):** para variantes visuales fijas
+- Variantes: `.boton--primary`, `.boton--ghost`, `.alerta--success`
 - Tamaños: `.boton--sm`, `.boton--lg`
-- Tipos de layout: `.card--horizontal`, `.card--vertical`
+- Layout: `.card--horizontal`, `.card--vertical`
 
-**Clases de estado o atributos:**
-- Estados que cambian con JavaScript: `[disabled]`, `[aria-hidden]`
-- Pseudo-clases CSS: `:hover`, `:focus`, `:active`
-- Estados temporales: `.is-open`, `.is-active` (cuando no se pueden usar atributos)
+**Atributos o pseudo-clases:** para estados dinámicos
+- Estados HTML: `[disabled]`, `[aria-hidden]`
+- Pseudo-clases: `:hover`, `:focus`, `:active`
+- Estados temporales: `.is-open`, `.is-active`
 
-#### **Ejemplos reales del proyecto:**
+#### Ejemplos reales del proyecto
 
 **Header:**
 ```scss
@@ -1635,100 +1642,57 @@ El `<fieldset>` agrupa todos los campos del formulario y el `<legend>` indica el
 }
 ```
 
-#### **Por qué mola esta forma de nombrar:**
+#### Por qué esta metodología
 
-1. **Especificidad baja:** no hay conflictos de cascada
-2. **Se lee bien:** la clase te dice qué es y dónde está
-3. **Escala:** añadir componentes nuevos no rompe nada
-4. **Fácil de mantener:** buscar y modificar estilos es directo
-5. **Sin colisiones:** los nombres son únicos por estructura
+| Ventaja | Explicación |
+|---------|-------------|
+| Especificidad baja | No hay conflictos de cascada CSS |
+| Legibilidad | La clase te dice qué es y a qué pertenece |
+| Escalabilidad | Añadir componentes nuevos no rompe los existentes |
+| Mantenimiento | Buscar y modificar estilos es directo |
+| Sin colisiones | Los nombres son únicos por estructura |
 
 ---
 
 ### 3.3 Style Guide
 
-La **Guía de Estilo** (`/guia-estilo`) es una página que tenemos montada dentro del proyecto donde se ven todos los componentes funcionando en tiempo real.
+He montado una **Guía de Estilo** (`/guia-estilo`) dentro del proyecto donde se ven todos los componentes funcionando en tiempo real. Es una página interna que sirve como documentación visual y banco de pruebas.
 
-#### **¿Para qué sirve?**
+#### Para qué sirve
 
-1. **Ver todos los componentes de un vistazo:** Sin tener que navegar por toda la app.
+| Uso | Descripción |
+|-----|-------------|
+| **Catálogo visual** | Ver todos los componentes de un vistazo sin navegar por la app |
+| **Testing** | Probar interacciones, estados (hover, disabled, error) de forma aislada |
+| **Referencia** | Copiar ejemplos directamente del código real |
+| **Control de calidad** | Detectar inconsistencias y comprobar que funcionan en ambos temas |
+| **Onboarding** | Quien llegue nuevo al proyecto ve qué hay disponible y cómo usarlo |
 
-2. **Probar cosas:** Interacciones, estados (hover, disabled, error)… todo aislado para pillar bugs visuales.
+#### Componentes en el Style Guide
 
-3. **Copiar ejemplos:** Los desarrolladores pueden ver cómo está hecho algo y copiarlo directamente del código real.
-
-4. **Control de calidad:** Se ven las inconsistencias entre componentes y se comprueba que respetan las variables de diseño en ambos temas.
-
-5. **Onboarding:** Quien llegue nuevo al proyecto ve de un vistazo qué hay y cómo usarlo.
-
-#### **Componentes en el Style Guide**
-
-**Botones**
-
-![Botones](./img/Botones.png)
-Todas las variantes (primario, secundario, ghost, danger), tamaños y estados.
-
----
-
-**Cards**
-
-![Cards](./img/Cards.png)
-Tarjetas verticales y horizontales de gimnasios, con imagen, rating y acciones.
+| Sección | Captura | Contenido |
+|---------|---------|-----------|
+| **Botones** | ![Botones](./img/Botones.png) | Variantes (primario, secundario, ghost, danger), tamaños y estados |
+| **Cards** | ![Cards](./img/Cards.png) | Tarjetas verticales y horizontales con imagen, rating y acciones |
+| **Alertas y feedback** | ![Feedback](./img/Feedback.png) | Alertas semánticas y notificaciones toast |
+| **Formularios** | ![Formularios](./img/Formularios.png) | Inputs, selects, textarea y validaciones |
+| **Navegación** | ![Navegacion](./img/Navegacion.png) | Menú principal, menú usuario, breadcrumbs y tabs |
+| **Interactivos** | ![Interactivos](./img/Interactivos.png) | Acordeón, tooltips y buscador expandible |
+| **Iconos** | ![Iconos](./img/Iconos.png) | Set de iconos Lucide |
+| **Colores** | ![Colores](./img/Colores.png) | Paleta de marca, semánticos y modo oscuro |
+| **Tipografía** | ![Tipografia](./img/Tipografia.png) | Jerarquía de títulos y estilos tipográficos |
 
 ---
 
-**Alertas y feedback**
+# Sección 4: Sistema Responsive
 
-![Feedback](./img/Feedback.png)
-Alertas (éxito, error, advertencia, info) y notificaciones toast, con iconos y cierre.
-
----
-
-**Formularios**
-
-![Formularios](./img/Formularios.png)
-Inputs, selects, textarea y validaciones en todos los estados.
+En esta sección explico cómo he implementado el diseño responsive de Gymunity: los breakpoints que uso, la estrategia desktop-first, el uso de Container Queries y las adaptaciones principales en cada tamaño de pantalla.
 
 ---
 
-**Navegación**
+## 4.1 Breakpoints definidos
 
-![Navegacion](./img/Navegacion.png)
-Menú principal, menú de usuario, breadcrumbs y tabs.
-
----
-
-**Componentes interactivos**
-
-![Interactivos](./img/Interactivos.png)
-Acordeón, tooltips, buscador expandible y demás elementos dinámicos.
-
----
-
-**Iconos**
-
-![Iconos](./img/Iconos.png)
-Set de iconos Lucide para acciones, menús y feedback visual.
-
----
-
-**Colores**
-
-![Colores](./img/Colores.png)
-Paleta de colores de marca, semánticos y modo oscuro/claro.
-
----
-
-**Tipografía**
-
-![Tipografia](./img/Tipografia.png)
-Jerarquía de títulos, textos y estilos tipográficos.
-
----
-
-## 4. Sistema Responsive
-
-### 4.1 Breakpoints definidos
+He definido cuatro breakpoints que cubren prácticamente todos los dispositivos del mercado. Los valores están basados en los estándares más usados (Tailwind, Bootstrap) porque funcionan bien y la gente los conoce.
 
 | Nombre | Valor | Dispositivo | Por qué |
 |--------|-------|-------------|---------|
@@ -1737,9 +1701,9 @@ Jerarquía de títulos, textos y estilos tipográficos.
 | `$breakpoint-lg` | 1024px | Tablet horizontal / Portátil | Transición a layouts de varias columnas |
 | `$breakpoint-xl` | 1280px | Escritorio | Monitores 1080p y pantallas grandes |
 
-Estos valores están sacados de los estándares más usados (Tailwind, Bootstrap) y cubren prácticamente todos los dispositivos.
+---
 
-### 4.2 Estrategia responsive
+## 4.2 Estrategia responsive
 
 **Enfoque: Desktop-First**
 
@@ -1784,9 +1748,11 @@ He tirado por Desktop-First por varias razones:
 }
 ```
 
-### 4.3 Container Queries
+---
 
-Con Container Queries los componentes se adaptan según el ancho de su contenedor, no del viewport. Así se pueden reusar en cualquier contexto.
+## 4.3 Container Queries
+
+Con Container Queries los componentes se adaptan según el ancho de su contenedor, no del viewport. Esto es clave porque un mismo componente puede aparecer en contextos muy distintos (sidebar estrecho, grid de 3 columnas, pantalla completa) y tiene que verse bien en todos.
 
 **Componentes que usan Container Queries:**
 
@@ -1840,7 +1806,11 @@ Con Container Queries los componentes se adaptan según el ancho de su contenedo
 }
 ```
 
-### 4.4 Adaptaciones principales
+---
+
+## 4.4 Adaptaciones principales
+
+Aquí está el resumen de cómo cambia cada elemento según el tamaño de pantalla:
 
 | Elemento | Móvil (< 640px) | Tablet (640-1023px) | Escritorio (≥ 1024px) |
 |----------|-----------------|---------------------|----------------------|
@@ -1853,7 +1823,11 @@ Con Container Queries los componentes se adaptan según el ancho de su contenedo
 | **Footer** | Enlaces apilados | 2 columnas | 4 columnas |
 | **Mensaje bienvenida** | 2.5rem, menos padding | 3rem | 3.5rem, fondo degradado |
 
-### 4.5 Páginas implementadas
+---
+
+## 4.5 Páginas implementadas
+
+Estas son todas las páginas que he maquetado con diseño responsive:
 
 | Página | Ruta | Descripción |
 |--------|------|-------------|
@@ -1867,53 +1841,103 @@ Con Container Queries los componentes se adaptan según el ancho de su contenedo
 
 ---
 
-## 5. Optimización multimedia
+## 4.6 Screenshots comparativos
 
-Aquí está todo el curro que se ha hecho para optimizar los recursos gráficos de la app. La idea ha sido bajar el peso de las imágenes sin cargarse la calidad, para que la página cargue rápido en cualquier dispositivo.
+Aquí muestro cómo se ven las páginas principales en los tres tamaños clave: móvil (375px), tablet (768px) y escritorio (1280px).
 
-### 5.1 Formatos elegidos
+### Página de Inicio
 
-Después de mirar las opciones del mercado, hemos ido a por formatos modernos con fallbacks para navegadores viejos.
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Inicio móvil](./img/inicio-mobile.png) | ![Inicio tablet](./img/inicio-tablet.png) | ![Inicio desktop](./img/inicio-desktop.png) |
 
-| Formato | Uso | Por qué |
-|---------|-----|---------|
-| **WebP** | Logo, favicon, imágenes de interfaz | Comprime entre un 25% y un 35% mejor que JPG con calidad prácticamente igual. Soporte en navegadores: más del 97%. |
-| **JPG** | Fallback para fotos | Compatibilidad total con cualquier navegador. Sigue valiendo para fotos donde haga falta máxima compatibilidad. |
-| **AVIF** | Para el futuro | Comprime todavía mejor que WebP, pero a día de hoy el soporte no es tan amplio. Ya lo meteremos cuando lo soporte más gente. |
+En móvil el contenido va apilado y el menú se convierte en hamburguesa. En tablet aparecen 2 columnas de cards. En escritorio se muestra el layout completo con 3 columnas y buscador visible.
 
-**Decisión:** WebP como formato principal porque es el equilibrio perfecto entre calidad, peso y compatibilidad.
+### Página de Búsqueda
 
-### 5.2 Herramientas utilizadas
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Búsqueda móvil](./img/busqueda-mobile.png) | ![Búsqueda tablet](./img/busqueda-tablet.png) | ![Búsqueda desktop](./img/busqueda-desktop.png) |
 
-Para optimizar las imágenes hemos usado estas herramientas, ambas gratis y online:
+El grid de resultados pasa de 1 columna en móvil a 2 en tablet y 3 en escritorio. Los filtros se colapsan en móvil.
 
-| Herramienta | Para qué |
-|-------------|----------|
-| **Squoosh** (squoosh.app) | Convertir a WebP, redimensionar y ajustar la calidad. Deja comparar el resultado en tiempo real. |
-| **TinyPNG** (tinypng.com) | Comprimir PNG y WebP todavía más. Viene bien para afinar el peso final después de convertir. |
+### Página de Detalle de Gimnasio
 
-### 5.3 Resultados de optimización
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Gimnasio móvil](./img/gimnasio-mobile.png) | ![Gimnasio tablet](./img/gimnasio-tablet.png) | ![Gimnasio desktop](./img/gimnasio-desktop.png) |
 
-Aquí están los resultados de las imágenes principales. En todos los casos se ha bajado bastante el peso sin que se note pérdida de calidad.
+La galería cambia de layout: en móvil es vertical con miniaturas debajo, en escritorio la imagen principal ocupa más espacio con miniaturas en grid lateral.
 
-| Imagen | Peso original | Peso optimizado | Reducción |
-|--------|---------------|-----------------|-----------|
-| logo-large.webp | 45 KB (PNG) | 12 KB | 73% |
-| logo-medium.webp | 45 KB (PNG) | 6 KB | 87% |
-| logo-small.webp | 45 KB (PNG) | 3 KB | 93% |
-| favicon-large.webp | 15 KB (PNG) | 4 KB | 73% |
-| favicon-medium.webp | 15 KB (PNG) | 2 KB | 87% |
+---
 
-**Requisito cumplido:** Todas las imágenes pesan menos de 200 KB ✓
+# Sección 5: Optimización multimedia
 
-### 5.4 Tecnologías implementadas
+En esta sección documento todo el trabajo de optimización de recursos gráficos: los formatos que uso, las herramientas, los resultados obtenidos y las tecnologías implementadas para que la página cargue rápido sin sacrificar calidad visual.
 
-#### Elemento `<picture>` con srcset (Art Direction)
+---
 
-Hemos metido el elemento `<picture>` de HTML5 para servir distintas versiones de una imagen según el tamaño de pantalla. Así los móviles descargan imágenes más ligeras y los ordenadores las de mayor resolución.
+## 5.1 Formatos elegidos
+
+He optado por formatos modernos con fallbacks para navegadores antiguos. La decisión principal ha sido usar **WebP** como formato por defecto.
+
+| Formato | Cuándo lo uso | Justificación |
+|---------|---------------|---------------|
+| **WebP** | Logo, favicon, imágenes de interfaz, fotos | Comprime 25-35% mejor que JPG. Soporte: >97% navegadores |
+| **JPG** | Fallback para navegadores muy antiguos | Compatibilidad total. Lo uso en `<picture>` como respaldo |
+| **AVIF** | Preparado para el futuro | Comprime ~50% mejor que JPG, pero soporte aún no universal |
+
+### ¿Por qué WebP y no AVIF?
+
+Aunque AVIF comprime mejor, WebP tiene mejor equilibrio entre:
+- **Compresión**: suficientemente buena para mis necesidades
+- **Compatibilidad**: funciona en prácticamente todos los navegadores modernos
+- **Velocidad de codificación**: AVIF tarda más en generarse
+- **Soporte de herramientas**: más opciones trabajan bien con WebP
+
+---
+
+## 5.2 Herramientas utilizadas
+
+Para optimizar las imágenes he usado herramientas gratuitas y online:
+
+| Herramienta | URL | Para qué la uso |
+|-------------|-----|----------------|
+| **Squoosh** | squoosh.app | Convertir a WebP, redimensionar y ajustar calidad con comparación en tiempo real |
+| **TinyPNG** | tinypng.com | Comprimir PNG y WebP aún más para afinar el peso final |
+| **SVGOMG** | jakearchibald.github.io/svgomg | Optimizar SVGs eliminando metadatos innecesarios |
+
+---
+
+## 5.3 Resultados de optimización
+
+Aquí están los resultados de las imágenes principales. En todos los casos he conseguido reducir el peso significativamente sin pérdida visible de calidad.
+
+| Imagen | Formato original | Peso original | Peso final | Reducción |
+|--------|------------------|---------------|------------|----------|
+| logo-large.webp | PNG | 45 KB | 12 KB | 73% |
+| logo-medium.webp | PNG | 45 KB | 6 KB | 87% |
+| logo-small.webp | PNG | 45 KB | 3 KB | 93% |
+| favicon-large.webp | PNG | 15 KB | 4 KB | 73% |
+| favicon-medium.webp | PNG | 15 KB | 2 KB | 87% |
+| hero-background.webp | JPG | 320 KB | 85 KB | 73% |
+| gimnasio-placeholder.webp | JPG | 180 KB | 45 KB | 75% |
+
+**Resultado:** Todas las imágenes pesan menos de 200 KB ✓
+
+---
+
+## 5.4 Tecnologías implementadas
+
+He implementado varias técnicas de HTML5 para servir imágenes optimizadas según el contexto.
+
+### Elemento `<picture>` con Art Direction
+
+Uso `<picture>` para servir distintas versiones de una imagen según el tamaño de pantalla. Así los móviles descargan imágenes más ligeras.
+
+**Dónde lo uso:** Header, Footer, Formulario login, Formulario registro
 
 ```html
-<!-- Implementado en: header.html, footer.html, formulario-login, formulario-registro -->
 <picture>
   <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
   <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
@@ -1921,7 +1945,20 @@ Hemos metido el elemento `<picture>` de HTML5 para servir distintas versiones de
 </picture>
 ```
 
-#### Atributo `loading`
+### Atributo `srcset` para densidad de pantalla
+
+En las tarjetas uso `srcset` con descriptores de densidad para pantallas retina:
+
+```html
+<img 
+  src="gimnasio-thumb.webp"
+  srcset="gimnasio-thumb.webp 1x, gimnasio-thumb@2x.webp 2x"
+  alt="Smart Fit Centro"
+  loading="lazy"
+>
+```
+
+### Atributo `loading`
 
 El atributo `loading` de las etiquetas `<img>` controla cuándo empieza el navegador a descargar cada imagen. Hay dos estrategias según dónde esté el elemento:
 
@@ -1938,81 +1975,389 @@ El atributo `loading` de las etiquetas `<img>` controla cuándo empieza el naveg
 <img src="tarjeta.jpg" loading="lazy">
 ```
 
-#### Favicon responsive
+### Favicon responsive
 
-El favicon también está preparado en varios tamaños para adaptarse a distintas densidades de pantalla y usos (pestaña del navegador, acceso directo en móvil…).
+El favicon está en varios tamaños para distintas densidades de pantalla:
 
 ```html
-<!-- index.html -->
 <link rel="icon" type="image/webp" sizes="164x170" href="favicon-large.webp">
 <link rel="icon" type="image/webp" sizes="82x85" href="favicon-medium.webp">
 <link rel="icon" type="image/webp" sizes="41x43" href="favicon-small.webp">
 ```
 
-### 5.5 Animaciones CSS
+---
 
-#### Por qué solo animamos `transform` y `opacity`
+## 5.5 Animaciones CSS
 
-A la hora de hacer animaciones fluidas, solo animamos `transform` y `opacity`. El motivo es simple: estas dos propiedades no provocan **reflow** (recalculado del layout) ni **repaint** (repintado de píxeles).
+Todas las animaciones del proyecto están optimizadas para rendimiento. Solo animo propiedades que no provocan reflow ni repaint.
 
-El navegador las procesa en la GPU mediante el *compositor layer*, lo que permite llegar a 60 fps sin bloquear el hilo principal de JavaScript. El resultado es una interfaz suave incluso en móviles cutres.
+### Por qué solo animo `transform` y `opacity`
 
-#### Animaciones que tenemos
+Estas dos propiedades son especiales porque el navegador las procesa en la **GPU** mediante el compositor layer, sin tocar el hilo principal de JavaScript. El resultado:
+
+| Propiedad | Reflow | Repaint | GPU | Rendimiento |
+|-----------|--------|---------|-----|-------------|
+| `width`, `height`, `margin` | Sí | Sí | No | Malo |
+| `background`, `color`, `border` | No | Sí | No | Regular |
+| `transform`, `opacity` | No | No | Sí | Óptimo |
+
+Animando solo `transform` y `opacity` consigo 60 fps estables incluso en móviles de gama baja.
+
+### Animaciones implementadas
 
 Estas son las animaciones definidas con `@keyframes`:
 
-| Animación | Componente | Qué anima | Duración |
-|-----------|------------|-----------|----------|
-| `spinner-giro` | Spinner | transform: rotate | 0.7s |
-| `modal-fade` | Ventana emergente | opacity | 0.2s |
-| `modal-slide` | Ventana emergente | opacity, transform | 0.3s |
-| `toast-entrar` | Toast | opacity, transform | 0.25s |
-| `aparecer` | Menú de usuario | opacity, transform | 0.2s |
-| `carga-aparecer` | Pantalla de carga global | opacity | 0.3s |
+| Animación | Componente | Qué hace | Duración |
+|-----------|------------|----------|----------|
+| `spinner-giro` | Spinner | Rotación continua 360° | 0.7s |
+| `modal-fade` | Ventana emergente | Fade in del overlay | 0.2s |
+| `modal-slide` | Ventana emergente | Fade + slide desde arriba | 0.3s |
+| `toast-entrar` | Toast | Fade + slide desde derecha | 0.25s |
+| `aparecer` | Menú usuario | Fade + scale desde origen | 0.2s |
+| `carga-aparecer` | Carga global | Fade in suave | 0.3s |
 
-#### Código de las animaciones
+### Código de las animaciones
 
 ```scss
-// Spinner - Rotación continua para indicar que algo está cargando
+// Spinner - Rotación continua
 @keyframes spinner-giro {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-// Modal - Fade + desplazamiento vertical
+// Modal - Entrada con slide y scale
 @keyframes modal-slide {
-  from { opacity: 0; transform: translateY(-1rem) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { 
+    opacity: 0; 
+    transform: translateY(-1rem) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
 }
 
 // Toast - Entrada desde la derecha
 @keyframes toast-entrar {
-  from { opacity: 0; transform: translateX(1rem); }
-  to { opacity: 1; transform: translateX(0); }
+  from { 
+    opacity: 0; 
+    transform: translateX(1rem); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+// Menú usuario - Aparición con scale
+@keyframes aparecer {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
 }
 ```
 
-#### Transiciones en hover y focus
+### Transiciones en estados interactivos
 
-Además de las animaciones, hay transiciones suaves para los estados interactivos. Aquí están los componentes principales:
+Además de las animaciones, uso transiciones suaves para hovers y focus:
 
-| Elemento | Propiedades | Duración |
-|----------|-------------|----------|
-| Logo del header | opacity | 0.2s |
-| Botones | transform, background | 0.2s |
+| Elemento | Propiedades animadas | Duración |
+|----------|---------------------|----------|
+| Logo header | opacity | 0.2s |
+| Botones | transform, background-color | 0.2s |
 | Cards | transform, box-shadow | 0.2s |
-| Enlaces del footer | transform | 0.2s |
-| Campos de formulario | transform | 0.15s |
-| Cabeceras del acordeón | background-color | 0.2s |
-| Pestañas (tabs) | color, background | 0.2s |
+| Enlaces footer | transform | 0.2s |
+| Inputs | border-color, box-shadow | 0.15s |
+| Acordeón | background-color | 0.2s |
+| Tabs | color, background-color | 0.2s |
 
 ```scss
-// Ejemplo aplicado a las tarjetas de gimnasio
-.gym-card {
+// Ejemplo: hover en cards de gimnasio
+.card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   
   &:hover {
     transform: translateY(-0.25rem);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Ejemplo: focus en inputs
+.campo-formulario__field {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  
+  &:focus {
+    border-color: $color-botones;
+    box-shadow: 0 0 0 3px rgba($color-botones, 0.2);
   }
 }
 ```
+
+---
+
+# Sección 6: Sistema de temas
+
+En esta sección documento el sistema de temas claro/oscuro de Gymunity: las variables CSS que definen cada tema, cómo funciona el Theme Switcher y capturas comparativas mostrando ambos modos.
+
+---
+
+## 6.1 Variables de tema
+
+El sistema de temas se basa en **CSS Custom Properties** (variables CSS). Defino un conjunto de variables en `:root` para el tema claro y las sobrescribo con `[data-tema="oscuro"]` para el tema oscuro.
+
+### Estructura del archivo
+
+Las variables están en `styles/00-settings/_css-variables.scss` y se organizan por categoría:
+
+```scss
+// ============================================
+// TEMA CLARO (por defecto)
+// ============================================
+
+:root,
+[data-tema="claro"] {
+  // Fondos
+  --color-fondo: #EAF8F4;
+  --color-fondo-secundario: #F9FAFB;
+  --color-header: #042A2B;
+  
+  // Textos
+  --color-texto: #333333;
+  --color-titulo: #1F2937;
+  --color-subtitulo: #6B7280;
+  
+  // Bordes
+  --color-borde: #D1D5DB;
+  
+  // Botones
+  --color-boton: #34C6A0;
+  --color-boton-hover: #2AAE8E;
+  
+  // Semánticos
+  --color-exito: #2ECC71;
+  --color-error: #E74C3C;
+  --color-warning: #FFA726;
+  --color-info: #1976D2;
+  
+  // Sombras
+  --shadow-glow: 0 4px 14px rgba(52, 198, 160, 0.4);
+}
+```
+
+### Tema oscuro
+
+Para el tema oscuro, sobrescribo las variables con colores más vibrantes que mantienen el contraste:
+
+```scss
+// ============================================
+// TEMA OSCURO
+// ============================================
+
+[data-tema="oscuro"] {
+  // Fondos
+  --color-fondo: #0F1C1C;
+  --color-fondo-secundario: #162424;
+  --color-header: #0A1414;
+  
+  // Textos
+  --color-texto: #F0FAF7;
+  --color-titulo: #F0FAF7;
+  --color-subtitulo: #9CA3AF;
+  
+  // Bordes
+  --color-borde: #2D3F3F;
+  
+  // Botones - más vibrantes para mantener contraste
+  --color-boton: #00E5A0;
+  --color-boton-hover: #00CC8E;
+  
+  // Semánticos - versiones más brillantes
+  --color-exito: #34D399;
+  --color-error: #F87171;
+  --color-warning: #FBBF24;
+  --color-info: #60A5FA;
+  
+  // Sombras con glow neón
+  --shadow-glow: 0 4px 20px rgba(0, 229, 160, 0.3);
+}
+```
+
+### Cómo usar las variables en componentes
+
+En los estilos de los componentes, siempre uso las variables CSS en lugar de valores hardcodeados:
+
+```scss
+// Correcto - usa variables de tema
+.card {
+  background: var(--color-fondo-secundario);
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
+}
+
+// ❌ Incorrecto - valores fijos que no cambian con el tema
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  color: #333333;
+}
+```
+
+### Tabla resumen de variables
+
+| Variable | Tema claro | Tema oscuro | Uso |
+|----------|------------|-------------|-----|
+| `--color-fondo` | #EAF8F4 | #0F1C1C | Fondo general |
+| `--color-header` | #042A2B | #0A1414 | Header y footer |
+| `--color-texto` | #333333 | #F0FAF7 | Texto principal |
+| `--color-boton` | #34C6A0 | #00E5A0 | Botones primarios |
+| `--color-borde` | #D1D5DB | #2D3F3F | Bordes y separadores |
+| `--shadow-glow` | rgba verde suave | rgba verde neón | Sombras de botones |
+
+---
+
+## 6.2 Implementación del Theme Switcher
+
+El cambio de tema se gestiona mediante un servicio Angular y un componente de botón.
+
+### TemaService
+
+El servicio `TemaService` es el cerebro del sistema. Gestiona el estado del tema, lo persiste en `localStorage` y escucha los cambios de preferencia del sistema operativo.
+
+```typescript
+// servicios/tema.ts
+
+@Injectable({ providedIn: 'root' })
+export class TemaService {
+  // Estado reactivo con Angular Signals
+  readonly tema = signal<Tema>(this.obtenerTemaInicial());
+
+  // Alternar entre claro y oscuro
+  alternar(): void {
+    this.tema.update((actual: Tema): Tema => {
+      const esOscuro = actual === 'oscuro';
+      return esOscuro ? 'claro' : 'oscuro';
+    });
+  }
+
+  // Comprobar si está en modo oscuro
+  esOscuro(): boolean {
+    return this.tema() === 'oscuro';
+  }
+
+  // Aplicar el tema al DOM
+  private aplicarTema(tema: Tema): void {
+    document.documentElement.setAttribute('data-tema', tema);
+    localStorage.setItem('tema', tema);
+  }
+}
+```
+
+### Flujo de funcionamiento
+
+1. **Inicialización**: Al cargar la app, el servicio comprueba:
+   - Si hay un tema guardado en `localStorage` → lo usa
+   - Si no, comprueba `prefers-color-scheme` del sistema operativo
+   - Por defecto → tema claro
+
+2. **Cambio de tema**: Cuando el usuario hace clic en el botón:
+   - Se actualiza la señal `tema`
+   - Un `effect()` aplica el atributo `data-tema` al `<html>`
+   - Se guarda en `localStorage` para persistir
+
+3. **Escucha del sistema**: Si el usuario cambia el tema del SO y no había guardado preferencia, la app se adapta automáticamente.
+
+### Componente ThemeSwitcher
+
+El componente es un simple botón que alterna entre iconos de sol y luna:
+
+```typescript
+// componentes/theme-switcher/theme-switcher.ts
+
+@Component({
+  selector: 'app-theme-switcher',
+  standalone: true,
+  imports: [Icono],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ThemeSwitcher {
+  private readonly temaService = inject(TemaService);
+
+  // Señal computada para saber si está en modo oscuro
+  readonly esOscuro: Signal<boolean> = computed(() => 
+    this.temaService.esOscuro()
+  );
+
+  // Método para alternar el tema
+  alternar(): void {
+    this.temaService.alternar();
+  }
+}
+```
+
+### Template del botón
+
+```html
+<button 
+  class="theme-switcher"
+  type="button"
+  (click)="alternar()"
+  [attr.aria-label]="esOscuro() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+  aria-pressed="false">
+  
+  @if (esOscuro()) {
+    <app-icono nombre="sun" />
+  } @else {
+    <app-icono nombre="moon" />
+  }
+</button>
+```
+
+### Transición suave entre temas
+
+Para que el cambio de tema no sea brusco, aplico transiciones globales:
+
+```scss
+// styles/04-layout/_globals.scss
+
+* {
+  transition: 
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+```
+
+---
+
+## 6.3 Capturas comparativas
+
+Aquí muestro cómo se ven las páginas principales en modo claro y modo oscuro.
+
+### Página de Inicio
+
+| Modo claro | Modo oscuro |
+|------------|-------------|
+| ![Inicio claro](./img/inicio-claro.png) | ![Inicio oscuro](./img/inicio-oscuro.png) |
+
+En modo oscuro los colores de acento son más vibrantes (#00E5A0) para mantener el contraste sobre fondos oscuros.
+
+### Página de Búsqueda
+
+| Modo claro | Modo oscuro |
+|------------|-------------|
+| ![Búsqueda claro](./img/busqueda-claro.png) | ![Búsqueda oscuro](./img/busqueda-oscuro.png) |
+
+Las cards mantienen su estructura pero adaptan los colores de fondo y borde.
+
+### Página de Detalle de Gimnasio
+
+| Modo claro | Modo oscuro |
+|------------|-------------|
+| ![Gimnasio claro](./img/gimnasio-claro.png) | ![Gimnasio oscuro](./img/gimnasio-oscuro.png) |
+
+La galería y los elementos interactivos se adaptan manteniendo la legibilidad.

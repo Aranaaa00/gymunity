@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy, effect } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Subject, takeUntil, forkJoin, of } from 'rxjs';
 import { Card } from '../../componentes/compartidos/card/card';
@@ -26,7 +26,7 @@ const MAX_GIMNASIOS_POR_SECCION = 3;
   styleUrls: ['./inicio.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Inicio implements OnInit, OnDestroy {
+export class Inicio implements OnDestroy {
   // ----------------------------------------
   // Dependencias
   // ----------------------------------------
@@ -61,10 +61,21 @@ export class Inicio implements OnInit, OnDestroy {
   });
 
   // ----------------------------------------
-  // Lifecycle
+  // Constructor con effect para recargar al cambiar auth
   // ----------------------------------------
-  ngOnInit(): void {
-    this.cargarGimnasios();
+  constructor() {
+    effect(() => {
+      // Este effect se ejecuta cuando cambia el usuario o la autenticación
+      const usuario = this.auth.usuario();
+      const autenticado = this.auth.estaAutenticado();
+      
+      // Forzar la lectura para que el effect se suscriba
+      void usuario;
+      void autenticado;
+      
+      // Recargar gimnasios cuando cambie el estado
+      this.cargarGimnasios();
+    });
   }
 
   ngOnDestroy(): void {

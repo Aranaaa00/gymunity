@@ -160,6 +160,11 @@ export class AuthService {
     this._token.set(response.token);
     this._cargando.set(false);
     this.guardarEnAlmacenamiento(usuario, response.token);
+    
+    // Scroll al top después del login
+    if (this.esBrowser()) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   }
 
   private restaurarSesion(): void {

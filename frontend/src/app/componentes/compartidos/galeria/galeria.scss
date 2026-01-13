@@ -7,15 +7,16 @@
 
 $galeria-miniaturas-size: 5rem;
 $galeria-gap: $space-2;
-$galeria-altura-desktop: 22rem;
+$galeria-altura-desktop: 24rem;
 $galeria-altura-tablet: 18rem;
 
 .galeria {
   display: grid;
   grid-template-columns: 1fr auto;
+  align-items: start;
   gap: $galeria-gap;
 
-  margin: 0;
+  margin: 0 0 $space-4 0;
 
   @include respond-down(md) {
     display: flex;
@@ -69,13 +70,15 @@ $galeria-altura-tablet: 18rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: $galeria-gap;
 
-  height: $galeria-altura-desktop;
+  max-height: $galeria-altura-desktop;
+
+  overflow-y: auto;
 
   @include respond-down(lg) {
-    height: $galeria-altura-tablet;
+    max-height: $galeria-altura-tablet;
   }
 
   @include respond-down(md) {
