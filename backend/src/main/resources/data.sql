@@ -1,8 +1,10 @@
 -- ============================================
 -- DATOS INICIALES - GYMUNITY
 -- ============================================
--- Codificación: UTF-8
 -- Este script se ejecuta automáticamente con SQL_INIT_MODE=always
+
+-- Forzar codificación UTF-8 para tildes
+SET client_encoding = 'UTF8';
 
 -- ============================================
 -- PROFESORES
