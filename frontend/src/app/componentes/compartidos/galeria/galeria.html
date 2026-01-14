@@ -5,6 +5,10 @@
       [alt]="alt()" 
       class="galeria__imagen-principal"
       loading="eager"
+      fetchpriority="high"
+      width="800"
+      height="450"
+      decoding="async"
     />
   </picture>
 
@@ -23,6 +27,9 @@
             [alt]="alt() + ' - miniatura ' + ($index + 1)"
             class="galeria__miniatura-img"
             loading="lazy"
+            width="80"
+            height="60"
+            decoding="async"
           />
         </button>
       }

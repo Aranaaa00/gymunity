@@ -29,7 +29,15 @@
         <app-galeria [imagenes]="fotosGaleria()" [alt]="gimnasio()!.nombre" />
       } @else if (gimnasio()!.foto) {
         <figure class="gimnasio__imagen-unica">
-          <img [src]="gimnasio()!.foto" [alt]="gimnasio()!.nombre" class="gimnasio__foto" loading="eager" />
+          <img 
+            [src]="gimnasio()!.foto" 
+            [alt]="gimnasio()!.nombre" 
+            class="gimnasio__foto" 
+            loading="eager"
+            fetchpriority="high"
+            width="800"
+            height="450"
+            decoding="async" />
         </figure>
       }
 

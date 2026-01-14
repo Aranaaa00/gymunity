@@ -10,7 +10,7 @@ Enlace a la web: https://clownfish-app-puttm.ondigitalocean.app/
 2. [Stack tecnológico](#stack-tecnológico)
 3. [Arquitectura](#arquitectura)
 4. [Documentación](#documentación)
-5. [Desarrollo](#desarrollo)
+5. [Desarrollo](#desarrollo)<>
 
 ---
 

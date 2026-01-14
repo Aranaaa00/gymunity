@@ -6,7 +6,10 @@
     <img 
       [src]="src()" 
       [alt]="alt()" 
+      [width]="variant() === 'horizontal' ? 72 : 400"
+      [height]="variant() === 'horizontal' ? 72 : 300"
       loading="lazy"
+      decoding="async"
       (error)="onImageError()" />
   } @else {
     <span class="card-image-placeholder" aria-hidden="true">
