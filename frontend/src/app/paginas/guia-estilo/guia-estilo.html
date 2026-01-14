@@ -556,10 +556,10 @@
         <fieldset class="guia-estilo__bloque">
           <legend>Pesos Tipográficos</legend>
           <ul class="guia-estilo__tipografia-pesos">
-            <li style="font-weight: 400;">Regular (400) — Texto base</li>
-            <li style="font-weight: 500;">Medium (500) — Labels y énfasis sutil</li>
-            <li style="font-weight: 600;">Semibold (600) — Subtítulos</li>
-            <li style="font-weight: 700;">Bold (700) — Títulos y CTA</li>
+            <li class="guia-estilo__peso-regular">Regular (400) — Texto base</li>
+            <li class="guia-estilo__peso-medium">Medium (500) — Labels y énfasis sutil</li>
+            <li class="guia-estilo__peso-semibold">Semibold (600) — Subtítulos</li>
+            <li class="guia-estilo__peso-bold">Bold (700) — Títulos y CTA</li>
           </ul>
         </fieldset>
 
@@ -599,18 +599,18 @@ $font-weight-bold: 700;</code></pre>
         <fieldset class="guia-estilo__bloque">
           <legend>Colores Primarios</legend>
           <ul class="guia-estilo__grid-colores">
-            <li class="guia-estilo__color" style="--color: var(--color-botones)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--botones"></span>
               <span>Primary</span>
               <code>--color-botones</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-botones-hover)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--botones-hover"></span>
               <span>Primary Hover</span>
               <code>--color-botones-hover</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-header)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--header"></span>
               <span>Header</span>
               <code>--color-header</code>
             </li>
@@ -621,23 +621,23 @@ $font-weight-bold: 700;</code></pre>
         <fieldset class="guia-estilo__bloque">
           <legend>Colores Semánticos</legend>
           <ul class="guia-estilo__grid-colores">
-            <li class="guia-estilo__color" style="--color: var(--color-exito)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--exito"></span>
               <span>Success</span>
               <code>--color-exito</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-advertencia)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--advertencia"></span>
               <span>Warning</span>
               <code>--color-advertencia</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-peligro)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--peligro"></span>
               <span>Error</span>
               <code>--color-peligro</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-info)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--info"></span>
               <span>Info</span>
               <code>--color-info</code>
             </li>
@@ -648,18 +648,18 @@ $font-weight-bold: 700;</code></pre>
         <fieldset class="guia-estilo__bloque">
           <legend>Fondos y Superficies</legend>
           <ul class="guia-estilo__grid-colores">
-            <li class="guia-estilo__color" style="--color: var(--color-fondo)">
-              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--border"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--fondo guia-estilo__color-muestra--border"></span>
               <span>Background</span>
               <code>--color-fondo</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-superficie)">
-              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--border"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--superficie guia-estilo__color-muestra--border"></span>
               <span>Surface</span>
               <code>--color-superficie</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-borde)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--borde"></span>
               <span>Border</span>
               <code>--color-borde</code>
             </li>
@@ -670,18 +670,18 @@ $font-weight-bold: 700;</code></pre>
         <fieldset class="guia-estilo__bloque">
           <legend>Texto</legend>
           <ul class="guia-estilo__grid-colores">
-            <li class="guia-estilo__color" style="--color: var(--color-texto)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--texto"></span>
               <span>Text</span>
               <code>--color-texto</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-subtitulo)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--subtitulo"></span>
               <span>Text Secondary</span>
               <code>--color-subtitulo</code>
             </li>
-            <li class="guia-estilo__color" style="--color: var(--color-placeholder)">
-              <span class="guia-estilo__color-muestra"></span>
+            <li class="guia-estilo__color">
+              <span class="guia-estilo__color-muestra guia-estilo__color-muestra--placeholder"></span>
               <span>Text Muted</span>
               <code>--color-placeholder</code>
             </li>

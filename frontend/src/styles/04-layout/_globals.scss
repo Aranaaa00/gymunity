@@ -1,16 +1,25 @@
 @use '../00-settings/variables' as *;
 
 // ============================================
-// TRANSICIONES GLOBALES PARA CAMBIO DE TEMA
+// TRANSICIONES PARA CAMBIO DE TEMA (optimizado)
 // ============================================
 
-*,
-*::before,
-*::after {
+// Solo aplicar transiciones a elementos que realmente cambian con el tema
+body,
+header,
+main,
+footer,
+article,
+section,
+aside,
+nav,
+button,
+input,
+textarea,
+select {
   transition: 
     background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color 0.2s ease;
 }
 
 // ============================================

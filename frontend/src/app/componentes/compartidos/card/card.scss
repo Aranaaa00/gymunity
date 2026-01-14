@@ -46,6 +46,12 @@ $card-container-breakpoint: 20rem;
     }
   }
 
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+    border-radius: $radio-lg;
+  }
+
   &:active {
     transform: translateY(0);
   }

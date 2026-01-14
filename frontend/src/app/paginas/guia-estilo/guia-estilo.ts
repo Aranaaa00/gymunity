@@ -45,7 +45,10 @@ const ICONOS_DISPONIBLES: readonly NombreIcono[] = [
   'map-pin', 'users', 'sol', 'luna', 'email', 'menu', 'chevron-down',
   'settings', 'log-out', 'plus', 'search', 'loader', 'construction',
   'sparkles', 'dumbbell', 'star', 'wallet', 'clock', 'trophy',
-  'bar-chart', 'palette', 'lock', 'message-circle', 'check', 'x-circle'
+  'bar-chart', 'palette', 'lock', 'message-circle', 'check', 'x-circle',
+  'alert-circle', 'refresh-cw', 'check-circle', 'search-x', 'tag',
+  'award', 'medal', 'target', 'flame', 'zap', 'shield', 'crown', 'gem',
+  'hourglass', 'pencil', 'swords', 'hand', 'footprints', 'person-standing', 'activity'
 ] as const;
 
 // ============================================

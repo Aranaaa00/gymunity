@@ -54,7 +54,7 @@ $boton-danger-darken-active: -15%;
     transform: scale($boton-active-scale);
   }
 
-  &:focus {
+  &:focus-visible {
     outline: $borde-medium solid var(--color-boton);
     outline-offset: $boton-focus-outline-offset;
   }

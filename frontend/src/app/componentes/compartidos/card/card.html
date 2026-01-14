@@ -2,7 +2,11 @@
   class="card" 
   [class]="variant()"
   [class.card--clickable]="!!id()"
-  (click)="navegarAGimnasio()">
+  [attr.tabindex]="id() ? 0 : null"
+  [attr.role]="id() ? 'link' : null"
+  (click)="navegarAGimnasio()"
+  (keydown.enter)="navegarAGimnasio()"
+  (keydown.space)="navegarAGimnasio(); $event.preventDefault()">
   @if (imageSrc()) {
     <app-card-image
       [src]="imageSrc()"

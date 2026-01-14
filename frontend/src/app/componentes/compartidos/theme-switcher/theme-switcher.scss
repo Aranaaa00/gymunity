@@ -35,6 +35,11 @@ $switcher-active-scale: 0.95;
     color: $color-botones;
   }
 
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+  }
+
   &:active {
     transform: scale($switcher-active-scale);
   }
