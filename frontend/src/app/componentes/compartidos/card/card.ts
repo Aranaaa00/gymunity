@@ -47,6 +47,7 @@ export class Card {
   readonly imageAlt: InputSignal<string> = input<string>('');
   readonly actionText: InputSignal<string> = input<string>('');
   readonly variant: InputSignal<CardVariant> = input<CardVariant>(VARIANTE_DEFECTO);
+  readonly priority: InputSignal<boolean> = input<boolean>(false);
   
   /** @deprecated Usar valoracion y totalResenias */
   readonly rating: InputSignal<string> = input<string>('');

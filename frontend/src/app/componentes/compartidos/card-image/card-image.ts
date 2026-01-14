@@ -30,6 +30,7 @@ export class CardImage {
   readonly src: InputSignal<string> = input<string>('');
   readonly alt: InputSignal<string> = input<string>('');
   readonly variant: InputSignal<VarianteImagen> = input<VarianteImagen>(VARIANTE_DEFECTO);
+  readonly priority: InputSignal<boolean> = input<boolean>(false);
 
   // ----------------------------------------
   // Estado

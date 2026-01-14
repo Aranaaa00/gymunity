@@ -8,7 +8,8 @@
       [alt]="alt()" 
       [width]="variant() === 'horizontal' ? 72 : 400"
       [height]="variant() === 'horizontal' ? 72 : 300"
-      loading="lazy"
+      [attr.loading]="priority() ? 'eager' : 'lazy'"
+      [attr.fetchpriority]="priority() ? 'high' : 'auto'"
       decoding="async"
       (error)="onImageError()" />
   } @else {
