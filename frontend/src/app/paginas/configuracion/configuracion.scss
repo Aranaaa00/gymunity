@@ -2,164 +2,388 @@
 @use '../../../styles/01-tools/mixins' as *;
 
 // ============================================
-// CONFIGURACIÓN - CONTENEDOR PRINCIPAL
+// CONTENEDOR PRINCIPAL
 // ============================================
 
-.configuracion {
+.ajustes {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: $max-width-contenido;
   min-height: calc(100vh - 4rem);
-  padding: $space-4 $space-3;
+  margin: 0 auto;
+  padding: $space-6 $space-4;
 
   @include respond-down(sm) {
-    padding: $space-3 $space-2;
-  }
-}
-
-.configuracion__contenedor {
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-  
-  max-width: 48rem;
-  margin: 0 auto;
-
-  @include respond-down(md) {
     gap: $space-3;
+    padding: $space-4 $space-3;
   }
 }
 
 // ============================================
-// HEADER
+// CABECERA
 // ============================================
 
-.configuracion__header {
+.ajustes__cabecera {
   display: flex;
-  flex-direction: column;
-  gap: $space-2;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $space-3;
+  border-bottom: $borde-thin solid var(--color-borde);
 }
 
-.configuracion__titulo {
-  font-size: $texto-3xl;
+.ajustes__titulo {
+  margin: 0;
+  font-size: $texto-2xl;
   font-weight: $font-weight-bold;
+  letter-spacing: -0.02em;
   color: var(--color-titulo);
 
-  @include respond-down(md) {
+  @include respond-down(sm) {
     font-size: $texto-xl;
   }
 }
 
-.configuracion__subtitulo {
-  font-size: $texto-lg;
+.ajustes__salir {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2 $space-3;
+  background: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-full;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
   color: var(--color-subtitulo);
+  cursor: pointer;
+  transition: 
+    background-color $transicion-rapida,
+    color $transicion-rapida,
+    border-color $transicion-rapida;
+
+  &:hover {
+    background: var(--color-boton);
+    border-color: var(--color-boton);
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+  }
+}
+
+// ============================================
+// SECCIONES
+// ============================================
+
+.ajustes__seccion {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: $space-3;
+  padding: $space-4;
+  background: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-xl;
+  transition: border-color $transicion-rapida;
+
+  &:hover {
+    border-color: var(--color-boton);
+  }
 
   @include respond-down(sm) {
-    font-size: $texto-s;
+    grid-template-columns: 1fr;
+    gap: $space-2;
+    padding: $space-3;
   }
 }
 
-// ============================================
-// CONTENIDO
-// ============================================
+.ajustes__seccion--eliminar {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.7;
+  transition: opacity $transicion-rapida;
 
-.configuracion__contenido {
+  &:hover {
+    opacity: 1;
+    border-color: var(--color-borde);
+  }
+}
+
+.ajustes__seccion-icono {
   display: flex;
-  flex-direction: column;
-  gap: $space-4;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.125rem;
+  color: var(--color-boton);
 
-  @include respond-down(md) {
-    gap: $space-3;
+  @include respond-down(sm) {
+    display: none;
   }
 }
 
-.configuracion__seccion {
+.ajustes__seccion-icono--muted {
+  color: var(--color-subtitulo);
+}
+
+.ajustes__seccion-contenido {
   display: flex;
   flex-direction: column;
   gap: $space-3;
-  
-  padding: $space-3;
-  
-  background: var(--color-fondo-secundario);
-  
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
-
-  @include respond-down(sm) {
-    gap: $space-2;
-    padding: $space-2;
-  }
 }
 
-.configuracion__seccion-titulo {
+.ajustes__seccion-titulo {
+  margin: 0;
   font-size: $texto-lg;
   font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
   color: var(--color-titulo);
+}
 
-  @include respond-down(sm) {
-    font-size: $texto-s;
-  }
+.ajustes__seccion-desc {
+  margin: -$space-2 0 0;
+  font-size: $texto-sm;
+  color: var(--color-subtitulo);
 }
 
 // ============================================
-// MENSAJE
+// AVATAR
 // ============================================
 
-.configuracion__mensaje {
+.ajustes__avatar-zona {
   display: flex;
   align-items: center;
-  gap: $space-2;
-  
-  padding: $space-3;
-  
-  background: var(--color-info-fondo);
-  
-  border: $borde-thin solid var(--color-info);
-  border-radius: $radio-md;
+  gap: $space-3;
 
   @include respond-down(sm) {
+    flex-direction: column;
     align-items: flex-start;
-    padding: $space-2;
   }
 }
 
-.configuracion__icono {
+.ajustes__avatar {
+  position: relative;
+  display: flex;
   flex-shrink: 0;
-  color: var(--color-info);
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 6rem;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--color-boton), var(--color-boton-hover));
+  border: none;
+  border-radius: $radio-full;
+  color: #fff;
+  cursor: pointer;
+  transition: transform $transicion-rapida;
+
+  &:hover {
+    transform: scale(1.03);
+
+    .ajustes__avatar-overlay {
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+  }
+
+  @include respond-down(sm) {
+    width: 5rem;
+    height: 5rem;
+  }
 }
 
-.configuracion__mensaje-texto {
-  font-size: $texto-s;
+.ajustes__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ajustes__avatar-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  font-size: $texto-xs;
+  font-weight: $font-weight-medium;
+  color: #fff;
+  transition: opacity $transicion-rapida;
+}
+
+.ajustes__avatar-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ajustes__avatar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.ajustes__avatar-formato {
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-texto);
+}
+
+.ajustes__avatar-size {
+  font-size: $texto-xs;
+  color: var(--color-subtitulo);
+}
+
+// ============================================
+// FORMULARIOS
+// ============================================
+
+.ajustes__form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.ajustes__form-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-3;
+
+  @include respond-down(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// MENSAJES
+// ============================================
+
+.ajustes__mensaje {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  margin: 0;
+  padding: $space-2 $space-3;
+  border-radius: $radio-md;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+}
+
+.ajustes__mensaje--exito {
+  background: var(--color-alerta-success-bg);
+  color: var(--color-alerta-success-text);
+}
+
+.ajustes__mensaje--error {
+  background: var(--color-alerta-error-bg);
+  color: var(--color-alerta-error-text);
+}
+
+// ============================================
+// ELIMINAR CUENTA
+// ============================================
+
+.ajustes__btn-eliminar {
+  align-self: flex-start;
+  padding: $space-2 $space-3;
+  background: none;
+  border: $borde-thin dashed var(--color-subtitulo);
+  border-radius: $radio-md;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  color: var(--color-subtitulo);
+  cursor: pointer;
+  transition: 
+    color $transicion-rapida,
+    border-color $transicion-rapida;
+
+  &:hover {
+    border-color: var(--color-alerta-error-text);
+    color: var(--color-alerta-error-text);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+  }
+}
+
+.ajustes__confirmar {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.ajustes__confirmar-texto {
+  margin: 0;
+  font-size: $texto-sm;
   line-height: $line-height-normal;
   color: var(--color-texto);
 
-  @include respond-down(sm) {
-    font-size: $texto-xs;
+  strong {
+    font-weight: $font-weight-bold;
+    color: var(--color-titulo);
   }
 }
 
-// ============================================
-// ACCIONES Y PRUEBAS
-// ============================================
+.ajustes__confirmar-input {
+  max-width: 18rem;
+  padding: $space-2;
+  background: var(--color-fondo);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  color: var(--color-texto);
+  transition: border-color $transicion-rapida;
 
-.configuracion__info {
-  font-size: $texto-s;
-  color: var(--color-subtitulo);
+  &::placeholder {
+    color: var(--color-subtitulo);
+  }
 
-  @include respond-down(sm) {
-    font-size: $texto-xs;
+  &:focus {
+    border-color: var(--color-boton);
+    outline: none;
   }
 }
 
-.configuracion__acciones {
+.ajustes__confirmar-btns {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: $space-2;
+  margin-top: $space-1;
 }
 
-.configuracion__alerta {
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-warning);
+.ajustes__btn-cancelar {
+  padding: $space-2 $space-3;
+  background: none;
+  border: none;
+  font-family: $fuente-principal;
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-subtitulo);
+  cursor: pointer;
+  transition: color $transicion-rapida;
 
-  @include respond-down(sm) {
-    font-size: $texto-xs;
+  &:hover {
+    color: var(--color-texto);
+  }
+
+  &:focus-visible {
+    outline: $borde-medium solid var(--color-boton);
+    outline-offset: $borde-medium;
+    border-radius: $radio-sm;
   }
 }

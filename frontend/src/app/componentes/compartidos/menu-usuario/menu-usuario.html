@@ -6,7 +6,15 @@
   [attr.aria-expanded]="desplegableAbierto()"
   aria-haspopup="true"
   aria-label="Menú de usuario">
-  <app-icono nombre="user-circle" />
+  @if (avatarUsuario()) {
+    <img 
+      [src]="avatarUsuario()" 
+      alt="Tu avatar"
+      class="menu-usuario__avatar"
+    />
+  } @else {
+    <app-icono nombre="user-circle" />
+  }
   <span class="menu-usuario__nombre">{{ usuario()?.nombreUsuario || 'Usuario' }}</span>
   <app-icono 
     nombre="chevron-down" 

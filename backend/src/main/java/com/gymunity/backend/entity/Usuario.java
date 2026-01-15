@@ -54,7 +54,7 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDate fechaRegistro;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String avatar;
 
     @Column

@@ -5,6 +5,7 @@
 // ============================================
 
 $transition: 0.2s ease;
+$avatar-size: 1.75rem;
 
 // ============================================
 // HOST
@@ -50,6 +51,24 @@ $transition: 0.2s ease;
       opacity: 0.8;
       transition: transform $transition;
     }
+  }
+}
+
+// ============================================
+// AVATAR
+// ============================================
+
+.menu-usuario__avatar {
+  flex-shrink: 0;
+  width: $avatar-size;
+  height: $avatar-size;
+  border: $borde-medium solid rgba(255, 255, 255, 0.3);
+  border-radius: $radio-full;
+  object-fit: cover;
+  transition: border-color $transition;
+
+  .menu-usuario__boton:hover & {
+    border-color: rgba(255, 255, 255, 0.6);
   }
 }
 

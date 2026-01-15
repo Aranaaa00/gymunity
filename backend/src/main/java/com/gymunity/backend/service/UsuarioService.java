@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gymunity.backend.dto.UsuarioActualizacionDTO;
 import com.gymunity.backend.dto.UsuarioRegistroDTO;
 import com.gymunity.backend.dto.UsuarioResponseDTO;
 import com.gymunity.backend.entity.Rol;
@@ -90,10 +91,55 @@ public class UsuarioService {
     }
 
     /**
+     * Actualiza el perfil de un usuario (campos parciales).
+     * Solo actualiza los campos que vienen con valor.
+     */
+    public UsuarioResponseDTO actualizarPerfil(Long id, UsuarioActualizacionDTO dto) {
+        Usuario usuario = buscarPorId(id);
+        
+        if (dto.getNombreUsuario() != null && !dto.getNombreUsuario().isEmpty()) {
+            if (!usuario.getNombreUsuario().equalsIgnoreCase(dto.getNombreUsuario())) {
+                validarNombreUsuarioUnico(dto.getNombreUsuario());
+            }
+            usuario.setNombreUsuario(dto.getNombreUsuario());
+        }
+        
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
+            validarCambioEmail(usuario.getEmail(), dto.getEmail());
+            usuario.setEmail(dto.getEmail());
+        }
+        
+        if (dto.getCiudad() != null) {
+            usuario.setCiudad(dto.getCiudad());
+        }
+        
+        if (dto.getAvatar() != null) {
+            usuario.setAvatar(dto.getAvatar());
+        }
+        
+        return convertirADTO(usuarioRepository.save(usuario));
+    }
+
+    /**
      * Elimina un usuario por ID.
      */
     public void eliminar(Long id) {
         usuarioRepository.delete(buscarPorId(id));
+    }
+
+    /**
+     * Cambia la contraseña de un usuario.
+     * REGLA: La contraseña actual debe ser correcta.
+     */
+    public void cambiarContrasenia(Long id, String contraseniaActual, String contraseniaNueva) {
+        Usuario usuario = buscarPorId(id);
+        
+        if (!passwordEncoder.matches(contraseniaActual, usuario.getContrasenia())) {
+            throw new ReglaNegocioException("La contraseña actual es incorrecta");
+        }
+        
+        usuario.setContrasenia(passwordEncoder.encode(contraseniaNueva));
+        usuarioRepository.save(usuario);
     }
 
     /**

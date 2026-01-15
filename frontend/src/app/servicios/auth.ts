@@ -246,6 +246,106 @@ export class AuthService {
     return localStorage.getItem(CLAVE_CREDENCIALES) !== null;
   }
 
+  // ----------------------------------------
+  // Actualizar perfil
+  // ----------------------------------------
+  actualizarPerfil(datos: { nombreUsuario?: string; email?: string; ciudad?: string; avatar?: string }): Observable<boolean> {
+    const usuarioActual = this._usuario();
+    if (!usuarioActual) {
+      return of(false);
+    }
+
+    this._cargando.set(true);
+    this._error.set(null);
+
+    return this.http.put<Usuario>(`/api/usuarios/${usuarioActual.id}`, datos).pipe(
+      tap((usuarioActualizado) => {
+        const nuevoUsuario: Usuario = {
+          ...usuarioActual,
+          ...usuarioActualizado,
+        };
+        this._usuario.set(nuevoUsuario);
+        this.guardarEnAlmacenamiento(nuevoUsuario, this._token()!);
+        this._cargando.set(false);
+      }),
+      map(() => true),
+      catchError((error) => {
+        this._error.set(error.mensaje || 'Error al actualizar el perfil');
+        this._cargando.set(false);
+        return of(false);
+      })
+    );
+  }
+
+  // ----------------------------------------
+  // Actualizar avatar
+  // ----------------------------------------
+  actualizarAvatar(avatarBase64: string): void {
+    const usuarioActual = this._usuario();
+    if (!usuarioActual) return;
+
+    const nuevoUsuario: Usuario = {
+      ...usuarioActual,
+      avatar: avatarBase64,
+    };
+    this._usuario.set(nuevoUsuario);
+    this.guardarEnAlmacenamiento(nuevoUsuario, this._token()!);
+  }
+
+  // ----------------------------------------
+  // Cambiar contraseña
+  // ----------------------------------------
+  cambiarContrasenia(contraseniaActual: string, contraseniaNueva: string): Observable<boolean> {
+    const usuarioActual = this._usuario();
+    if (!usuarioActual) {
+      return of(false);
+    }
+
+    this._cargando.set(true);
+    this._error.set(null);
+
+    return this.http.put<void>(`/api/usuarios/${usuarioActual.id}/password`, {
+      contraseniaActual,
+      contraseniaNueva,
+    }).pipe(
+      tap(() => {
+        this._cargando.set(false);
+      }),
+      map(() => true),
+      catchError((error) => {
+        this._error.set(error.mensaje || 'Contraseña actual incorrecta');
+        this._cargando.set(false);
+        return of(false);
+      })
+    );
+  }
+
+  // ----------------------------------------
+  // Eliminar cuenta
+  // ----------------------------------------
+  eliminarCuenta(): Observable<boolean> {
+    const usuarioActual = this._usuario();
+    if (!usuarioActual) {
+      return of(false);
+    }
+
+    this._cargando.set(true);
+    this._error.set(null);
+
+    return this.http.delete<void>(`/api/usuarios/${usuarioActual.id}`).pipe(
+      tap(() => {
+        this._cargando.set(false);
+        this.cerrarSesion();
+      }),
+      map(() => true),
+      catchError((error) => {
+        this._error.set(error.mensaje || 'Error al eliminar la cuenta');
+        this._cargando.set(false);
+        return of(false);
+      })
+    );
+  }
+
   private esBrowser(): boolean {
     return isPlatformBrowser(this.plataformaId);
   }

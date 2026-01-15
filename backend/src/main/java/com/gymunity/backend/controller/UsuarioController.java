@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.gymunity.backend.dto.CambioContraseniaDTO;
+import com.gymunity.backend.dto.UsuarioActualizacionDTO;
 import com.gymunity.backend.dto.UsuarioRegistroDTO;
 import com.gymunity.backend.dto.UsuarioResponseDTO;
 import com.gymunity.backend.entity.Rol;
@@ -51,13 +53,20 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> actualizar(@PathVariable Long id, 
-                                                         @Valid @RequestBody UsuarioRegistroDTO dto) {
-        return ResponseEntity.ok(usuarioService.actualizar(id, dto));
+                                                         @Valid @RequestBody UsuarioActualizacionDTO dto) {
+        return ResponseEntity.ok(usuarioService.actualizarPerfil(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         usuarioService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<Void> cambiarContrasenia(@PathVariable Long id,
+                                                    @Valid @RequestBody CambioContraseniaDTO dto) {
+        usuarioService.cambiarContrasenia(id, dto.getContraseniaActual(), dto.getContraseniaNueva());
         return ResponseEntity.noContent().build();
     }
 

@@ -110,6 +110,52 @@ describe('ValidadoresAsincronos', () => {
       tick();
       expect(resultado).toBeNull();
     }));
+
+    it('deberia ignorar validacion si username es igual al valor actual', fakeAsync(() => {
+      const validator = service.usernameUnico('miusuario');
+      const control = new FormControl('miusuario');
+      
+      let resultado: any = undefined;
+      (validator(control) as Observable<any>).subscribe((r: any) => resultado = r);
+      
+      tick(600);
+      expect(resultado).toBeNull();
+    }));
+
+    it('deberia ignorar validacion si username es igual al valor actual (case insensitive)', fakeAsync(() => {
+      const validator = service.usernameUnico('MiUsuario');
+      const control = new FormControl('miusuario');
+      
+      let resultado: any = undefined;
+      (validator(control) as Observable<any>).subscribe((r: any) => resultado = r);
+      
+      tick(600);
+      expect(resultado).toBeNull();
+    }));
+  });
+
+  describe('emailUnico con valorActual', () => {
+    it('deberia ignorar validacion si email es igual al valor actual', fakeAsync(() => {
+      const validator = service.emailUnico('test@email.com');
+      const control = new FormControl('test@email.com');
+      
+      let resultado: any = undefined;
+      (validator(control) as Observable<any>).subscribe((r: any) => resultado = r);
+      
+      tick(600);
+      expect(resultado).toBeNull();
+    }));
+
+    it('deberia ignorar validacion si email es igual al valor actual (case insensitive)', fakeAsync(() => {
+      const validator = service.emailUnico('TEST@EMAIL.COM');
+      const control = new FormControl('test@email.com');
+      
+      let resultado: any = undefined;
+      (validator(control) as Observable<any>).subscribe((r: any) => resultado = r);
+      
+      tick(600);
+      expect(resultado).toBeNull();
+    }));
   });
 
   describe('ciudadExiste', () => {

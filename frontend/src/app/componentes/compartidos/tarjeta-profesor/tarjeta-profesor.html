@@ -1,7 +1,7 @@
 <article class="tarjeta-profesor">
   <figure class="tarjeta-profesor__avatar">
     @if (foto()) {
-      <img [src]="foto()" [alt]="nombre()" class="tarjeta-profesor__imagen" loading="lazy" />
+      <img [src]="foto()" [alt]="nombre()" class="tarjeta-profesor__imagen" loading="lazy" width="64" height="64" />
     } @else {
       <app-icono nombre="user" tamano="lg" class="tarjeta-profesor__icono-default" />
     }

@@ -51,7 +51,6 @@ class GimnasioServiceTest {
                 .foto("foto.jpg")
                 .build();
         
-        when(gimnasioRepository.findByCiudadIgnoreCase("Madrid")).thenReturn(Collections.emptyList());
         when(gimnasioRepository.save(any(Gimnasio.class))).thenReturn(gimnasioGuardado);
         
         GimnasioCardDTO resultado = gimnasioService.crear(dto);
@@ -69,13 +68,7 @@ class GimnasioServiceTest {
                 .ciudad("Madrid")
                 .build();
         
-        Gimnasio gimnasioExistente = Gimnasio.builder()
-                .id(1L)
-                .nombre("Gimnasio Duplicado")
-                .ciudad("Madrid")
-                .build();
-        
-        when(gimnasioRepository.findByCiudadIgnoreCase("Madrid")).thenReturn(List.of(gimnasioExistente));
+        when(gimnasioRepository.existsByNombreIgnoreCaseAndCiudadIgnoreCase("Gimnasio Duplicado", "Madrid")).thenReturn(true);
         
         assertThatThrownBy(() -> gimnasioService.crear(dto))
                 .isInstanceOf(ReglaNegocioException.class)

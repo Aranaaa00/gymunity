@@ -252,4 +252,54 @@ describe('AuthService', () => {
       expect(service.cargando()).toBeFalse();
     }));
   });
+
+  describe('cambiarContrasenia', () => {
+    it('deberia cambiar contrasenia exitosamente', fakeAsync(() => {
+      // Primero hacer login
+      service.login('test@example.com', 'password').subscribe();
+      const loginReq = httpMock.expectOne('/api/auth/login');
+      loginReq.flush({ id: 1, email: 'test@example.com', token: 'token', nombreUsuario: 'test', rol: 'ALUMNO' });
+      tick();
+
+      let resultado = false;
+      service.cambiarContrasenia('oldpass', 'newpass').subscribe(r => resultado = r);
+
+      const req = httpMock.expectOne('/api/usuarios/1/password');
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toEqual({
+        contraseniaActual: 'oldpass',
+        contraseniaNueva: 'newpass'
+      });
+      req.flush({});
+
+      tick();
+      expect(resultado).toBeTrue();
+    }));
+
+    it('deberia manejar error al cambiar contrasenia', fakeAsync(() => {
+      // Primero hacer login
+      service.login('test@example.com', 'password').subscribe();
+      const loginReq = httpMock.expectOne('/api/auth/login');
+      loginReq.flush({ id: 1, email: 'test@example.com', token: 'token', nombreUsuario: 'test', rol: 'ALUMNO' });
+      tick();
+
+      let resultado = true;
+      service.cambiarContrasenia('wrongpass', 'newpass').subscribe(r => resultado = r);
+
+      const req = httpMock.expectOne('/api/usuarios/1/password');
+      req.flush({ mensaje: 'Contraseña incorrecta' }, { status: 401, statusText: 'Unauthorized' });
+
+      tick();
+      expect(resultado).toBeFalse();
+      expect(service.error()).toBeTruthy();
+    }));
+
+    it('deberia retornar false si no hay usuario logueado', fakeAsync(() => {
+      let resultado = true;
+      service.cambiarContrasenia('old', 'new').subscribe(r => resultado = r);
+      tick();
+      expect(resultado).toBeFalse();
+    }));
+  });
 });
+

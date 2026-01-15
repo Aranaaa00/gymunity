@@ -141,11 +141,10 @@ class AlumnoClaseServiceTest {
         
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(alumno));
         when(claseRepository.findById(1L)).thenReturn(Optional.of(clase));
-        when(alumnoClaseRepository.existsByAlumnoIdAndClaseIdAndFechaClase(1L, 1L, fechaPasada)).thenReturn(false);
         
         assertThatThrownBy(() -> alumnoClaseService.inscribir(1L, 1L, fechaPasada))
                 .isInstanceOf(ReglaNegocioException.class)
-                .hasMessageContaining("No se puede reservar una clase para una fecha pasada");
+                .hasMessageContaining("La fecha de la clase debe ser futura");
         
         verify(alumnoClaseRepository, never()).save(any());
     }
@@ -179,7 +178,6 @@ class AlumnoClaseServiceTest {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(alumno));
         when(claseRepository.findById(1L)).thenReturn(Optional.of(clase));
         when(alumnoClaseRepository.existsByAlumnoIdAndClaseIdAndFechaClase(1L, 1L, FECHA_FUTURA)).thenReturn(false);
-        when(alumnoClaseRepository.findByAlumnoId(1L)).thenReturn(java.util.Collections.emptyList());
         when(alumnoClaseRepository.save(any(AlumnoClase.class))).thenReturn(inscripcion);
         
         InscripcionResponseDTO resultado = alumnoClaseService.inscribir(1L, 1L, FECHA_FUTURA);

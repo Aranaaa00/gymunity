@@ -17,9 +17,13 @@ export class ValidadoresAsincronos {
   
   private readonly http = inject(HttpBase);
 
-  emailUnico(): AsyncValidatorFn {
+  emailUnico(valorActual?: string): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
+        return of(null);
+      }
+
+      if (valorActual && control.value.toLowerCase() === valorActual.toLowerCase()) {
         return of(null);
       }
 
@@ -31,9 +35,13 @@ export class ValidadoresAsincronos {
     };
   }
 
-  usernameUnico(): AsyncValidatorFn {
+  usernameUnico(valorActual?: string): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
+        return of(null);
+      }
+
+      if (valorActual && control.value.toLowerCase() === valorActual.toLowerCase()) {
         return of(null);
       }
 

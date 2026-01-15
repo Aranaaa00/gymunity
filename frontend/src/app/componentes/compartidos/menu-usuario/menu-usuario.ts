@@ -1,4 +1,4 @@
-import { Component, signal, inject, HostListener, ViewChild, ElementRef, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, inject, HostListener, ViewChild, ElementRef, WritableSignal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Icono } from '../icono/icono';
 import { AuthService } from '../../../servicios/auth';
@@ -33,6 +33,14 @@ export class MenuUsuario {
   // ----------------------------------------
   readonly desplegableAbierto: WritableSignal<boolean> = signal(false);
   readonly usuario = this.authService.usuario;
+
+  // ----------------------------------------
+  // Computed
+  // ----------------------------------------
+  readonly avatarUsuario = computed(() => {
+    const usuario = this.usuario();
+    return usuario?.avatar ?? null;
+  });
 
   // ----------------------------------------
   // Host Listeners

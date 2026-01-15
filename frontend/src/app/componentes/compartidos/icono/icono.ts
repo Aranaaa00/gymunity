@@ -62,7 +62,10 @@ export type NombreIcono =
   | 'hand'
   | 'footprints'
   | 'person-standing'
-  | 'activity';
+  | 'activity'
+  | 'camera'
+  | 'trash'
+  | 'shield-alert';
 
 type TamanoIcono = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
@@ -132,6 +135,9 @@ const MAPEO_ICONOS: Readonly<Record<NombreIcono, string>> = {
   footprints: 'Footprints',
   'person-standing': 'PersonStanding',
   activity: 'Activity',
+  camera: 'Camera',
+  trash: 'Trash2',
+  'shield-alert': 'ShieldAlert',
 } as const;
 
 const TAMANOS_PIXELES: Readonly<Record<TamanoIcono, number>> = {
