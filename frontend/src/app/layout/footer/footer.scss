@@ -5,7 +5,7 @@
 // VARIABLES LOCALES
 // ============================================
 
-$footer-transition-duration: 0.3s;
+// Usar transición de tema global para sincronización
 $footer-social-transition-duration: 0.2s;
 $footer-logo-height: 2.5rem;
 $footer-slogan-max-width: 18rem;
@@ -22,8 +22,7 @@ $footer-social-translate-y: -0.125rem;
   padding: $space-4 0 $space-3;
 
   background: var(--color-header);
-
-  transition: background-color $footer-transition-duration ease;
+  transition: background-color $transicion-tema;
 
   @include respond-down(md) {
     padding-bottom: 5rem;

@@ -21,7 +21,8 @@ body {
   font-family: $fuente-principal;
   background: var(--color-fondo);
   color: var(--color-texto);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  // Transición sincronizada en toda la app para cambio de tema
+  transition: background-color $transicion-tema, color $transicion-tema;
 }
 
 img, picture, video, canvas, svg {

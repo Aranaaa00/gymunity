@@ -61,6 +61,7 @@ $estrella-color-activa: #facc15;
   border-radius: $radio-xl;
   box-shadow: $shadow-lg;
   animation: modal-slide $modal-animation-duration ease-out;
+  transition: background-color $transicion-tema;
 
   @include respond-down(sm) {
     gap: $space-3;

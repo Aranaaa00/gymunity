@@ -47,6 +47,7 @@ $modal-focus-offset: 0.125rem;
   padding: $space-4;
 
   background: var(--color-fondo);
+  transition: background-color $transicion-tema;
 
   border-radius: $radio-lg;
 

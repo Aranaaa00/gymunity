@@ -364,12 +364,13 @@ Los botones tienen sombras verdes para reforzar la identidad de marca.
 ### Transiciones
 
 ```scss
-$transicion-rapida: 0.15s ease;   // Hovers rápidos
-$transicion-estandar: 0.3s ease;  // Cambios de estado
-$transicion-lenta: 0.5s ease;     // Animaciones de entrada
+$transicion-rapida: 0.15s ease;      // Hovers rápidos
+$transicion-estandar: 0.3s ease;     // Cambios de estado
+$transicion-lenta: 0.5s ease;        // Animaciones de entrada
+$transicion-tema: 0.4s ease-in-out;  // Cambio de tema (sincronizado en toda la app)
 ```
 
-Para el **cambio de tema** aplico transiciones globales de 200ms en background, border y box-shadow.
+La variable `$transicion-tema` se usa en **todos los elementos con background** para que el cambio entre modo claro y oscuro sea uniforme y sin desfases visibles.
 
 ---
 

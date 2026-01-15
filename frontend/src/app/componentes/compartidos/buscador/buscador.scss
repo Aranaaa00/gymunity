@@ -26,9 +26,9 @@ $buscador-width-transition-duration: 0.3s;
   border-radius: $radio-full;
   box-shadow: $shadow-buscador;
   transition: 
-    background-color $buscador-transition-duration ease, 
+    background-color $transicion-tema, 
     width $buscador-width-transition-duration ease, 
-    border $buscador-transition-duration ease;
+    border-color $buscador-transition-duration ease;
 
   &:hover {
     background: var(--color-fondo-secundario);

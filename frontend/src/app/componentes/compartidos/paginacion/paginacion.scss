@@ -23,7 +23,10 @@
   border-radius: $radio-md;
   color: var(--color-texto);
   cursor: pointer;
-  transition: background-color $transicion-rapida, border-color $transicion-rapida;
+  transition:
+    background-color $transicion-tema,
+    border-color $transicion-rapida,
+    color $transicion-rapida;
 
   &:hover:not(:disabled) {
     background: var(--color-boton);

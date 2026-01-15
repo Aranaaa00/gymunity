@@ -194,6 +194,7 @@
   text-align: center;
 
   background: var(--color-fondo-secundario);
+  transition: background-color $transicion-tema;
 
   border-radius: $radio-lg;
 }

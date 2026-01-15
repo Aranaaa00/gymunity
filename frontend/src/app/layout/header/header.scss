@@ -5,7 +5,7 @@
 // VARIABLES LOCALES
 // ============================================
 
-$header-transition-duration: 0.3s;
+// Usar transición de tema global para sincronización
 $header-menu-transition-duration: 0.2s;
 $header-logo-height-mobile: 2rem;
 $header-logo-height-desktop: 2.5rem;
@@ -30,7 +30,7 @@ $header-buscador-max-width: 28rem;
   padding: $space-2 0;
   background: var(--color-header);
   box-shadow: $shadow-sm;
-  transition: background-color $header-transition-duration ease, box-shadow $header-transition-duration ease;
+  transition: background-color $transicion-tema, box-shadow $transicion-tema;
 
   @include respond-down(md) {
     padding: $space-1 0;

@@ -44,7 +44,10 @@ $transform-hover: -0.125rem;
   border-radius: $radio-lg;
   box-shadow: $shadow-sm;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: 
+    background-color $transicion-tema,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY($transform-hover);

@@ -135,6 +135,7 @@ $inicio-link-gap: 0.25rem;
   background: linear-gradient(135deg, var(--color-fondo-elevado) 0%, var(--color-fondo) 100%);
   border-radius: $radio-lg;
   text-align: center;
+  transition: background $transicion-tema;
 
   @include respond-down(md) {
     padding: $space-6 $space-3;

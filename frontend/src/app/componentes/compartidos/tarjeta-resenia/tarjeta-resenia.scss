@@ -15,6 +15,7 @@
 
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
+  transition: background-color $transicion-tema, border-color $transicion-tema;
 
   @include respond-down(sm) {
     gap: $space-1;

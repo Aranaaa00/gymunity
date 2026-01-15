@@ -82,7 +82,8 @@ export class ValidadoresAsincronos {
           }
         }),
         map((response) => response.existe ? null : { ciudadNoExiste: true }),
-        catchError(() => of(null))
+        // Si hay error de conexión, marcar como inválido para seguridad
+        catchError(() => of({ ciudadNoExiste: true }))
       );
     };
   }

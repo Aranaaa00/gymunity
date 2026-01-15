@@ -24,6 +24,7 @@ $barra-transition-duration: 0.3s;
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-sm;
   background: var(--color-fondo-secundario);
+  transition: background-color $transicion-tema, border-color $transicion-tema;
 }
 
 .formulario-registro__fuerza-barra {

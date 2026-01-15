@@ -20,7 +20,9 @@
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
 
-  transition: border-color 0.2s ease;
+  transition:
+    background-color $transicion-tema,
+    border-color $transicion-rapida;
 
   &:hover {
     border-color: var(--color-acento);

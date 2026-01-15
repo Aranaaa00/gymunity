@@ -156,7 +156,8 @@ $card-container-breakpoint: 20rem;
   background: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-md;
-  transition: 
+  transition:
+    background-color $transicion-tema,
     border-color $card-transition,
     box-shadow $card-transition;
 
@@ -210,7 +211,8 @@ $card-container-breakpoint: 20rem;
   background: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-md;
-  transition: 
+  transition:
+    background-color $transicion-tema,
     border-color $card-transition,
     box-shadow $card-transition;
 

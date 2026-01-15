@@ -27,6 +27,7 @@
   background: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
+  transition: background-color $transicion-tema, border-color $transicion-tema;
 
   @include respond-down(sm) {
     flex-direction: column;
@@ -47,6 +48,7 @@
   border: $borde-medium solid var(--color-borde);
   border-radius: $radio-full;
   overflow: hidden;
+  transition: background-color $transicion-tema, border-color $transicion-tema;
 
   @include respond-down(sm) {
     width: $space-8;
@@ -188,6 +190,7 @@
   background: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
+  transition: background-color $transicion-tema, border-color $transicion-tema;
 
   @include respond-down(md) {
     grid-template-columns: repeat(2, 1fr);
@@ -285,7 +288,10 @@
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
   cursor: pointer;
-  transition: border-color $transicion-rapida, box-shadow $transicion-rapida;
+  transition:
+    background-color $transicion-tema,
+    border-color $transicion-rapida,
+    box-shadow $transicion-rapida;
 
   &:hover {
     border-color: var(--color-acento);
