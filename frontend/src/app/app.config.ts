@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
+import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import {
 import { httpHeadersInterceptor } from './interceptors/http-headers.interceptor';
 import { httpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { httpLoggingInterceptor } from './interceptors/http-logging.interceptor';
+import { IdlePreloadStrategy } from './servicios/idle-preload-strategy';
 
 // ============================================
 // ICONOS
@@ -86,7 +87,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideRouter(routes, withPreloading(IdlePreloadStrategy)),
     provideClientHydration(withEventReplay()),
     provideHttpClient(
       withFetch(),

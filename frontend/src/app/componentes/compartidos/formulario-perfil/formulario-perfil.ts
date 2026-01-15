@@ -1,4 +1,4 @@
-import { Component, input, output, inject, InputSignal, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
+import { Component, input, output, inject, InputSignal, OutputEmitterRef, signal, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { CampoFormulario } from '../campo-formulario/campo-formulario';
 import { AreaTexto } from '../area-texto/area-texto';
@@ -80,6 +80,7 @@ const PLATAFORMAS_REDES = ['Instagram', 'Twitter', 'Facebook', 'LinkedIn', 'TikT
   imports: [ReactiveFormsModule, CampoFormulario, AreaTexto, Boton, Icono],
   templateUrl: './formulario-perfil.html',
   styleUrl: './formulario-perfil.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormularioPerfil {
   // ----------------------------------------

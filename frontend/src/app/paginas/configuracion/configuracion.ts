@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth';
 import { NotificacionService } from '../../servicios/notificacion';
 import { ValidadoresAsincronos, MENSAJES_VALIDACION_ASINCRONA } from '../../servicios/validadores-asincronos';
+import { calcularFuerzaPassword, ResultadoFuerza } from '../../servicios/fuerza-password';
 import { Boton } from '../../componentes/compartidos/boton/boton';
 import { CampoFormulario } from '../../componentes/compartidos/campo-formulario/campo-formulario';
 import { ComponenteConCambios } from '../../guards/cambios-sin-guardar.guard';
@@ -23,7 +24,6 @@ const LONGITUD_MINIMA_PASSWORD = 6;
 const TIPOS_IMAGEN_VALIDOS = ['image/jpeg', 'image/png', 'image/webp'];
 const CALIDAD_COMPRESION = 0.8;
 const DIMENSION_MAXIMA = 400;
-const TIMEOUT_MENSAJE_EXITO = 4000;
 
 const MENSAJES_ERROR = {
   username: {
@@ -94,14 +94,6 @@ export class Configuracion implements ComponenteConCambios, OnInit {
   
   readonly mostrarConfirmacionEliminar = signal(false);
   readonly avatarPreview = signal<string | null>(null);
-  readonly avatarError = signal<string | null>(null);
-  
-  readonly mensajeExitoPerfil = signal<string | null>(null);
-  readonly mensajeExitoPassword = signal<string | null>(null);
-  readonly mensajeExitoAvatar = signal<string | null>(null);
-  
-  readonly errorPerfil = signal<string | null>(null);
-  readonly errorPassword = signal<string | null>(null);
   readonly errorEliminar = signal<string | null>(null);
   
   readonly guardandoPerfil = signal(false);
@@ -111,8 +103,9 @@ export class Configuracion implements ComponenteConCambios, OnInit {
   private readonly cambiosPerfil = signal(false);
   private readonly avatarCambiado = signal(false);
   
-  // Signal para forzar actualización del computed cuando cambia el formulario
   private readonly perfilFormValido = signal(true);
+  private readonly passwordFormValido = signal(false);
+  private readonly passwordNuevaValue = signal('');
   
   private valoresIniciales = { username: '', email: '', ciudad: '' };
 
@@ -143,13 +136,9 @@ export class Configuracion implements ComponenteConCambios, OnInit {
     
     const hayCambios = this.cambiosPerfil();
     const noGuardando = !this.guardandoPerfil();
-    // Leer el signal para forzar reactividad
     const formValido = this.perfilFormValido();
     
-    // Si no hay cambios, no se puede guardar
     if (!hayCambios) return false;
-    
-    // Si está guardando, no permitir otro guardado
     if (!noGuardando) return false;
     
     return formValido;
@@ -160,14 +149,21 @@ export class Configuracion implements ComponenteConCambios, OnInit {
   });
 
   readonly puedeGuardarPassword = computed(() => {
-    const formValido = this.passwordForm.valid;
-    const contraseniasCoinciden = this.contraseniaNuevaControl.value === this.confirmarContraseniaControl.value;
-    const noGuardando = !this.guardandoPassword();
-    const hayContenido = !!this.contraseniaActualControl.value && !!this.contraseniaNuevaControl.value;
-    return formValido && contraseniasCoinciden && noGuardando && hayContenido;
+    return this.passwordFormValido() && !this.guardandoPassword();
   });
 
   readonly textoConfirmacion = computed(() => this.usuario()?.nombreUsuario ?? '');
+
+  readonly fuerzaPassword = computed((): ResultadoFuerza => {
+    return calcularFuerzaPassword(this.passwordNuevaValue());
+  });
+
+  readonly contraseniasCoinciden = computed(() => {
+    const nueva = this.contraseniaNuevaControl?.value ?? '';
+    const confirmar = this.confirmarContraseniaControl?.value ?? '';
+    if (!nueva || !confirmar) return true;
+    return nueva === confirmar;
+  });
 
   // ----------------------------------------
   // Lifecycle
@@ -223,16 +219,25 @@ export class Configuracion implements ComponenteConCambios, OnInit {
 
   getErrorPassword(campo: CampoPassword): string {
     const control = this.passwordForm.get(campo);
-    if (!control?.touched || !control?.errors) return '';
-
-    if (campo === 'confirmarContrasenia') {
-      const noCoincide = control.value !== this.contraseniaNuevaControl.value;
-      if (noCoincide && control.value) return MENSAJES_ERROR.confirmarContrasenia.noCoincide;
+    if (!control?.touched || !control?.errors) {
+      if (campo === 'confirmarContrasenia' && control?.touched && control?.value) {
+        const noCoincide = control.value !== this.contraseniaNuevaControl.value;
+        if (noCoincide) return MENSAJES_ERROR.confirmarContrasenia.noCoincide;
+      }
+      return '';
     }
 
     const mensajes = MENSAJES_ERROR[campo];
     const tipoError = Object.keys(control.errors)[0];
     return mensajes[tipoError as keyof typeof mensajes] ?? '';
+  }
+
+  getMensajeCoincidencia(): string {
+    const nueva = this.contraseniaNuevaControl?.value ?? '';
+    const confirmar = this.confirmarContraseniaControl?.value ?? '';
+    if (!confirmar || !nueva) return '';
+    if (nueva === confirmar) return '✓ Las contraseñas coinciden';
+    return '';
   }
 
   getMensajeExitoPerfil(campo: CampoPerfil): string {
@@ -265,11 +270,8 @@ export class Configuracion implements ComponenteConCambios, OnInit {
     const archivo = input.files?.[0];
     if (!archivo) return;
 
-    this.avatarError.set(null);
-
     if (!TIPOS_IMAGEN_VALIDOS.includes(archivo.type)) {
-      this.avatarError.set('Usa JPG, PNG o WebP');
-      this.notificacionService.error('Formato de imagen no válido');
+      this.notificacionService.error('Formato no válido. Usa JPG, PNG o WebP');
       input.value = '';
       return;
     }
@@ -285,7 +287,6 @@ export class Configuracion implements ComponenteConCambios, OnInit {
     if (!avatar) return;
 
     this.guardandoAvatar.set(true);
-    this.mensajeExitoAvatar.set(null);
 
     this.authService.actualizarPerfil({ avatar })
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -294,20 +295,16 @@ export class Configuracion implements ComponenteConCambios, OnInit {
           this.guardandoAvatar.set(false);
           if (exito) {
             this.authService.actualizarAvatar(avatar);
-            this.mensajeExitoAvatar.set('Foto actualizada');
             this.notificacionService.success('Foto de perfil actualizada');
             this.avatarCambiado.set(false);
             this.avatarPreview.set(null);
-            this.ocultarMensaje('avatar');
           } else {
             const errorMsg = this.authService.error() ?? 'Error al guardar';
-            this.avatarError.set(errorMsg);
             this.notificacionService.error(errorMsg);
           }
         },
         error: () => {
           this.guardandoAvatar.set(false);
-          this.avatarError.set('Error de conexión');
           this.notificacionService.error('Error de conexión');
         },
       });
@@ -317,9 +314,6 @@ export class Configuracion implements ComponenteConCambios, OnInit {
   // Métodos públicos - Guardar perfil
   // ----------------------------------------
   guardarPerfil(): void {
-    this.errorPerfil.set(null);
-    this.mensajeExitoPerfil.set(null);
-
     // Verificar si hay cambios
     if (!this.cambiosPerfil()) {
       this.notificacionService.info('No hay cambios que guardar');
@@ -366,20 +360,16 @@ export class Configuracion implements ComponenteConCambios, OnInit {
         next: (exito) => {
           this.guardandoPerfil.set(false);
           if (exito) {
-            this.mensajeExitoPerfil.set('Datos actualizados correctamente');
             this.notificacionService.success('Perfil actualizado correctamente');
             this.actualizarValoresIniciales();
             this.cambiosPerfil.set(false);
-            this.ocultarMensaje('perfil');
           } else {
             const errorMsg = this.authService.error() ?? 'Error al guardar';
-            this.errorPerfil.set(errorMsg);
             this.notificacionService.error(errorMsg);
           }
         },
         error: () => {
           this.guardandoPerfil.set(false);
-          this.errorPerfil.set('Error de conexión');
           this.notificacionService.error('Error de conexión');
         },
       });
@@ -390,8 +380,6 @@ export class Configuracion implements ComponenteConCambios, OnInit {
   // ----------------------------------------
   cambiarContrasenia(): void {
     this.passwordForm.markAllAsTouched();
-    this.errorPassword.set(null);
-    this.mensajeExitoPassword.set(null);
 
     if (this.passwordForm.invalid) return;
     if (!this.puedeGuardarPassword()) return;
@@ -407,19 +395,15 @@ export class Configuracion implements ComponenteConCambios, OnInit {
         next: (exito) => {
           this.guardandoPassword.set(false);
           if (exito) {
-            this.mensajeExitoPassword.set('Contraseña actualizada');
             this.notificacionService.success('Contraseña actualizada correctamente');
             this.passwordForm.reset();
-            this.ocultarMensaje('password');
           } else {
             const errorMsg = this.authService.error() ?? 'Contraseña actual incorrecta';
-            this.errorPassword.set(errorMsg);
             this.notificacionService.error(errorMsg);
           }
         },
         error: () => {
           this.guardandoPassword.set(false);
-          this.errorPassword.set('Error de conexión');
           this.notificacionService.error('Error de conexión');
         },
       });
@@ -434,8 +418,8 @@ export class Configuracion implements ComponenteConCambios, OnInit {
   }
 
   confirmarEliminacion(inputConfirmacion: HTMLInputElement): void {
-    const valor = inputConfirmacion.value.trim();
-    const nombreUsuario = this.usuario()?.nombreUsuario ?? '';
+    const valor = inputConfirmacion.value.trim().toLowerCase();
+    const nombreUsuario = (this.usuario()?.nombreUsuario ?? '').toLowerCase();
 
     if (valor !== nombreUsuario) {
       this.errorEliminar.set('El nombre de usuario no coincide');
@@ -544,6 +528,30 @@ export class Configuracion implements ComponenteConCambios, OnInit {
     this.perfilForm.statusChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.actualizarValidezFormulario());
+
+    // Escuchar cambios en el formulario de contraseña
+    this.passwordForm.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.passwordNuevaValue.set(this.contraseniaNuevaControl.value ?? '');
+        this.actualizarValidezPasswordForm();
+      });
+
+    this.passwordForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.actualizarValidezPasswordForm());
+  }
+
+  private actualizarValidezPasswordForm(): void {
+    const formValido = this.passwordForm.valid;
+    const contraseniaActual = this.contraseniaActualControl.value;
+    const contraseniaNueva = this.contraseniaNuevaControl.value;
+    const confirmar = this.confirmarContraseniaControl.value;
+    
+    const hayContenido = !!contraseniaActual && !!contraseniaNueva && !!confirmar;
+    const contraseniasCoinciden = contraseniaNueva === confirmar;
+    
+    this.passwordFormValido.set(formValido && hayContenido && contraseniasCoinciden);
   }
 
   private actualizarValidezFormulario(): void {
@@ -569,15 +577,6 @@ export class Configuracion implements ComponenteConCambios, OnInit {
     const ciudadValida = ciudadNoModificada || (this.perfilForm.get('ciudad')?.valid ?? false);
     
     this.perfilFormValido.set(usernameValido && emailValido && ciudadValida);
-  }
-
-  private ocultarMensaje(tipo: 'perfil' | 'password' | 'avatar'): void {
-    if (!isPlatformBrowser(this.plataformaId)) return;
-    setTimeout(() => {
-      if (tipo === 'perfil') this.mensajeExitoPerfil.set(null);
-      else if (tipo === 'password') this.mensajeExitoPassword.set(null);
-      else this.mensajeExitoAvatar.set(null);
-    }, TIMEOUT_MENSAJE_EXITO);
   }
 
   private comprimirImagen(archivo: File): void {
@@ -614,7 +613,7 @@ export class Configuracion implements ComponenteConCambios, OnInit {
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      this.avatarError.set('No se pudo procesar la imagen');
+      this.notificacionService.error('No se pudo procesar la imagen');
     };
 
     img.src = url;

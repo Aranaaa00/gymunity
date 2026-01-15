@@ -29,7 +29,7 @@
           (click)="inputAvatar.click()"
           [attr.aria-label]="tieneAvatar() ? 'Cambiar foto de perfil actual' : 'Subir foto de perfil'">
           @if (avatarActual()) {
-            <img [src]="avatarActual()" alt="Tu foto de perfil actual" class="ajustes__avatar-img" width="96" height="96" loading="eager" fetchpriority="high" />
+            <img [src]="avatarActual()" alt="Tu foto de perfil actual" class="ajustes__avatar-img" width="96" height="96" loading="eager" fetchpriority="high" decoding="async" />
           } @else {
             <app-icono nombre="user" tamano="xl" aria-hidden="true" />
           }
@@ -51,16 +51,6 @@
           <span class="ajustes__avatar-size">Se optimiza automaticamente</span>
         </div>
       </div>
-
-      @if (mensajeExitoAvatar()) {
-        <p class="ajustes__mensaje ajustes__mensaje--exito" role="status" aria-live="polite">
-          <app-icono nombre="check-circle" tamano="sm" aria-hidden="true" />
-          {{ mensajeExitoAvatar() }}
-        </p>
-      }
-      @if (avatarError()) {
-        <p class="ajustes__mensaje ajustes__mensaje--error" role="alert">{{ avatarError() }}</p>
-      }
 
       @if (puedeGuardarAvatar()) {
         <app-boton 
@@ -134,16 +124,6 @@
           [errorMessage]="getErrorPerfil('ciudad')"
           [mensajeExito]="getMensajeExitoPerfil('ciudad')" />
 
-        @if (mensajeExitoPerfil()) {
-          <p class="ajustes__mensaje ajustes__mensaje--exito" role="status" aria-live="polite">
-            <app-icono nombre="check-circle" tamano="sm" aria-hidden="true" />
-            {{ mensajeExitoPerfil() }}
-          </p>
-        }
-        @if (errorPerfil()) {
-          <p class="ajustes__mensaje ajustes__mensaje--error" role="alert">{{ errorPerfil() }}</p>
-        }
-
         <app-boton 
           tipo="submit"
           variante="primary"
@@ -184,7 +164,7 @@
           [hasError]="contraseniaActualControl.touched && contraseniaActualControl.invalid"
           [errorMessage]="getErrorPassword('contraseniaActual')" />
 
-        <div class="ajustes__form-fila">
+        <article class="ajustes__password-grupo">
           <app-campo-formulario
             label="Nueva contrasena"
             type="password"
@@ -197,6 +177,24 @@
             [hasError]="contraseniaNuevaControl.touched && contraseniaNuevaControl.invalid"
             [errorMessage]="getErrorPassword('contraseniaNueva')" />
 
+          @if (contraseniaNuevaControl.value) {
+            <section class="ajustes__fuerza">
+              <figure class="ajustes__fuerza-barra">
+                <span 
+                  class="ajustes__fuerza-progreso"
+                  [class.ajustes__fuerza-progreso--debil]="fuerzaPassword().nivel === 'debil'"
+                  [class.ajustes__fuerza-progreso--media]="fuerzaPassword().nivel === 'media'"
+                  [class.ajustes__fuerza-progreso--fuerte]="fuerzaPassword().nivel === 'fuerte'"
+                  [class.ajustes__fuerza-progreso--muy-fuerte]="fuerzaPassword().nivel === 'muy-fuerte'"
+                  [style.width.%]="fuerzaPassword().porcentaje">
+                </span>
+              </figure>
+              <small class="ajustes__fuerza-mensaje">{{ fuerzaPassword().mensaje }}</small>
+            </section>
+          }
+        </article>
+
+        <article class="ajustes__password-grupo">
           <app-campo-formulario
             label="Repetir contrasena"
             type="password"
@@ -206,19 +204,10 @@
             autocomplete="new-password"
             [formControl]="confirmarContraseniaControl"
             [required]="true"
-            [hasError]="confirmarContraseniaControl.touched && (confirmarContraseniaControl.invalid || confirmarContraseniaControl.value !== contraseniaNuevaControl.value)"
-            [errorMessage]="getErrorPassword('confirmarContrasenia')" />
-        </div>
-
-        @if (mensajeExitoPassword()) {
-          <p class="ajustes__mensaje ajustes__mensaje--exito" role="status" aria-live="polite">
-            <app-icono nombre="check-circle" tamano="sm" aria-hidden="true" />
-            {{ mensajeExitoPassword() }}
-          </p>
-        }
-        @if (errorPassword()) {
-          <p class="ajustes__mensaje ajustes__mensaje--error" role="alert">{{ errorPassword() }}</p>
-        }
+            [hasError]="confirmarContraseniaControl.touched && !contraseniasCoinciden()"
+            [errorMessage]="getErrorPassword('confirmarContrasenia')"
+            [mensajeExito]="getMensajeCoincidencia()" />
+        </article>
 
         <app-boton 
           tipo="submit"

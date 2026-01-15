@@ -255,14 +255,65 @@
   gap: $space-3;
 }
 
-.ajustes__form-fila {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $space-3;
+.ajustes__password-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
 
-  @include respond-down(sm) {
-    grid-template-columns: 1fr;
-  }
+// ============================================
+// BARRA DE FUERZA DE CONTRASEÑA
+// ============================================
+
+.ajustes__fuerza {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: $space-1;
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-sm;
+  background: var(--color-fondo-secundario);
+}
+
+.ajustes__fuerza-barra {
+  position: relative;
+  height: 0.375rem;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-borde);
+  border-radius: $radio-full;
+}
+
+.ajustes__fuerza-progreso {
+  position: absolute;
+  inset: 0;
+  width: 0;
+  min-width: 0.25rem;
+  border-radius: $radio-full;
+  transition: width $transicion-rapida, background-color $transicion-rapida;
+}
+
+.ajustes__fuerza-progreso--debil {
+  background: linear-gradient(90deg, var(--color-error), #ff6b6b);
+}
+
+.ajustes__fuerza-progreso--media {
+  background: linear-gradient(90deg, var(--color-warning), #ffd43b);
+}
+
+.ajustes__fuerza-progreso--fuerte {
+  background: linear-gradient(90deg, var(--color-info), #74c0fc);
+}
+
+.ajustes__fuerza-progreso--muy-fuerte {
+  background: linear-gradient(90deg, var(--color-exito), #69db7c);
+}
+
+.ajustes__fuerza-mensaje {
+  font-size: $texto-xs;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
+  color: var(--color-subtitulo);
 }
 
 // ============================================
@@ -322,7 +373,8 @@
 .ajustes__confirmar {
   display: flex;
   flex-direction: column;
-  gap: $space-2;
+  gap: $space-3;
+  max-width: 24rem;
 }
 
 .ajustes__confirmar-texto {
@@ -338,8 +390,8 @@
 }
 
 .ajustes__confirmar-input {
-  max-width: 18rem;
-  padding: $space-2;
+  width: 100%;
+  padding: $space-2 $space-3;
   background: var(--color-fondo);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-md;
@@ -360,10 +412,8 @@
 
 .ajustes__confirmar-btns {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: $space-2;
-  margin-top: $space-1;
+  gap: $space-3;
 }
 
 .ajustes__btn-cancelar {

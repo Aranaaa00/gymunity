@@ -1,4 +1,4 @@
-import { Component, input, output, InputSignal, OutputEmitterRef } from '@angular/core';
+import { Component, input, output, InputSignal, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 // ============================================
@@ -23,6 +23,7 @@ const TIPO_DEFECTO: TipoNotificacion = 'info';
   imports: [LucideAngularModule],
   templateUrl: './notificacion.html',
   styleUrl: './notificacion.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Notificacion {
   // ----------------------------------------

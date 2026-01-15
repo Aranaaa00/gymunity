@@ -9,8 +9,14 @@
   <link rel="icon" type="image/webp" sizes="164x170" href="favicon-large.webp">
   <link rel="icon" type="image/webp" sizes="82x85" href="favicon-medium.webp">
   <link rel="icon" type="image/webp" sizes="41x43" href="favicon-small.webp">
+  <!-- Preconnect para fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload de imágenes LCP críticas -->
+  <link rel="preload" as="image" type="image/webp" href="assets/fondo-hero-large.webp" media="(min-width: 1025px) and (prefers-color-scheme: dark)">
+  <link rel="preload" as="image" type="image/webp" href="assets/fondo-hero-modoblanco-large.webp" media="(min-width: 1025px) and (prefers-color-scheme: light)">
+  <link rel="preload" as="image" type="image/webp" href="assets/logo-blanco-large.webp">
+  <!-- Fuentes con carga optimizada -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
