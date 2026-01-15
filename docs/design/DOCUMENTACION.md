@@ -95,6 +95,15 @@
 - [6.2 Implementación del Theme Switcher](#62-implementación-del-theme-switcher)
 - [6.3 Capturas comparativas](#63-capturas-comparativas)
 
+### 7. Aplicación completa y despliegue
+- [7.1 Estado final de la aplicación](#71-estado-final-de-la-aplicación)
+- [7.2 Testing multi-dispositivo](#72-testing-multi-dispositivo)
+- [7.3 Testing en dispositivos reales](#73-testing-en-dispositivos-reales)
+- [7.4 Verificación multi-navegador](#74-verificación-multi-navegador)
+- [7.5 Capturas finales](#75-capturas-finales)
+- [7.6 Despliegue](#76-despliegue)
+- [7.7 Problemas conocidos y mejoras futuras](#77-problemas-conocidos-y-mejoras-futuras)
+
 ---
 
 # Sección 1: Arquitectura CSS y comunicación visual
@@ -2362,3 +2371,246 @@ Las cards mantienen su estructura pero adaptan los colores de fondo y borde.
 | ![Gimnasio claro](./img/gimnasio-claro.png) | ![Gimnasio oscuro](./img/gimnasio-oscuro.png) |
 
 La galería y los elementos interactivos se adaptan manteniendo la legibilidad.
+
+---
+
+# Sección 7: Aplicación completa y despliegue
+
+Esta última sección recoge el estado final de la aplicación, los resultados del testing en diferentes dispositivos y navegadores, las capturas finales en los tres viewports principales, los datos del despliegue a producción, y una lista de posibles mejoras para el futuro.
+
+---
+
+## 7.1 Estado final de la aplicación
+
+A continuación listo todas las páginas y funcionalidades que he implementado en Gymunity. La aplicación está completamente funcional tanto en desarrollo como en producción.
+
+### Páginas implementadas
+
+**Inicio** (`/`)
+- Sección de bienvenida personalizada según si el usuario ha iniciado sesión o no
+- Carrusel de gimnasios populares (basado en valoraciones)
+- Carrusel de gimnasios recientes (últimos añadidos)
+- Carrusel de gimnasios cercanos a la ciudad del usuario (si está autenticado)
+- Botón de registro para usuarios no autenticados
+
+**Búsqueda** (`/busqueda`)
+- Buscador con autocompletado por nombre y ciudad
+- Grid de resultados con paginación infinita (scroll load)
+- Contador de resultados encontrados
+- Opción de limpiar filtros activos
+- Cards de gimnasios con foto, nombre, ciudad, valoración y dirección
+
+**Detalle de Gimnasio** (`/gimnasio/:id`)
+- Galería de fotos con imagen principal y miniaturas navegables
+- Información completa: nombre, dirección, descripción, valoración media
+- Sección de profesores con tarjetas individuales
+- Sección de clases disponibles con horarios y posibilidad de reservar
+- Sección de torneos organizados por el gimnasio
+- Sección de reseñas de otros usuarios con puntuación y comentario
+- Modal para reservar clase (requiere autenticación)
+- Modal para escribir reseña (requiere autenticación)
+
+**Perfil** (`/perfil`)
+- Información del usuario: avatar, nombre, email, ciudad, créditos
+- Sistema de pestañas para organizar el contenido
+- Pestaña de logros organizados por categorías (entrenamiento, torneos, comunidad, etc.)
+- Pestaña de "Mis clases" con las reservas activas y paginación
+- Pestaña de "Mis reseñas" con las reseñas escritas por el usuario
+- Posibilidad de cancelar reservas desde el perfil
+
+**Configuración** (`/configuracion`)
+- Formulario de edición de perfil (nombre de usuario, email, ciudad)
+- Validaciones asíncronas para comprobar disponibilidad de username y email
+- Cambio de avatar con preview y compresión automática de imagen
+- Formulario de cambio de contraseña con indicador de seguridad
+- Opción de eliminar cuenta con confirmación
+
+**Guía de Estilo** (`/guia-estilo`)
+- Documentación visual de todos los componentes del sistema
+- Ejemplos de uso de botones, alertas, cards, formularios, etc.
+- Paleta de colores completa
+
+**Página 404** (`/**`)
+- Mensaje amigable cuando la ruta no existe
+- Enlace para volver al inicio
+
+### Funcionalidades transversales
+
+- **Autenticación completa**: login, registro, logout, persistencia de sesión con JWT
+- **Sistema de temas**: modo claro y oscuro con persistencia en localStorage
+- **Buscador global**: accesible desde el header, filtra por nombre y ciudad
+- **Notificaciones toast**: feedback visual para acciones del usuario
+- **Carga global**: indicador de carga durante peticiones al servidor
+- **Protección de rutas**: guards para páginas que requieren autenticación
+- **Prevención de pérdida de datos**: aviso al salir con cambios sin guardar
+- **Breadcrumbs**: navegación contextual en páginas de detalle
+- **Menú de usuario**: acceso rápido a perfil, configuración y logout
+- **Responsive completo**: adaptación a móvil, tablet y escritorio
+
+---
+
+## 7.2 Testing multi-dispositivo
+
+He probado la aplicación en cinco viewports diferentes usando las DevTools del navegador. En la tabla muestro el resultado de cada prueba:
+
+| Viewport | Ancho | Layout | Navegación | Interacciones | Textos | Resultado |
+|----------|-------|--------|------------|---------------|--------|-----------|
+| Móvil pequeño | 320px | Correcto | Menú hamburguesa funciona | Botones táctiles OK | Legibles | OK |
+| Móvil estándar | 375px | Correcto | Menú hamburguesa funciona | Botones táctiles OK | Legibles | OK |
+| Tablet vertical | 768px | Correcto | Menú visible parcial | Todo funciona | Legibles | OK |
+| Tablet horizontal | 1024px | Correcto | Menú completo | Todo funciona | Legibles | OK |
+| Escritorio | 1280px | Correcto | Menú completo | Todo funciona | Legibles | OK |
+
+Todas las páginas responden correctamente a los breakpoints definidos. No he encontrado problemas de desbordamiento ni elementos que se corten.
+
+---
+
+## 7.3 Testing en dispositivos reales
+
+Además de las DevTools, he probado la aplicación en dispositivos físicos para verificar el comportamiento real:
+
+| Dispositivo | Sistema operativo | Navegador | Resolución | Resultado |
+|-------------|-------------------|-----------|------------|-----------|
+| Samsung Galaxy Tab A | Android 11 | Chrome 120 | 1920x1200 | Todo funciona correctamente |
+| Samsung Galaxy A54 | Android 14 | Chrome 121 | 2340x1080 | Todo funciona correctamente |
+| PC sobremesa | Windows 11 | Chrome 121 / Firefox 122 | 1920x1080 | Todo funciona correctamente |
+
+En los tres dispositivos la aplicación se comporta como se espera: la navegación es fluida, los modales se abren y cierran bien, los formularios validan correctamente, y el cambio de tema funciona sin problemas.
+
+---
+
+## 7.4 Verificación multi-navegador
+
+He comprobado la compatibilidad de Gymunity en los navegadores que uso habitualmente:
+
+| Navegador | Versión | Plataforma | CSS moderno | JavaScript | Funcionalidad | Resultado |
+|-----------|---------|------------|-------------|------------|---------------|-----------|
+| Google Chrome | 121.0.6167 | Windows 11 | Sin problemas | Sin errores | Completa | Compatible |
+| Mozilla Firefox | 122.0 | Windows 11 | Sin problemas | Sin errores | Completa | Compatible |
+
+Ambos navegadores renderizan la aplicación de forma idéntica. Las animaciones CSS funcionan correctamente, el lazy loading de imágenes funciona, y no hay errores en la consola.
+
+---
+
+## 7.5 Capturas finales
+
+A continuación dejo las capturas de las páginas principales en los tres tamaños de referencia (móvil 375px, tablet 768px, escritorio 1280px), tanto en modo claro como oscuro.
+
+### Página de Inicio
+
+**Modo claro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Inicio móvil claro](./img/final-inicio-mobile-claro.png) | ![Inicio tablet claro](./img/final-inicio-tablet-claro.png) | ![Inicio escritorio claro](./img/final-inicio-desktop-claro.png) |
+
+**Modo oscuro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Inicio móvil oscuro](./img/final-inicio-mobile-oscuro.png) | ![Inicio tablet oscuro](./img/final-inicio-tablet-oscuro.png) | ![Inicio escritorio oscuro](./img/final-inicio-desktop-oscuro.png) |
+
+### Página de Búsqueda
+
+**Modo claro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Búsqueda móvil claro](./img/final-busqueda-mobile-claro.png) | ![Búsqueda tablet claro](./img/final-busqueda-tablet-claro.png) | ![Búsqueda escritorio claro](./img/final-busqueda-desktop-claro.png) |
+
+**Modo oscuro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Búsqueda móvil oscuro](./img/final-busqueda-mobile-oscuro.png) | ![Búsqueda tablet oscuro](./img/final-busqueda-tablet-oscuro.png) | ![Búsqueda escritorio oscuro](./img/final-busqueda-desktop-oscuro.png) |
+
+### Página de Gimnasio
+
+**Modo claro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Gimnasio móvil claro](./img/final-gimnasio-mobile-claro.png) | ![Gimnasio tablet claro](./img/final-gimnasio-tablet-claro.png) | ![Gimnasio escritorio claro](./img/final-gimnasio-desktop-claro.png) |
+
+**Modo oscuro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Gimnasio móvil oscuro](./img/final-gimnasio-mobile-oscuro.png) | ![Gimnasio tablet oscuro](./img/final-gimnasio-tablet-oscuro.png) | ![Gimnasio escritorio oscuro](./img/final-gimnasio-desktop-oscuro.png) |
+
+### Página de Perfil
+
+**Modo claro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Perfil móvil claro](./img/final-perfil-mobile-claro.png) | ![Perfil tablet claro](./img/final-perfil-tablet-claro.png) | ![Perfil escritorio claro](./img/final-perfil-desktop-claro.png) |
+
+**Modo oscuro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Perfil móvil oscuro](./img/final-perfil-mobile-oscuro.png) | ![Perfil tablet oscuro](./img/final-perfil-tablet-oscuro.png) | ![Perfil escritorio oscuro](./img/final-perfil-desktop-oscuro.png) |
+
+### Página de Configuración
+
+**Modo claro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Configuración móvil claro](./img/final-configuracion-mobile-claro.png) | ![Configuración tablet claro](./img/final-configuracion-tablet-claro.png) | ![Configuración escritorio claro](./img/final-configuracion-desktop-claro.png) |
+
+**Modo oscuro**
+
+| Móvil (375px) | Tablet (768px) | Escritorio (1280px) |
+|---------------|----------------|---------------------|
+| ![Configuración móvil oscuro](./img/final-configuracion-mobile-oscuro.png) | ![Configuración tablet oscuro](./img/final-configuracion-tablet-oscuro.png) | ![Configuración escritorio oscuro](./img/final-configuracion-desktop-oscuro.png) |
+
+---
+
+## 7.6 Despliegue
+
+La aplicación está desplegada en producción y accesible públicamente.
+
+**URL de producción:** https://clownfish-app-puttm.ondigitalocean.app/
+
+### Verificación del despliegue
+
+He comprobado que todo funciona correctamente en el entorno de producción:
+
+- La página de inicio carga correctamente con los gimnasios populares, recientes y cercanos
+- El sistema de autenticación funciona (login, registro, logout)
+- Las búsquedas devuelven resultados desde la base de datos de producción
+- Los detalles de gimnasios cargan con todas sus secciones (galería, profesores, clases, reseñas)
+- El perfil muestra los datos del usuario autenticado
+- La configuración permite editar perfil y cambiar contraseña
+- El cambio de tema funciona y persiste entre sesiones
+- Los modales de reserva y reseña funcionan correctamente
+- Las notificaciones toast aparecen tras las acciones del usuario
+- La aplicación es responsive en dispositivos reales accediendo a la URL de producción
+
+El backend está desplegado junto con el frontend usando Docker Compose. La base de datos PostgreSQL está configurada con persistencia de datos.
+
+---
+
+## 7.7 Problemas conocidos y mejoras futuras
+
+### Problemas menores
+
+Actualmente no hay bugs críticos conocidos. La aplicación es estable y todas las funcionalidades principales funcionan correctamente.
+
+### Mejoras para futuras versiones
+
+Estas son funcionalidades que me gustaría implementar en el futuro para mejorar la experiencia de usuario:
+
+**Sistema de likes entre usuarios**
+Permitir que los usuarios puedan dar like a otros usuarios de la plataforma, creando una red social básica dentro de Gymunity.
+
+**Acceso a perfiles de otros usuarios**
+Actualmente solo se puede ver el perfil propio. Sería interesante poder visitar el perfil público de otros usuarios para ver sus logros, gimnasios favoritos y actividad.
+
+**Valoración de profesores con estrellas**
+Los usuarios que estén apuntados a una clase podrían valorar al profesor de esa clase con un sistema de estrellas (1-5). Esto ayudaría a otros usuarios a elegir clases basándose en la calidad del profesor.
+
+**Lista de favoritos en el perfil**
+Añadir una sección en el perfil para que el usuario pueda guardar una lista de profesores y gimnasios favoritos. Así tendría acceso rápido a sus preferencias sin tener que buscarlos cada vez.
