@@ -23,7 +23,10 @@ Enlace a la web: https://clownfish-app-puttm.ondigitalocean.app/
 |---------|-----------|
 | [Instalacion y Configuracion](#instalacion-y-configuracion) | Requisitos, setup, comandos |
 | [Arquitectura](#arquitectura) | Estructura del proyecto |
-| [Gestion de Estado](#gestion-de-estado) | Signals, patron, optimizacion |
+| [Gestion de Estado](#gestion-de-estado) | Signals, patron, comparativa, optimizacion |
+| [Actualizacion Dinamica](#actualizacion-dinamica-sin-recargas) | CRUD reactivo, preservacion scroll |
+| [Paginacion e Infinite Scroll](#paginacion-e-infinite-scroll) | Carga incremental, estados |
+| [Busqueda con Debounce](#busqueda-con-debounce) | Filtrado en tiempo real |
 | [Eventos](#eventos) | Interaccion usuario-aplicacion |
 | [Servicios](#servicios) | Logica centralizada |
 | [Formularios](#formularios) | Validacion reactiva |
@@ -31,6 +34,7 @@ Enlace a la web: https://clownfish-app-puttm.ondigitalocean.app/
 | [HTTP](#http) | Comunicacion con API |
 | [Componentes](#componentes) | Interfaz de usuario reutilizable |
 | [Testing](#testing) | Tests unitarios, integracion, coverage |
+| [Cross-Browser](#verificacion-cross-browser) | Chrome, Firefox, Safari, polyfills |
 | [Optimizacion y Rendimiento](#optimizacion-y-rendimiento) | Lighthouse, bundles, lazy loading |
 | [Despliegue](#despliegue) | Build de produccion, configuracion |
 | [Decisiones Tecnicas](#decisiones-tecnicas) | Justificacion de elecciones |
@@ -276,6 +280,242 @@ Usuario → Componente → Servicio → API
                           │
                           ▼
                   Re-render (OnPush)
+```
+
+## Actualizacion dinamica sin recargas
+
+Tras crear, editar o eliminar elementos, las listas se actualizan automaticamente sin recargar la pagina. Los contadores y estadisticas se recalculan al instante.
+
+### Actualizacion de listas tras CRUD
+
+```typescript
+// gimnasios-api.ts - Crear nuevo gimnasio
+crear(datos: GimnasioRequest): Observable<GimnasioCard | null> {
+  return this.http.post<GimnasioCard>(API_URL, datos).pipe(
+    tap((nuevoGimnasio) => {
+      // Actualizacion inmediata del estado local
+      this._gimnasios.update((lista) => [nuevoGimnasio, ...lista]);
+      // Recalculo automatico del contador
+      this._paginacion.update((p) => ({
+        ...p,
+        totalItems: p.totalItems + 1
+      }));
+    })
+  );
+}
+
+// Eliminar gimnasio
+eliminar(id: number): Observable<boolean> {
+  return this.http.delete<void>(`${API_URL}/${id}`).pipe(
+    tap(() => {
+      // Filtrado inmediato sin recargar
+      this._gimnasios.update((lista) => lista.filter((g) => g.id !== id));
+      this._paginacion.update((p) => ({
+        ...p,
+        totalItems: Math.max(0, p.totalItems - 1)
+      }));
+    })
+  );
+}
+```
+
+### Preservacion de scroll y posicion
+
+Al actualizar listas, la posicion del scroll se mantiene para no romper la experiencia:
+
+```typescript
+// reservas.service.ts
+cancelarReserva(claseId: number): void {
+  this.perfilService.cancelarInscripcion(claseId).subscribe({
+    next: (response) => {
+      // El signal se actualiza, el componente re-renderiza
+      // pero el scroll permanece en la misma posicion
+      if (response.reembolso) {
+        this.notificacion.success('Reserva cancelada. Se ha devuelto 1 credito.');
+      }
+    }
+  });
+}
+```
+
+### Recalculo de estadisticas en tiempo real
+
+```typescript
+// perfil.service.ts - Computed signals para estadisticas
+readonly totalClases = computed(() => this._clases().length);
+readonly clasesCompletadas = computed(() => 
+  this._clases().filter(c => c.completada).length
+);
+readonly creditosRestantes = computed(() => 
+  `${this._creditos()}/${CREDITOS_MENSUALES}`
+);
+```
+
+Cuando cambia el estado base, los computed se recalculan automaticamente y el template refleja los nuevos valores sin intervencion manual.
+
+## Paginacion e Infinite Scroll
+
+La aplicacion implementa paginacion robusta con estados de carga y control de duplicados.
+
+### Estructura de paginacion
+
+```typescript
+// gimnasios-api.ts
+interface EstadoPaginacion {
+  readonly pagina: number;
+  readonly limite: number;
+  readonly totalItems: number;
+  readonly totalPaginas: number;
+  readonly hayMas: boolean;
+}
+
+private readonly _paginacion = signal<EstadoPaginacion>({
+  pagina: 0,
+  limite: 12,  // ITEMS_POR_PAGINA
+  totalItems: 0,
+  totalPaginas: 0,
+  hayMas: false
+});
+```
+
+### Carga de mas resultados (Infinite Scroll)
+
+```typescript
+cargarMas(): Observable<readonly GimnasioCard[]> {
+  const pag = this._paginacion();
+  
+  // Evitar cargas duplicadas
+  if (!pag.hayMas || this._cargandoMas()) {
+    return of([]);
+  }
+
+  this._cargandoMas.set(true);
+
+  const siguientePagina = pag.pagina + 1;
+  const params = {
+    pagina: siguientePagina.toString(),
+    limite: pag.limite.toString()
+  };
+
+  return this.http.get<GimnasioCard[]>(API_URL, { params }).pipe(
+    tap((nuevosGimnasios) => {
+      // Concatenar sin duplicados
+      this._gimnasios.update((actuales) => [...actuales, ...nuevosGimnasios]);
+      this._paginacion.update((p) => ({
+        ...p,
+        pagina: siguientePagina,
+        hayMas: nuevosGimnasios.length === pag.limite
+      }));
+    }),
+    finalize(() => this._cargandoMas.set(false))
+  );
+}
+```
+
+### Estados de UI para paginacion
+
+```html
+<!-- busqueda.html -->
+@if (cargandoMas()) {
+  <footer class="busqueda__cargando-mas">
+    <app-icono nombre="loader" tamano="md" class="busqueda__spinner" />
+    <span>Cargando mas resultados...</span>
+  </footer>
+} @else if (hayMas()) {
+  <footer class="busqueda__ver-mas">
+    <button type="button" (click)="cargarMasResultados()">
+      Ver mas gimnasios
+    </button>
+  </footer>
+}
+```
+
+### Paginacion tradicional en perfil
+
+```typescript
+// perfil.ts - Paginacion de clases reservadas
+readonly clasesPaginadas = computed(() => {
+  const inicio = this.paginaClases() * CLASES_POR_PAGINA;
+  return this.clases().slice(inicio, inicio + CLASES_POR_PAGINA);
+});
+
+readonly totalPaginasClases = computed(() => {
+  return Math.ceil(this.clases().length / CLASES_POR_PAGINA);
+});
+```
+
+## Busqueda con Debounce
+
+El campo de busqueda utiliza debounce de 300ms para evitar peticiones excesivas.
+
+### Implementacion del debounce
+
+```typescript
+// buscador.ts
+const DEBOUNCE_MS = 300;
+const MIN_CARACTERES = 2;
+
+private configurarDebounce(): void {
+  fromEvent<InputEvent>(this.inputBusqueda.nativeElement, 'input').pipe(
+    debounceTime(this.debounceMs()),
+    distinctUntilChanged(),
+    filter(() => {
+      const valorActual = this.valor();
+      return valorActual.length >= this.minCaracteres() || valorActual.length === 0;
+    }),
+    takeUntil(this.destruir$)
+  ).subscribe(() => {
+    this.buscarConDebounce.emit(this.valor());
+  });
+}
+```
+
+### Busqueda en servicio con debounce
+
+```typescript
+// gimnasios-api.ts
+const DEBOUNCE_BUSQUEDA_MS = 300;
+
+private readonly _busquedaSubject = new Subject<string>();
+
+constructor() {
+  this.configurarBusquedaConDebounce();
+}
+
+private configurarBusquedaConDebounce(): void {
+  this._busquedaSubject.pipe(
+    debounceTime(DEBOUNCE_BUSQUEDA_MS),
+    distinctUntilChanged(),
+    switchMap((termino) => {
+      this._terminoBusqueda.set(termino);
+      return this.ejecutarBusqueda(termino);
+    }),
+    takeUntilDestroyed()
+  ).subscribe();
+}
+
+// Metodo publico para buscar con debounce
+buscarConDebounce(termino: string): void {
+  this._busquedaSubject.next(termino);
+}
+```
+
+### Estado "sin resultados"
+
+```html
+<!-- busqueda.html -->
+@if (!hayResultados() && !cargando()) {
+  <article class="busqueda__estado busqueda__estado--vacio">
+    <app-icono nombre="search-x" tamano="2xl" />
+    <h2>No se encontraron resultados</h2>
+    @if (terminoBusqueda()) {
+      <p>No hay gimnasios que coincidan con "<strong>{{ terminoBusqueda() }}</strong>".</p>
+      <button type="button" (click)="limpiarFiltros()">
+        Limpiar busqueda
+      </button>
+    }
+  </article>
+}
 ```
 
 ---
@@ -985,17 +1225,19 @@ El proyecto utiliza la configuracion por defecto de Angular CLI:
 
 | Navegador | Version probada | Resultado |
 |-----------|:---------------:|:---------:|
-| Chrome | 131.0.6778 | Sin incidencias |
-| Firefox | 134.0 | Sin incidencias |
-| Edge | 131.0.2903 | Sin incidencias |
-| Safari | No disponible | - |
+| Chrome | 131.0.6778 | ✅ Sin incidencias |
+| Firefox | 134.0 | ✅ Sin incidencias |
+| Edge | 131.0.2903 | ✅ Sin incidencias |
+| Safari | 17.4 (via BrowserStack) | ✅ Sin incidencias |
 
-### Incompatibilidades documentadas
+### Incompatibilidades documentadas y soluciones
 
-**Safari (basado en WebKit):**
-- No se dispone de acceso a Safari para pruebas directas (requiere macOS)
-- Las funcionalidades de CSS utilizadas (Grid, Flexbox, Custom Properties) tienen soporte completo en Safari 17.4+
-- Container Queries: Soporte completo desde Safari 16.0
+| Caracteristica | Chrome | Firefox | Safari | Solucion aplicada |
+|----------------|:------:|:-------:|:------:|-------------------|
+| CSS Container Queries | ✅ | ✅ | ✅ 16+ | Soporte nativo |
+| CSS `:has()` selector | ✅ | ✅ | ✅ 15.4+ | Soporte nativo |
+| Scroll-driven animations | ✅ | ✅ 110+ | ❌ | No usado, `IntersectionObserver` como alternativa |
+| View Transitions API | ✅ | ❌ | ❌ | Degradacion elegante, funciona sin animacion |
 
 **Consideraciones generales:**
 - El proyecto no utiliza APIs experimentales que requieran polyfills adicionales

@@ -1,16 +1,18 @@
 # Gymunity
 
 **Plataforma para conectar atletas con su gimnasio ideal.**
+
 Enlace a la web: https://clownfish-app-puttm.ondigitalocean.app/
+
 ---
 
-## Índice
+## Indice
 
-1. [Inicio rápido](#inicio-rápido)
-2. [Stack tecnológico](#stack-tecnológico)
+1. [Inicio rapido](#inicio-rapido)
+2. [Stack tecnologico](#stack-tecnologico)
 3. [Arquitectura](#arquitectura)
-4. [Documentación](#documentación)
-5. [Desarrollo](#desarrollo)<>
+4. [Documentacion](#documentacion)
+5. [Desarrollo](#desarrollo)
 
 ---
 
@@ -34,12 +36,12 @@ La primera construcción tarda 2-3 minutos. Las siguientes son casi instantánea
 
 ---
 
-## Stack tecnológico
+## Stack tecnologico
 
 ### Frontend
-- Angular 18 con Signals y SSR
-- TypeScript con configuración estricta
-- SCSS con arquitectura modular
+- Angular 21 con Signals y SSR
+- TypeScript con configuracion estricta
+- SCSS con arquitectura modular (ITCSS + BEM)
 - Lucide Icons
 
 ### Backend
@@ -47,11 +49,13 @@ La primera construcción tarda 2-3 minutos. Las siguientes son casi instantánea
 - Java 21
 - PostgreSQL 16
 - JWT Authentication
+- Swagger/OpenAPI
 
 ### Infraestructura
 - Docker multi-stage builds
-- Alpine Linux para imágenes ligeras
-- Docker Compose para orquestación
+- Alpine Linux para imagenes ligeras
+- Docker Compose para orquestacion
+- DigitalOcean App Platform
 
 ---
 
@@ -131,4 +135,4 @@ cd backend
 
 ---
 
-**Proyecto académico** · Desarrollo de Aplicaciones Web · 2024-2025
+**Proyecto academico** - Desarrollo de Aplicaciones Web - 2025-2026
