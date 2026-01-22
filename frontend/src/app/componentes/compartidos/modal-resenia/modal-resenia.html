@@ -35,6 +35,7 @@
               class="modal-resenia__estrella"
               [class.modal-resenia__estrella--activa]="esActiva(estrella)"
               [attr.aria-checked]="valoracion() === estrella"
+              [attr.aria-label]="estrella + (estrella === 1 ? ' estrella' : ' estrellas')"
               role="radio"
               (click)="seleccionarEstrella(estrella)"
               (mouseenter)="hoverEstrella(estrella)"
