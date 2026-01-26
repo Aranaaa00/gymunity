@@ -18,6 +18,7 @@ export class Galeria {
   // ----------------------------------------
   readonly imagenes = input.required<readonly string[]>();
   readonly alt = input<string>('Imagen de galería');
+  readonly caption = input<string>('');  // Leyenda visible para figcaption
   readonly maxMiniaturas = input<number>(4);
 
   // ----------------------------------------
@@ -41,6 +42,16 @@ export class Galeria {
   });
 
   readonly tieneMiniaturas = computed(() => this.imagenes().length > 1);
+
+  readonly descripciones = input<readonly string[]>([]);
+
+  readonly captionActivo = computed(() => {
+    const nombre = this.caption() || this.alt();
+    const indice = this.indiceActivo();
+    const descs = this.descripciones();
+    const descripcion = descs[indice] || 'Vista de las instalaciones';
+    return `${nombre} - ${descripcion}`;
+  });
 
   // ----------------------------------------
   // Métodos

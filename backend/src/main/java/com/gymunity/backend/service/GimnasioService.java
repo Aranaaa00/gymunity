@@ -232,29 +232,12 @@ public class GimnasioService {
                         .build())
                 .toList();
         
-        // Torneos del gimnasio (información del gimnasio, no de usuarios)
-        List<TorneoDTO> torneos = List.of(
-                TorneoDTO.builder()
-                        .id(1L)
-                        .nombre("Campeonato de " + (clases.isEmpty() ? "MMA" : clases.get(0).getNombre()))
-                        .fecha(java.time.LocalDate.now().plusMonths(1))
-                        .disciplina(clases.isEmpty() ? "MMA" : clases.get(0).getNombre())
-                        .build(),
-                TorneoDTO.builder()
-                        .id(2L)
-                        .nombre("Campeonato de " + (clases.size() > 1 ? clases.get(1).getNombre() : "Boxeo"))
-                        .fecha(java.time.LocalDate.now().plusMonths(2))
-                        .disciplina(clases.size() > 1 ? clases.get(1).getNombre() : "Boxeo")
-                        .build()
-        );
+        // Torneos del gimnasio desde la base de datos
+        List<TorneoDTO> torneos = parsearTorneos(gimnasio.getTorneosInfo());
         
-        // Fotos adicionales de galería (parte del gimnasio, no generadas por usuarios)
-        List<String> fotosGaleria = List.of(
-                "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop",
-                "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop",
-                "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&h=300&fit=crop",
-                "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=400&h=300&fit=crop"
-        );
+        // Fotos adicionales de galería desde la base de datos
+        List<String> fotosGaleria = parsearListaComas(gimnasio.getFotosGaleria());
+        List<String> descripcionesFotos = parsearListaComas(gimnasio.getDescripcionesGaleria());
         
         List<ReseniaDTO> resenias = interaccionRepository.findByGimnasioIdAndReseniaIsNotNull(gimnasio.getId()).stream()
                 .map(i -> ReseniaDTO.builder()
@@ -274,6 +257,7 @@ public class GimnasioService {
                 .ciudad(gimnasio.getCiudad())
                 .foto(gimnasio.getFoto())
                 .fotos(fotosGaleria)
+                .descripcionesFotos(descripcionesFotos)
                 .valoracionMedia(interaccionRepository.calcularValoracionMedia(gimnasio.getId()))
                 .totalResenias((int) interaccionRepository.countByGimnasioIdAndReseniaIsNotNull(gimnasio.getId()))
                 .totalApuntados((int) interaccionRepository.countByGimnasioIdAndEsApuntadoTrue(gimnasio.getId()))
@@ -282,5 +266,56 @@ public class GimnasioService {
                 .torneos(torneos)
                 .resenias(resenias)
                 .build();
+    }
+
+    // ============================================
+    // GENERADOR DE FOTOS DE GALERÍA POR GIMNASIO
+    // ============================================
+    
+    /**
+     * Parsea una cadena separada por comas.
+     * 
+     * @param cadena String con valores separados por coma
+     * @return Lista de strings
+     */
+    private List<String> parsearListaComas(String cadena) {
+        if (cadena == null || cadena.isBlank()) {
+            return List.of();
+        }
+        return java.util.Arrays.stream(cadena.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+    }
+
+    /**
+     * Parsea la información de torneos desde el campo torneosInfo.
+     * Formato: "nombre1|fecha1|disciplina1;nombre2|fecha2|disciplina2"
+     * Ejemplo: "Campeonato de Karate|2026-03-15|Karate;Open de MMA|2026-04-20|MMA"
+     */
+    private List<TorneoDTO> parsearTorneos(String torneosInfo) {
+        if (torneosInfo == null || torneosInfo.isBlank()) {
+            return List.of();
+        }
+        
+        java.util.concurrent.atomic.AtomicLong idCounter = new java.util.concurrent.atomic.AtomicLong(1);
+        
+        return java.util.Arrays.stream(torneosInfo.split(";"))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(torneoStr -> {
+                    String[] partes = torneoStr.split("\\|");
+                    if (partes.length >= 3) {
+                        return TorneoDTO.builder()
+                                .id(idCounter.getAndIncrement())
+                                .nombre(partes[0].trim())
+                                .fecha(java.time.LocalDate.parse(partes[1].trim()))
+                                .disciplina(partes[2].trim())
+                                .build();
+                    }
+                    return null;
+                })
+                .filter(t -> t != null)
+                .toList();
     }
 }

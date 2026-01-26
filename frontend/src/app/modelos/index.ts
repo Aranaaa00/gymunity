@@ -68,6 +68,7 @@ export interface GimnasioDetalle {
   readonly ciudad: string;
   readonly foto: string;
   readonly fotos: readonly string[];
+  readonly descripcionesFotos: readonly string[];
   readonly profesores: readonly Profesor[];
   readonly torneos: readonly Torneo[];
   readonly clases: readonly Clase[];

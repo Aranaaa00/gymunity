@@ -143,3 +143,31 @@ $galeria-altura-tablet: 18rem;
 
   border-radius: calc($radio-md - 2px);
 }
+
+// ============================================
+// FIGCAPTION - Overlay en hover
+// ============================================
+
+.galeria__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  
+  width: 100%;
+  padding: $space-2 $space-3;
+  
+  background: rgba($gris-900, 0.85);
+  
+  font-size: $texto-sm;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  color: $gris-50;
+  
+  opacity: 0;
+  
+  transition: opacity 0.2s ease;
+  
+  .galeria__principal:hover & {
+    opacity: 1;
+  }
+}

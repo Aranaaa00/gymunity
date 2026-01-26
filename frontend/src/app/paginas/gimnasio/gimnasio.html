@@ -26,7 +26,12 @@
 
       <!-- GALERÍA DE IMÁGENES -->
       @if (tieneFotos()) {
-        <app-galeria [imagenes]="fotosGaleria()" [alt]="gimnasio()!.nombre" />
+        <app-galeria 
+          [imagenes]="fotosGaleria()" 
+          [alt]="gimnasio()!.nombre"
+          [caption]="'Galería de ' + gimnasio()!.nombre"
+          [descripciones]="descripcionesGaleria()"
+        />
       } @else if (gimnasio()!.foto) {
         <figure class="gimnasio__imagen-unica">
           <img 

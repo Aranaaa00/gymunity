@@ -43,6 +43,15 @@ public class Gimnasio {
     @Column
     private String foto;
 
+    @Column(length = 2000)
+    private String fotosGaleria;
+
+    @Column(length = 1000)
+    private String descripcionesGaleria;
+
+    @Column(length = 2000)
+    private String torneosInfo;
+
     @Column(nullable = false)
     private String ciudad;
 

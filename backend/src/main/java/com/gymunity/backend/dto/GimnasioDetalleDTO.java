@@ -25,6 +25,7 @@ public class GimnasioDetalleDTO {
     private String email;
     private String foto;
     private List<String> fotos;
+    private List<String> descripcionesFotos;
     private Double valoracionMedia;
     private Integer totalResenias;
     private Integer totalApuntados;

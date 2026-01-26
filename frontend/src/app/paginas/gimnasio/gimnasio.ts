@@ -70,14 +70,16 @@ export class GimnasioPage implements OnInit, OnDestroy {
 
   readonly fotosGaleria = computed(() => {
     const gym = this.gimnasio();
-    if (!gym) return [];
+    if (!gym?.fotos || gym.fotos.length === 0) return [];
     
-    // Combinar foto principal + fotos adicionales
-    const fotos: string[] = [];
-    if (gym.foto) fotos.push(gym.foto);
-    if (gym.fotos) fotos.push(...gym.fotos);
-    
-    return fotos;
+    // Las fotos ya vienen completas desde el backend
+    return gym.fotos;
+  });
+
+  readonly descripcionesGaleria = computed(() => {
+    const gym = this.gimnasio();
+    if (!gym?.descripcionesFotos) return [];
+    return gym.descripcionesFotos;
   });
 
   readonly profesoresVisibles = computed(() => {
