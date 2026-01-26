@@ -18,11 +18,11 @@ const LETRAS_NIF = 'TRWAGMYFPDXBNJZSQVHLCKE';
 // ============================================
 
 export const MENSAJES_VALIDACION = {
-  passwordFuerte: 'La contraseña debe tener mayúsculas, minúsculas, números y caracteres especiales',
-  passwordMismatch: 'Las contraseñas no coinciden',
-  nifInvalido: 'NIF inválido',
-  telefonoInvalido: 'Teléfono inválido',
-  codigoPostalInvalido: 'Código postal inválido',
+  passwordFuerte: 'La contraseña debe tener al menos 8 caracteres, con mayúsculas, minúsculas, números y un carácter especial. Ejemplo: MiClave123!',
+  passwordMismatch: 'Las contraseñas no coinciden. Asegúrate de escribir la misma en ambos campos',
+  nifInvalido: 'NIF inválido. Debe tener 8 números y una letra. Ejemplo: 12345678A',
+  telefonoInvalido: 'Teléfono inválido. Usa 9 dígitos empezando por 6, 7, 8 o 9. Ejemplo: 612345678',
+  codigoPostalInvalido: 'Código postal inválido. Debe tener 5 dígitos. Ejemplo: 11001',
 } as const;
 
 // ============================================

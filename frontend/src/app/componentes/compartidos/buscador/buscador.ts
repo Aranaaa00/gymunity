@@ -114,6 +114,19 @@ export class Buscador implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/busqueda'], {
       queryParams: { q: terminoLimpio }
     });
+
+    // Limpiar el buscador después de navegar
+    this.valor.set('');
+    if (this.inputBusqueda) {
+      this.inputBusqueda.nativeElement.value = '';
+    }
+  }
+
+  limpiar(): void {
+    this.valor.set('');
+    if (this.inputBusqueda) {
+      this.inputBusqueda.nativeElement.value = '';
+    }
   }
 }
 

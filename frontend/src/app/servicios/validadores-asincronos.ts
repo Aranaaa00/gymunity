@@ -90,7 +90,7 @@ export class ValidadoresAsincronos {
 }
 
 export const MENSAJES_VALIDACION_ASINCRONA = {
-  emailNoDisponible: 'Este email ya está registrado',
-  usernameNoDisponible: 'Este nombre de usuario no está disponible',
-  ciudadNoExiste: 'Esta ciudad no existe. Introduce una ciudad real',
+  emailNoDisponible: 'Este email ya está registrado. Si es tuyo, inicia sesión en vez de registrarte',
+  usernameNoDisponible: 'Este nombre de usuario ya está en uso. Prueba con otro diferente',
+  ciudadNoExiste: 'No encontramos esta ciudad. Escribe el nombre de una ciudad de España. Ejemplo: Madrid, Sevilla, Cádiz',
 } as const;

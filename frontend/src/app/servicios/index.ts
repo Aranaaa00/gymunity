@@ -32,3 +32,5 @@ export type { OpcionesHttp, ErrorApi, QueryParams, OpcionesPaginacion } from './
 export { calcularFuerzaPassword } from './fuerza-password';
 export type { NivelFuerza, ResultadoFuerza } from './fuerza-password';
 
+// Título dinámico de página
+export { TituloPagina } from './titulo-pagina';

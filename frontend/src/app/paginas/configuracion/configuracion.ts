@@ -30,12 +30,12 @@ const MENSAJES_ERROR = {
     required: 'El nombre de usuario es obligatorio',
     minlength: `Mínimo ${LONGITUD_MINIMA_USERNAME} caracteres`,
     maxlength: `Máximo ${LONGITUD_MAXIMA_USERNAME} caracteres`,
-    pattern: 'Solo letras, números y guión bajo',
+    pattern: 'Solo letras, números y guión bajo. Ejemplo: juan_perez123',
     usernameNoDisponible: MENSAJES_VALIDACION_ASINCRONA.usernameNoDisponible,
   },
   email: {
     required: 'El email es obligatorio',
-    pattern: 'Introduce un email válido',
+    pattern: 'El email debe tener formato válido. Ejemplo: usuario@gmail.com',
     emailNoDisponible: MENSAJES_VALIDACION_ASINCRONA.emailNoDisponible,
   },
   ciudad: {
@@ -54,7 +54,7 @@ const MENSAJES_ERROR = {
   },
   confirmarContrasenia: {
     required: 'Confirma la nueva contraseña',
-    noCoincide: 'Las contraseñas no coinciden',
+    noCoincide: 'Las contraseñas no coinciden. Asegúrate de escribir la misma',
   },
 } as const;
 

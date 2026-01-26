@@ -14,7 +14,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./paginas/inicio/inicio').then((m) => m.Inicio),
-    data: { breadcrumb: 'Inicio' },
+    data: { breadcrumb: 'Inicio', titulo: 'Encuentra tu gimnasio ideal' },
   },
 
   // ----------------------------------------
@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: 'busqueda',
     loadComponent: () => import('./paginas/busqueda/busqueda').then((m) => m.Busqueda),
-    data: { breadcrumb: 'Búsqueda' },
+    data: { breadcrumb: 'Búsqueda', titulo: 'Buscar gimnasios' },
   },
 
   // ----------------------------------------
@@ -35,7 +35,7 @@ export const routes: Routes = [
     resolve: {
       gimnasio: gimnasioResolver,
     },
-    data: { breadcrumb: 'Gimnasio' },
+    data: { breadcrumb: 'Gimnasio', titulo: 'Detalles del gimnasio' },
   },
 
   // ----------------------------------------
@@ -46,7 +46,7 @@ export const routes: Routes = [
     loadComponent: () => import('./paginas/perfil/perfil').then((m) => m.Perfil),
     canActivate: [autenticacionGuard],
     canDeactivate: [cambiosSinGuardarGuard],
-    data: { breadcrumb: 'Mi Perfil' },
+    data: { breadcrumb: 'Mi Perfil', titulo: 'Mi perfil y reservas' },
   },
 
   // ----------------------------------------
@@ -57,7 +57,7 @@ export const routes: Routes = [
     loadComponent: () => import('./paginas/configuracion/configuracion').then((m) => m.Configuracion),
     canActivate: [autenticacionGuard],
     canDeactivate: [cambiosSinGuardarGuard],
-    data: { breadcrumb: 'Configuración' },
+    data: { breadcrumb: 'Configuración', titulo: 'Ajustes de cuenta' },
   },
 
   // ----------------------------------------
@@ -66,7 +66,7 @@ export const routes: Routes = [
   {
     path: 'guia-estilo',
     loadComponent: () => import('./paginas/guia-estilo/guia-estilo').then((m) => m.GuiaEstilo),
-    data: { breadcrumb: 'Guía de Estilo' },
+    data: { breadcrumb: 'Guía de Estilo', titulo: 'Guía de estilo y componentes' },
   },
 
   // ----------------------------------------
@@ -75,6 +75,7 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () => import('./paginas/no-encontrada/no-encontrada').then((m) => m.NoEncontrada),
+    data: { titulo: 'Página no encontrada' },
   },
 ];
 

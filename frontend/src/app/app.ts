@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Header } from './layout/header/header';
 import { Main } from './layout/main/main';
 import { Footer } from './layout/footer/footer';
@@ -11,6 +11,7 @@ import { CargaGlobal } from './componentes/compartidos/carga-global/carga-global
 import { ModalService } from './servicios/modal';
 import { AuthService } from './servicios/auth';
 import { CargaService } from './servicios/carga';
+import { TituloPagina } from './servicios/titulo-pagina';
 
 @Component({
   selector: 'app-root',
@@ -20,18 +21,26 @@ import { CargaService } from './servicios/carga';
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
+export class App implements OnInit {
   // ----------------------------------------
   // Dependencias
   // ----------------------------------------
   private readonly modalService = inject(ModalService);
   private readonly authService = inject(AuthService);
   private readonly cargaService = inject(CargaService);
+  private readonly tituloPagina = inject(TituloPagina);
 
   // ----------------------------------------
   // Propiedades públicas
   // ----------------------------------------
   readonly modal = this.modalService;
+
+  // ----------------------------------------
+  // Lifecycle
+  // ----------------------------------------
+  ngOnInit(): void {
+    this.tituloPagina.inicializar();
+  }
 
   // ----------------------------------------
   // Event Handlers

@@ -37,7 +37,7 @@ const MENSAJES_ERROR: Readonly<Record<CampoRegistro, Record<string, string>>> = 
     required: 'El nombre de usuario es obligatorio',
     minlength: `Mínimo ${LONGITUD_MINIMA_USERNAME} caracteres`,
     maxlength: `Máximo ${LONGITUD_MAXIMA_USERNAME} caracteres`,
-    pattern: 'Solo letras, números y guión bajo',
+    pattern: 'Solo letras, números y guión bajo. Ejemplo: juan_perez123',
     usernameNoDisponible: MENSAJES_VALIDACION_ASINCRONA.usernameNoDisponible,
   },
   fullName: {
@@ -47,7 +47,7 @@ const MENSAJES_ERROR: Readonly<Record<CampoRegistro, Record<string, string>>> = 
   },
   email: {
     required: 'El email es obligatorio',
-    email: 'Introduce un email válido',
+    email: 'El email debe tener formato válido. Ejemplo: usuario@gmail.com',
     emailNoDisponible: MENSAJES_VALIDACION_ASINCRONA.emailNoDisponible,
   },
   ciudad: {

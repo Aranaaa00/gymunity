@@ -14,6 +14,7 @@ import { ReservasService } from '../../servicios/reservas';
 import { PerfilService } from '../../servicios/perfil';
 import { AuthService } from '../../servicios/auth';
 import { ModalService } from '../../servicios/modal';
+import { TituloPagina } from '../../servicios/titulo-pagina';
 
 // ============================================
 // CONSTANTES
@@ -44,6 +45,7 @@ export class GimnasioPage implements OnInit, OnDestroy {
   private readonly perfilService = inject(PerfilService);
   private readonly authService = inject(AuthService);
   private readonly modalService = inject(ModalService);
+  private readonly tituloPagina = inject(TituloPagina);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destruir$ = new Subject<void>();
   
@@ -115,8 +117,14 @@ export class GimnasioPage implements OnInit, OnDestroy {
     this.route.data.pipe(
       takeUntil(this.destruir$)
     ).subscribe((data) => {
-      this.gimnasio.set(data['gimnasio'] as GimnasioDetalle);
+      const gym = data['gimnasio'] as GimnasioDetalle;
+      this.gimnasio.set(gym);
       this.cargando.set(false);
+      
+      // Actualizar título dinámico con nombre del gimnasio
+      if (gym?.nombre) {
+        this.tituloPagina.establecer(gym.nombre);
+      }
     });
   }
 
