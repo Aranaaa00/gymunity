@@ -9,7 +9,7 @@
     <button 
       type="button" 
       class="modal-resenia__cerrar" 
-      aria-label="Cerrar"
+      [attr.aria-label]="'Cerrar formulario de reseña para ' + gimnasioNombre()"
       (click)="onCerrar()"
     >
       <app-icono nombre="x" tamano="md" />
@@ -66,6 +66,7 @@
         class="modal-resenia__boton modal-resenia__boton--secundario"
         (click)="onCerrar()"
         [disabled]="enviando()"
+        aria-label="Cancelar y cerrar sin guardar la reseña"
       >
         Cancelar
       </button>
@@ -74,6 +75,7 @@
         class="modal-resenia__boton modal-resenia__boton--primario"
         [disabled]="!puedeEnviar()"
         (click)="onEnviar()"
+        [attr.aria-label]="enviando() ? 'Enviando tu reseña, por favor espera' : 'Publicar tu reseña de ' + gimnasioNombre()"
       >
         @if (enviando()) {
           <app-icono nombre="loader" tamano="sm" class="modal-resenia__spinner" />

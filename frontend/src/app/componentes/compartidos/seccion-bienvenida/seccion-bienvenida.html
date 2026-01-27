@@ -41,7 +41,12 @@
       </p>
     }
     @if (textoBoton()) {
-      <button class="hero__cta" (click)="accion.emit()">{{ textoBoton() }}</button>
+      <button 
+        class="hero__cta" 
+        (click)="accion.emit()"
+        aria-label="Crear tu cuenta gratis y empezar a buscar gimnasios en Gymunity">
+        {{ textoBoton() }}
+      </button>
     }
   </article>
 </section>

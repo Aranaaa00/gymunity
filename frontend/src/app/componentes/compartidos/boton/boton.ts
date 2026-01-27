@@ -38,6 +38,7 @@ export class Boton {
   readonly tamano = input<TamanoBoton>(TAMANO_DEFAULT);
   readonly disabled = input<boolean>(false);
   readonly cargando = input<boolean>(false);
+  readonly ariaLabel = input<string>('');
 
   // ----------------------------------------
   // Propiedades computadas

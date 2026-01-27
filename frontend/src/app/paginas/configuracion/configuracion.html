@@ -5,7 +5,7 @@
       type="button" 
       class="ajustes__salir" 
       (click)="cerrarSesion()"
-      aria-label="Cerrar sesion y salir de la aplicacion">
+      aria-label="Cerrar tu sesión y volver a la página de inicio de Gymunity">
       <app-icono nombre="log-out" tamano="sm" aria-hidden="true" />
       <span>Cerrar sesión</span>
     </button>
@@ -29,7 +29,7 @@
           (click)="inputAvatar.click()"
           [attr.aria-label]="tieneAvatar() ? 'Cambiar foto de perfil actual' : 'Subir foto de perfil'">
           @if (avatarActual()) {
-            <img [src]="avatarActual()" alt="Tu foto de perfil actual" class="ajustes__avatar-img" width="96" height="96" loading="eager" fetchpriority="high" decoding="async" />
+            <img [src]="avatarActual()" alt="Tu foto de perfil actual. Haz clic para cambiarla" class="ajustes__avatar-img" width="96" height="96" loading="eager" fetchpriority="high" decoding="async" />
           } @else {
             <app-icono nombre="user" tamano="xl" aria-hidden="true" />
           }
@@ -238,7 +238,8 @@
           class="ajustes__btn-eliminar"
           (click)="toggleConfirmacionEliminar()"
           aria-expanded="false"
-          aria-controls="confirmacion-eliminar">
+          aria-controls="confirmacion-eliminar"
+          aria-label="Mostrar opciones para eliminar tu cuenta de Gymunity de forma permanente">
           Quiero eliminar mi cuenta
         </button>
       } @else {
@@ -263,7 +264,7 @@
               type="button" 
               class="ajustes__btn-cancelar"
               (click)="toggleConfirmacionEliminar()"
-              aria-label="Cancelar eliminacion de cuenta">
+              aria-label="No eliminar mi cuenta, volver a la configuración normal">
               Cancelar
             </button>
             <app-boton 

@@ -2,7 +2,12 @@
   <header class="seccion-lista__header">
     <h3 class="seccion-lista__titulo">{{ titulo() }}</h3>
     @if (mostrarVerMas()) {
-      <button type="button" class="seccion-lista__ver-mas" (click)="onVerMas()">
+      <button 
+        type="button" 
+        class="seccion-lista__ver-mas" 
+        [attr.aria-label]="'Ver más elementos de ' + titulo()"
+        (click)="onVerMas()"
+      >
         {{ textoVerMas() }}
       </button>
     }

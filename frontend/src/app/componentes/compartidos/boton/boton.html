@@ -4,9 +4,11 @@
   [class.boton--disabled]="disabled() || cargando()"
   [class.boton--cargando]="cargando()"
   [type]="tipo()"
-  [disabled]="disabled() || cargando()">
+  [disabled]="disabled() || cargando()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-busy]="cargando() || null">
   @if (cargando()) {
-    <lucide-icon name="Loader2" class="boton__spinner" [size]="16"></lucide-icon>
+    <lucide-icon name="Loader2" class="boton__spinner" aria-hidden="true" [size]="16"></lucide-icon>
   }
   <span [class.boton__contenido--oculto]="cargando()">
     <ng-content></ng-content>

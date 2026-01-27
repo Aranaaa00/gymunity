@@ -5,11 +5,11 @@
   (click)="toggleMenu()"
   [attr.aria-expanded]="desplegableAbierto()"
   aria-haspopup="true"
-  aria-label="Menú de usuario">
+  aria-label="Abrir menú de tu cuenta">
   @if (avatarUsuario()) {
     <img 
       [src]="avatarUsuario()" 
-      alt="Tu foto de perfil"
+      [alt]="'Tu foto de perfil, ' + (usuario()?.nombreUsuario || 'usuario')"
       class="menu-usuario__avatar"
       decoding="async"
     />
@@ -29,11 +29,12 @@
     #menuDropdown
     class="menu-usuario__desplegable"
     role="menu"
-    aria-label="Opciones de usuario">
+    aria-label="Menú de opciones de tu cuenta">
     <button
       class="menu-usuario__opcion"
       type="button"
       role="menuitem"
+      aria-label="Ir a tu perfil de usuario"
       (click)="navegarAPerfil()">
       <app-icono nombre="user" />
       <span>Perfil</span>
@@ -43,17 +44,19 @@
       class="menu-usuario__opcion"
       type="button"
       role="menuitem"
+      aria-label="Ir a configuración de tu cuenta"
       (click)="navegarAConfiguracion()">
       <app-icono nombre="settings" />
       <span>Configuración</span>
     </button>
 
-    <hr class="menu-usuario__separador" />
+    <hr class="menu-usuario__separador" aria-hidden="true" />
 
     <button
       class="menu-usuario__opcion"
       type="button"
       role="menuitem"
+      aria-label="Cerrar tu sesión actual"
       (click)="cerrarSesion()">
       <app-icono nombre="log-out" />
       <span>Cerrar sesión</span>

@@ -1,7 +1,7 @@
 <article class="tarjeta-resenia">
   <figure class="tarjeta-resenia__avatar">
     @if (foto()) {
-      <img [src]="foto()" [alt]="'Foto de perfil de ' + nombre()" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
+      <img [src]="foto()" [alt]="'Foto de ' + nombre() + ', autor de esta reseña'" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
     } @else {
       <app-icono nombre="user" tamano="md" class="tarjeta-resenia__icono-default" />
     }
@@ -24,7 +24,7 @@
   </section>
 
   @if (mostrarCorazon()) {
-    <button type="button" class="tarjeta-resenia__corazon" aria-label="Me gusta">
+    <button type="button" class="tarjeta-resenia__corazon" [attr.aria-label]="'Me gusta la reseña de ' + nombre()">
       <app-icono nombre="heart" tamano="sm" />
     </button>
   }

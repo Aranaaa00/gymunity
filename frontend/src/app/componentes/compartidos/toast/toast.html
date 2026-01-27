@@ -1,5 +1,5 @@
 @if (notificaciones().length > 0) {
-  <section class="toast-container">
+  <section class="toast-container" aria-label="Notificaciones del sistema">
     @for (n of notificaciones(); track trackById($index, n)) {
       <aside 
         class="toast"
@@ -18,7 +18,7 @@
           type="button"
           class="toast__cerrar" 
           (click)="cerrar(n)" 
-          aria-label="Cerrar notificación">
+          [attr.aria-label]="'Cerrar notificación: ' + n.mensaje">
           <app-icono nombre="x" tamano="sm" />
         </button>
       </aside>

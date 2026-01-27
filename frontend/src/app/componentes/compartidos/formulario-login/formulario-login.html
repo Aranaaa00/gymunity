@@ -2,7 +2,7 @@
   <picture class="formulario-auth__logo">
     <source media="(max-width: 480px)" srcset="assets/logo-small.webp">
     <source media="(max-width: 768px)" srcset="assets/logo-medium.webp">
-    <img src="assets/logo-large.webp" alt="Gymunity" loading="eager" width="180" height="40" fetchpriority="high" decoding="async">
+    <img src="assets/logo-large.webp" alt="Logo de Gymunity - Iniciar sesión" loading="eager" width="180" height="40" fetchpriority="high" decoding="async">
   </picture>
   <p class="formulario-auth__tagline">Tu comunidad fitness te espera</p>
 </header>
@@ -44,7 +44,8 @@
         type="checkbox" 
         class="formulario-login__recordar-checkbox"
         [checked]="recordarUsuario()"
-        (change)="toggleRecordar()">
+        (change)="toggleRecordar()"
+        aria-label="Guardar mis datos para no tener que volver a escribirlos la próxima vez">
       <span class="formulario-login__recordar-texto">Recordar mis datos</span>
     </label>
     
@@ -57,7 +58,13 @@
     <footer class="formulario-auth__footer">
       <p class="formulario-auth__alt">
         ¿Nuevo en Gymunity? 
-        <button type="button" class="formulario-auth__link" (click)="irRegistro.emit()">Únete ahora</button>
+        <button 
+          type="button" 
+          class="formulario-auth__link" 
+          (click)="irRegistro.emit()"
+          aria-label="Crear una cuenta nueva en Gymunity">
+          Únete ahora
+        </button>
       </p>
     </footer>
   </fieldset>

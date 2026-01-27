@@ -1,4 +1,4 @@
-import { Component, output, ViewChild, ElementRef, AfterViewInit, inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
+import { Component, output, ViewChild, ElementRef, AfterViewInit, inject, PLATFORM_ID, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Icono } from '../icono/icono';
 
@@ -59,6 +59,11 @@ export class VentanaEmergente implements AfterViewInit {
   // ----------------------------------------
   // Event Handlers
   // ----------------------------------------
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.emitirCerrar();
+  }
+
   onOverlayClick(evento: MouseEvent): void {
     const clicEnOverlay = evento.target === evento.currentTarget;
 

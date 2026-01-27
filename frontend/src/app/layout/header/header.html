@@ -1,10 +1,10 @@
 <header class="gym-header">
   <section class="gym-header__top">
-    <a class="gym-header__logo" routerLink="/" aria-label="Ir a inicio">
+    <a class="gym-header__logo" routerLink="/" aria-label="Ir a la página de inicio de Gymunity">
       <picture>
         <source media="(max-width: 480px)" srcset="assets/logo-blanco-small.webp">
         <source media="(max-width: 768px)" srcset="assets/logo-blanco-medium.webp">
-        <img src="assets/logo-blanco-large.webp" alt="Gymunity" loading="eager" width="140" height="32" fetchpriority="high" decoding="async">
+        <img src="assets/logo-blanco-large.webp" alt="Logo de Gymunity - Plataforma de gimnasios de artes marciales" loading="eager" width="140" height="32" fetchpriority="high" decoding="async">
       </picture>
     </a>
 
@@ -35,7 +35,7 @@
         (click)="alternarMenu()"
         class="gym-header__hamburguesa"
         [class.gym-header__hamburguesa--oculto]="usuarioAutenticado()"
-        [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
+        [attr.aria-label]="menuAbierto() ? 'Cerrar menú de navegación' : 'Abrir menú de navegación con opciones de inicio de sesión'"
         [attr.aria-expanded]="menuAbierto()">
         <app-icono [nombre]="menuAbierto() ? 'x' : 'menu'" />
       </button>

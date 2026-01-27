@@ -19,7 +19,12 @@
             </p>
           }
         </hgroup>
-        <button type="button" class="gimnasio__boton-resenia" (click)="abrirResenia()">
+        <button 
+          type="button" 
+          class="gimnasio__boton-resenia" 
+          [attr.aria-label]="'Escribir una reseña para ' + gimnasio()!.nombre"
+          (click)="abrirResenia()"
+        >
           Dejar reseña
         </button>
       </header>

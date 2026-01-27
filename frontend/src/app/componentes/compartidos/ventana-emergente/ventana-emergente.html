@@ -2,6 +2,7 @@
   class="ventana-emergente"
   role="dialog"
   aria-modal="true"
+  aria-label="Ventana de diálogo. Pulsa Escape para cerrar"
   (click)="onOverlayClick($event)">
   
   <article #contenido class="ventana-emergente__contenido">
@@ -10,7 +11,7 @@
       #botonCerrar
       type="button"
       class="ventana-emergente__cerrar"
-      aria-label="Cerrar ventana"
+      aria-label="Cerrar esta ventana"
       (click)="emitirCerrar()">
       <app-icono nombre="x" tamano="lg"></app-icono>
     </button>

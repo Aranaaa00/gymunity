@@ -27,9 +27,9 @@
     @if (estaAutenticado() && ciudadUsuario()) {
       <section class="gimnasios-section">
         <header class="section-header">
-          <a class="section-link" routerLink="/busqueda" [queryParams]="{ciudad: ciudadUsuario()}">
+          <a class="section-link" routerLink="/busqueda" [queryParams]="{ciudad: ciudadUsuario()}" [attr.aria-label]="'Ver todos los gimnasios en ' + ciudadUsuario()">
             <h2 class="section-title">Gimnasios cercanos a <strong>{{ ciudadUsuario() }}</strong></h2>
-            <span class="section-arrow">›</span>
+            <span class="section-arrow" aria-hidden="true">›</span>
           </a>
         </header>
         @if (cargandoCercanos()) {
@@ -62,9 +62,9 @@
 
     <section class="gimnasios-section">
       <header class="section-header">
-        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'popular'}">
+        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'popular'}" aria-label="Ver todos los gimnasios más populares de Gymunity">
           <h2 class="section-title">Gimnasios más populares</h2>
-          <span class="section-arrow">›</span>
+          <span class="section-arrow" aria-hidden="true">›</span>
         </a>
       </header>
       <ul class="gimnasios-grid">
@@ -88,9 +88,9 @@
 
     <section class="gimnasios-section">
       <header class="section-header">
-        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'reciente'}">
+        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'reciente'}" aria-label="Ver todos los gimnasios recién añadidos a Gymunity">
           <h2 class="section-title">Nuevos gimnasios en Gymunity</h2>
-          <span class="section-arrow">›</span>
+          <span class="section-arrow" aria-hidden="true">›</span>
         </a>
       </header>
       <ul class="gimnasios-grid">

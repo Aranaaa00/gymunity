@@ -4,10 +4,10 @@
     class="paginacion__btn"
     [disabled]="!puedeIrAtras()"
     (click)="irAnterior()"
-    aria-label="Página anterior">
+    [attr.aria-label]="'Ir a la página anterior, actualmente en página ' + (paginaActual() + 1) + ' de ' + totalPaginas()">
     <app-icono nombre="chevron-down" tamano="sm" class="paginacion__icono paginacion__icono--izq" />
   </button>
-  <span class="paginacion__info">
+  <span class="paginacion__info" aria-live="polite">
     {{ paginaActual() + 1 }} / {{ totalPaginas() }}
   </span>
   <button 
@@ -15,7 +15,7 @@
     class="paginacion__btn"
     [disabled]="!puedeIrAdelante()"
     (click)="irSiguiente()"
-    aria-label="Página siguiente">
+    [attr.aria-label]="'Ir a la página siguiente, actualmente en página ' + (paginaActual() + 1) + ' de ' + totalPaginas()">
     <app-icono nombre="chevron-down" tamano="sm" class="paginacion__icono paginacion__icono--der" />
   </button>
 </nav>

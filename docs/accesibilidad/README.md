@@ -247,3 +247,24 @@ He revisado todas las imágenes de la web, buscando si tienen texto alternativo 
 - **Sin alt o con alt poco descriptivo (necesitan corrección):** 8
 
 He corregido las 8 imágenes que tenían alt poco descriptivo, añadiendo contexto a cada una (por ejemplo, "Foto de perfil de..." en vez de solo el nombre, o "Instalaciones de..." para las fotos de gimnasios).
+
+---
+
+## 7. Verificación manual
+
+### 7.1 Test de navegación por teclado
+
+He desconectado el ratón y navegado por toda la web usando solo el teclado para comprobar que todo es accesible. Aquí está el resultado:
+
+**Checklist de navegación:**
+
+- [x] Puedo llegar a todos los enlaces y botones con Tab
+- [x] El orden de navegación con Tab es lógico (no salta caóticamente)
+- [x] Veo claramente qué elemento tiene el focus (borde, sombra, color)
+- [x] Puedo usar mi componente multimedia solo con teclado
+- [x] No hay "trampas" de teclado donde quedo bloqueado
+- [x] Los menús/modals se pueden cerrar con Esc (si aplica)
+
+**Problemas encontrados:** Ninguno.
+
+**Soluciones aplicadas:** No ha sido necesario aplicar ninguna corrección porque todo ya funcionaba bien desde el principio. La web está diseñada con accesibilidad en mente desde el comienzo.

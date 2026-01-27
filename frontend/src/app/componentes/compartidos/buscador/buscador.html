@@ -6,11 +6,11 @@
     [placeholder]="placeholder()" 
     [value]="valor()"
     (input)="onValorCambia(inputBusqueda.value)"
-    [attr.aria-label]="placeholder()"
+    [attr.aria-label]="'Buscar gimnasios. ' + placeholder()"
     name="busqueda"
     autocomplete="off"
   >
-  <button type="submit" class="buscador__boton" aria-label="Buscar">
+  <button type="submit" class="buscador__boton" aria-label="Iniciar búsqueda de gimnasios">
     <app-icono nombre="buscar" tamano="md" />
   </button>
 </form>

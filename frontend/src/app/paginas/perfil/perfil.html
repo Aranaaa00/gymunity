@@ -2,7 +2,7 @@
   <header class="perfil__cabecera">
     <figure class="perfil__avatar">
       @if (usuario()?.avatar) {
-        <img [src]="usuario()!.avatar" [alt]="'Foto de perfil de ' + usuario()!.nombreUsuario" class="perfil__avatar-img" width="128" height="128" loading="eager" fetchpriority="high" decoding="async" />
+        <img [src]="usuario()!.avatar" [alt]="'Tu foto de perfil, ' + usuario()!.nombreUsuario" class="perfil__avatar-img" width="128" height="128" loading="eager" fetchpriority="high" decoding="async" />
       } @else {
         <app-icono nombre="user" tamano="2xl" class="perfil__avatar-icono" />
       }
@@ -64,7 +64,15 @@
         } @else {
           <ul class="perfil__lista-clases">
             @for (clase of clasesPaginadas(); track clase.id) {
-              <li class="perfil__clase" (click)="irAGimnasio(clase)" role="button" tabindex="0" (keydown.enter)="irAGimnasio(clase)">
+              <li 
+                class="perfil__clase" 
+                role="button" 
+                tabindex="0" 
+                [attr.aria-label]="'Ver gimnasio ' + clase.gimnasio + ', clase de ' + clase.nombre + ' con ' + clase.profesor"
+                (click)="irAGimnasio(clase)" 
+                (keydown.enter)="irAGimnasio(clase)"
+                (keydown.space)="irAGimnasio(clase); $event.preventDefault()"
+              >
                 <figure class="perfil__clase-avatar">
                   <app-icono [nombre]="obtenerIconoClase(clase.nombre)" tamano="lg" />
                 </figure>
@@ -99,6 +107,7 @@
                         type="button" 
                         class="perfil__btn-cancelar"
                         [class.perfil__btn-cancelar--sin-reembolso]="!clase.puedeReembolsar"
+                        [attr.aria-label]="clase.puedeReembolsar ? 'Cancelar clase de ' + clase.nombre + ' en ' + clase.gimnasio + ' y recuperar tu crédito' : 'Cancelar clase de ' + clase.nombre + ' sin reembolso porque quedan menos de 24 horas'"
                         (click)="cancelarClase(clase); $event.stopPropagation()"
                         [title]="clase.puedeReembolsar ? 'Cancelar y recuperar crédito' : 'Cancelar sin reembolso (menos de 24h)'"
                       >

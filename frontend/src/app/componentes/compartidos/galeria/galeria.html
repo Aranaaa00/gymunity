@@ -2,7 +2,7 @@
   <picture class="galeria__principal">
     <img 
       [src]="imagenPrincipal()" 
-      [alt]="alt()" 
+      [alt]="captionActivo()" 
       class="galeria__imagen-principal"
       loading="eager"
       fetchpriority="high"
@@ -14,18 +14,19 @@
   </picture>
 
   @if (tieneMiniaturas()) {
-    <nav class="galeria__miniaturas" aria-label="Miniaturas de la galería">
+    <nav class="galeria__miniaturas" aria-label="Miniaturas de la galería de imágenes">
       @for (miniatura of miniaturas(); track trackByIndex($index)) {
         <button 
           type="button"
           class="galeria__miniatura"
           [class.galeria__miniatura--activa]="$index === indiceActivo()"
           (click)="seleccionarImagen($index)"
-          [attr.aria-label]="'Ver imagen ' + ($index + 1)"
+          [attr.aria-label]="'Ver foto ' + ($index + 1) + ' de ' + imagenes().length + ': ' + (descripciones()[$index] || 'Vista de las instalaciones')"
+          [attr.aria-pressed]="$index === indiceActivo()"
         >
           <img 
             [src]="miniatura" 
-            [alt]="alt() + ' - miniatura ' + ($index + 1)"
+            [alt]="'Miniatura ' + ($index + 1) + ': ' + (descripciones()[$index] || 'Vista de las instalaciones')"
             class="galeria__miniatura-img"
             loading="lazy"
             width="80"

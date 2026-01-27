@@ -4,13 +4,14 @@
   [class.card--clickable]="!!id()"
   [attr.tabindex]="id() ? 0 : null"
   [attr.role]="id() ? 'link' : null"
+  [attr.aria-label]="id() ? 'Ver detalles de ' + title() + (location() ? ' en ' + location() : '') + (tieneValoracion() ? ', valoración ' + valoracionFormateada() : '') : null"
   (click)="navegarAGimnasio()"
   (keydown.enter)="navegarAGimnasio()"
   (keydown.space)="navegarAGimnasio(); $event.preventDefault()">
   @if (imageSrc()) {
     <app-card-image
       [src]="imageSrc()"
-      [alt]="imageAlt() || 'Imagen de ' + title()"
+      [alt]="imageAlt() || 'Foto del gimnasio ' + title() + (location() ? ' en ' + location() : '')"
       size="md"
       [variant]="variant()"
       [priority]="priority()"

@@ -39,6 +39,7 @@
       <button 
         type="button" 
         class="modal-reserva__boton modal-reserva__boton--secundario"
+        [attr.aria-label]="'Cancelar reserva de ' + claseNombre()"
         (click)="onCancelar()"
         [disabled]="procesando()"
       >
@@ -47,6 +48,7 @@
       <button 
         type="button" 
         class="modal-reserva__boton modal-reserva__boton--primario"
+        [attr.aria-label]="procesando() ? 'Procesando reserva de ' + claseNombre() : 'Confirmar reserva de ' + claseNombre() + (profesorNombre() ? ' con ' + profesorNombre() : '')"
         (click)="onConfirmar()"
         [disabled]="procesando()"
       >
