@@ -232,3 +232,18 @@ H1: [Nombre del gimnasio] (ej: "Box Vallecas")
 ```
 
 **Análisis:** La jerarquía está **correcta**, sin saltos de nivel. El H1 es el título principal (el nombre del gimnasio), y luego tengo tres H2 que dividen las secciones de profesores, torneos y reseñas. No he usado H3 porque dentro de cada lista los elementos (profesores, torneos, reseñas) son componentes visuales (tarjetas) que no necesitan encabezado propio, ya que se entienden por su contenido y estructura.
+
+---
+
+## 6. Análisis de imágenes
+
+He revisado todas las imágenes de la web, buscando si tienen texto alternativo y si este es realmente útil. Aquí está el desglose completo:
+
+### Resumen de imágenes
+
+- **Total de imágenes:** 14
+- **Con texto alternativo correcto:** 6
+- **Decorativas (alt=""):** 0
+- **Sin alt o con alt poco descriptivo (necesitan corrección):** 8
+
+He corregido las 8 imágenes que tenían alt poco descriptivo, añadiendo contexto a cada una (por ejemplo, "Foto de perfil de..." en vez de solo el nombre, o "Instalaciones de..." para las fotos de gimnasios).

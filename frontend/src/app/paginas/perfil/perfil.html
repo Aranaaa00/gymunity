@@ -2,7 +2,7 @@
   <header class="perfil__cabecera">
     <figure class="perfil__avatar">
       @if (usuario()?.avatar) {
-        <img [src]="usuario()!.avatar" [alt]="usuario()!.nombreUsuario" class="perfil__avatar-img" width="128" height="128" loading="eager" fetchpriority="high" decoding="async" />
+        <img [src]="usuario()!.avatar" [alt]="'Foto de perfil de ' + usuario()!.nombreUsuario" class="perfil__avatar-img" width="128" height="128" loading="eager" fetchpriority="high" decoding="async" />
       } @else {
         <app-icono nombre="user" tamano="2xl" class="perfil__avatar-icono" />
       }

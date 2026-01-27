@@ -10,7 +10,7 @@
   @if (imageSrc()) {
     <app-card-image
       [src]="imageSrc()"
-      [alt]="imageAlt() || title()"
+      [alt]="imageAlt() || 'Imagen de ' + title()"
       size="md"
       [variant]="variant()"
       [priority]="priority()"
