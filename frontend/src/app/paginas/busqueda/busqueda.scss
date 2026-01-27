@@ -76,7 +76,7 @@
   color: var(--color-subtitulo);
 
   strong {
-    color: var(--color-acento);
+    color: var(--color-acento-texto);
     font-weight: $font-weight-semibold;
   }
 }
@@ -105,7 +105,7 @@
 .busqueda__contador-numero {
   font-size: $texto-s;
   font-weight: $font-weight-bold;
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 .busqueda__contador-texto {
@@ -137,7 +137,7 @@
 
   font-size: $texto-s;
   font-weight: $font-weight-medium;
-  color: var(--color-texto-inverso);
+  color: var(--color-boton-texto);
 
   cursor: pointer;
 
@@ -200,7 +200,7 @@
 }
 
 .busqueda__spinner {
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
   animation: spin 1s linear infinite;
 }
 
@@ -252,7 +252,7 @@
 
   font-size: $texto-s;
   font-weight: $font-weight-medium;
-  color: var(--color-texto-inverso);
+  color: var(--color-boton-texto);
 
   cursor: pointer;
 
@@ -328,19 +328,20 @@
 
   background: transparent;
 
-  border: $borde-thin solid var(--color-acento);
+  border: $borde-medium solid var(--color-acento-texto);
   border-radius: $radio-md;
 
   font-size: $texto-s;
-  font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  font-weight: $font-weight-semibold;
+  color: var(--color-acento-texto);
 
   cursor: pointer;
 
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 
   &:hover {
-    background: var(--color-acento);
+    background: var(--color-acento-texto);
+    border-color: var(--color-acento-texto);
     color: var(--color-texto-inverso);
     transform: translateY(-1px);
   }
@@ -350,7 +351,7 @@
   }
 
   &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
+    outline: $borde-medium solid var(--color-acento-texto);
     outline-offset: 2px;
   }
 }

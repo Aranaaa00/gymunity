@@ -24,12 +24,17 @@
   // Botones
   --color-boton: #{$color-botones};
   --color-boton-hover: #{$color-botones-hover};
+  --color-boton-texto: #{$gris-900};
   // Semánticos
   --color-exito: #{$color-exito};
+  --color-exito-texto: #{$color-exito-texto};
   --color-error: #{$color-error};
+  --color-error-texto: #{$color-error-texto};
   --color-error-fondo: #fef2f2;
   --color-warning: #{$color-warning};
+  --color-warning-texto: #{$color-warning-texto};
   --color-info: #{$color-info};
+  --color-info-texto: #{$color-info-texto};
   --color-info-fondo: #{$gris-100};
   // Sombras
   --shadow-glow: #{$shadow-boton};
@@ -62,6 +67,7 @@
 
   // Acentos y hover
   --color-acento: #{$color-botones};
+  --color-acento-texto: #{$color-acento-texto};
   --color-acento-hover: #{$color-botones-hover};
   --color-hover: #{$color-hover-suave};
   --color-texto-inverso: #ffffff;
@@ -87,12 +93,17 @@
   // Botones
   --color-boton: #{$oscuro-boton};
   --color-boton-hover: #{$oscuro-boton-hover};
+  --color-boton-texto: #{$gris-900};
   // Semánticos
   --color-exito: #{$oscuro-exito};
+  --color-exito-texto: #{$oscuro-exito-texto};
   --color-error: #{$oscuro-error};
+  --color-error-texto: #{$oscuro-error-texto};
   --color-error-fondo: #7f1d1d;
   --color-warning: #{$oscuro-warning};
+  --color-warning-texto: #{$oscuro-warning-texto};
   --color-info: #{$oscuro-info};
+  --color-info-texto: #{$oscuro-info-texto};
   --color-info-fondo: #{$oscuro-fondo-secundario};
   // Sombras con glow
   --shadow-glow: #{$oscuro-shadow-boton};
@@ -126,6 +137,7 @@
 
   // Acentos y hover - Modo Oscuro
   --color-acento: #{$oscuro-boton};
+  --color-acento-texto: #{$oscuro-acento-texto};
   --color-acento-hover: #{$oscuro-boton-hover};
   --color-hover: rgba(0, 229, 160, 0.1);
   --color-texto-inverso: #{$oscuro-fondo};

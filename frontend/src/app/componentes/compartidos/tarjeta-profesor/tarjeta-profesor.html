@@ -4,14 +4,14 @@
   tabindex="0">
   <figure class="tarjeta-profesor__avatar" aria-hidden="true">
     @if (foto()) {
-      <img [src]="foto()" [alt]="'Profesor ' + nombre() + ', especialista en ' + especialidad()" class="tarjeta-profesor__imagen" loading="lazy" width="64" height="64" decoding="async" />
+      <img [src]="foto()" alt="" class="tarjeta-profesor__imagen" loading="lazy" width="64" height="64" decoding="async" />
     } @else {
       <app-icono nombre="user" tamano="lg" class="tarjeta-profesor__icono-default" />
     }
   </figure>
 
   <section class="tarjeta-profesor__info" aria-hidden="true">
-    <h4 class="tarjeta-profesor__nombre">{{ nombre() }}</h4>
+    <h3 class="tarjeta-profesor__nombre">{{ nombre() }}</h3>
     <p class="tarjeta-profesor__especialidad">{{ especialidad() }}</p>
     @if (proximaClase()) {
       <p class="tarjeta-profesor__proxima-clase">

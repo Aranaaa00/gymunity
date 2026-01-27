@@ -54,7 +54,7 @@ $formulario-link-transition-duration: 0.2s;
   margin: 0;
   font-size: $texto-sm;
   font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 // ============================================
@@ -90,12 +90,13 @@ $formulario-link-transition-duration: 0.2s;
   width: 100%;
   margin: 0 0 $space-1;
   padding: $space-2;
-  background-color: rgba($color-error, 0.1);
-  border: $borde-thin solid rgba($color-error, 0.3);
+  background-color: var(--color-alerta-error-bg);
+  border: $borde-thin solid var(--color-alerta-error-border);
   border-radius: $radio-md;
   font-size: $texto-sm;
+  font-weight: $font-weight-medium;
   text-align: center;
-  color: var(--color-error);
+  color: var(--color-alerta-error-text);
 }
 
 // ============================================
@@ -139,14 +140,15 @@ $formulario-link-transition-duration: 0.2s;
   border: none;
   border-radius: $radio-sm;
   font-size: inherit;
-  font-weight: $font-weight-semibold;
-  text-decoration: none;
-  color: var(--color-boton);
+  font-weight: $font-weight-bold;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--color-acento-texto);
   cursor: pointer;
   transition: color $formulario-link-transition-duration ease;
 
   &:hover {
-    color: var(--color-boton-hover);
+    color: var(--color-titulo);
     text-decoration: underline;
   }
 

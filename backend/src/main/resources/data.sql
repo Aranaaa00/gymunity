@@ -10,7 +10,11 @@ SET client_encoding = 'UTF8';
 -- ============================================
 -- LIMPIAR DATOS PREVIOS (para sincronizar IDs)
 -- ============================================
--- Eliminar clases primero (depende de gimnasio y profesor)
+-- Eliminar interacciones primero (depende de gimnasio y usuario)
+DELETE FROM interaccion WHERE id IS NOT NULL;
+-- Eliminar alumno_clase (depende de clase y usuario)
+DELETE FROM alumno_clase WHERE id IS NOT NULL;
+-- Eliminar clases (depende de gimnasio y profesor)
 DELETE FROM clase WHERE id > 0;
 -- Eliminar gimnasios
 DELETE FROM gimnasio WHERE id > 0;

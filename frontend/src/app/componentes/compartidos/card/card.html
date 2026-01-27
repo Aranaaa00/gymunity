@@ -42,12 +42,12 @@
   </section>
   @if (variant() === 'horizontal') {
     <footer class="card-footer">
-      <app-boton variante="ghost" tamanio="sm">Ver más</app-boton>
+      <app-boton variante="ghost" tamanio="sm" [ariaLabel]="'Ver más información sobre ' + title()">Ver más</app-boton>
     </footer>
   }
   @if (actionText() && variant() !== 'horizontal') {
     <footer class="card-footer">
-      <button class="card-action">{{ actionText() }}</button>
+      <button class="card-action" [attr.aria-label]="actionText() + ' en ' + title()">{{ actionText() }}</button>
     </footer>
   }
 </article>

@@ -88,7 +88,7 @@ $footer-social-translate-y: -0.125rem;
 .gym-footer__slogan {
   max-width: $footer-slogan-max-width;
   font-size: $texto-xs;
-  color: $gris-300;
+  color: $gris-100;
   text-align: left;
 
   @include respond-down(sm) {
@@ -113,7 +113,7 @@ $footer-social-translate-y: -0.125rem;
 
 .gym-footer__email {
   font-size: $texto-xs;
-  color: $gris-400;
+  color: $gris-200;
 }
 
 // ============================================
@@ -164,9 +164,9 @@ $footer-social-translate-y: -0.125rem;
   max-width: $max-width-contenido;
   margin: 0 auto;
   padding: $space-2 $space-3 0;
-  border-top: $borde-thin solid rgba($gris-100, 0.1);
+  border-top: $borde-thin solid rgba($gris-100, 0.15);
   font-size: $texto-xs;
-  color: $gris-500;
+  color: $gris-50;
   text-align: center;
 
   @include respond-down(sm) {

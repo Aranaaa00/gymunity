@@ -1,7 +1,7 @@
 <figure 
   class="galeria"
   role="region"
-  [attr.aria-label]="'Galería de fotos con ' + imagenes().length + ' imágenes. Mostrando foto ' + (indiceActivo() + 1) + ' de ' + imagenes().length">
+  [attr.aria-label]="'Estás en la galería de fotos del gimnasio, ' + imagenes().length + ' imágenes en total. Ahora viendo foto ' + (indiceActivo() + 1) + ' de ' + imagenes().length + ': ' + captionActivo()">
   <picture class="galeria__principal">
     <img 
       [src]="imagenPrincipal()" 
@@ -13,19 +13,20 @@
       height="450"
       decoding="async"
       tabindex="0"
+      [attr.aria-label]="'Foto principal: ' + captionActivo()"
     />
     <figcaption class="galeria__caption">{{ captionActivo() }}</figcaption>
   </picture>
 
   @if (tieneMiniaturas()) {
-    <nav class="galeria__miniaturas" [attr.aria-label]="'Seleccionar entre ' + imagenes().length + ' fotos de la galería'">
+    <nav class="galeria__miniaturas" aria-label="Miniaturas para cambiar de foto">
       @for (miniatura of miniaturas(); track trackByIndex($index)) {
         <button 
           type="button"
           class="galeria__miniatura"
           [class.galeria__miniatura--activa]="$index === indiceActivo()"
           (click)="seleccionarImagen($index)"
-          [attr.aria-label]="'Ver foto ' + ($index + 1) + ' de ' + imagenes().length + ': ' + (descripciones()[$index] || 'Vista de las instalaciones')"
+          [attr.aria-label]="$index === indiceActivo() ? 'Foto ' + ($index + 1) + ' de ' + imagenes().length + ', seleccionada actualmente: ' + (descripciones()[$index] || 'Vista de las instalaciones') : 'Ver foto ' + ($index + 1) + ' de ' + imagenes().length + ': ' + (descripciones()[$index] || 'Vista de las instalaciones')"
           [attr.aria-pressed]="$index === indiceActivo()"
         >
           <img 

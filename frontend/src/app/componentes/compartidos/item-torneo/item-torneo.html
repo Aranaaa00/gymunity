@@ -4,13 +4,13 @@
   tabindex="0">
   <app-icono nombre="trophy" tamano="sm" class="item-torneo__icono" aria-hidden="true" />
   <section class="item-torneo__info" aria-hidden="true">
-    <h4 class="item-torneo__nombre">
+    <h3 class="item-torneo__nombre">
       @if (disciplina()) {
         Campeonato de <strong>{{ disciplina() }}</strong>
       } @else {
         {{ nombre() }}
       }
-    </h4>
+    </h3>
     <time class="item-torneo__fecha" [attr.datetime]="fecha()">{{ formatearFecha() }}</time>
   </section>
 </article>

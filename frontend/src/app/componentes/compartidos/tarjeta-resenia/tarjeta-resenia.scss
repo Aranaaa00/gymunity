@@ -122,12 +122,12 @@
   gap: 0.25rem;
 
   font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  font-weight: $font-weight-semibold;
+  color: $gris-700;
 }
 
 .tarjeta-resenia__estrella {
-  color: #facc15;
+  color: $color-estrella;
 }
 
 .tarjeta-resenia__corazon {

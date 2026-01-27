@@ -144,7 +144,7 @@
 
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
-  color: var(--color-texto-inverso);
+  color: var(--color-boton-texto);
 
   cursor: pointer;
 
@@ -170,9 +170,9 @@
 }
 
 .tarjeta-profesor__boton--reservada {
-  background: rgba(52, 198, 160, 0.15);
+  background: rgba(52, 198, 160, 0.2);
 
-  color: var(--color-acento);
+  color: $gris-800;
 }
 
 // ============================================

@@ -42,7 +42,7 @@ $campo-input-padding-h: 0.75rem;
   font-size: $texto-sm;
   font-weight: $font-weight-bold;
   text-decoration: none;
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 // ============================================
@@ -138,7 +138,7 @@ $campo-input-padding-h: 0.75rem;
 
 .campo-formulario__error {
   font-weight: $font-weight-medium;
-  color: var(--color-error);
+  color: var(--color-error-texto);
 
   &::before {
     content: '⚠';
@@ -148,7 +148,7 @@ $campo-input-padding-h: 0.75rem;
 
 .campo-formulario__validando {
   font-weight: $font-weight-medium;
-  color: var(--color-info);
+  color: var(--color-info-texto);
 
   &::before {
     content: '⟳';
@@ -165,7 +165,7 @@ $campo-input-padding-h: 0.75rem;
 
 .campo-formulario__exito {
   font-weight: $font-weight-medium;
-  color: var(--color-exito);
+  color: var(--color-exito-texto);
 
   &::before {
     content: '✓';

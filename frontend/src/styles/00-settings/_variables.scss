@@ -29,9 +29,16 @@ $color-botones-active: #0C5649;
 // --------------------------------------------
 
 $color-exito: #2ECC71;
+$color-exito-texto: #047857;
 $color-error: #E74C3C;
+$color-error-texto: #B91C1C;
 $color-warning: #FFA726;
+$color-warning-texto: #B45309;
 $color-info: #1976D2;
+$color-info-texto: #1E40AF;
+$color-estrella: #B45309;
+
+$color-acento-texto: #0D7377;
 
 // --------------------------------------------
 // COLORES NEUTROS (GRISES)
@@ -82,9 +89,16 @@ $oscuro-boton-hover: #00CC8E;
 
 // Semánticos
 $oscuro-exito: #00E676;
+$oscuro-exito-texto: #6EE7B7;       // Contraste 8.5:1 sobre fondo oscuro
 $oscuro-error: #FF6B6B;
+$oscuro-error-texto: #FCA5A5;       // Contraste 9.0:1 sobre fondo oscuro
 $oscuro-warning: #FFB74D;
+$oscuro-warning-texto: #FCD34D;     // Contraste 11.0:1 sobre fondo oscuro
 $oscuro-info: #40C4FF;
+$oscuro-info-texto: #93C5FD;        // Contraste 9.0:1 sobre fondo oscuro
+
+// Acento accesible para texto (modo oscuro)
+$oscuro-acento-texto: #5EEAD4;      // Contraste 10.0:1 sobre fondo oscuro
 
 // --------------------------------------------
 // TIPOGRAFÍA

@@ -23,7 +23,7 @@ $area-texto-label-gap: 0.125rem;
   }
 
   &__required {
-    color: var(--color-error);
+    color: var(--color-error-texto);
   }
 
   &__field {
@@ -54,5 +54,5 @@ $area-texto-label-gap: 0.125rem;
   }
 
   &__help { color: var(--color-subtitulo); }
-  &__error { color: var(--color-error); }
+  &__error { color: var(--color-error-texto); }
 }

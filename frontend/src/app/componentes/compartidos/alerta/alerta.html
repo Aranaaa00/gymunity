@@ -14,7 +14,7 @@
       type="button"
       class="alerta__cerrar" 
       (click)="cerrar.emit()" 
-      aria-label="Cerrar alerta">
+      [attr.aria-label]="'Cerrar alerta: ' + mensaje()">
       <app-icono nombre="x" tamano="sm" />
     </button>
   }

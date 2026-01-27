@@ -142,7 +142,7 @@
 .perfil__creditos-valor {
   font-size: $texto-xs;
   font-weight: $font-weight-bold;
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 .perfil__creditos-texto {
@@ -168,8 +168,8 @@
   transition: border-color $transicion-rapida, color $transicion-rapida;
 
   &:hover {
-    border-color: var(--color-acento);
-    color: var(--color-acento);
+    border-color: var(--color-acento-texto);
+    color: var(--color-acento-texto);
   }
 
   @include respond-down(sm) {
@@ -256,8 +256,8 @@
 
 .perfil__logro--desbloqueado .perfil__logro-icono {
   background: transparent;
-  border-color: var(--color-acento);
-  color: var(--color-acento);
+  border-color: var(--color-acento-texto);
+  color: var(--color-acento-texto);
 }
 
 .perfil__logro-nombre {
@@ -319,7 +319,7 @@
   background: var(--color-fondo-secundario);
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-full;
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 .perfil__clase-info {
@@ -349,7 +349,7 @@
 }
 
 .perfil__clase-profesor {
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 .perfil__clase-estado {
@@ -370,12 +370,12 @@
 
 .perfil__clase-estado--pendiente {
   background: rgba($color-warning, 0.1);
-  color: #d97706;
+  color: $color-estrella;
 }
 
 .perfil__clase-estado--completada {
   background: rgba($color-botones, 0.1);
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 .perfil__clase-acciones {
@@ -418,7 +418,7 @@
 .perfil__btn-cancelar--sin-reembolso {
   background: rgba($color-warning, 0.1);
   border-color: rgba($color-warning, 0.3);
-  color: #d97706;
+  color: $color-estrella;
 
   &:hover {
     background: rgba($color-warning, 0.15);

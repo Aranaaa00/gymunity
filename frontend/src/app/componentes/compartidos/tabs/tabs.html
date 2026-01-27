@@ -1,4 +1,4 @@
-<nav class="tabs__lista" role="tablist">
+<nav class="tabs__lista" role="tablist" aria-label="Navegación por pestañas">
   @for (pestana of pestanas(); track $index) {
     <button
       type="button"
@@ -7,6 +7,7 @@
       [class.tabs__tab--activo]="tabActivo() === $index"
       [attr.aria-selected]="tabActivo() === $index"
       [attr.tabindex]="tabActivo() === $index ? 0 : -1"
+      [attr.aria-label]="'Ver sección ' + pestana + (tabActivo() === $index ? ', seleccionada actualmente' : '')"
       (click)="seleccionarTab($index)">
       {{ pestana }}
     </button>

@@ -6,7 +6,7 @@
   gap: $space-3;
   width: 100%;
   padding: $space-4;
-  background: white;
+  background: var(--color-fondo-secundario);
   border: $borde-medium solid var(--color-borde);
   border-left-width: 0.25rem;
   border-radius: $radio-md;
@@ -22,7 +22,7 @@
   margin: 0;
   font-size: $texto-sm;
   font-weight: $font-weight-medium;
-  color: var(--color-texto-oscuro, #1f2937);
+  color: $gris-900;
 }
 
 .alerta--success {

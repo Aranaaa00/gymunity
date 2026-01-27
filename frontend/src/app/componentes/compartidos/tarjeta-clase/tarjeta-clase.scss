@@ -44,7 +44,7 @@
 .tarjeta-clase__icono {
   flex-shrink: 0;
 
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 .tarjeta-clase__textos {
@@ -93,7 +93,7 @@
 
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
-  color: var(--color-texto-inverso);
+  color: var(--color-boton-texto);
 
   cursor: pointer;
 
@@ -121,5 +121,5 @@
 .tarjeta-clase__boton--reservada {
   background: rgba(52, 198, 160, 0.15);
 
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }

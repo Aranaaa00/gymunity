@@ -137,7 +137,7 @@ $estrella-color-activa: #facc15;
   margin: $space-1 0 0;
   font-size: $texto-s;
   font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 }
 
 // ----------------------------------------
@@ -304,7 +304,7 @@ $estrella-color-activa: #facc15;
 
 .modal-resenia__boton--primario {
   background: var(--color-boton);
-  color: $gris-50;
+  color: var(--color-boton-texto);
 
   &:hover:not(:disabled) {
     background: var(--color-boton-hover);

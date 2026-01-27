@@ -23,7 +23,7 @@ $selector-label-gap: 0.125rem;
   }
 
   &__required {
-    color: var(--color-error);
+    color: var(--color-error-texto);
   }
 
   &__wrapper {
@@ -74,7 +74,7 @@ $selector-label-gap: 0.125rem;
 
       &:checked {
         background-color: var(--color-boton);
-        color: $gris-50;
+        color: var(--color-boton-texto);
         font-weight: $font-weight-medium;
       }
     }
@@ -101,5 +101,5 @@ $selector-label-gap: 0.125rem;
   }
 
   &__help { color: var(--color-subtitulo); }
-  &__error { color: var(--color-error); }
+  &__error { color: var(--color-error-texto); }
 }

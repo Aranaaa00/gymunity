@@ -142,7 +142,7 @@ $modal-focus-offset: 0.125rem;
   color: var(--color-texto);
 
   strong {
-    color: var(--color-acento);
+    color: var(--color-acento-texto);
   }
 }
 
@@ -191,7 +191,7 @@ $modal-focus-offset: 0.125rem;
 .modal-reserva__boton--primario {
   background: var(--color-acento);
 
-  color: var(--color-texto-inverso);
+  color: var(--color-boton-texto);
 
   &:hover:not(:disabled) {
     background: var(--color-boton-hover);

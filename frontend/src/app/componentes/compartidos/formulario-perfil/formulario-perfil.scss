@@ -91,7 +91,7 @@
   background: none;
   border: none;
   border-radius: v.$radio-sm;
-  color: var(--color-error);
+  color: var(--color-error-texto);
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
 
@@ -151,7 +151,7 @@
   }
 
   .error {
-    color: var(--color-error);
+    color: var(--color-error-texto);
     font-size: v.$texto-sm;
   }
 }

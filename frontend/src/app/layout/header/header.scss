@@ -186,6 +186,18 @@ $header-buscador-max-width: 28rem;
   pointer-events: auto;
   transform: translateY(0);
 
+  // Botón ghost con mejor contraste sobre fondo oscuro del header
+  ::ng-deep .boton--ghost {
+    border-color: $gris-100;
+    color: $gris-100;
+
+    &:hover:not(:disabled) {
+      background: rgba($gris-100, 0.15);
+      border-color: $gris-100;
+      color: $gris-100;
+    }
+  }
+
   @include respond-down(md) {
     position: fixed;
     top: $space-2;

@@ -115,31 +115,31 @@
   margin: 0;
 
   font-size: $texto-s;
-  font-weight: $font-weight-medium;
-  color: var(--color-subtitulo);
+  font-weight: $font-weight-semibold;
+  color: $gris-700;
 }
 
 .gimnasio__estrella {
-  color: #f59e0b;
+  color: $color-estrella;
 }
 
 .gimnasio__boton-resenia {
   padding: $space-1 $space-2;
 
-  background: transparent;
+  background: var(--color-boton);
 
-  border: $borde-thin solid var(--color-acento);
+  border: none;
   border-radius: $radio-md;
 
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  color: $gris-900;
   cursor: pointer;
   transition: background-color $transicion-rapida, color $transicion-rapida;
 
   &:hover {
     background: var(--color-acento);
-    color: var(--color-texto-inverso);
+    color: var(--color-boton-texto);
   }
 
   &:focus-visible {

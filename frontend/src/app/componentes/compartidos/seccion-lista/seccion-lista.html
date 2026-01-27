@@ -1,14 +1,14 @@
 <section 
   class="seccion-lista"
   role="region"
-  [attr.aria-labelledby]="'seccion-titulo-' + titulo().replace(' ', '-')">
+  [attr.aria-labelledby]="'seccion-titulo-' + titulo().toLowerCase().replaceAll(' ', '-').replaceAll(':', '')">
   <header class="seccion-lista__header">
-    <h3 
+    <h2 
       class="seccion-lista__titulo"
-      [id]="'seccion-titulo-' + titulo().replace(' ', '-')"
+      [id]="'seccion-titulo-' + titulo().toLowerCase().replaceAll(' ', '-').replaceAll(':', '')"
       tabindex="0">
       {{ titulo() }}
-    </h3>
+    </h2>
     @if (mostrarVerMas()) {
       <button 
         type="button" 

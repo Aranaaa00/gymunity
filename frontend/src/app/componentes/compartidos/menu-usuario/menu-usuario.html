@@ -5,11 +5,11 @@
   (click)="toggleMenu()"
   [attr.aria-expanded]="desplegableAbierto()"
   aria-haspopup="true"
-  aria-label="Abrir menú de tu cuenta">
+  [attr.aria-label]="desplegableAbierto() ? 'Cerrar menú de tu cuenta' : 'Abrir menú de tu cuenta'">
   @if (avatarUsuario()) {
     <img 
       [src]="avatarUsuario()" 
-      [alt]="'Tu foto de perfil, ' + (usuario()?.nombreUsuario || 'usuario')"
+      [alt]="'Tu foto de perfil'"
       class="menu-usuario__avatar"
       decoding="async"
     />

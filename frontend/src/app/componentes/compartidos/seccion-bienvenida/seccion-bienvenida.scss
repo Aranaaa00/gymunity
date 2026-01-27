@@ -106,7 +106,7 @@
   font-weight: $font-weight-bold;
   font-style: italic;
   line-height: $line-height-tight;
-  color: var(--color-texto);
+  color: $gris-900;
   white-space: nowrap;
 
   span {
@@ -125,7 +125,7 @@
   font-size: $texto-md;
   font-weight: $font-weight-regular;
   line-height: $line-height-relaxed;
-  color: var(--color-subtitulo);
+  color: $gris-700;
 
   span {
     display: block;
@@ -147,8 +147,8 @@
   border: none;
   border-radius: $radio-full;
   font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: $gris-50;
+  font-weight: $font-weight-bold;
+  color: var(--color-boton-texto);
   cursor: pointer;
   box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.4);
   transition: background-color $transicion-rapida, box-shadow $transicion-rapida, transform $transicion-rapida;

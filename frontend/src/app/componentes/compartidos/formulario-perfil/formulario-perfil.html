@@ -134,7 +134,7 @@
             type="button"
             class="formulario-perfil__eliminar"
             (click)="eliminarRedSocial($index)"
-            aria-label="Eliminar red social">
+            [attr.aria-label]="'Eliminar tu enlace de ' + getRedSocialControl($index, 'plataforma').value + ' del perfil'">
             <app-icono nombre="x" />
           </button>
         </article>
@@ -147,6 +147,7 @@
       <app-boton
         tipo="button"
         variante="secondary"
+        ariaLabel="Añadir una nueva red social a tu perfil"
         (click)="agregarRedSocial()">
         <app-icono nombre="plus" />
         Añadir red social
@@ -158,11 +159,13 @@
     <app-boton
       tipo="button"
       variante="secondary"
+      ariaLabel="Cancelar edición del perfil y descartar los cambios"
       (click)="onCancelar()">
       Cancelar
     </app-boton>
     <app-boton
       tipo="submit"
+      ariaLabel="Guardar todos los cambios de tu perfil"
       [disabled]="perfilForm.invalid && perfilForm.touched">
       Guardar cambios
     </app-boton>

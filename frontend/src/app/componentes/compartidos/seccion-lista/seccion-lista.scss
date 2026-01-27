@@ -39,7 +39,7 @@
 
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
-  color: var(--color-acento);
+  color: var(--color-acento-texto);
 
   cursor: pointer;
 
@@ -51,7 +51,7 @@
   }
 
   &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
+    outline: $borde-medium solid var(--color-acento-texto);
     outline-offset: 2px;
   }
 }

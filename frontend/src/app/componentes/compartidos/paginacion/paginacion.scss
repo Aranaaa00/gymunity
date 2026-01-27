@@ -31,7 +31,7 @@
   &:hover:not(:disabled) {
     background: var(--color-boton);
     border-color: var(--color-boton);
-    color: $gris-50;
+    color: var(--color-boton-texto);
   }
 
   &:focus-visible {
@@ -50,7 +50,7 @@
   transition: color $transicion-rapida;
 
   .paginacion__btn:hover:not(:disabled) & {
-    color: $gris-50;
+    color: var(--color-boton-texto);
   }
 }
 

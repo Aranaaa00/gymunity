@@ -32,7 +32,7 @@ $boton-danger-darken-active: -15%;
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   white-space: nowrap;
-  color: var(--color-texto-claro);
+  color: var(--color-boton-texto);
   cursor: pointer;
   transition: 
     background $boton-transition-duration ease, 
@@ -69,7 +69,7 @@ $boton-danger-darken-active: -15%;
   &--primary {
     background: var(--color-boton);
     border-color: var(--color-boton);
-    color: var(--color-texto-claro);
+    color: var(--color-boton-texto);
   }
 
   &--secondary {
@@ -89,8 +89,8 @@ $boton-danger-darken-active: -15%;
 
   &--ghost {
     background: transparent;
-    border-color: var(--color-boton);
-    color: var(--color-boton);
+    border-color: var(--color-acento-texto);
+    color: var(--color-acento-texto);
 
     &:hover:not(:disabled) {
       background: rgba($color-botones, $boton-ghost-hover-bg-opacity);

@@ -4,7 +4,7 @@
   tabindex="0">
   <figure class="tarjeta-resenia__avatar" aria-hidden="true">
     @if (foto()) {
-      <img [src]="foto()" [alt]="'Foto de ' + nombre() + ', autor de esta reseña'" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
+      <img [src]="foto()" alt="" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
     } @else {
       <app-icono nombre="user" tamano="md" class="tarjeta-resenia__icono-default" />
     }
@@ -12,7 +12,7 @@
 
   <section class="tarjeta-resenia__contenido">
     <header class="tarjeta-resenia__header">
-      <h4 class="tarjeta-resenia__nombre">{{ nombre() }}</h4>
+      <h3 class="tarjeta-resenia__nombre">{{ nombre() }}</h3>
       @if (titulo()) {
         <strong class="tarjeta-resenia__titulo">{{ titulo() }}</strong>
       }

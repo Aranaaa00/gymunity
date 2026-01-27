@@ -2,7 +2,7 @@
   type="button" 
   class="theme-switcher" 
   (click)="alternar()" 
-  [attr.aria-label]="esOscuro() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+  [attr.aria-label]="esOscuro() ? 'Estás en modo oscuro, pulsa para cambiar a modo claro' : 'Estás en modo claro, pulsa para cambiar a modo oscuro'"
   [attr.aria-pressed]="esOscuro()">
   <app-icono [nombre]="esOscuro() ? 'sol' : 'luna'" tamano="md" />
 </button>
