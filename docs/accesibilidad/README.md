@@ -197,3 +197,38 @@ eliminarReserva(id: number) {
   }
 }
 ```
+
+---
+
+## 5. Análisis de estructura semántica
+
+### Landmarks HTML5 utilizados
+
+He usado las etiquetas HTML5 para estructurar bien la web y que los lectores de pantalla sepan dónde está cada cosa. Esto es lo que tengo en Gymunity:
+
+- [x] `<header>` - Cabecera del sitio: La uso en el layout para poner el logo, el buscador y los botones de login/registro. También dentro de las páginas (por ejemplo, en el perfil del usuario y en la página de gimnasio) para las secciones de título y acciones principales.
+
+- [x] `<nav>` - Menú de navegación: Lo uso en el header para los botones de autenticación (login/registro) y en el footer para las redes sociales. Cada uno tiene su `aria-label` para que se entienda qué tipo de navegación es.
+
+- [x] `<main>` - Contenido principal: Cada página tiene su propio `<main>` que engloba todo el contenido relevante (la lista de gimnasios, los detalles del gimnasio, el perfil, etc.). Es lo primero que encuentran los lectores de pantalla al saltar al contenido.
+
+- [x] `<article>` - Lo uso para las tarjetas de profesores, torneos, reseñas y toda la sección de contenido del gimnasio. También en el footer para la marca y el contacto, porque son bloques independientes de información.
+
+- [x] `<section>` - Usado para agrupar contenido relacionado: Lo uso para agrupar listas de profesores, torneos y reseñas dentro de la página del gimnasio. También para la descripción del gimnasio, y en el perfil para los logros y las clases del usuario.
+
+- [x] `<aside>` - Usado para contenido complementario: Lo tengo en el perfil del usuario para las acciones laterales (editar perfil, cerrar sesión), para los botones de acción de cada clase, y para el backdrop del menú móvil. También lo uso para marcar reseñas con un punto decorativo.
+
+- [x] `<footer>` - Pie de página: Está al final del layout con la info de contacto, redes sociales y el copyright.
+
+### Jerarquía de encabezados
+
+Esta es la estructura de encabezados **de la página de detalles de gimnasio** (gimnasio.html):
+
+```
+H1: [Nombre del gimnasio] (ej: "Box Vallecas")
+  H2: Profesores y artes marciales
+  H2: Torneos disponibles en [Nombre del gimnasio]
+  H2: Reseñas de otros alumnos
+```
+
+**Análisis:** La jerarquía está **correcta**, sin saltos de nivel. El H1 es el título principal (el nombre del gimnasio), y luego tengo tres H2 que dividen las secciones de profesores, torneos y reseñas. No he usado H3 porque dentro de cada lista los elementos (profesores, torneos, reseñas) son componentes visuales (tarjetas) que no necesitan encabezado propio, ya que se entienden por su contenido y estructura.
