@@ -1,6 +1,6 @@
-<section class="perfil">
-  <header class="perfil__cabecera">
-    <figure class="perfil__avatar">
+<section class="perfil" role="main" aria-labelledby="perfil-titulo">
+  <header class="perfil__cabecera" tabindex="0" [attr.aria-label]="'Perfil de ' + (usuario()?.nombreUsuario ?? 'Usuario') + ', ' + rolFormateado() + ' en ' + ciudad() + '. Tienes ' + creditosTexto() + ' créditos disponibles'">
+    <figure class="perfil__avatar" aria-hidden="true">
       @if (usuario()?.avatar) {
         <img [src]="usuario()!.avatar" [alt]="'Tu foto de perfil, ' + usuario()!.nombreUsuario" class="perfil__avatar-img" width="128" height="128" loading="eager" fetchpriority="high" decoding="async" />
       } @else {
@@ -8,8 +8,8 @@
       }
     </figure>
 
-    <hgroup class="perfil__info">
-      <h1 class="perfil__nombre">{{ usuario()?.nombreUsuario ?? 'Usuario' }}</h1>
+    <hgroup class="perfil__info" aria-hidden="true">
+      <h1 id="perfil-titulo" class="perfil__nombre">{{ usuario()?.nombreUsuario ?? 'Usuario' }}</h1>
       <p class="perfil__rol">{{ rolFormateado() }}</p>
       <p class="perfil__ubicacion">
         <app-icono nombre="map-pin" tamano="xs" />
@@ -17,12 +17,12 @@
       </p>
     </hgroup>
 
-    <aside class="perfil__acciones">
+    <aside class="perfil__acciones" aria-hidden="true">
       <span class="perfil__creditos">
         <strong class="perfil__creditos-valor">{{ creditosTexto() }}</strong>
         <span class="perfil__creditos-texto">créditos</span>
       </span>
-      <button type="button" class="perfil__btn-editar" (click)="irAConfiguracion()">
+      <button type="button" class="perfil__btn-editar" (click)="irAConfiguracion()" aria-label="Ir a configuración para editar tu perfil">
         <app-icono nombre="settings" tamano="sm" />
         Editar perfil
       </button>
@@ -32,17 +32,21 @@
   <app-tabs [pestanas]="pestanas" [tabActivo]="tabActivo()" (tabCambiado)="cambiarTab($event)">
     @switch (tabActivo()) {
       @case (0) {
-        <article class="perfil__logros">
+        <article class="perfil__logros" role="region" aria-label="Tus logros y medallas">
           @for (categoria of categorias; track categoria) {
-            <section class="perfil__categoria">
-              <h3 class="perfil__categoria-titulo">{{ categoria }}</h3>
-              <ul class="perfil__lista-logros">
+            <section class="perfil__categoria" role="region" [attr.aria-label]="'Categoría ' + categoria">
+              <h3 class="perfil__categoria-titulo" tabindex="0">{{ categoria }}</h3>
+              <ul class="perfil__lista-logros" role="list">
                 @for (logro of logrosPorCategoria().get(categoria); track logro.id) {
-                  <li class="perfil__logro" [class.perfil__logro--desbloqueado]="logro.desbloqueado">
-                    <span class="perfil__logro-icono">
+                  <li 
+                    class="perfil__logro" 
+                    [class.perfil__logro--desbloqueado]="logro.desbloqueado"
+                    tabindex="0"
+                    [attr.aria-label]="logro.nombre + (logro.desbloqueado ? ', logro conseguido' : ', logro bloqueado')">
+                    <span class="perfil__logro-icono" aria-hidden="true">
                       <app-icono [nombre]="obtenerIconoLogro(logro)" tamano="sm" />
                     </span>
-                    <span class="perfil__logro-nombre">{{ logro.nombre }}</span>
+                    <span class="perfil__logro-nombre" aria-hidden="true">{{ logro.nombre }}</span>
                   </li>
                 }
               </ul>

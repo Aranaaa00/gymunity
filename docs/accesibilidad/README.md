@@ -202,7 +202,7 @@ eliminarReserva(id: number) {
 
 ## 5. Análisis de estructura semántica
 
-### Landmarks HTML5 utilizados
+### 5.1 Landmarks HTML5 utilizados
 
 He usado las etiquetas HTML5 para estructurar bien la web y que los lectores de pantalla sepan dónde está cada cosa. Esto es lo que tengo en Gymunity:
 
@@ -235,7 +235,7 @@ H1: [Nombre del gimnasio] (ej: "Box Vallecas")
 
 ---
 
-## 6. Análisis de imágenes
+## 5.2 Análisis de imágenes
 
 He revisado todas las imágenes de la web, buscando si tienen texto alternativo y si este es realmente útil. Aquí está el desglose completo:
 
@@ -250,9 +250,9 @@ He corregido las 8 imágenes que tenían alt poco descriptivo, añadiendo contex
 
 ---
 
-## 7. Verificación manual
+## 6. Verificación manual
 
-### 7.1 Test de navegación por teclado
+### 6.1 Test de navegación por teclado
 
 He desconectado el ratón y navegado por toda la web usando solo el teclado para comprobar que todo es accesible. Aquí está el resultado:
 
@@ -268,3 +268,50 @@ He desconectado el ratón y navegado por toda la web usando solo el teclado para
 **Problemas encontrados:** Ninguno.
 
 **Soluciones aplicadas:** No ha sido necesario aplicar ninguna corrección porque todo ya funcionaba bien desde el principio. La web está diseñada con accesibilidad en mente desde el comienzo.
+
+### 6.2 Test con lector de pantalla
+
+He probado la web con NVDA en Chrome, Firefox y Edge, navegando con Tab y también usando el ratón para comparar qué anuncia el lector en cada caso. Aquí están los resultados:
+
+| Aspecto evaluado | Resultado | Observación |
+|------------------|-----------|-------------|
+| ¿Se entiende la estructura sin ver la pantalla? | ⚠️ | La estructura general se entiende, pero algunos elementos no dan suficiente contexto cuando se navega con Tab |
+| ¿Los landmarks se anuncian correctamente? | ✅ | El header, main, nav y footer se anuncian bien, NVDA dice "banner", "navegación", "principal" y "información de contenido" |
+| ¿Las imágenes tienen descripciones adecuadas? | ⚠️ | Con ratón sí, pero al navegar con Tab algunas imágenes no se enfocan o no leen el alt completo |
+| ¿Los enlaces tienen textos descriptivos? | ✅ | Los enlaces de redes sociales dicen "Síguenos en Instagram, abre en una nueva pestaña", que está muy bien |
+| ¿El componente multimedia es accesible? | ⚠️ | La galería funciona con teclado, pero al pasar con Tab no anuncia que es una galería ni cuántas fotos hay |
+
+**Principales problemas detectados:**
+
+1. **Reseñas sin contexto de "alumno":** Al pasar por encima de una reseña con el lector, solo dice el nombre del usuario (por ejemplo "Carlos García"), pero no indica que es un alumno que dejó una reseña. Con el ratón sí se entiende por el contexto visual, pero con teclado falta esa información.
+
+2. **Diferencia entre ratón y teclado:** El lector de pantalla funciona mejor cuando uso el ratón (modo exploración) que cuando navego solo con Tab. Algunos elementos que con ratón dan contexto completo, con Tab solo dicen el texto visible sin explicar qué son.
+
+3. **Tarjetas de reseña poco descriptivas:** Las tarjetas de reseña no anuncian que son reseñas ni quién las escribió de forma clara. Solo leen el contenido del texto sin decir "Reseña de [nombre]" o algo así.
+
+**Mejoras aplicadas:** Después de detectar estos problemas, he añadido `aria-label` descriptivos y `tabindex="0"` a todos los elementos importantes para que el lector anuncie:
+- "Reseña del alumno [nombre], valoración X de 5 estrellas: [texto]"
+- "Profesor [nombre], especialista en [disciplina]. Próxima clase: [fecha]"
+- "Galería de fotos con X imágenes. Mostrando foto Y de X"
+- "Torneo de [disciplina] el día [fecha]"
+- "Logro [nombre], conseguido/bloqueado"
+
+Ahora la experiencia con Tab es igual de descriptiva que usando el ratón.
+
+### 6.3 Verificación cross-browser
+
+He abierto Gymunity en los tres navegadores principales para comprobar que todo se ve y funciona igual en todos. Esto es importante porque cada navegador interpreta el CSS y JavaScript de forma ligeramente diferente, y lo que funciona en Chrome puede fallar en Firefox o Safari.
+
+| Navegador | Versión | Layout correcto | Multimedia funciona | Observaciones |
+|-----------|---------|-----------------|---------------------|---------------|
+| Chrome | 120+ | ✅ | ✅ | Sin problemas. |
+| Firefox | 121+ | ✅ | ✅ | Sin problemas. |
+| Edge | 120+ | ✅ | ✅ | Sin problemas. |
+
+**Capturas de pantalla:**
+
+| Navegador  | Captura |
+|------------|---------|
+| Chrome     | ![Gymunity en Chrome](./capturas/chrome.png) |
+| Firefox    | ![Gymunity en Firefox](./capturas/firefox.png) |
+| Safari     | ![Gymunity en Safari](./capturas/safari.png) |

@@ -1,11 +1,19 @@
-<section class="seccion-lista">
+<section 
+  class="seccion-lista"
+  role="region"
+  [attr.aria-labelledby]="'seccion-titulo-' + titulo().replace(' ', '-')">
   <header class="seccion-lista__header">
-    <h3 class="seccion-lista__titulo">{{ titulo() }}</h3>
+    <h3 
+      class="seccion-lista__titulo"
+      [id]="'seccion-titulo-' + titulo().replace(' ', '-')"
+      tabindex="0">
+      {{ titulo() }}
+    </h3>
     @if (mostrarVerMas()) {
       <button 
         type="button" 
         class="seccion-lista__ver-mas" 
-        [attr.aria-label]="'Ver más elementos de ' + titulo()"
+        [attr.aria-label]="'Ver más elementos de la sección ' + titulo()"
         (click)="onVerMas()"
       >
         {{ textoVerMas() }}

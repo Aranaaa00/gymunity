@@ -1,4 +1,7 @@
-<figure class="galeria">
+<figure 
+  class="galeria"
+  role="region"
+  [attr.aria-label]="'Galería de fotos con ' + imagenes().length + ' imágenes. Mostrando foto ' + (indiceActivo() + 1) + ' de ' + imagenes().length">
   <picture class="galeria__principal">
     <img 
       [src]="imagenPrincipal()" 
@@ -9,12 +12,13 @@
       width="800"
       height="450"
       decoding="async"
+      tabindex="0"
     />
     <figcaption class="galeria__caption">{{ captionActivo() }}</figcaption>
   </picture>
 
   @if (tieneMiniaturas()) {
-    <nav class="galeria__miniaturas" aria-label="Miniaturas de la galería de imágenes">
+    <nav class="galeria__miniaturas" [attr.aria-label]="'Seleccionar entre ' + imagenes().length + ' fotos de la galería'">
       @for (miniatura of miniaturas(); track trackByIndex($index)) {
         <button 
           type="button"

@@ -1,8 +1,9 @@
 <article 
   class="item-torneo"
-  [attr.aria-label]="disciplina() ? 'Campeonato de ' + disciplina() + ', ' + formatearFecha() : nombre() + ', ' + formatearFecha()">
+  [attr.aria-label]="disciplina() ? 'Torneo de ' + disciplina() + ' el día ' + formatearFecha() : nombre() + ' el día ' + formatearFecha()"
+  tabindex="0">
   <app-icono nombre="trophy" tamano="sm" class="item-torneo__icono" aria-hidden="true" />
-  <section class="item-torneo__info">
+  <section class="item-torneo__info" aria-hidden="true">
     <h4 class="item-torneo__nombre">
       @if (disciplina()) {
         Campeonato de <strong>{{ disciplina() }}</strong>

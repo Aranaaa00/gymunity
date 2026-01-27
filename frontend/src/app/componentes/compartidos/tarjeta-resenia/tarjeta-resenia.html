@@ -1,5 +1,8 @@
-<article class="tarjeta-resenia">
-  <figure class="tarjeta-resenia__avatar">
+<article 
+  class="tarjeta-resenia"
+  [attr.aria-label]="'Reseña del alumno ' + nombre() + (valoracion() > 0 ? ', valoración ' + valoracion() + ' de 5 estrellas' : '') + ': ' + texto()"
+  tabindex="0">
+  <figure class="tarjeta-resenia__avatar" aria-hidden="true">
     @if (foto()) {
       <img [src]="foto()" [alt]="'Foto de ' + nombre() + ', autor de esta reseña'" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
     } @else {
@@ -14,13 +17,13 @@
         <strong class="tarjeta-resenia__titulo">{{ titulo() }}</strong>
       }
       @if (valoracion() > 0) {
-        <span class="tarjeta-resenia__valoracion">
+        <span class="tarjeta-resenia__valoracion" aria-hidden="true">
           {{ valoracion() }}
           <app-icono nombre="star" tamano="xs" class="tarjeta-resenia__estrella" />
         </span>
       }
     </header>
-    <p class="tarjeta-resenia__texto">{{ texto() }}</p>
+    <p class="tarjeta-resenia__texto" aria-hidden="true">{{ texto() }}</p>
   </section>
 
   @if (mostrarCorazon()) {

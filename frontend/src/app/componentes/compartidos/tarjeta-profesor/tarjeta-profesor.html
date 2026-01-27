@@ -1,5 +1,8 @@
-<article class="tarjeta-profesor">
-  <figure class="tarjeta-profesor__avatar">
+<article 
+  class="tarjeta-profesor"
+  [attr.aria-label]="'Profesor ' + nombre() + ', especialista en ' + especialidad() + (proximaClase() ? '. Próxima clase: ' + proximaClase() : '')"
+  tabindex="0">
+  <figure class="tarjeta-profesor__avatar" aria-hidden="true">
     @if (foto()) {
       <img [src]="foto()" [alt]="'Profesor ' + nombre() + ', especialista en ' + especialidad()" class="tarjeta-profesor__imagen" loading="lazy" width="64" height="64" decoding="async" />
     } @else {
@@ -7,7 +10,7 @@
     }
   </figure>
 
-  <section class="tarjeta-profesor__info">
+  <section class="tarjeta-profesor__info" aria-hidden="true">
     <h4 class="tarjeta-profesor__nombre">{{ nombre() }}</h4>
     <p class="tarjeta-profesor__especialidad">{{ especialidad() }}</p>
     @if (proximaClase()) {
@@ -27,7 +30,7 @@
     (click)="onReservar()"
   >
     @if (reservada()) {
-      <app-icono nombre="check" tamano="sm" />
+      <app-icono nombre="check" tamano="sm" aria-hidden="true" />
     }
     {{ textoBoton() }}
   </button>

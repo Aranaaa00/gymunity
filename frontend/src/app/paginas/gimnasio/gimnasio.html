@@ -6,14 +6,20 @@
     </section>
   </main>
 } @else if (gimnasio()) {
-  <main class="gimnasio">
+  <main class="gimnasio" role="main" aria-labelledby="gimnasio-titulo">
     <article class="gimnasio__contenedor">
       <!-- HEADER: Título y valoración -->
       <header class="gimnasio__header">
         <hgroup class="gimnasio__titulos">
-          <h1 class="gimnasio__titulo">{{ gimnasio()!.nombre }}</h1>
+          <h1 
+            id="gimnasio-titulo"
+            class="gimnasio__titulo" 
+            tabindex="0"
+            [attr.aria-label]="gimnasio()!.nombre + (gimnasio()!.valoracionMedia !== null ? ', valoración ' + formatearValoracion() + ' de 5 estrellas' : ', sin valoraciones todavía')">
+            {{ gimnasio()!.nombre }}
+          </h1>
           @if (gimnasio()!.valoracionMedia !== null) {
-            <p class="gimnasio__valoracion">
+            <p class="gimnasio__valoracion" aria-hidden="true">
               {{ formatearValoracion() }}
               <app-icono nombre="star" tamano="xs" class="gimnasio__estrella" />
             </p>
@@ -52,7 +58,11 @@
       }
 
       <!-- DESCRIPCIÓN -->
-      <section class="gimnasio__descripcion">
+      <section 
+        class="gimnasio__descripcion"
+        role="region"
+        aria-label="Descripción del gimnasio"
+        tabindex="0">
         <p class="gimnasio__descripcion-texto">{{ gimnasio()!.descripcion }}</p>
       </section>
 
