@@ -331,8 +331,8 @@ Después de aplicar todas las correcciones de accesibilidad, he vuelto a ejecuta
 | TAW | 11 problemas, 29 advertencias | 0 problemas | -11 problemas |
 
 **Capturas de los resultados finales:**
-- [Lighthouse después de las correcciones](./capturas/lighthouse-despues.png)
-- [WAVE después de las correcciones](./capturas/wave-despues.png)
+- ![Lighthouse después de las correcciones](./capturas/lighthouse-despues.png)
+- ![WAVE después de las correcciones](./capturas/wave-despues.png)
 
 ### Checklist de conformidad WCAG 2.1 Nivel AA
 

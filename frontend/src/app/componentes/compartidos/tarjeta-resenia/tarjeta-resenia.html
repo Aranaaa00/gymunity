@@ -4,7 +4,7 @@
   tabindex="0">
   <figure class="tarjeta-resenia__avatar" aria-hidden="true">
     @if (foto()) {
-      <img [src]="foto()" alt="" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
+      <img [src]="foto()" [alt]="'Foto de perfil de ' + nombre()" class="tarjeta-resenia__imagen" loading="lazy" width="48" height="48" decoding="async" />
     } @else {
       <app-icono nombre="user" tamano="md" class="tarjeta-resenia__icono-default" />
     }

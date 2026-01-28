@@ -39,15 +39,15 @@
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>
 
-    <label class="formulario-login__recordar">
+    <div class="formulario-login__recordar">
       <input 
         type="checkbox" 
+        id="recordar-usuario"
         class="formulario-login__recordar-checkbox"
         [checked]="recordarUsuario()"
-        (change)="toggleRecordar()"
-        aria-label="Guardar mis datos para no tener que volver a escribirlos la próxima vez">
-      <span class="formulario-login__recordar-texto">Recordar mis datos</span>
-    </label>
+        (change)="toggleRecordar()">
+      <label for="recordar-usuario" class="formulario-login__recordar-texto">Recordar mis datos para iniciar sesión automáticamente</label>
+    </div>
     
     <section class="formulario-auth__submit">
       <app-boton tipo="submit" [disabled]="loginForm.invalid && loginForm.touched" [cargando]="cargando()">

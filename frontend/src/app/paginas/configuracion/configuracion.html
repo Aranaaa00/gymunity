@@ -38,15 +38,17 @@
             Cambiar
           </span>
         </button>
+        <label for="input-avatar" class="sr-only">Seleccionar imagen para tu foto de perfil</label>
         <input 
           #inputAvatar
+          id="input-avatar"
           type="file"
           accept="image/jpeg,image/png,image/webp"
           class="ajustes__avatar-input"
-          aria-label="Seleccionar archivo de imagen"
+          aria-describedby="avatar-formatos"
           (change)="onFileSelected($event)"
         />
-        <div class="ajustes__avatar-info">
+        <div id="avatar-formatos" class="ajustes__avatar-info">
           <span class="ajustes__avatar-formato">JPG, PNG o WebP</span>
           <span class="ajustes__avatar-size">Se optimiza automaticamente</span>
         </div>
@@ -247,13 +249,15 @@
           <p id="confirmar-titulo" class="ajustes__confirmar-texto">
             Escribe <strong>{{ textoConfirmacion() }}</strong> para confirmar
           </p>
+          <label for="input-confirmacion-eliminar" class="sr-only">Escribe tu nombre de usuario para confirmar la eliminación</label>
           <input 
             #inputConfirmacion
+            id="input-confirmacion-eliminar"
             type="text"
             class="ajustes__confirmar-input"
             placeholder="Tu nombre de usuario"
             autocomplete="off"
-            aria-label="Confirmar nombre de usuario para eliminar cuenta"
+            aria-required="true"
             aria-describedby="confirmar-titulo"
           />
           @if (errorEliminar()) {

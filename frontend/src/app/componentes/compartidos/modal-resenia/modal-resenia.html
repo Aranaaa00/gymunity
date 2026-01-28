@@ -46,18 +46,20 @@
         </span>
       </fieldset>
 
-      <label class="modal-resenia__campo">
-        <span class="modal-resenia__label">Tu comentario</span>
+      <div class="modal-resenia__campo">
+        <label for="textarea-comentario-resenia" class="sr-only">Tu comentario</label>
         <textarea
+          id="textarea-comentario-resenia"
           class="modal-resenia__textarea"
           placeholder="Cuéntanos tu experiencia en este gimnasio..."
           rows="4"
           maxlength="1000"
           [value]="comentario()"
           (input)="actualizarComentario($event)"
+          aria-describedby="contador-comentario-resenia"
         ></textarea>
-        <span class="modal-resenia__contador">{{ comentario().length }}/1000</span>
-      </label>
+        <span id="contador-comentario-resenia" class="modal-resenia__contador" aria-live="polite">{{ comentario().length }}/1000</span>
+      </div>
     </section>
 
     <footer class="modal-resenia__acciones">

@@ -17,8 +17,9 @@
     [placeholder]="placeholder()"
     [autocomplete]="autocomplete()"
     [formControl]="formControl()!"
-    [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
-    [attr.aria-invalid]="hasError()"
+    [attr.aria-required]="required() || null"
+    [attr.aria-describedby]="getAriaDescribedBy()"
+    [attr.aria-invalid]="hasError() || null"
   />
 } @else {
   <input 
@@ -34,8 +35,9 @@
     [required]="required()"
     [disabled]="disabled()"
     [value]="value()"
-    [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
-    [attr.aria-invalid]="hasError()"
+    [attr.aria-required]="required() || null"
+    [attr.aria-describedby]="getAriaDescribedBy()"
+    [attr.aria-invalid]="hasError() || null"
     (input)="onInput($event)"
     (blur)="onBlur()"
   />

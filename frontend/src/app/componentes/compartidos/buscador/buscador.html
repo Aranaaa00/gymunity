@@ -1,16 +1,19 @@
 <form class="buscador" [class.buscador--expandido]="expandido()" role="search" (ngSubmit)="onBuscar()">
+  <label for="buscador-gimnasios" class="sr-only">Buscar gimnasios</label>
   <input 
     #inputBusqueda
+    id="buscador-gimnasios"
     type="search" 
     class="buscador__input"
     [placeholder]="placeholder()" 
     [value]="valor()"
     (input)="onValorCambia(inputBusqueda.value)"
-    [attr.aria-label]="'Buscar gimnasios. ' + placeholder()"
+    aria-describedby="buscador-ayuda"
     name="busqueda"
     autocomplete="off"
   >
+  <span id="buscador-ayuda" class="sr-only">Escribe el nombre de un gimnasio o ciudad para buscar</span>
   <button type="submit" class="buscador__boton" aria-label="Iniciar búsqueda de gimnasios">
-    <app-icono nombre="buscar" tamano="md" />
+    <app-icono nombre="buscar" tamano="md" aria-hidden="true" />
   </button>
 </form>

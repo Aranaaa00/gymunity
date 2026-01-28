@@ -1,7 +1,8 @@
 <header class="gym-header" role="banner" aria-label="Cabecera principal de Gymunity">
   <section class="gym-header__top">
     <a class="gym-header__logo" routerLink="/" aria-label="Gymunity, volver a la página de inicio">
-      <picture>
+      <span class="sr-only">Gymunity - Ir a inicio</span>
+      <picture aria-hidden="true">
         <source media="(max-width: 480px)" srcset="assets/logo-blanco-small.webp">
         <source media="(max-width: 768px)" srcset="assets/logo-blanco-medium.webp">
         <img src="assets/logo-blanco-large.webp" alt="Logo de Gymunity" loading="eager" width="140" height="32" fetchpriority="high" decoding="async">

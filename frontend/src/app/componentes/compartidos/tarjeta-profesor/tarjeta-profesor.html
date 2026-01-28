@@ -4,7 +4,7 @@
   tabindex="0">
   <figure class="tarjeta-profesor__avatar" aria-hidden="true">
     @if (foto()) {
-      <img [src]="foto()" alt="" class="tarjeta-profesor__imagen" loading="lazy" width="64" height="64" decoding="async" />
+      <img [src]="foto()" [alt]="'Foto del profesor ' + nombre()" class="tarjeta-profesor__imagen" loading="lazy" width="64" height="64" decoding="async" />
     } @else {
       <app-icono nombre="user" tamano="lg" class="tarjeta-profesor__icono-default" />
     }

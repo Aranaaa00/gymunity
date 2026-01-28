@@ -106,8 +106,8 @@
         <article class="formulario-perfil__red" [formGroupName]="$index">
           <section class="formulario-perfil__red-campos">
             <section class="formulario-perfil__campo-selector">
-              <label>Plataforma</label>
-              <select [formControl]="getRedSocialControl($index, 'plataforma')">
+              <label [for]="'red-plataforma-' + $index" class="sr-only">Plataforma</label>
+              <select [id]="'red-plataforma-' + $index" [formControl]="getRedSocialControl($index, 'plataforma')">
                 @for (plataforma of plataformasDisponibles; track plataforma) {
                   <option [value]="plataforma">{{ plataforma }}</option>
                 }
