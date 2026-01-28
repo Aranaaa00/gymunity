@@ -142,6 +142,7 @@ $header-buscador-max-width: 28rem;
 // ============================================
 
 .gym-header__acciones {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -181,50 +182,79 @@ $header-buscador-max-width: 28rem;
   box-shadow: none;
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
-
-  // Botón ghost con mejor contraste sobre fondo oscuro del header
-  ::ng-deep .boton--ghost {
-    border-color: $gris-100;
-    color: $gris-100;
-
-    &:hover:not(:disabled) {
-      background: rgba($gris-100, 0.15);
-      border-color: $gris-100;
-      color: $gris-100;
-    }
-  }
+  transform: none;
 
   @include respond-down(md) {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: absolute;
+    top: calc(100% + $space-2);
+    right: 0;
     z-index: $z-overlay;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: $space-3;
-    min-width: 16rem;
-    padding: $space-4;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: $space-2;
+    min-width: 12rem;
+    padding: $space-3;
     background: $gris-50;
     border: $borde-thin solid $gris-200;
-    border-radius: $radio-lg;
+    border-radius: $radio-md;
     box-shadow: $shadow-lg;
     opacity: 0;
     pointer-events: none;
-    transform: translate(-50%, -50%) scale(0.95);
+    transform: translateY(-0.5rem);
     transition: opacity $header-menu-transition-duration ease,
                 transform $header-menu-transition-duration ease;
 
-    // En móvil, botones ghost con colores oscuros para contraste
-    ::ng-deep .boton--ghost {
-      border-color: $gris-600;
-      color: $gris-800;
+    [data-tema="oscuro"] & {
+      background: $oscuro-fondo-secundario;
+      border-color: $oscuro-borde;
+    }
 
-      &:hover:not(:disabled) {
-        background: $gris-100;
-        border-color: $gris-600;
-        color: $gris-800;
+    // Estilos específicos para botones dentro del dropdown móvil
+    .boton {
+      justify-content: center;
+      width: 100%;
+      
+      &.boton--primario {
+        color: $gris-50;
+        background: $color-acento-texto;
+        
+        &:hover {
+          background: $color-botones-hover;
+        }
+      }
+
+      &.boton--ghost {
+        color: $color-acento-texto;
+        background: transparent;
+        
+        &:hover {
+          color: $gris-50;
+          background: $color-acento-texto;
+        }
+      }
+    }
+
+    [data-tema="oscuro"] & {
+      .boton {
+        &.boton--primario {
+          color: $gris-900;
+          background: $oscuro-boton;
+          
+          &:hover {
+            background: $oscuro-boton-hover;
+          }
+        }
+
+        &.boton--ghost {
+          color: $gris-50;
+          background: transparent;
+          
+          &:hover {
+            color: $gris-900;
+            background: $oscuro-boton;
+          }
+        }
       }
     }
   }
@@ -232,28 +262,7 @@ $header-buscador-max-width: 28rem;
   &--abierto {
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-// Modo oscuro para el desplegable
-:host-context([data-theme='dark']) {
-  .gym-header__nav {
-    @include respond-down(md) {
-      background: $oscuro-fondo-secundario;
-      border-color: $oscuro-borde;
-
-      ::ng-deep .boton--ghost {
-        border-color: $oscuro-subtitulo;
-        color: $oscuro-texto;
-
-        &:hover:not(:disabled) {
-          background: rgba($oscuro-texto, 0.1);
-          border-color: $oscuro-subtitulo;
-          color: $oscuro-texto;
-        }
-      }
-    }
+    transform: translateY(0);
   }
 }
 

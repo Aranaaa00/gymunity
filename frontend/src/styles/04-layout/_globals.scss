@@ -8,6 +8,54 @@
 // ============================================
 
 // ============================================
+// HEADER - Estilos para botones en navegación
+// (Atraviesa encapsulación de componentes)
+// ============================================
+
+// Desktop: botones ghost sobre header oscuro - texto blanco para máximo contraste
+.gym-header__nav .boton.boton--ghost {
+  border-color: $gris-50;
+  color: $gris-50;
+
+  &:hover:not(:disabled) {
+    background: rgba($gris-50, 0.15);
+    border-color: $gris-50;
+    color: $gris-50;
+  }
+}
+
+// Dropdown móvil: botones ocupan ancho completo
+@media (max-width: 767px) {
+  .gym-header__nav .boton {
+    width: 100%;
+  }
+
+  // Modo claro móvil: fondo claro ($gris-50), texto verde oscuro para contraste
+  .gym-header__nav .boton.boton--ghost {
+    border-color: $color-acento-texto;
+    color: $color-acento-texto;
+
+    &:hover:not(:disabled) {
+      background: rgba($color-botones, 0.1);
+      border-color: $color-botones-hover;
+      color: $color-botones-hover;
+    }
+  }
+
+  // Modo oscuro móvil: fondo oscuro ($oscuro-fondo-secundario), texto blanco
+  [data-tema="oscuro"] .gym-header__nav .boton.boton--ghost {
+    border-color: $gris-50;
+    color: $gris-50;
+
+    &:hover:not(:disabled) {
+      background: rgba($oscuro-boton, 0.15);
+      border-color: $oscuro-boton;
+      color: $oscuro-boton;
+    }
+  }
+}
+
+// ============================================
 // TOOLTIP - Estilos Globales
 // ============================================
 
@@ -26,7 +74,7 @@
   color: $gris-50;
   text-align: center;
   white-space: normal;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   opacity: 0;
   transform: scale(0.95);
   transition: 
