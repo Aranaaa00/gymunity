@@ -39,6 +39,7 @@ export class Boton {
   readonly disabled = input<boolean>(false);
   readonly cargando = input<boolean>(false);
   readonly ariaLabel = input<string>('');
+  readonly tabIndex = input<number | null>(null);
 
   // ----------------------------------------
   // Propiedades computadas

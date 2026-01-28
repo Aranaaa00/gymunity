@@ -327,8 +327,8 @@ Después de aplicar todas las correcciones de accesibilidad, he vuelto a ejecuta
 | Herramienta | Antes | Después | Mejora |
 |-------------|-------|---------|--------|
 | Lighthouse | 91/100 | 100/100 | +9 puntos |
-| WAVE | 2 errores | 0 errores | -2 errores |
-| TAW | 11 problemas | 0 problemas | -11 problemas |
+| WAVE | 2 errores, 5 alertas | 0 errores, 3 alertas | -2 errores, -2 alertas |
+| TAW | 11 problemas, 29 advertencias | 0 problemas | -11 problemas |
 
 **Capturas de los resultados finales:**
 - [Lighthouse después de las correcciones](./capturas/lighthouse-despues.png)
@@ -358,3 +358,41 @@ He verificado uno por uno todos los criterios de éxito del nivel AA para asegur
 **Robusto:**
 - [x] 4.1.2 - Nombre, función, valor (ARIA cuando necesario)
 
+### Nivel de conformidad alcanzado
+
+**Nivel: AA**
+
+He conseguido cumplir el nivel AA de las WCAG 2.1 en todos los criterios básicos de accesibilidad. Todos los textos tienen contraste suficiente (4.5:1 o más), toda la web es navegable con teclado sin trampas, las imágenes tienen texto alternativo descriptivo, los formularios tienen etiquetas correctas y la estructura HTML es semántica con landmarks bien definidos. Los únicos aspectos que no aplican son los relacionados con contenido multimedia de audio/vídeo en directo, ya que Gymunity no incluye ese tipo de contenido, por lo que se consideran N/A y no afectan a la conformidad del nivel AA.
+---
+
+## 8. Conclusiones y reflexión
+
+### ¿Es accesible mi proyecto?
+
+Después de todo el trabajo de corrección, creo que Gymunity es un proyecto accesible, aunque con matices. No es perfecto, y probablemente nunca lo sea, pero ahora una persona ciega que use NVDA puede navegar por toda la web, buscar gimnasios, leer reseñas y reservar clases sin bloquearse. Lo más difícil fue cambiar mi mentalidad de "diseñar para lo que yo veo" a "diseñar para quien no ve nada", porque al principio pensaba que con poner alt en las imágenes ya estaba hecho, pero luego descubrí que faltaban labels en formularios, que los botones tenian mala semántica, y que el orden del tabulador no estaba de forma bien ordenada. Lo que más me sorprendió del lector de pantalla fue lo rápido que lee todo: si no estructuras bien el HTML con landmarks y encabezados, el usuario se pierde completamente porque no puede "escanear" la página visualmente como hacemos nosotros. Esta experiencia ha cambiado totalmente mi forma de pensar el diseño web: ahora primero pienso en la estructura semántica y la accesibilidad, y luego en cómo se ve bonito, no al revés.
+
+### Principales mejoras aplicadas
+
+1. **Añadir etiquetas `<label>` a todos los formularios** - Era crítico porque sin ellas, un usuario ciego no sabe qué tiene que escribir en cada campo. Ahora todos los inputs tienen su label asociado con `for` e `id`.
+
+2. **Cambiar divs por botones reales con semántica correcta** - Los `<div>` con `onClick` no son botones para los lectores de pantalla, así que cambiarlos a `<button type="button">` hizo que toda la navegación con teclado funcionara correctamente.
+
+3. **Implementar aria-labels en enlaces de iconos** - Los enlaces de redes sociales y los botones con solo iconos ahora dicen "Síguenos en Instagram" en vez de solo "enlace", dando contexto real a usuarios ciegos.
+
+4. **Mejorar el contraste de colores en modo claro y oscuro** - Subí el contraste de los textos del verde claro original a un verde oscuro (#0D7377) que cumple 4.5:1, porque antes había textos casi ilegibles para personas con baja visión.
+
+5. **Añadir mensajes de error descriptivos con sugerencias** - En vez de "Email inválido", ahora dice "Email inválido. Debe incluir @ y un dominio. Ejemplo: usuario@gmail.com", ayudando a personas con dificultades cognitivas a corregir sus errores.
+
+### Mejoras futuras
+
+Si tuviera más tiempo, implementaría estas funcionalidades con accesibilidad desde el inicio:
+
+1. **Sistema de puntuación para profesores** - Permitir a los alumnos puntuar a los profesores con estrellas (1-5) y dejar comentarios.
+
+2. **Funcionalidad de añadir amigos** - Lista de amigos con búsqueda accesible, notificaciones de solicitudes y estado de conexión (online/offline) anunciado por lectores de pantalla.
+
+3. **Poder dar me gusta o guardar reseñas** - Botones de "me gusta" y "guardar" con estados toggle accesibles, contador de likes visible para todos y colección de reseñas guardadas.
+
+### Aprendizaje clave
+
+La lección más importante es que la accesibilidad no es una lista de checkboxes para aprobar un examen, sino una forma de empatizar con personas que usan la web de manera completamente diferente a ti. Antes pensaba que era solo "poner alt en imágenes", pero ahora entiendo que es diseñar pensando primero en la estructura y el significado del contenido, y luego en el aspecto visual. La accesibilidad te hace mejor desarrollador porque te obliga a escribir HTML semántico, CSS ordenado y JavaScript que no rompa la navegación con teclado.

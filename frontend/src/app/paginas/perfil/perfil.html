@@ -17,13 +17,13 @@
       </p>
     </hgroup>
 
-    <aside class="perfil__acciones" aria-hidden="true">
-      <span class="perfil__creditos">
+    <aside class="perfil__acciones">
+      <span class="perfil__creditos" aria-hidden="true">
         <strong class="perfil__creditos-valor">{{ creditosTexto() }}</strong>
         <span class="perfil__creditos-texto">créditos</span>
       </span>
       <button type="button" class="perfil__btn-editar" (click)="irAConfiguracion()" aria-label="Ir a configuración para editar tu perfil">
-        <app-icono nombre="settings" tamano="sm" />
+        <app-icono nombre="settings" tamano="sm" aria-hidden="true" />
         Editar perfil
       </button>
     </aside>

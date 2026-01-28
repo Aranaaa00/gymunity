@@ -25,8 +25,8 @@
           role="navigation"
           aria-label="Opciones de acceso"
           [attr.aria-hidden]="!menuAbierto()">
-          <app-boton variante="ghost" tamano="sm" ariaLabel="Abrir formulario de inicio de sesión" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
-          <app-boton variante="primary" tamano="sm" ariaLabel="Abrir formulario de registro gratuito" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
+          <app-boton variante="ghost" tamano="sm" ariaLabel="Abrir formulario de inicio de sesión" [tabIndex]="menuAbierto() ? 0 : -1" (click)="ejecutarYCerrar(abrirLogin.emit.bind(abrirLogin))">Iniciar Sesión</app-boton>
+          <app-boton variante="primary" tamano="sm" ariaLabel="Abrir formulario de registro gratuito" [tabIndex]="menuAbierto() ? 0 : -1" (click)="ejecutarYCerrar(abrirRegistro.emit.bind(abrirRegistro))">Registrarse</app-boton>
         </nav>
       }
 
