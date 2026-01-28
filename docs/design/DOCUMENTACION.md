@@ -282,23 +282,23 @@ Los design tokens son las variables centralizadas que definen los valores base d
 
 ### Colores principales
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `$color-header` | #042A2B | Header y fondos oscuros |
-| `$color-fondo` | #EAF8F4 | Fondo general de la página |
-| `$color-botones` | #34C6A0 | Botones y acciones principales |
-| `$color-botones-hover` | #2AAE8E | Estado hover de botones |
+| Token | Valor HSL | Hex | Uso |
+|-------|-----------|-----|-----|
+| `$color-header` | hsl(181, 79%, 9%) | #042A2B | Header y fondos oscuros |
+| `$color-fondo` | hsl(160, 56%, 95%) | #EAF8F4 | Fondo general de la página |
+| `$color-botones` | hsl(162, 56%, 49%) | #34C6A0 | Botones y acciones principales |
+| `$color-botones-hover` | hsl(162, 61%, 42%) | #2AAE8E | Estado hover de botones |
 
 **¿Por qué estos colores?** La paleta verde transmite salud, energía y bienestar, conceptos asociados con gimnasios y fitness.
 
 ### Colores semánticos
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `$color-exito` | #2ECC71 | Mensajes de éxito |
-| `$color-error` | #E74C3C | Errores de validación |
-| `$color-warning` | #FFA726 | Advertencias |
-| `$color-info` | #1976D2 | Información neutral |
+| Token | Valor HSL | Hex | Uso |
+|-------|-----------|-----|-----|
+| `$color-exito` | hsl(145, 63%, 49%) | #2ECC71 | Mensajes de éxito |
+| `$color-error` | hsl(6, 78%, 57%) | #E74C3C | Errores de validación |
+| `$color-warning` | hsl(36, 100%, 57%) | #FFA726 | Advertencias |
+| `$color-info` | hsl(210, 79%, 46%) | #1976D2 | Información neutral |
 
 Son los colores universales que cualquier usuario reconoce.
 
@@ -306,11 +306,11 @@ Son los colores universales que cualquier usuario reconoce.
 
 Para el modo oscuro uso versiones más vibrantes de los colores para mantener el contraste:
 
-| Token | Valor | Diferencia |
-|-------|-------|------------|
-| `$oscuro-fondo` | #0F1C1C | Fondo oscuro con tinte verde |
-| `$oscuro-boton` | #00E5A0 | Verde neón, más brillante |
-| `$oscuro-texto` | #F0FAF7 | Texto claro |
+| Token | Valor HSL | Hex | Diferencia |
+|-------|-----------|-----|------------|
+| `$oscuro-fondo` | hsl(180, 29%, 8%) | #0F1C1C | Fondo oscuro con tinte verde |
+| `$oscuro-boton` | hsl(161, 100%, 45%) | #00E5A0 | Verde neón, más brillante |
+| `$oscuro-texto` | hsl(160, 47%, 97%) | #F0FAF7 | Texto claro |
 
 ### Tipografía
 

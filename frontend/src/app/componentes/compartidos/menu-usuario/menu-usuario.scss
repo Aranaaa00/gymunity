@@ -35,7 +35,7 @@ $avatar-size: 1.75rem;
   transition: background $transition;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba($gris-100, 0.15);
   }
 
   &:focus-visible {
@@ -62,13 +62,13 @@ $avatar-size: 1.75rem;
   flex-shrink: 0;
   width: $avatar-size;
   height: $avatar-size;
-  border: $borde-medium solid rgba(255, 255, 255, 0.3);
+  border: $borde-medium solid rgba($gris-100, 0.3);
   border-radius: $radio-full;
   object-fit: cover;
   transition: border-color $transition;
 
   .menu-usuario__boton:hover & {
-    border-color: rgba(255, 255, 255, 0.6);
+    border-color: rgba($gris-100, 0.6);
   }
 }
 

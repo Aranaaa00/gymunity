@@ -92,9 +92,9 @@
 
   padding: $space-1 $space-2;
 
-  background: rgba(52, 198, 160, 0.1);
+  background: rgba($color-botones, 0.1);
 
-  border: $borde-thin solid rgba(52, 198, 160, 0.2);
+  border: $borde-thin solid rgba($color-botones, 0.2);
   border-radius: $radio-md;
 
   @include respond-down(md) {
@@ -168,14 +168,14 @@
 
   padding: 0.125rem;
 
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba($gris-100, 0.25);
 
   border-radius: $radio-full;
 
   transition: background-color 0.15s ease;
 
   .busqueda__filtro-chip:hover & {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba($gris-100, 0.4);
   }
 }
 

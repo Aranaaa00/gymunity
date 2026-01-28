@@ -144,18 +144,18 @@
     </div>
     <div class="ajustes__seccion-contenido">
       <h2 id="titulo-seguridad" class="ajustes__seccion-titulo">Seguridad</h2>
-      <p class="ajustes__seccion-desc">Cambia tu contrasena periodicamente</p>
+      <p class="ajustes__seccion-desc">Cambia tu contraseña periódicamente</p>
       
       <form 
         class="ajustes__form" 
         [formGroup]="passwordForm" 
         (ngSubmit)="cambiarContrasenia()"
-        aria-label="Formulario de cambio de contrasena">
+        aria-label="Formulario de cambio de contraseña">
         
         <app-campo-formulario
-          label="Contrasena actual"
+          label="Contraseña actual"
           type="password"
-          placeholder="Tu contrasena actual"
+          placeholder="Tu contraseña actual"
           inputId="config-password-actual"
           name="contraseniaActual"
           autocomplete="current-password"
@@ -166,9 +166,9 @@
 
         <article class="ajustes__password-grupo">
           <app-campo-formulario
-            label="Nueva contrasena"
+            label="Nueva contraseña"
             type="password"
-            placeholder="Minimo 6 caracteres"
+            placeholder="Mínimo 6 caracteres"
             inputId="config-password-nueva"
             name="contraseniaNueva"
             autocomplete="new-password"
@@ -196,9 +196,9 @@
 
         <article class="ajustes__password-grupo">
           <app-campo-formulario
-            label="Repetir contrasena"
+            label="Repetir contraseña"
             type="password"
-            placeholder="Repite la nueva contrasena"
+            placeholder="Repite la nueva contraseña"
             inputId="config-password-confirmar"
             name="confirmarContrasenia"
             autocomplete="new-password"
@@ -214,8 +214,8 @@
           variante="primary"
           [disabled]="!puedeGuardarPassword()"
           [cargando]="guardandoPassword()"
-          aria-label="Guardar nueva contrasena">
-          Cambiar contrasena
+          aria-label="Guardar nueva contraseña">
+          Cambiar contraseña
         </app-boton>
       </form>
     </div>

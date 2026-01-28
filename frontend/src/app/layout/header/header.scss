@@ -5,12 +5,9 @@
 // VARIABLES LOCALES
 // ============================================
 
-// Usar transición de tema global para sincronización
 $header-menu-transition-duration: 0.2s;
 $header-logo-height-mobile: 2rem;
 $header-logo-height-desktop: 2.5rem;
-$header-nav-min-width: 12rem;
-$header-nav-translate-y: -0.5rem;
 $header-backdrop-opacity: 0.4;
 $header-buscador-max-width: 28rem;
 
@@ -75,7 +72,7 @@ $header-buscador-max-width: 28rem;
 
   &:focus-visible {
     opacity: 0.8;
-    outline: $borde-medium solid var(--color-buscador-borde);
+    outline: $borde-medium solid var(--color-boton);
     outline-offset: $space-1;
     border-radius: $radio-sm;
   }
@@ -128,7 +125,7 @@ $header-buscador-max-width: 28rem;
 
   border-top: $borde-thin solid var(--color-borde);
 
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px rgba($color-negro, 0.1);
 
   @include respond-down(md) {
     display: flex;
@@ -200,28 +197,63 @@ $header-buscador-max-width: 28rem;
 
   @include respond-down(md) {
     position: fixed;
-    top: $space-2;
-    right: $space-2;
+    top: 50%;
+    left: 50%;
     z-index: $z-overlay;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    min-width: $header-nav-min-width;
-    padding: $space-3;
-    background: var(--color-fondo);
-    border: $borde-thin solid var(--color-borde);
-    border-radius: $radio-md;
+    justify-content: center;
+    align-items: center;
+    gap: $space-3;
+    min-width: 16rem;
+    padding: $space-4;
+    background: $gris-50;
+    border: $borde-thin solid $gris-200;
+    border-radius: $radio-lg;
     box-shadow: $shadow-lg;
     opacity: 0;
     pointer-events: none;
-    transform: translateY($header-nav-translate-y);
-    transition: opacity $header-menu-transition-duration ease, transform $header-menu-transition-duration ease;
+    transform: translate(-50%, -50%) scale(0.95);
+    transition: opacity $header-menu-transition-duration ease,
+                transform $header-menu-transition-duration ease;
+
+    // En móvil, botones ghost con colores oscuros para contraste
+    ::ng-deep .boton--ghost {
+      border-color: $gris-600;
+      color: $gris-800;
+
+      &:hover:not(:disabled) {
+        background: $gris-100;
+        border-color: $gris-600;
+        color: $gris-800;
+      }
+    }
   }
 
   &--abierto {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+// Modo oscuro para el desplegable
+:host-context([data-theme='dark']) {
+  .gym-header__nav {
+    @include respond-down(md) {
+      background: $oscuro-fondo-secundario;
+      border-color: $oscuro-borde;
+
+      ::ng-deep .boton--ghost {
+        border-color: $oscuro-subtitulo;
+        color: $oscuro-texto;
+
+        &:hover:not(:disabled) {
+          background: rgba($oscuro-texto, 0.1);
+          border-color: $oscuro-subtitulo;
+          color: $oscuro-texto;
+        }
+      }
+    }
   }
 }
 
@@ -267,7 +299,7 @@ $header-buscador-max-width: 28rem;
   inset: 0;
   z-index: $z-dropdown;
   display: none;
-  background: rgba(0, 0, 0, $header-backdrop-opacity);
+  background: rgba($color-negro, $header-backdrop-opacity);
   opacity: 0;
   cursor: pointer;
   pointer-events: none;

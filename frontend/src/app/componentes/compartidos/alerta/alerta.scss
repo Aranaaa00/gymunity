@@ -22,27 +22,27 @@
   margin: 0;
   font-size: $texto-sm;
   font-weight: $font-weight-medium;
-  color: $gris-900;
+  color: var(--color-texto);
 }
 
 .alerta--success {
   border-left-color: var(--color-exito);
-  background: rgba(16, 185, 129, 0.05);
+  background: var(--color-alerta-success-bg);
 }
 
 .alerta--error {
   border-left-color: var(--color-peligro);
-  background: rgba(239, 68, 68, 0.05);
+  background: var(--color-alerta-error-bg);
 }
 
 .alerta--warning {
   border-left-color: var(--color-advertencia);
-  background: rgba(245, 158, 11, 0.05);
+  background: var(--color-alerta-warning-bg);
 }
 
 .alerta--info {
   border-left-color: var(--color-info);
-  background: rgba(59, 130, 246, 0.05);
+  background: var(--color-alerta-info-bg);
 }
 
 .alerta__cerrar {
@@ -58,6 +58,6 @@
   transition: background 0.2s ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba($gris-800, 0.1);
   }
 }

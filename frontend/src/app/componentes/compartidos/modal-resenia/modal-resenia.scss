@@ -13,7 +13,6 @@ $modal-max-width: 28rem;
 $modal-backdrop-blur: 0.25rem;
 $modal-animation-duration: 0.2s;
 $estrella-size: 2.25rem;
-$estrella-color-activa: #facc15;
 
 // ----------------------------------------
 // Overlay
@@ -27,7 +26,7 @@ $estrella-color-activa: #facc15;
   align-items: center;
   justify-content: center;
   padding: $space-4;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba($color-negro, 0.5);
   backdrop-filter: blur($modal-backdrop-blur);
   animation: modal-fade $modal-animation-duration ease-out;
 
@@ -205,10 +204,10 @@ $estrella-color-activa: #facc15;
 }
 
 .modal-resenia__estrella--activa {
-  color: $estrella-color-activa;
+  color: var(--color-estrella);
 
   svg {
-    fill: $estrella-color-activa;
+    fill: var(--color-estrella);
   }
 }
 

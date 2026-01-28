@@ -157,7 +157,7 @@ $inicio-link-gap: 0.25rem;
 }
 
 .inicio__nombre {
-  color: $gris-900;
+  color: var(--color-acento-texto);
 }
 
 .inicio__mensaje {

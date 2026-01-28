@@ -12,93 +12,120 @@ $max-width-contenido: 64rem;
 // COLORES PRINCIPALES
 // --------------------------------------------
 
-$color-header: #042A2B;
-$color-hover-header: #063B3D;
-$color-fondo: #EAF8F4;
-$color-buscador-bg: #FAFCFB;
-$color-buscador-hover: #E8F5F1;
-$color-buscador-focus: #F5FAF8;
-$color-buscador-borde: #34C6A0;
+$color-header: hsl(181, 79%, 9%);           // #042A2B
+$color-fondo: hsl(160, 56%, 95%);           // #EAF8F4
 
-$color-botones: #34C6A0;
-$color-botones-hover: #2AAE8E;
-$color-botones-active: #0C5649;
+$color-botones: hsl(162, 56%, 49%);         // #34C6A0
+$color-botones-hover: hsl(162, 61%, 42%);   // #2AAE8E
+$color-botones-active: hsl(166, 77%, 19%);  // #0C5649
 
 // --------------------------------------------
 // COLORES SEMÁNTICOS
 // --------------------------------------------
 
-$color-exito: #2ECC71;
-$color-exito-texto: #047857;
-$color-error: #E74C3C;
-$color-error-texto: #B91C1C;
-$color-warning: #FFA726;
-$color-warning-texto: #B45309;
-$color-info: #1976D2;
-$color-info-texto: #1E40AF;
-$color-estrella: #B45309;
+$color-exito: hsl(145, 63%, 49%);           // #2ECC71
+$color-exito-texto: hsl(160, 90%, 18%);     // #047857
+$color-exito-claro: hsl(132, 64%, 64%);     // #69db7c
+$color-error: hsl(6, 78%, 57%);             // #E74C3C
+$color-error-texto: hsl(0, 74%, 42%);       // #B91C1C
+$color-error-claro: hsl(0, 100%, 71%);      // #ff6b6b
+$color-warning: hsl(36, 100%, 57%);         // #FFA726
+$color-warning-texto: hsl(28, 92%, 37%);    // #B45309
+$color-warning-claro: hsl(48, 100%, 61%);   // #ffd43b
+$color-info: hsl(210, 79%, 46%);            // #1976D2
+$color-info-texto: hsl(224, 76%, 48%);      // #1E40AF
+$color-info-claro: hsl(211, 96%, 72%);      // #74c0fc
+$color-estrella: hsl(28, 92%, 37%);         // #B45309
 
-$color-acento-texto: #0D7377;
+$color-acento-texto: hsl(182, 81%, 26%);    // #0D7377
 
 // --------------------------------------------
 // COLORES NEUTROS (GRISES)
 // --------------------------------------------
 
-$gris-50: #F9FAFB;
-$gris-100: #F3F4F6;
-$gris-200: #E5E7EB;
-$gris-300: #D1D5DB;
-$gris-400: #9CA3AF;
-$gris-500: #6B7280;
-$gris-600: #4B5563;
-$gris-700: #374151;
-$gris-800: #1F2937;
-$gris-900: #111827;
+$gris-50: hsl(210, 20%, 98%);               // #F9FAFB
+$gris-100: hsl(220, 14%, 96%);              // #F3F4F6
+$gris-200: hsl(220, 13%, 91%);              // #E5E7EB
+$gris-300: hsl(216, 12%, 84%);              // #D1D5DB
+$gris-400: hsl(218, 11%, 65%);              // #9CA3AF
+$gris-600: hsl(215, 14%, 34%);              // #4B5563
+$gris-800: hsl(217, 19%, 17%);              // #1F2937
+$gris-900: hsl(222, 47%, 11%);              // #111827
 
 // --------------------------------------------
 // COLORES PARA TEXTO
 // --------------------------------------------
 
 $color-text: $gris-800;
-$color-text-claro: #F7FAFC;
-$color-text-header: #F0FAF7;
-$color-subtitulo: #4A5568;
+$color-text-claro: hsl(200, 47%, 97%);      // #F7FAFC
+$color-subtitulo: hsl(215, 14%, 34%);       // #4A5568
 
 // Color para hover suave en menús
-$color-hover-suave: #E8F8F5;
+$color-hover-suave: hsl(167, 53%, 94%);     // #E8F8F5
 
 // --------------------------------------------
 // COLORES MODO OSCURO
 // --------------------------------------------
 
 // Fondos
-$oscuro-fondo: #0F1C1C;
-$oscuro-fondo-secundario: #1A2D2D;
-$oscuro-header: #081414;
+$oscuro-fondo: hsl(180, 29%, 8%);           // #0F1C1C
+$oscuro-fondo-secundario: hsl(180, 26%, 14%); // #1A2D2D
+$oscuro-header: hsl(180, 38%, 5%);          // #081414
 
 // Textos
-$oscuro-texto: #F0FAF7;
-$oscuro-subtitulo: #8EC5B5;
+$oscuro-texto: hsl(160, 47%, 97%);          // #F0FAF7
+$oscuro-subtitulo: hsl(160, 33%, 66%);      // #8EC5B5
 
 // Bordes
-$oscuro-borde: #2D4A4A;
+$oscuro-borde: hsl(180, 25%, 23%);          // #2D4A4A
 
 // Acentos
-$oscuro-boton: #00E5A0;
-$oscuro-boton-hover: #00CC8E;
+$oscuro-boton: hsl(161, 100%, 45%);         // #00E5A0
+$oscuro-boton-hover: hsl(161, 100%, 40%);   // #00CC8E
 
 // Semánticos
-$oscuro-exito: #00E676;
-$oscuro-exito-texto: #6EE7B7;       // Contraste 8.5:1 sobre fondo oscuro
-$oscuro-error: #FF6B6B;
-$oscuro-error-texto: #FCA5A5;       // Contraste 9.0:1 sobre fondo oscuro
-$oscuro-warning: #FFB74D;
-$oscuro-warning-texto: #FCD34D;     // Contraste 11.0:1 sobre fondo oscuro
-$oscuro-info: #40C4FF;
-$oscuro-info-texto: #93C5FD;        // Contraste 9.0:1 sobre fondo oscuro
+$oscuro-exito: hsl(151, 100%, 45%);         // #00E676
+$oscuro-exito-texto: hsl(152, 68%, 68%);    // #6EE7B7
+$oscuro-exito-bg: hsl(162, 88%, 16%);       // #064e3b
+$oscuro-error: hsl(0, 100%, 71%);           // #FF6B6B
+$oscuro-error-texto: hsl(0, 93%, 82%);      // #FCA5A5
+$oscuro-error-bg: hsl(0, 62%, 31%);         // #7f1d1d
+$oscuro-warning: hsl(33, 100%, 65%);        // #FFB74D
+$oscuro-warning-texto: hsl(48, 95%, 64%);   // #FCD34D
+$oscuro-warning-bg: hsl(28, 80%, 26%);      // #78350f
+$oscuro-info: hsl(199, 100%, 63%);          // #40C4FF
+$oscuro-info-texto: hsl(213, 96%, 78%);     // #93C5FD
+$oscuro-info-bg: hsl(224, 64%, 33%);        // #1e3a8a
 
 // Acento accesible para texto (modo oscuro)
-$oscuro-acento-texto: #5EEAD4;      // Contraste 10.0:1 sobre fondo oscuro
+$oscuro-acento-texto: hsl(168, 76%, 64%);   // #5EEAD4
+
+// Colores de alerta modo claro
+$color-alerta-success-bg: hsl(152, 81%, 96%);   // #ecfdf5
+$color-alerta-success-border: hsl(160, 84%, 39%); // #10b981
+$color-alerta-success-text: hsl(163, 88%, 20%); // #065f46
+$color-alerta-error-bg: hsl(0, 86%, 97%);       // #fef2f2
+$color-alerta-error-border: hsl(0, 84%, 60%);   // #ef4444
+$color-alerta-error-text: hsl(0, 74%, 35%);     // #991b1b
+$color-alerta-warning-bg: hsl(48, 100%, 96%);   // #fffbeb
+$color-alerta-warning-border: hsl(38, 92%, 50%); // #f59e0b
+$color-alerta-warning-text: hsl(26, 83%, 28%);  // #92400e
+$color-alerta-info-bg: hsl(214, 100%, 97%);     // #eff6ff
+$color-alerta-info-border: hsl(217, 91%, 60%);  // #3b82f6
+$color-alerta-info-text: hsl(224, 76%, 48%);    // #1e40af
+
+// Colores de alerta modo oscuro
+$oscuro-alerta-success-text: hsl(156, 72%, 74%); // #a7f3d0
+$oscuro-alerta-error-text: hsl(0, 93%, 82%);    // #fca5a5
+$oscuro-alerta-warning-text: hsl(48, 95%, 64%); // #fcd34d
+$oscuro-alerta-info-text: hsl(213, 96%, 78%);   // #93c5fd
+
+// Colores de menú
+$color-menu-hover-bg: hsl(180, 25%, 16%);       // #1F3333
+$oscuro-boton-rgba: 0, 229, 160;                // Para uso en rgba()
+$color-blanco: hsl(0, 0%, 100%);                // #ffffff
+$oscuro-estrella: hsl(45, 97%, 56%);            // #FBBF24
+$color-negro: hsl(0, 0%, 0%);                   // #000000
 
 // --------------------------------------------
 // TIPOGRAFÍA
@@ -118,12 +145,8 @@ $texto-l: 2rem;
 $texto-xl: 2.5rem;
 $texto-2xl: 3rem;
 $texto-3xl: 3.5rem;
-$texto-4xl: 4rem;
-$texto-5xl: 5rem;
 
 // Pesos tipográficos
-$font-weight-thin: 100;
-$font-weight-light: 300;
 $font-weight-regular: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
@@ -141,35 +164,29 @@ $line-height-relaxed: 1.75;
 
 $space-1: 0.5rem;
 $space-2: 1rem;
-$space-2-5: 1.25rem;
 $space-3: 1.5rem;
 $space-4: 2rem;
 $space-5: 2.5rem;
 $space-6: 3rem;
-$space-7: 3.5rem;
 $space-8: 4rem;
-$space-9: 4.5rem;
 $space-10: 5rem;
-$space-11: 5.5rem;
-$space-12: 6rem;
 
 // --------------------------------------------
 // SOMBRAS
 // --------------------------------------------
 
 // Sombras generales
-$shadow-sm: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
-$shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.16);
-$shadow-lg: 0 4px 16px 0 rgba(0, 0, 0, 0.24);
-$shadow-buscador: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+$shadow-sm: 0 1px 4px 0 hsla(0, 0%, 0%, 0.08);
+$shadow-md: 0 2px 8px 0 hsla(0, 0%, 0%, 0.16);
+$shadow-lg: 0 4px 16px 0 hsla(0, 0%, 0%, 0.24);
+$shadow-buscador: 0 2px 6px 0 hsla(0, 0%, 0%, 0.1);
 
 // Sombras de botones
-$shadow-boton: 0 4px 12px 0 rgba(52, 198, 160, 0.4);
-$shadow-boton-hover: 0 6px 16px 0 rgba(42, 174, 142, 0.5);
+$shadow-boton: 0 4px 12px 0 hsla(162, 56%, 49%, 0.4);
 
 // Sombras modo oscuro
-$oscuro-shadow-boton: 0 4px 20px 0 rgba(0, 229, 160, 0.35);
-$oscuro-shadow-lg: 0 4px 16px 0 rgba(0, 229, 160, 0.2);
+$oscuro-shadow-boton: 0 4px 20px 0 hsla(161, 100%, 45%, 0.35);
+$oscuro-shadow-lg: 0 4px 16px 0 hsla(161, 100%, 45%, 0.2);
 
 // --------------------------------------------
 // BORDES Y RADIOS
@@ -177,7 +194,6 @@ $oscuro-shadow-lg: 0 4px 16px 0 rgba(0, 229, 160, 0.2);
 
 $borde-thin: 1px;
 $borde-medium: 2px;
-$borde-thick: 4px;
 
 $radio-sm: 2px;
 $radio-md: 4px;
@@ -209,8 +225,7 @@ $z-modal: 5;
 // --------------------------------------------
 
 $transicion-rapida: 0.15s ease;
-$transicion-estandar: 0.3s ease;
-$transicion-lenta: 0.5s ease;
 
 // Transición para cambio de tema (sincronizada en toda la app)
 $transicion-tema: 0.4s ease-in-out;
+

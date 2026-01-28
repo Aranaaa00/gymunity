@@ -109,7 +109,7 @@ $card-container-breakpoint: 20rem;
   line-height: $line-height-normal;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: $gris-600;
+  color: var(--color-subtitulo);
 }
 
 .card-rating {
@@ -119,12 +119,12 @@ $card-container-breakpoint: 20rem;
   margin-top: $space-1;
   font-size: $texto-xs;
   font-weight: $font-weight-semibold;
-  color: $gris-700;
+  color: var(--color-texto);
 }
 
 .card-rating--con-estrella {
   lucide-icon {
-    color: $color-estrella;
+    color: var(--color-estrella);
   }
 }
 

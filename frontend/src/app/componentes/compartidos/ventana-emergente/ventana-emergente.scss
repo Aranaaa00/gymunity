@@ -27,7 +27,7 @@ $modal-slide-scale: 0.98;
   align-items: center;
   justify-content: center;
   padding: $space-2;
-  background: rgba(0, 0, 0, $modal-backdrop-opacity);
+  background: rgba($color-negro, $modal-backdrop-opacity);
   backdrop-filter: blur($modal-backdrop-blur);
   animation: modal-fade $modal-fade-duration ease-out;
 }

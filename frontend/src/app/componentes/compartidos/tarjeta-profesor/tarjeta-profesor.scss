@@ -170,9 +170,9 @@
 }
 
 .tarjeta-profesor__boton--reservada {
-  background: rgba(52, 198, 160, 0.2);
+  background: rgba($color-botones, 0.2);
 
-  color: $gris-800;
+  color: var(--color-texto);
 }
 
 // ============================================

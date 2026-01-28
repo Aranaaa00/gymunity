@@ -106,7 +106,7 @@
   font-weight: $font-weight-bold;
   font-style: italic;
   line-height: $line-height-tight;
-  color: $gris-900;
+  color: var(--color-titulo);
   white-space: nowrap;
 
   span {
@@ -125,7 +125,7 @@
   font-size: $texto-md;
   font-weight: $font-weight-regular;
   line-height: $line-height-relaxed;
-  color: $gris-700;
+  color: var(--color-subtitulo);
 
   span {
     display: block;

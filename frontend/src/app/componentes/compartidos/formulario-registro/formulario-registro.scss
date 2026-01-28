@@ -46,19 +46,19 @@ $barra-transition-duration: 0.3s;
 }
 
 .formulario-registro__fuerza-progreso--debil {
-  background: linear-gradient(90deg, var(--color-error), #ff6b6b);
+  background: linear-gradient(90deg, var(--color-error), $color-error-claro);
 }
 
 .formulario-registro__fuerza-progreso--media {
-  background: linear-gradient(90deg, var(--color-warning), #ffd43b);
+  background: linear-gradient(90deg, var(--color-warning), $color-warning-claro);
 }
 
 .formulario-registro__fuerza-progreso--fuerte {
-  background: linear-gradient(90deg, var(--color-info), #74c0fc);
+  background: linear-gradient(90deg, var(--color-info), $color-info-claro);
 }
 
 .formulario-registro__fuerza-progreso--muy-fuerte {
-  background: linear-gradient(90deg, var(--color-exito), #69db7c);
+  background: linear-gradient(90deg, var(--color-exito), $color-exito-claro);
 }
 
 .formulario-registro__fuerza-mensaje {

@@ -30,7 +30,7 @@
   --color-exito-texto: #{$color-exito-texto};
   --color-error: #{$color-error};
   --color-error-texto: #{$color-error-texto};
-  --color-error-fondo: #fef2f2;
+  --color-error-fondo: #{$color-alerta-error-bg};
   --color-warning: #{$color-warning};
   --color-warning-texto: #{$color-warning-texto};
   --color-info: #{$color-info};
@@ -40,24 +40,24 @@
   --shadow-glow: #{$shadow-boton};
   
   // Alertas y Notificaciones
-  --color-alerta-success-bg: #ecfdf5;
-  --color-alerta-success-border: #10b981;
-  --color-alerta-success-text: #065f46;
-  --color-alerta-error-bg: #fef2f2;
-  --color-alerta-error-border: #ef4444;
-  --color-alerta-error-text: #991b1b;
-  --color-alerta-warning-bg: #fffbeb;
-  --color-alerta-warning-border: #f59e0b;
-  --color-alerta-warning-text: #92400e;
-  --color-alerta-info-bg: #eff6ff;
-  --color-alerta-info-border: #3b82f6;
-  --color-alerta-info-text: #1e40af;
+  --color-alerta-success-bg: #{$color-alerta-success-bg};
+  --color-alerta-success-border: #{$color-alerta-success-border};
+  --color-alerta-success-text: #{$color-alerta-success-text};
+  --color-alerta-error-bg: #{$color-alerta-error-bg};
+  --color-alerta-error-border: #{$color-alerta-error-border};
+  --color-alerta-error-text: #{$color-alerta-error-text};
+  --color-alerta-warning-bg: #{$color-alerta-warning-bg};
+  --color-alerta-warning-border: #{$color-alerta-warning-border};
+  --color-alerta-warning-text: #{$color-alerta-warning-text};
+  --color-alerta-info-bg: #{$color-alerta-info-bg};
+  --color-alerta-info-border: #{$color-alerta-info-border};
+  --color-alerta-info-text: #{$color-alerta-info-text};
 
   // Menú desplegable
   --color-menu-bg: #{$gris-50};
   --color-menu-border: #{$gris-300};
   --color-menu-hover-bg: #{$gris-50};
-  --color-menu-hover-shadow: rgba(52, 198, 160, 0.15);
+  --color-menu-hover-shadow: rgba($color-botones, 0.15);
   --color-dropdown-bg: #{$gris-50};
   --color-dropdown-border: #{$gris-400};
   --color-dropdown-separator: #{$gris-300};
@@ -70,8 +70,10 @@
   --color-acento-texto: #{$color-acento-texto};
   --color-acento-hover: #{$color-botones-hover};
   --color-hover: #{$color-hover-suave};
-  --color-texto-inverso: #ffffff;
-  --color-error-suave: #fef2f2;
+  --color-texto-inverso: #{$color-blanco};
+  --color-error-suave: #{$color-alerta-error-bg};
+  --color-estrella: #{$color-estrella};
+  --color-estrella-inactiva: #{$gris-300};
 }
 
 // --------------------------------------------
@@ -99,7 +101,7 @@
   --color-exito-texto: #{$oscuro-exito-texto};
   --color-error: #{$oscuro-error};
   --color-error-texto: #{$oscuro-error-texto};
-  --color-error-fondo: #7f1d1d;
+  --color-error-fondo: #{$oscuro-error-bg};
   --color-warning: #{$oscuro-warning};
   --color-warning-texto: #{$oscuro-warning-texto};
   --color-info: #{$oscuro-info};
@@ -109,29 +111,29 @@
   --shadow-glow: #{$oscuro-shadow-boton};
   
   // Alertas y Notificaciones - Modo Oscuro
-  --color-alerta-success-bg: #064e3b;
+  --color-alerta-success-bg: #{$oscuro-exito-bg};
   --color-alerta-success-border: #{$oscuro-exito};
-  --color-alerta-success-text: #a7f3d0;
-  --color-alerta-error-bg: #7f1d1d;
+  --color-alerta-success-text: #{$oscuro-alerta-success-text};
+  --color-alerta-error-bg: #{$oscuro-error-bg};
   --color-alerta-error-border: #{$oscuro-error};
-  --color-alerta-error-text: #fca5a5;
-  --color-alerta-warning-bg: #78350f;
+  --color-alerta-error-text: #{$oscuro-alerta-error-text};
+  --color-alerta-warning-bg: #{$oscuro-warning-bg};
   --color-alerta-warning-border: #{$oscuro-warning};
-  --color-alerta-warning-text: #fcd34d;
-  --color-alerta-info-bg: #1e3a8a;
+  --color-alerta-warning-text: #{$oscuro-alerta-warning-text};
+  --color-alerta-info-bg: #{$oscuro-info-bg};
   --color-alerta-info-border: #{$oscuro-info};
-  --color-alerta-info-text: #93c5fd;
+  --color-alerta-info-text: #{$oscuro-alerta-info-text};
 
   // Menú desplegable - Modo Oscuro
   --color-menu-bg: #{$oscuro-fondo-secundario};
   --color-menu-border: #{$oscuro-borde};
-  --color-menu-hover-bg: #1F3333;
-  --color-menu-hover-shadow: rgba(0, 229, 160, 0.2);
+  --color-menu-hover-bg: #{$color-menu-hover-bg};
+  --color-menu-hover-shadow: rgba($oscuro-boton-rgba, 0.2);
   --color-dropdown-bg: #{$oscuro-fondo-secundario};
-  --color-dropdown-border: rgba(0, 229, 160, 0.2);
+  --color-dropdown-border: rgba($oscuro-boton-rgba, 0.2);
   --color-dropdown-separator: #{$oscuro-borde};
   --shadow-dropdown: #{$oscuro-shadow-lg};
-  --color-opcion-hover: rgba(0, 229, 160, 0.12);
+  --color-opcion-hover: rgba($oscuro-boton-rgba, 0.12);
   --color-opcion-icon: #{$oscuro-subtitulo};
   --color-texto-claro: #{$oscuro-texto};
 
@@ -139,7 +141,9 @@
   --color-acento: #{$oscuro-boton};
   --color-acento-texto: #{$oscuro-acento-texto};
   --color-acento-hover: #{$oscuro-boton-hover};
-  --color-hover: rgba(0, 229, 160, 0.1);
+  --color-hover: rgba($oscuro-boton-rgba, 0.1);
   --color-texto-inverso: #{$oscuro-fondo};
-  --color-error-suave: #7f1d1d;
+  --color-error-suave: #{$oscuro-error-bg};
+  --color-estrella: #{$oscuro-estrella};
+  --color-estrella-inactiva: #{$gris-600};
 }

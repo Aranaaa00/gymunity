@@ -370,7 +370,7 @@
 
 .perfil__clase-estado--pendiente {
   background: rgba($color-warning, 0.1);
-  color: $color-estrella;
+  color: var(--color-warning-texto);
 }
 
 .perfil__clase-estado--completada {
@@ -418,7 +418,7 @@
 .perfil__btn-cancelar--sin-reembolso {
   background: rgba($color-warning, 0.1);
   border-color: rgba($color-warning, 0.3);
-  color: $color-estrella;
+  color: var(--color-warning-texto);
 
   &:hover {
     background: rgba($color-warning, 0.15);
@@ -574,7 +574,7 @@
 
   &:hover {
     transform: translateY(-0.125rem);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.5rem 1rem rgba($color-negro, 0.1);
   }
 
   .perfil__resenia-item--par & {
@@ -622,12 +622,12 @@
 }
 
 .perfil__resenia-estrella {
-  color: $gris-300;
+  color: var(--color-estrella-inactiva);
   transition: color $transicion-rapida;
 }
 
 .perfil__resenia-estrella--activa {
-  color: #fbbf24;
+  color: var(--color-estrella);
 }
 
 .perfil__resenia-texto {

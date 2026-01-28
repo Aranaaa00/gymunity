@@ -116,11 +116,11 @@
 
   font-size: $texto-s;
   font-weight: $font-weight-semibold;
-  color: $gris-700;
+  color: var(--color-texto);
 }
 
 .gimnasio__estrella {
-  color: $color-estrella;
+  color: var(--color-estrella);
 }
 
 .gimnasio__boton-resenia {
@@ -133,7 +133,7 @@
 
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
-  color: $gris-900;
+  color: var(--color-boton-texto);
   cursor: pointer;
   transition: background-color $transicion-rapida, color $transicion-rapida;
 

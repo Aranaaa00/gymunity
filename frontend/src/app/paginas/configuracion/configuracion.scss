@@ -214,7 +214,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba($color-negro, 0.55);
   opacity: 0;
   font-size: $texto-xs;
   font-weight: $font-weight-medium;
@@ -296,19 +296,19 @@
 }
 
 .ajustes__fuerza-progreso--debil {
-  background: linear-gradient(90deg, var(--color-error), #ff6b6b);
+  background: linear-gradient(90deg, var(--color-error), $color-error-claro);
 }
 
 .ajustes__fuerza-progreso--media {
-  background: linear-gradient(90deg, var(--color-warning), #ffd43b);
+  background: linear-gradient(90deg, var(--color-warning), $color-warning-claro);
 }
 
 .ajustes__fuerza-progreso--fuerte {
-  background: linear-gradient(90deg, var(--color-info), #74c0fc);
+  background: linear-gradient(90deg, var(--color-info), $color-info-claro);
 }
 
 .ajustes__fuerza-progreso--muy-fuerte {
-  background: linear-gradient(90deg, var(--color-exito), #69db7c);
+  background: linear-gradient(90deg, var(--color-exito), $color-exito-claro);
 }
 
 .ajustes__fuerza-mensaje {

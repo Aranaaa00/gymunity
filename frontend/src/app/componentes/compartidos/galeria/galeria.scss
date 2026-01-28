@@ -132,7 +132,7 @@ $galeria-altura-tablet: 18rem;
 
 .galeria__miniatura--activa {
   border-color: var(--color-acento);
-  box-shadow: 0 0 0 2px rgba(52, 198, 160, 0.3);
+  box-shadow: 0 0 0 2px rgba($color-botones, 0.3);
 }
 
 .galeria__miniatura-img {

@@ -26,7 +26,7 @@ $modal-focus-offset: 0.125rem;
 
   padding: $space-4;
 
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba($color-negro, 0.6);
   backdrop-filter: blur(0.25rem);
 
   animation: fadeIn $modal-transition-duration ease;
