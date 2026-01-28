@@ -358,6 +358,3 @@ He verificado uno por uno todos los criterios de éxito del nivel AA para asegur
 **Robusto:**
 - [x] 4.1.2 - Nombre, función, valor (ARIA cuando necesario)
 
-### Conclusión
-
-Gymunity cumple con el **nivel AA de WCAG 2.1**, que es el nivel exigido por la normativa española y europea. La web ha pasado de tener 11 problemas graves y 2 errores a tener puntuación perfecta en Lighthouse (100/100) y cero errores en todas las herramientas. Esto significa que la web es accesible para personas con discapacidad visual, motora, auditiva y cognitiva, y que cumple con la ley de accesibilidad.
