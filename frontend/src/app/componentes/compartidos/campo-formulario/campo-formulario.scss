@@ -1,174 +1,145 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-$campo-focus-shadow-size: 0.125rem;
-$campo-transition-duration: 0.2s;
-$campo-label-margin-bottom: 0.25rem;
-$campo-focus-shadow-opacity: 0.2;
-$campo-hover-opacity: 0.5;
-$campo-disabled-opacity: 0.5;
-$campo-placeholder-opacity: 0.5;
-$campo-input-padding-v: 0.5rem;
-$campo-input-padding-h: 0.75rem;
-
-// ============================================
-// HOST
-// ============================================
+$campo-focus: 0.125rem;
+$campo-transition: 0.2s;
 
 :host {
   display: block;
   width: 100%;
 }
 
-// ============================================
-// LABEL
-// ============================================
+.campo-formulario {
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-normal;
+    color: var(--color-texto);
+  }
 
-.campo-formulario__label {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-bottom: $campo-label-margin-bottom;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-normal;
-  color: var(--color-texto);
-}
+  &__required {
+    font-size: $texto-sm;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    color: var(--color-error-texto);
+  }
 
-.campo-formulario__required {
-  font-size: $texto-sm;
-  font-weight: $font-weight-bold;
-  text-decoration: none;
-  color: var(--color-error-texto);
-}
+  &__field {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-md;
+    font-family: $fuente-principal;
+    font-size: $texto-sm;
+    line-height: $line-height-normal;
+    color: var(--color-texto);
+    transition: 
+      border-color $campo-transition ease,
+      box-shadow $campo-transition ease;
 
-// ============================================
-// CAMPO INPUT
-// ============================================
+    &::placeholder {
+      color: var(--color-subtitulo);
+      opacity: 0.5;
+    }
 
-.campo-formulario__field {
-  width: 100%;
-  padding: $campo-input-padding-v $campo-input-padding-h;
-  background-color: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  font-family: $fuente-principal;
-  font-size: $texto-sm;
-  line-height: $line-height-normal;
-  color: var(--color-texto);
-  transition: 
-    border-color $campo-transition-duration ease,
-    box-shadow $campo-transition-duration ease;
+    &:hover:not(:disabled):not(:focus) {
+      border-color: rgba($color-botones, 0.5);
+    }
 
-  &::placeholder {
+    &:focus {
+      border-color: var(--color-boton);
+      box-shadow: 0 0 0 $campo-focus rgba($color-botones, 0.2);
+      outline: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &--error {
+      border-color: var(--color-error);
+
+      &:focus {
+        box-shadow: 0 0 0 $campo-focus rgba($color-error, 0.2);
+      }
+    }
+
+    &--validando {
+      border-color: var(--color-info);
+
+      &:focus {
+        box-shadow: 0 0 0 $campo-focus rgba($color-info, 0.2);
+      }
+    }
+
+    &--exito {
+      border-color: var(--color-exito);
+
+      &:focus {
+        box-shadow: 0 0 0 $campo-focus rgba($color-exito, 0.2);
+      }
+    }
+  }
+
+  &__mensaje-container {
+    min-height: 1.125rem;
+    margin-top: 0.125rem;
+  }
+
+  &__help,
+  &__error,
+  &__validando,
+  &__exito {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    font-size: $texto-xs;
+    line-height: 1.25;
+  }
+
+  &__help {
     color: var(--color-subtitulo);
-    opacity: $campo-placeholder-opacity;
   }
 
-  &:hover:not(:disabled):not(:focus) {
-    border-color: rgba($color-botones, $campo-hover-opacity);
+  &__error {
+    font-weight: $font-weight-medium;
+    color: var(--color-error-texto);
+
+    &::before {
+      content: '⚠';
+      flex-shrink: 0;
+    }
   }
 
-  &:focus {
-    border-color: var(--color-boton);
-    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-botones, $campo-focus-shadow-opacity);
-    outline: none;
+  &__validando {
+    font-weight: $font-weight-medium;
+    color: var(--color-info-texto);
+
+    &::before {
+      content: '⟳';
+      flex-shrink: 0;
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
   }
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: $campo-disabled-opacity;
-  }
-}
+  &__exito {
+    font-weight: $font-weight-medium;
+    color: var(--color-exito-texto);
 
-.campo-formulario__field--error {
-  border-color: var(--color-error);
-
-  &:focus {
-    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-error, $campo-focus-shadow-opacity);
-  }
-}
-
-.campo-formulario__field--validando {
-  border-color: var(--color-info);
-
-  &:focus {
-    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-info, $campo-focus-shadow-opacity);
-  }
-}
-
-.campo-formulario__field--exito {
-  border-color: var(--color-exito);
-
-  &:focus {
-    box-shadow: 0 0 0 $campo-focus-shadow-size rgba($color-exito, $campo-focus-shadow-opacity);
-  }
-}
-
-// ============================================
-// CONTENEDOR DE MENSAJE (altura fija)
-// ============================================
-
-.campo-formulario__mensaje-container {
-  min-height: 1.125rem;
-  margin-top: 0.125rem;
-}
-
-// ============================================
-// MENSAJES DE AYUDA Y ERROR
-// ============================================
-
-.campo-formulario__help,
-.campo-formulario__error,
-.campo-formulario__validando,
-.campo-formulario__exito {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.25rem;
-  font-size: $texto-xs;
-  line-height: 1.25;
-}
-
-.campo-formulario__help {
-  color: var(--color-subtitulo);
-}
-
-.campo-formulario__error {
-  font-weight: $font-weight-medium;
-  color: var(--color-error-texto);
-
-  &::before {
-    content: '⚠';
-    flex-shrink: 0;
-  }
-}
-
-.campo-formulario__validando {
-  font-weight: $font-weight-medium;
-  color: var(--color-info-texto);
-
-  &::before {
-    content: '⟳';
-    flex-shrink: 0;
-    display: inline-block;
-    animation: spin 1s linear infinite;
+    &::before {
+      content: '✓';
+      flex-shrink: 0;
+    }
   }
 }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-.campo-formulario__exito {
-  font-weight: $font-weight-medium;
-  color: var(--color-exito-texto);
-
-  &::before {
-    content: '✓';
-    flex-shrink: 0;
-  }
 }

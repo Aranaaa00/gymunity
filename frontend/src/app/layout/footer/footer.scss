@@ -1,26 +1,15 @@
 @use '../../../styles/00-settings/variables' as *;
 @use '../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-// Usar transición de tema global para sincronización
-$footer-social-transition-duration: 0.2s;
+$footer-transition: 0.2s;
 $footer-logo-height: 2.5rem;
-$footer-slogan-max-width: 18rem;
+$footer-slogan-max: 18rem;
 $footer-social-size: 2.5rem;
-$footer-social-icon-size: 1.25rem;
-$footer-social-translate-y: -0.125rem;
-
-// ============================================
-// FOOTER - COMPONENTE PRINCIPAL
-// ============================================
+$footer-social-icon: 1.25rem;
 
 .gym-footer {
   margin-top: auto;
   padding: $space-4 0 $space-3;
-
   background: var(--color-header);
   transition: background-color $transicion-tema;
 
@@ -31,145 +20,125 @@ $footer-social-translate-y: -0.125rem;
   @include respond-down(sm) {
     padding: $space-3 0 5rem;
   }
-}
 
-// ============================================
-// CONTENEDOR
-// ============================================
-
-.gym-footer__container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: $space-3;
-  width: 100%;
-  max-width: $max-width-contenido;
-  margin: 0 auto $space-3;
-  padding: 0 $space-3;
-
-  @include respond-down(sm) {
-    flex-direction: column;
-    padding: 0 $space-2;
-  }
-}
-
-// ============================================
-// MARCA
-// ============================================
-
-.gym-footer__brand {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: $space-2;
-
-  @include respond-down(sm) {
-    flex-direction: column;
-    gap: $space-1;
-  }
-}
-
-.gym-footer__logo {
-  display: block;
-
-  img {
-    display: block;
-    height: $footer-logo-height;
-    width: auto;
+  &__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-3;
+    width: 100%;
+    max-width: $max-width-contenido;
+    margin: 0 auto $space-3;
+    padding: 0 $space-3;
 
     @include respond-down(sm) {
-      height: 2rem;
+      flex-direction: column;
+      padding: 0 $space-2;
     }
   }
-}
 
-.gym-footer__slogan {
-  max-width: $footer-slogan-max-width;
-  font-size: $texto-xs;
-  color: $gris-100;
-  text-align: left;
-
-  @include respond-down(sm) {
-    text-align: center;
-  }
-}
-
-// ============================================
-// CONTACTO
-// ============================================
-
-.gym-footer__contacto {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: $space-2;
-
-  @include respond-down(sm) {
-    align-items: center;
-  }
-}
-
-.gym-footer__email {
-  font-size: $texto-xs;
-  color: $gris-200;
-}
-
-// ============================================
-// REDES SOCIALES
-// ============================================
-
-.gym-footer__social {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-
-  a {
+  &__brand {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    width: $footer-social-size;
-    height: $footer-social-size;
-    background-color: rgba($gris-100, 0.1);
-    border-radius: $radio-full;
+    gap: $space-2;
+
+    @include respond-down(sm) {
+      flex-direction: column;
+      gap: $space-1;
+    }
+  }
+
+  &__logo {
+    display: block;
+
+    img {
+      display: block;
+      height: $footer-logo-height;
+      width: auto;
+
+      @include respond-down(sm) {
+        height: 2rem;
+      }
+    }
+  }
+
+  &__slogan {
+    max-width: $footer-slogan-max;
+    font-size: $texto-xs;
     color: $gris-100;
-    transition: all $footer-social-transition-duration ease;
+    text-align: left;
 
-    &:hover {
-      background-color: var(--color-boton);
-      transform: translateY($footer-social-translate-y);
-    }
-
-    &:active {
-      transform: translateY(0);
+    @include respond-down(sm) {
+      text-align: center;
     }
   }
 
-  lucide-icon {
+  &__contacto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-2;
+
+    @include respond-down(sm) {
+      align-items: center;
+    }
+  }
+
+  &__email {
+    font-size: $texto-xs;
+    color: $gris-200;
+  }
+
+  &__social {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: $footer-social-icon-size;
-    height: $footer-social-icon-size;
+    gap: $space-2;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $footer-social-size;
+      height: $footer-social-size;
+      background-color: rgba($gris-100, 0.1);
+      border-radius: $radio-full;
+      color: $gris-100;
+      transition: all $footer-transition ease;
+
+      &:hover {
+        background-color: var(--color-boton);
+        transform: translateY(-0.125rem);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    lucide-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $footer-social-icon;
+      height: $footer-social-icon;
+    }
   }
-}
 
-// ============================================
-// COPYRIGHT
-// ============================================
+  &__copyright {
+    width: 100%;
+    max-width: $max-width-contenido;
+    margin: 0 auto;
+    padding: $space-2 $space-3 0;
+    border-top: $borde-thin solid rgba($gris-100, 0.15);
+    font-size: $texto-xs;
+    color: $gris-50;
+    text-align: center;
 
-.gym-footer__copyright {
-  width: 100%;
-  max-width: $max-width-contenido;
-  margin: 0 auto;
-  padding: $space-2 $space-3 0;
-  border-top: $borde-thin solid rgba($gris-100, 0.15);
-  font-size: $texto-xs;
-  color: $gris-50;
-  text-align: center;
-
-  @include respond-down(sm) {
-    padding: $space-2 $space-2 0;
+    @include respond-down(sm) {
+      padding: $space-2 $space-2 0;
+    }
   }
 }

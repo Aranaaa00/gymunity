@@ -1,116 +1,92 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
 $tabs-transition: 0.2s ease;
-$tabs-indicator-height: 0.25rem;
-
-// ============================================
-// HOST
-// ============================================
+$tabs-indicator: 0.25rem;
 
 .tabs {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
 
-// ============================================
-// CONTAINER
-// ============================================
-
-.tabs__container {
-  width: 100%;
-}
-
-// ============================================
-// LISTA DE TABS
-// ============================================
-
-.tabs__lista {
-  display: flex;
-  gap: 0;
-  padding: 0;
-  overflow-x: auto;
-  background-color: transparent;
-  border-bottom: $borde-thin solid var(--color-borde);
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-// ============================================
-// TAB INDIVIDUAL
-// ============================================
-
-.tabs__tab {
-  position: relative;
-  flex: 0 0 auto;
-  min-width: max-content;
-  padding: $space-2 $space-3;
-  background-color: transparent;
-  border: none;
-  font-family: $fuente-principal;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-normal;
-  color: var(--color-subtitulo);
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  transition: color $tabs-transition, background-color $tabs-transition;
-
-  @include respond-down(sm) {
-    padding: $space-1 $space-2;
-    font-size: $texto-xs;
+  &__container {
+    width: 100%;
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: $tabs-indicator-height;
+  &__lista {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    overflow-x: auto;
     background-color: transparent;
-    border-radius: $tabs-indicator-height $tabs-indicator-height 0 0;
-    transition: background-color $tabs-transition;
+    border-bottom: $borde-thin solid var(--color-borde);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  &:hover:not(.tabs__tab--activo) {
-    color: var(--color-texto);
+  &__tab {
+    position: relative;
+    flex: 0 0 auto;
+    min-width: max-content;
+    padding: $space-2 $space-3;
+    background-color: transparent;
+    border: none;
+    font-family: $fuente-principal;
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-normal;
+    color: var(--color-subtitulo);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: color $tabs-transition, background-color $tabs-transition;
+
+    @include respond-down(sm) {
+      padding: $space-1 $space-2;
+      font-size: $texto-xs;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: $tabs-indicator;
+      background-color: transparent;
+      border-radius: $tabs-indicator $tabs-indicator 0 0;
+      transition: background-color $tabs-transition;
+    }
+
+    &:hover:not(.tabs__tab--activo) {
+      color: var(--color-texto);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: -$borde-medium;
+    }
+
+    &--activo {
+      color: var(--color-boton);
+      font-weight: $font-weight-bold;
+      background-color: rgba($color-botones, 0.08);
+
+      &::after {
+        background-color: var(--color-boton);
+      }
+    }
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: -$borde-medium;
-  }
-}
+  &__contenido {
+    padding: $space-3 0;
 
-.tabs__tab--activo {
-  color: var(--color-boton);
-  font-weight: $font-weight-bold;
-  background-color: rgba($color-botones, 0.08);
-
-  &::after {
-    background-color: var(--color-boton);
-  }
-}
-
-// ============================================
-// CONTENIDO DEL TAB
-// ============================================
-
-.tabs__contenido {
-  padding: $space-3 0;
-
-  @include respond-down(sm) {
-    padding: $space-2 0;
+    @include respond-down(sm) {
+      padding: $space-2 0;
+    }
   }
 }

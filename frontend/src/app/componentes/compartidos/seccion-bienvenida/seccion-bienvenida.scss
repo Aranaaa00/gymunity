@@ -5,10 +5,6 @@
 // HERO - Sección de Bienvenida
 // ============================================
 
-// ----------------------------------------
-// Contenedor principal
-// ----------------------------------------
-
 .hero {
   position: relative;
   display: flex;
@@ -30,145 +26,142 @@
     min-height: 55vh;
     padding: $space-6 $space-2;
   }
-}
 
-// ----------------------------------------
-// Fondo con imagen (crossfade sincronizado)
-// ----------------------------------------
+  // ----------------------------------------
+  // Fondo con imagen (crossfade sincronizado)
+  // ----------------------------------------
 
-.hero__fondo {
-  position: absolute;
-  z-index: $z-base;
-  inset: 0;
-  pointer-events: none;
-  transition: opacity $transicion-tema;
+  &__fondo {
+    position: absolute;
+    z-index: $z-base;
+    inset: 0;
+    pointer-events: none;
+    transition: opacity $transicion-tema;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.hero__fondo--claro {
-  opacity: 1;
+    &--claro {
+      opacity: 1;
 
-  img {
-    opacity: 0.35;
-  }
-}
+      img {
+        opacity: 0.35;
+      }
 
-.hero__fondo--oscuro {
-  opacity: 0;
+      [data-tema="oscuro"] & {
+        opacity: 0;
+      }
+    }
 
-  img {
-    opacity: 0.7;
-  }
-}
+    &--oscuro {
+      opacity: 0;
 
-// Tema oscuro: crossfade sincronizado
-[data-tema="oscuro"] {
-  .hero__fondo--claro {
-    opacity: 0;
-  }
+      img {
+        opacity: 0.7;
+      }
 
-  .hero__fondo--oscuro {
-    opacity: 1;
-  }
-}
-
-// ----------------------------------------
-// Contenido
-// ----------------------------------------
-
-.hero__contenido {
-  position: relative;
-  z-index: calc($z-base + 1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-4;
-  max-width: $max-width-contenido;
-  text-align: center;
-
-  @include respond-down(sm) {
-    gap: $space-3;
-  }
-}
-
-// ----------------------------------------
-// Tipografía
-// ----------------------------------------
-
-.hero__titulo {
-  margin: 0;
-  font-size: clamp($texto-xl, 5vw, $texto-3xl);
-  font-weight: $font-weight-bold;
-  font-style: italic;
-  line-height: $line-height-tight;
-  color: var(--color-titulo);
-  white-space: nowrap;
-
-  span {
-    display: block;
+      [data-tema="oscuro"] & {
+        opacity: 1;
+      }
+    }
   }
 
-  @include respond-down(sm) {
-    font-size: clamp($texto-lg, 6vw, $texto-xl);
-    white-space: normal;
+  // ----------------------------------------
+  // Contenido
+  // ----------------------------------------
+
+  &__contenido {
+    position: relative;
+    z-index: calc($z-base + 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-4;
+    max-width: $max-width-contenido;
+    text-align: center;
+
+    @include respond-down(sm) {
+      gap: $space-3;
+    }
   }
-}
 
-.hero__subtitulo {
-  margin: 0;
-  max-width: 36rem;
-  font-size: $texto-md;
-  font-weight: $font-weight-regular;
-  line-height: $line-height-relaxed;
-  color: var(--color-subtitulo);
+  // ----------------------------------------
+  // Tipografía
+  // ----------------------------------------
 
-  span {
-    display: block;
+  &__titulo {
+    margin: 0;
+    font-size: clamp($texto-xl, 5vw, $texto-3xl);
+    font-weight: $font-weight-bold;
+    font-style: italic;
+    line-height: $line-height-tight;
+    color: var(--color-titulo);
+    white-space: nowrap;
+
+    span {
+      display: block;
+    }
+
+    @include respond-down(sm) {
+      font-size: clamp($texto-lg, 6vw, $texto-xl);
+      white-space: normal;
+    }
   }
 
-  @include respond-down(sm) {
+  &__subtitulo {
+    margin: 0;
+    max-width: 36rem;
+    font-size: $texto-md;
+    font-weight: $font-weight-regular;
+    line-height: $line-height-relaxed;
+    color: var(--color-subtitulo);
+
+    span {
+      display: block;
+    }
+
+    @include respond-down(sm) {
+      font-size: $texto-s;
+    }
+  }
+
+  // ----------------------------------------
+  // Botón CTA
+  // ----------------------------------------
+
+  &__cta {
+    margin-top: $space-2;
+    padding: $space-2 $space-6;
+    background: var(--color-boton);
+    border: none;
+    border-radius: $radio-full;
     font-size: $texto-s;
-  }
-}
+    font-weight: $font-weight-bold;
+    color: var(--color-boton-texto);
+    cursor: pointer;
+    box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.4);
+    transition: background-color $transicion-rapida, box-shadow $transicion-rapida, transform $transicion-rapida;
 
-// ----------------------------------------
-// Botón CTA
-// ----------------------------------------
+    &:hover {
+      background: var(--color-boton-hover);
+      box-shadow: 0 0.375rem 1.5rem rgba($color-botones, 0.5);
+      transform: translateY(-0.125rem);
+    }
 
-.hero__cta {
-  margin-top: $space-2;
-  padding: $space-2 $space-6;
-  background: var(--color-boton);
-  border: none;
-  border-radius: $radio-full;
-  font-size: $texto-s;
-  font-weight: $font-weight-bold;
-  color: var(--color-boton-texto);
-  cursor: pointer;
-  box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.4);
-  transition: background-color $transicion-rapida, box-shadow $transicion-rapida, transform $transicion-rapida;
+    &:active {
+      transform: translateY(0);
+    }
 
-  &:hover {
-    background: var(--color-boton-hover);
-    box-shadow: 0 0.375rem 1.5rem rgba($color-botones, 0.5);
-    transform: translateY(-0.125rem);
-  }
+    &:focus-visible {
+      outline: $borde-medium solid $gris-50;
+      outline-offset: $space-1;
+    }
 
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid $gris-50;
-    outline-offset: $space-1;
-  }
-
-  @include respond-down(sm) {
-    padding: $space-2 $space-4;
+    @include respond-down(sm) {
+      padding: $space-2 $space-4;
+    }
   }
 }

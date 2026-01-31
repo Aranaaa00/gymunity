@@ -1,22 +1,8 @@
 @use 'sass:color';
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-$boton-transition-duration: 0.2s;
-$boton-active-scale: 0.98;
-$boton-focus-outline-offset: 2px;
-$boton-disabled-opacity: 0.5;
-$boton-ghost-hover-bg-opacity: 0.1;
-$boton-ghost-active-bg-opacity: 0.2;
-$boton-danger-darken-hover: -8%;
-$boton-danger-darken-active: -15%;
-
-// ============================================
-// BOTÓN
-// ============================================
+$boton-transition: 0.2s;
+$boton-scale: 0.98;
 
 .boton {
   display: inline-flex;
@@ -35,12 +21,12 @@ $boton-danger-darken-active: -15%;
   color: var(--color-boton-texto);
   cursor: pointer;
   transition: 
-    background $boton-transition-duration ease, 
-    border-color $boton-transition-duration ease, 
-    color $boton-transition-duration ease, 
-    opacity $boton-transition-duration ease, 
-    transform $boton-transition-duration ease,
-    box-shadow $boton-transition-duration ease;
+    background $boton-transition ease, 
+    border-color $boton-transition ease, 
+    color $boton-transition ease, 
+    opacity $boton-transition ease, 
+    transform $boton-transition ease,
+    box-shadow $boton-transition ease;
 
   &:hover:not(:disabled) {
     background: var(--color-boton-hover);
@@ -51,21 +37,20 @@ $boton-danger-darken-active: -15%;
   &:active:not(:disabled) {
     background: $color-botones-active;
     border-color: $color-botones-active;
-    transform: scale($boton-active-scale);
+    transform: scale($boton-scale);
   }
 
   &:focus-visible {
     outline: $borde-medium solid var(--color-boton);
-    outline-offset: $boton-focus-outline-offset;
+    outline-offset: 2px;
   }
 
   &:disabled,
   &--disabled {
-    opacity: $boton-disabled-opacity;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 
-  // Variantes
   &--primary {
     background: var(--color-boton);
     border-color: var(--color-boton);
@@ -93,13 +78,13 @@ $boton-danger-darken-active: -15%;
     color: var(--color-acento-texto);
 
     &:hover:not(:disabled) {
-      background: rgba($color-botones, $boton-ghost-hover-bg-opacity);
+      background: rgba($color-botones, 0.1);
       border-color: var(--color-boton-hover);
       color: var(--color-boton-hover);
     }
 
     &:active:not(:disabled) {
-      background: rgba($color-botones, $boton-ghost-active-bg-opacity);
+      background: rgba($color-botones, 0.2);
     }
   }
 
@@ -108,17 +93,16 @@ $boton-danger-darken-active: -15%;
     border-color: $color-error;
 
     &:hover:not(:disabled) {
-      background: color.adjust($color-error, $lightness: $boton-danger-darken-hover);
-      border-color: color.adjust($color-error, $lightness: $boton-danger-darken-hover);
+      background: color.adjust($color-error, $lightness: -8%);
+      border-color: color.adjust($color-error, $lightness: -8%);
     }
 
     &:active:not(:disabled) {
-      background: color.adjust($color-error, $lightness: $boton-danger-darken-active);
-      border-color: color.adjust($color-error, $lightness: $boton-danger-darken-active);
+      background: color.adjust($color-error, $lightness: -15%);
+      border-color: color.adjust($color-error, $lightness: -15%);
     }
   }
 
-  // Tamaños
   &--sm {
     padding: $space-1 $space-2;
     font-size: $texto-xs;
@@ -134,30 +118,21 @@ $boton-danger-darken-active: -15%;
     font-size: $texto-m;
   }
 
-  // Estado de carga
   &--cargando {
     position: relative;
     pointer-events: none;
   }
-}
 
-// ============================================
-// SPINNER
-// ============================================
+  &__spinner {
+    animation: spin 1s linear infinite;
+  }
 
-.boton__spinner {
-  animation: spin 1s linear infinite;
-}
-
-.boton__contenido--oculto {
-  visibility: hidden;
+  &__contenido--oculto {
+    visibility: hidden;
+  }
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

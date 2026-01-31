@@ -1,14 +1,6 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
 $acordeon-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-// ============================================
-// HOST - El componente app-acordeon-item
-// ============================================
 
 :host {
   display: block;
@@ -28,155 +20,141 @@ $acordeon-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
     border-left-color: rgba($color-botones, 0.5);
   }
-}
 
-:host(.acordeon-item--expandido) {
-  border-left-color: var(--color-boton);
-  box-shadow: 
-    0 0.25rem 1rem rgba($color-botones, 0.1),
-    0 0.125rem 0.25rem rgba($gris-800, 0.05);
-}
+  &.acordeon-item--expandido {
+    border-left-color: var(--color-boton);
+    box-shadow: 
+      0 0.25rem 1rem rgba($color-botones, 0.1),
+      0 0.125rem 0.25rem rgba($gris-800, 0.05);
 
-// ============================================
-// HEADER / TRIGGER
-// ============================================
+    .acordeon-item__trigger {
+      font-weight: $font-weight-semibold;
+      color: var(--color-boton);
+    }
 
-.acordeon-item__header {
-  display: block;
-  width: 100%;
-}
+    .acordeon-item__indicador {
+      color: var(--color-boton);
+      transform: rotate(180deg);
+    }
 
-.acordeon-item__trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-3;
-  width: 100%;
-  padding: $space-3;
-  background-color: transparent;
-  border: none;
-  font-family: $fuente-principal;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-normal;
-  text-align: left;
-  color: var(--color-texto);
-  cursor: pointer;
-  transition: background-color $acordeon-transition;
-
-  &:hover {
-    background-color: rgba($color-botones, 0.04);
-  }
-
-  &:focus-visible {
-    outline: none;
-    background-color: rgba($color-botones, 0.06);
-    box-shadow: inset 0 0 0 $borde-medium var(--color-boton);
+    .acordeon-item__panel {
+      grid-template-rows: 1fr;
+    }
   }
 }
 
-:host(.acordeon-item--expandido) .acordeon-item__trigger {
-  font-weight: $font-weight-semibold;
-  color: var(--color-boton);
-}
-
-// ============================================
-// TITULO CON ICONO OPCIONAL
-// ============================================
-
-.acordeon-item__titulo-wrapper {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: $space-2;
-}
-
-.acordeon-item__icono {
-  flex-shrink: 0;
-  color: var(--color-boton);
-}
-
-.acordeon-item__titulo {
-  flex: 1;
-}
-
-// ============================================
-// INDICADOR DE EXPANSIÓN (chevron)
-// ============================================
-
-.acordeon-item__indicador {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-subtitulo);
-  transition: 
-    transform $acordeon-transition,
-    color $acordeon-transition;
-}
-
-:host(.acordeon-item--expandido) .acordeon-item__indicador {
-  color: var(--color-boton);
-  transform: rotate(180deg);
-}
-
-.acordeon-item__flecha {
-  display: block;
-}
-
-// ============================================
-// PANEL EXPANDIBLE
-// ============================================
-
-.acordeon-item__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows $acordeon-transition;
-}
-
-:host(.acordeon-item--expandido) .acordeon-item__panel {
-  grid-template-rows: 1fr;
-}
-
-.acordeon-item__contenido {
-  min-height: 0;
-  overflow: hidden;
-
-  > * {
-    padding: 0 $space-3 $space-3;
-    margin: 0;
+.acordeon-item {
+  &__header {
+    display: block;
+    width: 100%;
   }
 
-  p,
-  ul,
-  ol {
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+    width: 100%;
+    padding: $space-3;
+    background-color: transparent;
+    border: none;
     font-family: $fuente-principal;
     font-size: $texto-sm;
-    line-height: $line-height-relaxed;
-    color: var(--color-subtitulo);
-  }
-
-  ul,
-  ol {
-    padding-left: $space-4;
-  }
-
-  a {
     font-weight: $font-weight-medium;
-    text-decoration: none;
-    color: var(--color-boton);
-    transition: color 0.15s ease;
+    line-height: $line-height-normal;
+    text-align: left;
+    color: var(--color-texto);
+    cursor: pointer;
+    transition: background-color $acordeon-transition;
 
     &:hover {
-      color: var(--color-boton-hover);
-      text-decoration: underline;
+      background-color: rgba($color-botones, 0.04);
+    }
+
+    &:focus-visible {
+      outline: none;
+      background-color: rgba($color-botones, 0.06);
+      box-shadow: inset 0 0 0 $borde-medium var(--color-boton);
     }
   }
 
-  strong {
-    font-weight: $font-weight-semibold;
-    color: var(--color-texto);
+  &__titulo-wrapper {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  &__icono {
+    flex-shrink: 0;
+    color: var(--color-boton);
+  }
+
+  &__titulo {
+    flex: 1;
+  }
+
+  &__indicador {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-subtitulo);
+    transition: 
+      transform $acordeon-transition,
+      color $acordeon-transition;
+  }
+
+  &__flecha {
+    display: block;
+  }
+
+  &__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $acordeon-transition;
+  }
+
+  &__contenido {
+    min-height: 0;
+    overflow: hidden;
+
+    > * {
+      padding: 0 $space-3 $space-3;
+      margin: 0;
+    }
+
+    p,
+    ul,
+    ol {
+      font-family: $fuente-principal;
+      font-size: $texto-sm;
+      line-height: $line-height-relaxed;
+      color: var(--color-subtitulo);
+    }
+
+    ul,
+    ol {
+      padding-left: $space-4;
+    }
+
+    a {
+      font-weight: $font-weight-medium;
+      text-decoration: none;
+      color: var(--color-boton);
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: var(--color-boton-hover);
+        text-decoration: underline;
+      }
+    }
+
+    strong {
+      font-weight: $font-weight-semibold;
+      color: var(--color-texto);
+    }
   }
 }

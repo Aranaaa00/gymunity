@@ -1,22 +1,14 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// TARJETA CLASE
-// ============================================
-
 .tarjeta-clase {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: $space-3;
-
   padding: $space-2 $space-3;
-
   background: var(--color-fondo-elevado);
-
   border-radius: $radio-md;
-
   transition:
     background-color $transicion-tema,
     transform 0.15s ease,
@@ -31,95 +23,81 @@
     gap: $space-2;
     padding: $space-2;
   }
-}
 
-.tarjeta-clase__info {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-
-  min-width: 0;
-}
-
-.tarjeta-clase__icono {
-  flex-shrink: 0;
-
-  color: var(--color-acento-texto);
-}
-
-.tarjeta-clase__textos {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-
-  min-width: 0;
-}
-
-.tarjeta-clase__nombre {
-  margin: 0;
-
-  overflow: hidden;
-
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tarjeta-clase__profesor {
-  margin: 0;
-
-  overflow: hidden;
-
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tarjeta-clase__boton {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  flex-shrink: 0;
-
-  padding: $space-1 $space-2;
-
-  background: var(--color-acento);
-
-  border: none;
-  border-radius: $radio-md;
-
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-boton-texto);
-
-  cursor: pointer;
-
-  transition: background-color 0.2s ease, transform 0.15s ease;
-
-  &:hover:not(:disabled) {
-    background: var(--color-boton-hover);
-    transform: scale(1.02);
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-width: 0;
   }
 
-  &:active:not(:disabled) {
-    transform: scale(0.98);
+  &__icono {
+    flex-shrink: 0;
+    color: var(--color-acento-texto);
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 2px;
+  &__textos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
   }
 
-  &:disabled {
-    cursor: default;
+  &__nombre {
+    margin: 0;
+    overflow: hidden;
+    font-size: $texto-s;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-}
 
-.tarjeta-clase__boton--reservada {
-  background: rgba($color-botones, 0.15);
+  &__profesor {
+    margin: 0;
+    overflow: hidden;
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-  color: var(--color-acento-texto);
+  &__boton {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex-shrink: 0;
+    padding: $space-1 $space-2;
+    background: var(--color-acento);
+    border: none;
+    border-radius: $radio-md;
+    font-size: $texto-xs;
+    font-weight: $font-weight-medium;
+    color: var(--color-boton-texto);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--color-boton-hover);
+      transform: scale(1.02);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+
+    &--reservada {
+      background: rgba($color-botones, 0.15);
+      color: var(--color-acento-texto);
+    }
+  }
 }

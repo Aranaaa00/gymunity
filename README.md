@@ -42,7 +42,7 @@ Gymunity ha sido auditado y corregido para cumplir con las WCAG 2.1 nivel AA, el
 |-------------|-------------------|------------------|--------|
 | Lighthouse | 91/100 | 100/100 | +9 puntos |
 | WAVE | 2 errores, 5 alertas | 0 errores | -2 errores |
-| TAW | 11 problemas, 29 advertencias | 0 problemas | -11 problemas |
+| TAW | 11 problemas, 29 advertencias | 0 problemas, 36 advertencias | -11 problemas |
 
 **Nivel de conformidad alcanzado:** WCAG 2.1 Nivel AA
 

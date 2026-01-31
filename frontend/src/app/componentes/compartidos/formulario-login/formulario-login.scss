@@ -1,16 +1,8 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-$formulario-max-width: 100%;
-$formulario-logo-height: 2.5rem;
-$formulario-link-transition-duration: 0.2s;
-
-// ============================================
-// CONTENEDOR DEL FORMULARIO
-// ============================================
+$formulario-max: 100%;
+$logo-height: 2.5rem;
+$link-transition: 0.2s;
 
 :host {
   display: flex;
@@ -24,160 +16,138 @@ $formulario-link-transition-duration: 0.2s;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: $formulario-max-width;
-}
+  max-width: $formulario-max;
 
-// ============================================
-// HEADER CON LOGO Y TAGLINE
-// ============================================
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-1;
+    margin-bottom: $space-2;
+  }
 
-.formulario-auth__header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-1;
-  margin-bottom: $space-2;
-}
-
-.formulario-auth__logo {
-  display: block;
-  margin: 0;
-
-  img {
+  &__logo {
     display: block;
-    height: $formulario-logo-height;
-    width: auto;
+    margin: 0;
+
+    img {
+      display: block;
+      height: $logo-height;
+      width: auto;
+    }
   }
-}
 
-.formulario-auth__tagline {
-  margin: 0;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  color: var(--color-acento-texto);
-}
+  &__tagline {
+    margin: 0;
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-acento-texto);
+  }
 
-// ============================================
-// FIELDSET Y CAMPOS
-// ============================================
-
-.formulario-auth__fieldset {
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.formulario-auth__legend {
-  width: 100%;
-  margin-bottom: $space-1;
-  font-family: $fuente-principal;
-  font-size: $texto-lg;
-  font-weight: $font-weight-bold;
-  line-height: $line-height-tight;
-  text-align: center;
-  color: var(--color-texto);
-}
-
-// ============================================
-// ERROR DEL SERVIDOR
-// ============================================
-
-.formulario-auth__error-servidor {
-  width: 100%;
-  margin: 0 0 $space-1;
-  padding: $space-2;
-  background-color: var(--color-alerta-error-bg);
-  border: $borde-thin solid var(--color-alerta-error-border);
-  border-radius: $radio-md;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  text-align: center;
-  color: var(--color-alerta-error-text);
-}
-
-// ============================================
-// BOTÓN SUBMIT
-// ============================================
-
-.formulario-auth__submit {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: $space-2;
-  
-  app-boton {
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
     width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
   }
-}
 
-// ============================================
-// FOOTER Y TEXTO ALTERNATIVO
-// ============================================
+  &__legend {
+    width: 100%;
+    margin-bottom: $space-1;
+    font-family: $fuente-principal;
+    font-size: $texto-lg;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    text-align: center;
+    color: var(--color-texto);
+  }
 
-.formulario-auth__footer {
-  display: flex;
-  justify-content: center;
-  margin-top: $space-2;
-  padding-top: $space-2;
-  border-top: $borde-thin solid var(--color-borde);
-}
+  &__error-servidor {
+    width: 100%;
+    margin: 0 0 $space-1;
+    padding: $space-2;
+    background-color: var(--color-alerta-error-bg);
+    border: $borde-thin solid var(--color-alerta-error-border);
+    border-radius: $radio-md;
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    text-align: center;
+    color: var(--color-alerta-error-text);
+  }
 
-.formulario-auth__alt {
-  margin: 0;
-  font-size: $texto-sm;
-  text-align: center;
-  color: var(--color-subtitulo);
-}
+  &__submit {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: $space-2;
 
-.formulario-auth__link {
-  margin-left: 0.25rem;
-  padding: 0;
-  background: none;
-  border: none;
-  border-radius: $radio-sm;
-  font-size: inherit;
-  font-weight: $font-weight-bold;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  color: var(--color-acento-texto);
-  cursor: pointer;
-  transition: color $formulario-link-transition-duration ease;
+    app-boton {
+      width: 100%;
+    }
+  }
 
-  &:hover {
-    color: var(--color-titulo);
+  &__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: $space-2;
+    padding-top: $space-2;
+    border-top: $borde-thin solid var(--color-borde);
+  }
+
+  &__alt {
+    margin: 0;
+    font-size: $texto-sm;
+    text-align: center;
+    color: var(--color-subtitulo);
+  }
+
+  &__link {
+    margin-left: 0.25rem;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: $radio-sm;
+    font-size: inherit;
+    font-weight: $font-weight-bold;
     text-decoration: underline;
+    text-underline-offset: 2px;
+    color: var(--color-acento-texto);
+    cursor: pointer;
+    transition: color $link-transition ease;
+
+    &:hover {
+      color: var(--color-titulo);
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $borde-thin;
+    }
+  }
+}
+
+.formulario-login {
+  &__recordar {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    margin-top: $space-1;
+    cursor: pointer;
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $borde-thin;
+  &__recordar-checkbox {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--color-boton);
+    cursor: pointer;
   }
-}
 
-// ============================================
-// RECORDAR USUARIO
-// ============================================
-
-.formulario-login__recordar {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  margin-top: $space-1;
-  cursor: pointer;
-}
-
-.formulario-login__recordar-checkbox {
-  width: 1rem;
-  height: 1rem;
-  accent-color: var(--color-boton);
-  cursor: pointer;
-}
-
-.formulario-login__recordar-texto {
-  font-size: $texto-s;
-  color: var(--color-subtitulo);
+  &__recordar-texto {
+    font-size: $texto-s;
+    color: var(--color-subtitulo);
+  }
 }

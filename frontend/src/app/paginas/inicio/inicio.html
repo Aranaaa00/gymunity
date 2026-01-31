@@ -16,26 +16,26 @@
   }
 
   @if (cargando()) {
-    <section class="gimnasios-section gimnasios-section--cargando" aria-live="polite">
+    <section class="inicio__gimnasios inicio__gimnasios--cargando" aria-live="polite">
       <p>Cargando gimnasios...</p>
     </section>
   } @else if (error()) {
-    <section class="gimnasios-section gimnasios-section--error" role="alert">
+    <section class="inicio__gimnasios inicio__gimnasios--error" role="alert">
       <p>{{ error() }}</p>
     </section>
   } @else {
     @if (estaAutenticado() && ciudadUsuario()) {
-      <section class="gimnasios-section" role="region" [attr.aria-label]="'Gimnasios cercanos a ' + ciudadUsuario()">
-        <header class="section-header">
-          <a class="section-link" routerLink="/busqueda" [queryParams]="{ciudad: ciudadUsuario()}" [attr.aria-label]="'Ver todos los gimnasios en ' + ciudadUsuario()">
-            <h2 class="section-title" tabindex="0">Gimnasios cercanos a <strong>{{ ciudadUsuario() }}</strong></h2>
-            <span class="section-arrow" aria-hidden="true">›</span>
+      <section class="inicio__gimnasios" role="region" [attr.aria-label]="'Gimnasios cercanos a ' + ciudadUsuario()">
+        <header class="inicio__section-header">
+          <a class="inicio__section-link" routerLink="/busqueda" [queryParams]="{ciudad: ciudadUsuario()}" [attr.aria-label]="'Ver todos los gimnasios en ' + ciudadUsuario()">
+            <h2 class="inicio__section-title" tabindex="0">Gimnasios cercanos a <strong>{{ ciudadUsuario() }}</strong></h2>
+            <span class="inicio__section-arrow" aria-hidden="true">›</span>
           </a>
         </header>
         @if (cargandoCercanos()) {
-          <p class="gimnasios-section__cargando" aria-live="polite">Cargando gimnasios...</p>
+          <p class="inicio__gimnasios-cargando" aria-live="polite">Cargando gimnasios...</p>
         } @else if (gimnasiosCercanos().length > 0) {
-          <ul class="gimnasios-grid" role="list" [attr.aria-label]="'Lista de ' + gimnasiosCercanos().length + ' gimnasios cercanos'">
+          <ul class="inicio__gimnasios-grid" role="list" [attr.aria-label]="'Lista de ' + gimnasiosCercanos().length + ' gimnasios cercanos'">
             @for (gym of gimnasiosCercanos(); track trackByGimnasioId($index, gym)) {
               <li>
                 <app-card
@@ -53,21 +53,21 @@
             }
           </ul>
         } @else {
-          <p class="gimnasios-section__vacio">
+          <p class="inicio__gimnasios-vacio">
             Aún no hay gimnasios en {{ ciudadUsuario() }}. ¡Pronto habrá más!
           </p>
         }
       </section>
     }
 
-    <section class="gimnasios-section" role="region" aria-label="Gimnasios más populares">
-      <header class="section-header">
-        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'popular'}" aria-label="Ver todos los gimnasios más populares de Gymunity">
-          <h2 class="section-title" tabindex="0">Gimnasios más populares</h2>
-          <span class="section-arrow" aria-hidden="true">›</span>
+    <section class="inicio__gimnasios" role="region" aria-label="Gimnasios más populares">
+      <header class="inicio__section-header">
+        <a class="inicio__section-link" routerLink="/busqueda" [queryParams]="{orden: 'popular'}" aria-label="Ver todos los gimnasios más populares de Gymunity">
+          <h2 class="inicio__section-title" tabindex="0">Gimnasios más populares</h2>
+          <span class="inicio__section-arrow" aria-hidden="true">›</span>
         </a>
       </header>
-      <ul class="gimnasios-grid" role="list" [attr.aria-label]="'Lista de ' + gimnasiosPopulares().length + ' gimnasios populares'">
+      <ul class="inicio__gimnasios-grid" role="list" [attr.aria-label]="'Lista de ' + gimnasiosPopulares().length + ' gimnasios populares'">
         @for (gym of gimnasiosPopulares(); track trackByGimnasioId($index, gym)) {
           <li>
             <app-card
@@ -86,14 +86,14 @@
       </ul>
     </section>
 
-    <section class="gimnasios-section" role="region" aria-label="Nuevos gimnasios">
-      <header class="section-header">
-        <a class="section-link" routerLink="/busqueda" [queryParams]="{orden: 'reciente'}" aria-label="Ver todos los gimnasios recién añadidos a Gymunity">
-          <h2 class="section-title" tabindex="0">Nuevos gimnasios en Gymunity</h2>
-          <span class="section-arrow" aria-hidden="true">›</span>
+    <section class="inicio__gimnasios" role="region" aria-label="Nuevos gimnasios">
+      <header class="inicio__section-header">
+        <a class="inicio__section-link" routerLink="/busqueda" [queryParams]="{orden: 'reciente'}" aria-label="Ver todos los gimnasios recién añadidos a Gymunity">
+          <h2 class="inicio__section-title" tabindex="0">Nuevos gimnasios en Gymunity</h2>
+          <span class="inicio__section-arrow" aria-hidden="true">›</span>
         </a>
       </header>
-      <ul class="gimnasios-grid" role="list" [attr.aria-label]="'Lista de ' + gimnasiosRecientes().length + ' gimnasios nuevos'">
+      <ul class="inicio__gimnasios-grid" role="list" [attr.aria-label]="'Lista de ' + gimnasiosRecientes().length + ' gimnasios nuevos'">
         @for (gym of gimnasiosRecientes(); track trackByGimnasioId($index, gym)) {
           <li>
             <app-card

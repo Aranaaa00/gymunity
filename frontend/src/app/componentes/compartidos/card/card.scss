@@ -6,22 +6,12 @@
 // ============================================
 
 $card-transition: 0.25s ease;
-$card-vertical-max-width: 18rem;
+$card-vertical-max: 18rem;
 $card-horizontal-height: 5.5rem;
-$card-container-breakpoint: 20rem;
+$card-container-bp: 20rem;
 
 // ============================================
-// CARD CONTAINER (para Container Queries)
-// ============================================
-
-.card-container {
-  container-type: inline-size;
-  container-name: card;
-  width: 100%;
-}
-
-// ============================================
-// CARD BASE
+// CARD - Componente de tarjeta reutilizable
 // ============================================
 
 .card {
@@ -33,223 +23,232 @@ $card-container-breakpoint: 20rem;
   font-family: $fuente-principal;
   color: var(--color-texto);
   transition: transform $card-transition;
-}
 
-.card--clickable {
-  cursor: pointer;
+  // ----------------------------------------
+  // Container (para container queries)
+  // ----------------------------------------
 
-  &:hover {
-    transform: translateY(-0.125rem);
+  &-container {
+    container-type: inline-size;
+    container-name: card;
+    width: 100%;
+  }
 
-    .card-image-wrapper {
-      box-shadow: 0 0.5rem 1.5rem rgba($color-botones, 0.2);
+  // ----------------------------------------
+  // Modificadores de comportamiento
+  // ----------------------------------------
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-0.125rem);
+
+      .card__image-wrapper {
+        box-shadow: 0 0.5rem 1.5rem rgba($color-botones, 0.2);
+      }
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $borde-medium;
+      border-radius: $radio-lg;
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $borde-medium;
-    border-radius: $radio-lg;
+  // ----------------------------------------
+  // Modificadores de layout
+  // ----------------------------------------
+
+  &--vertical {
+    max-width: $card-vertical-max;
   }
 
-  &:active {
-    transform: translateY(0);
-  }
-}
+  &--horizontal {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-2;
+    height: $card-horizontal-height;
+    max-width: none;
+    padding: $space-2;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-md;
+    transition:
+      background-color $transicion-tema,
+      border-color $card-transition,
+      box-shadow $card-transition;
 
-// ============================================
-// VARIANTE VERTICAL
-// ============================================
+    &:hover {
+      border-color: var(--color-boton);
+      box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.12);
+    }
 
-.card.vertical {
-  max-width: $card-vertical-max-width;
-}
+    .card__body {
+      flex: 1;
+      gap: 0.125rem;
+      padding: 0;
+      min-width: 0;
+    }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: $space-1;
-  padding-top: $space-1;
-}
+    .card__title {
+      font-size: $texto-sm;
+    }
 
-.card-header {
-  display: flex;
-  flex-direction: column;
-}
+    .card__subtitle {
+      font-size: $texto-xs;
+    }
 
-.card-title {
-  margin: 0;
-  overflow: hidden;
-  font-size: $texto-s;
-  font-weight: $font-weight-bold;
-  line-height: $line-height-tight;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--color-texto);
-}
+    .card__rating {
+      margin-top: 0.25rem;
+      font-size: $texto-xs;
+    }
 
-.card-subtitle {
-  margin: 0;
-  overflow: hidden;
-  font-size: $texto-xs;
-  font-weight: $font-weight-regular;
-  line-height: $line-height-normal;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--color-subtitulo);
-}
-
-.card-location {
-  margin: 0;
-  overflow: hidden;
-  font-size: $texto-xs;
-  font-weight: $font-weight-regular;
-  font-style: italic;
-  line-height: $line-height-normal;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--color-subtitulo);
-}
-
-.card-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-top: $space-1;
-  font-size: $texto-xs;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-}
-
-.card-rating--con-estrella {
-  lucide-icon {
-    color: var(--color-estrella);
-  }
-}
-
-.card-rating--sin-valoracion {
-  font-weight: $font-weight-regular;
-  font-style: italic;
-  color: var(--color-subtitulo);
-}
-
-.card-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
-}
-
-// ============================================
-// VARIANTE HORIZONTAL (compacta para búsqueda)
-// ============================================
-
-.card.horizontal {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: $space-2;
-  height: $card-horizontal-height;
-  max-width: none;
-  padding: $space-2;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  transition:
-    background-color $transicion-tema,
-    border-color $card-transition,
-    box-shadow $card-transition;
-
-  &:hover {
-    border-color: var(--color-boton);
-    box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.12);
+    .card__footer {
+      flex-shrink: 0;
+      margin: 0;
+    }
   }
 
-  .card-body {
+  &--adaptive {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-2;
+    height: auto;
+    min-height: $card-horizontal-height;
+    max-width: none;
+    padding: $space-2;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-md;
+    transition:
+      background-color $transicion-tema,
+      border-color $card-transition,
+      box-shadow $card-transition;
+
+    &:hover {
+      border-color: var(--color-boton);
+      box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.12);
+    }
+
+    .card__body {
+      flex: 1;
+      gap: 0.125rem;
+      padding: 0;
+      min-width: 0;
+    }
+
+    .card__title {
+      font-size: $texto-sm;
+    }
+
+    .card__subtitle {
+      font-size: $texto-xs;
+    }
+
+    .card__rating {
+      margin-top: 0.25rem;
+      font-size: $texto-xs;
+    }
+
+    .card__footer {
+      flex-shrink: 0;
+      margin: 0;
+    }
+  }
+
+  // ----------------------------------------
+  // Elementos
+  // ----------------------------------------
+
+  &__body {
+    display: flex;
+    flex-direction: column;
     flex: 1;
-    gap: 0.125rem;
-    padding: 0;
-    min-width: 0;
+    gap: $space-1;
+    padding-top: $space-1;
   }
 
-  .card-title {
-    font-size: $texto-sm;
+  &__header {
+    display: flex;
+    flex-direction: column;
   }
 
-  .card-subtitle {
-    font-size: $texto-xs;
-  }
-
-  .card-rating {
-    margin-top: 0.25rem;
-    font-size: $texto-xs;
-  }
-
-  .card-footer {
-    flex-shrink: 0;
+  &__title {
     margin: 0;
+    overflow: hidden;
+    font-size: $texto-s;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--color-texto);
+  }
+
+  &__subtitle {
+    margin: 0;
+    overflow: hidden;
+    font-size: $texto-xs;
+    font-weight: $font-weight-regular;
+    line-height: $line-height-normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--color-subtitulo);
+  }
+
+  &__location {
+    margin: 0;
+    overflow: hidden;
+    font-size: $texto-xs;
+    font-weight: $font-weight-regular;
+    font-style: italic;
+    line-height: $line-height-normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--color-subtitulo);
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: $space-1;
+    font-size: $texto-xs;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+
+    &--con-estrella lucide-icon {
+      color: var(--color-estrella);
+    }
+
+    &--sin-valoracion {
+      font-weight: $font-weight-regular;
+      font-style: italic;
+      color: var(--color-subtitulo);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+
+  &__image-wrapper {
+    transition: box-shadow $card-transition;
   }
 }
 
-// ============================================
-// VARIANTE ADAPTATIVA (Container Queries)
-// ============================================
-// Esta variante cambia automáticamente de vertical a horizontal
-// basándose en el espacio disponible del contenedor padre.
-// Uso: envolver el card en un elemento con clase .card-container
+// ----------------------------------------
+// Container Query para modo adaptativo
+// ----------------------------------------
 
-.card.adaptive {
-  // Estado base: layout horizontal para contenedores anchos
-  flex-direction: row;
-  align-items: center;
-  gap: $space-2;
-  height: auto;
-  min-height: $card-horizontal-height;
-  max-width: none;
-  padding: $space-2;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  transition:
-    background-color $transicion-tema,
-    border-color $card-transition,
-    box-shadow $card-transition;
-
-  &:hover {
-    border-color: var(--color-boton);
-    box-shadow: 0 0.25rem 1rem rgba($color-botones, 0.12);
-  }
-
-  .card-body {
-    flex: 1;
-    gap: 0.125rem;
-    padding: 0;
-    min-width: 0;
-  }
-
-  .card-title {
-    font-size: $texto-sm;
-  }
-
-  .card-subtitle {
-    font-size: $texto-xs;
-  }
-
-  .card-rating {
-    margin-top: 0.25rem;
-    font-size: $texto-xs;
-  }
-
-  .card-footer {
-    flex-shrink: 0;
-    margin: 0;
-  }
-}
-
-// Container Query: cuando el contenedor es muy estrecho,
-// el card cambia a layout vertical
-@container card (max-width: #{$card-container-breakpoint}) {
-  .card.adaptive {
+@container card (max-width: #{$card-container-bp}) {
+  .card--adaptive {
     flex-direction: column;
     align-items: stretch;
     gap: $space-1;
@@ -266,19 +265,19 @@ $card-container-breakpoint: 20rem;
       box-shadow: none;
     }
 
-    .card-body {
+    .card__body {
       padding-top: $space-1;
     }
 
-    .card-title {
+    .card__title {
       font-size: $texto-s;
     }
 
-    .card-rating {
+    .card__rating {
       margin-top: $space-1;
     }
 
-    .card-footer {
+    .card__footer {
       justify-content: flex-end;
       margin-top: auto;
     }

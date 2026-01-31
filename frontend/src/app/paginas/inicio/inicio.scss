@@ -5,12 +5,10 @@
 // VARIABLES LOCALES
 // ============================================
 
-$inicio-transition-duration: 0.2s;
-$inicio-arrow-translate-x: 0.25rem;
-$inicio-link-gap: 0.25rem;
+$inicio-transition: 0.2s;
 
 // ============================================
-// PÁGINA INICIO
+// INICIO - Página principal
 // ============================================
 
 .inicio {
@@ -22,150 +20,150 @@ $inicio-link-gap: 0.25rem;
   @include respond-down(md) {
     gap: $space-4;
   }
-}
 
-// ============================================
-// SECCIONES DE GIMNASIOS
-// ============================================
+  // ----------------------------------------
+  // Sección de bienvenida
+  // ----------------------------------------
 
-.gimnasios-section {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-}
+  &__bienvenida {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-8 $space-4;
+    background: linear-gradient(135deg, var(--color-fondo-elevado) 0%, var(--color-fondo) 100%);
+    border-radius: $radio-lg;
+    text-align: center;
+    transition: background $transicion-tema;
 
-.section-header {
-  margin: 0;
-}
-
-.section-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $inicio-link-gap;
-  text-decoration: none;
-  color: var(--color-texto);
-  transition: color $inicio-transition-duration ease;
-
-  &:hover {
-    color: var(--color-boton);
-
-    .section-arrow {
-      transform: translateX($inicio-arrow-translate-x);
+    @include respond-down(md) {
+      padding: $space-6 $space-3;
+      gap: $space-1;
     }
   }
-}
 
-.section-title {
-  margin: 0;
-  font-size: $texto-s;
-  font-weight: $font-weight-bold;
-  color: var(--color-texto);
-}
+  &__saludo {
+    margin: 0;
+    font-size: $texto-3xl;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    color: var(--color-texto);
 
-.section-arrow {
-  font-size: $texto-m;
-  font-weight: $font-weight-bold;
-  color: var(--color-texto);
-  transition: transform $inicio-transition-duration ease;
-}
-
-.gimnasios-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  gap: $space-4;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  @include respond-down(lg) {
-    grid-template-columns: repeat(2, 1fr);
+    @include respond-down(md) {
+      font-size: $texto-xl;
+    }
   }
 
-  @include respond-down(sm) {
-    grid-template-columns: 1fr;
-    gap: $space-3;
+  &__nombre {
+    color: var(--color-acento-texto);
   }
-}
 
-// ============================================
-// ESTADOS DE CARGA Y ERROR
-// ============================================
+  &__mensaje {
+    margin: 0;
+    font-size: $texto-m;
+    color: var(--color-subtitulo);
 
-.gimnasios-section--cargando,
-.gimnasios-section--error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 10rem;
-  padding: $space-4;
-  color: var(--color-subtitulo);
-  text-align: center;
-}
-
-.gimnasios-section__vacio {
-  padding: $space-6;
-
-  border: $borde-thin dashed var(--color-borde);
-  border-radius: $radio-md;
-
-  font-size: $texto-s;
-  text-align: center;
-  color: var(--color-subtitulo);
-}
-
-.gimnasios-section__cargando {
-  padding: $space-6;
-
-  font-size: $texto-s;
-  text-align: center;
-  color: var(--color-subtitulo);
-}
-
-// ============================================
-// BIENVENIDA PERSONALIZADA
-// ============================================
-
-.inicio__bienvenida {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-2;
-  padding: $space-8 $space-4;
-  background: linear-gradient(135deg, var(--color-fondo-elevado) 0%, var(--color-fondo) 100%);
-  border-radius: $radio-lg;
-  text-align: center;
-  transition: background $transicion-tema;
-
-  @include respond-down(md) {
-    padding: $space-6 $space-3;
-    gap: $space-1;
+    @include respond-down(md) {
+      font-size: $texto-s;
+    }
   }
-}
 
-.inicio__saludo {
-  margin: 0;
+  // ----------------------------------------
+  // Sección de gimnasios
+  // ----------------------------------------
 
-  font-size: $texto-3xl;
-  font-weight: $font-weight-bold;
-  line-height: $line-height-tight;
-  color: var(--color-texto);
+  &__gimnasios {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
 
-  @include respond-down(md) {
-    font-size: $texto-xl;
+    &--cargando,
+    &--error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 10rem;
+      padding: $space-4;
+      color: var(--color-subtitulo);
+      text-align: center;
+    }
   }
-}
 
-.inicio__nombre {
-  color: var(--color-acento-texto);
-}
-
-.inicio__mensaje {
-  margin: 0;
-  font-size: $texto-m;
-  color: var(--color-subtitulo);
-
-  @include respond-down(md) {
+  &__gimnasios-vacio {
+    padding: $space-6;
+    border: $borde-thin dashed var(--color-borde);
+    border-radius: $radio-md;
     font-size: $texto-s;
+    text-align: center;
+    color: var(--color-subtitulo);
+  }
+
+  &__gimnasios-cargando {
+    padding: $space-6;
+    font-size: $texto-s;
+    text-align: center;
+    color: var(--color-subtitulo);
+  }
+
+  // ----------------------------------------
+  // Header de sección
+  // ----------------------------------------
+
+  &__section-header {
+    margin: 0;
+  }
+
+  &__section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-decoration: none;
+    color: var(--color-texto);
+    transition: color $inicio-transition ease;
+
+    &:hover {
+      color: var(--color-boton);
+
+      .inicio__section-arrow {
+        transform: translateX(0.25rem);
+      }
+    }
+  }
+
+  &__section-title {
+    margin: 0;
+    font-size: $texto-s;
+    font-weight: $font-weight-bold;
+    color: var(--color-texto);
+  }
+
+  &__section-arrow {
+    font-size: $texto-m;
+    font-weight: $font-weight-bold;
+    color: var(--color-texto);
+    transition: transform $inicio-transition ease;
+  }
+
+  // ----------------------------------------
+  // Grid de gimnasios
+  // ----------------------------------------
+
+  &__gimnasios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    gap: $space-4;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include respond-down(lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-down(sm) {
+      grid-template-columns: 1fr;
+      gap: $space-3;
+    }
   }
 }

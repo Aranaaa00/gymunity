@@ -1,18 +1,8 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
 $switcher-size: 2.5rem;
-$switcher-icon-size: 1.25rem;
+$switcher-icon: 1.25rem;
 $switcher-transition: 0.2s;
-$switcher-hover-bg: rgba($gris-100, 0.05);
-$switcher-active-scale: 0.95;
-
-// ============================================
-// THEME SWITCHER (Toggle Claro/Oscuro)
-// ============================================
 
 .theme-switcher {
   display: flex;
@@ -31,7 +21,7 @@ $switcher-active-scale: 0.95;
     background $switcher-transition ease;
 
   &:hover {
-    background: $switcher-hover-bg;
+    background: rgba($gris-100, 0.05);
     color: $color-botones;
   }
 
@@ -41,14 +31,14 @@ $switcher-active-scale: 0.95;
   }
 
   &:active {
-    transform: scale($switcher-active-scale);
+    transform: scale(0.95);
   }
 
   lucide-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: $switcher-icon-size;
-    height: $switcher-icon-size;
+    width: $switcher-icon;
+    height: $switcher-icon;
   }
 }

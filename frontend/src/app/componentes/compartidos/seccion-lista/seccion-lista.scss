@@ -1,57 +1,47 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// SECCION LISTA - ESTILOS
-// ============================================
-
 .seccion-lista {
   display: flex;
   flex-direction: column;
   gap: $space-2;
-}
 
-.seccion-lista__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-2;
-}
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-2;
+  }
 
-.seccion-lista__titulo {
-  margin: 0;
+  &__titulo {
+    margin: 0;
+    font-size: $texto-s;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
 
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
+  }
 
-  @include respond-down(sm) {
+  &__ver-mas {
+    padding: 0;
+    background: transparent;
+    border: none;
     font-size: $texto-xs;
-  }
-}
+    font-weight: $font-weight-medium;
+    color: var(--color-acento-texto);
+    cursor: pointer;
+    transition: color 0.2s ease;
 
-.seccion-lista__ver-mas {
-  padding: 0;
+    &:hover {
+      color: var(--color-acento-hover);
+      text-decoration: underline;
+    }
 
-  background: transparent;
-
-  border: none;
-
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-acento-texto);
-
-  cursor: pointer;
-
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--color-acento-hover);
-    text-decoration: underline;
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento-texto);
-    outline-offset: 2px;
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento-texto);
+      outline-offset: 2px;
+    }
   }
 }

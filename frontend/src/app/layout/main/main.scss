@@ -1,15 +1,7 @@
 @use '../../../styles/00-settings/variables' as *;
 @use '../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
 $main-header-offset: 3.5rem;
-
-// ============================================
-// MAIN - CONTENEDOR PRINCIPAL
-// ============================================
 
 .main {
   display: flex;
@@ -24,7 +16,6 @@ $main-header-offset: 3.5rem;
     padding: calc($space-3 + $main-header-offset) $space-2 $space-3;
   }
 
-  // Espacio extra para el buscador flotante en móvil
   @include respond-down(md) {
     padding-bottom: calc($space-4 + 4rem);
   }

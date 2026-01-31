@@ -1,71 +1,67 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// PAGINACION
-// ============================================
-
 .paginacion {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: $space-3;
   padding: $space-4 0;
-}
 
-.paginacion__btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  color: var(--color-texto);
-  cursor: pointer;
-  transition:
-    background-color $transicion-tema,
-    border-color $transicion-rapida,
-    color $transicion-rapida;
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-md;
+    color: var(--color-texto);
+    cursor: pointer;
+    transition:
+      background-color $transicion-tema,
+      border-color $transicion-rapida,
+      color $transicion-rapida;
 
-  &:hover:not(:disabled) {
-    background: var(--color-boton);
-    border-color: var(--color-boton);
-    color: var(--color-boton-texto);
+    &:hover:not(:disabled) {
+      background: var(--color-boton);
+      border-color: var(--color-boton);
+      color: var(--color-boton-texto);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $borde-thin;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $borde-thin;
+  &__icono {
+    color: var(--color-subtitulo);
+    transition: color $transicion-rapida;
+
+    .paginacion__btn:hover:not(:disabled) & {
+      color: var(--color-boton-texto);
+    }
+
+    &--izq {
+      transform: rotate(90deg);
+    }
+
+    &--der {
+      transform: rotate(-90deg);
+    }
   }
 
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  &__info {
+    min-width: 4rem;
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-subtitulo);
+    text-align: center;
   }
-}
-
-.paginacion__icono {
-  color: var(--color-subtitulo);
-  transition: color $transicion-rapida;
-
-  .paginacion__btn:hover:not(:disabled) & {
-    color: var(--color-boton-texto);
-  }
-}
-
-.paginacion__icono--izq {
-  transform: rotate(90deg);
-}
-
-.paginacion__icono--der {
-  transform: rotate(-90deg);
-}
-
-.paginacion__info {
-  min-width: 4rem;
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  color: var(--color-subtitulo);
-  text-align: center;
 }

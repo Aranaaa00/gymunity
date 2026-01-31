@@ -1,23 +1,11 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-$modal-fade-duration: 0.15s;
-$modal-slide-duration: 0.18s;
-$modal-max-width: 26rem;
-$modal-backdrop-blur: 0.25rem;
-$modal-backdrop-opacity: 0.5;
-$modal-cerrar-size: 2rem;
-$modal-cerrar-transition-duration: 0.15s;
-$modal-slide-offset: 0.5rem;
-$modal-slide-scale: 0.98;
-
-// ============================================
-// OVERLAY DE VENTANA EMERGENTE
-// ============================================
+$modal-fade: 0.15s;
+$modal-slide: 0.18s;
+$modal-max: 26rem;
+$modal-blur: 0.25rem;
+$cerrar-size: 2rem;
 
 .ventana-emergente {
   position: fixed;
@@ -27,77 +15,65 @@ $modal-slide-scale: 0.98;
   align-items: center;
   justify-content: center;
   padding: $space-2;
-  background: rgba($color-negro, $modal-backdrop-opacity);
-  backdrop-filter: blur($modal-backdrop-blur);
-  animation: modal-fade $modal-fade-duration ease-out;
-}
+  background: rgba($color-negro, 0.5);
+  backdrop-filter: blur($modal-blur);
+  animation: modal-fade $modal-fade ease-out;
 
-// ============================================
-// CONTENIDO DE LA VENTANA
-// ============================================
-
-.ventana-emergente__contenido {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: $modal-max-width;
-  max-height: calc(100vh - #{$space-4});
-  max-height: calc(100dvh - #{$space-4});
-  padding: $space-4 $space-5;
-  background: var(--color-fondo);
-  border-radius: $radio-xl;
-  box-shadow: $shadow-lg;
-  animation: modal-slide $modal-slide-duration ease-out;
-  overflow-y: auto;
-  transition: background-color $transicion-tema;
-
-  @include respond-down(sm) {
-    padding: $space-3 $space-3;
-    border-radius: $radio-lg;
-  }
-}
-
-// ============================================
-// BOTÓN CERRAR
-// ============================================
-
-.ventana-emergente__cerrar {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: $z-base;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: $modal-cerrar-size;
-  height: $modal-cerrar-size;
-  padding: 0;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-full;
-  color: var(--color-subtitulo);
-  cursor: pointer;
-  transition: 
-    background-color $modal-cerrar-transition-duration ease, 
-    color $modal-cerrar-transition-duration ease, 
-    border-color $modal-cerrar-transition-duration ease;
-
-  &:hover {
+  &__contenido {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: $modal-max;
+    max-height: calc(100vh - #{$space-4});
+    max-height: calc(100dvh - #{$space-4});
+    padding: $space-4 $space-5;
     background: var(--color-fondo);
-    border-color: var(--color-boton);
-    color: var(--color-texto);
+    border-radius: $radio-xl;
+    box-shadow: $shadow-lg;
+    animation: modal-slide $modal-slide ease-out;
+    overflow-y: auto;
+    transition: background-color $transicion-tema;
+
+    @include respond-down(sm) {
+      padding: $space-3 $space-3;
+      border-radius: $radio-lg;
+    }
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $borde-thin;
+  &__cerrar {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: $z-base;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $cerrar-size;
+    height: $cerrar-size;
+    padding: 0;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-full;
+    color: var(--color-subtitulo);
+    cursor: pointer;
+    transition: 
+      background-color 0.15s ease, 
+      color 0.15s ease, 
+      border-color 0.15s ease;
+
+    &:hover {
+      background: var(--color-fondo);
+      border-color: var(--color-boton);
+      color: var(--color-texto);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $borde-thin;
+    }
   }
 }
-
-// ============================================
-// ANIMACIONES
-// ============================================
 
 @keyframes modal-fade {
   from { opacity: 0; }
@@ -107,7 +83,7 @@ $modal-slide-scale: 0.98;
 @keyframes modal-slide {
   from { 
     opacity: 0; 
-    transform: translateY(-$modal-slide-offset) scale($modal-slide-scale); 
+    transform: translateY(-0.5rem) scale(0.98); 
   }
   to { 
     opacity: 1; 

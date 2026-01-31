@@ -12,33 +12,39 @@
 // (Atraviesa encapsulación de componentes)
 // ============================================
 
-// Desktop: botones ghost sobre header oscuro - texto blanco para máximo contraste
-.gym-header__nav .boton.boton--ghost {
-  border-color: $gris-50;
-  color: $gris-50;
+.gym-header__nav {
 
-  &:hover:not(:disabled) {
-    background: rgba($gris-50, 0.15);
+  .boton.boton--ghost {
+    // Desktop: botones ghost sobre header oscuro - texto blanco para máximo contraste
     border-color: $gris-50;
     color: $gris-50;
+
+    &:hover:not(:disabled) {
+      background: rgba($gris-50, 0.15);
+      border-color: $gris-50;
+      color: $gris-50;
+    }
   }
 }
 
 // Dropdown móvil: botones ocupan ancho completo
 @media (max-width: 767px) {
-  .gym-header__nav .boton {
-    width: 100%;
-  }
+  .gym-header__nav {
 
-  // Modo claro móvil: fondo claro ($gris-50), texto verde oscuro para contraste
-  .gym-header__nav .boton.boton--ghost {
-    border-color: $color-acento-texto;
-    color: $color-acento-texto;
+    .boton {
+      width: 100%;
+    }
 
-    &:hover:not(:disabled) {
-      background: rgba($color-botones, 0.1);
-      border-color: $color-botones-hover;
-      color: $color-botones-hover;
+    // Modo claro móvil: fondo claro ($gris-50), texto verde oscuro para contraste
+    .boton.boton--ghost {
+      border-color: $color-acento-texto;
+      color: $color-acento-texto;
+
+      &:hover:not(:disabled) {
+        background: rgba($color-botones, 0.1);
+        border-color: $color-botones-hover;
+        color: $color-botones-hover;
+      }
     }
   }
 
@@ -81,70 +87,78 @@
     opacity 0.15s ease-out,
     transform 0.15s ease-out;
   pointer-events: none;
-}
 
-.tooltip--visible {
-  opacity: 1;
-  transform: scale(1);
-}
+  // ----------------------------------------
+  // Modificadores
+  // ----------------------------------------
 
-.tooltip--arriba::after,
-.tooltip--abajo::after,
-.tooltip--izquierda::after,
-.tooltip--derecha::after {
-  content: '';
-  position: absolute;
-  border: 0.375rem solid transparent;
-}
+  &--visible {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-.tooltip--arriba::after {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-top-color: var(--color-header);
-}
+  &--arriba,
+  &--abajo,
+  &--izquierda,
+  &--derecha {
+    &::after {
+      content: '';
+      position: absolute;
+      border: 0.375rem solid transparent;
+    }
+  }
 
-.tooltip--abajo::after {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-bottom-color: var(--color-header);
-}
+  &--arriba::after {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: var(--color-header);
+  }
 
-.tooltip--izquierda::after {
-  top: 50%;
-  left: 100%;
-  transform: translateY(-50%);
-  border-left-color: var(--color-header);
-}
+  &--abajo::after {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: var(--color-header);
+  }
 
-.tooltip--derecha::after {
-  top: 50%;
-  right: 100%;
-  transform: translateY(-50%);
-  border-right-color: var(--color-header);
-}
+  &--izquierda::after {
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    border-left-color: var(--color-header);
+  }
 
-[data-tema="oscuro"] {
-  .tooltip {
+  &--derecha::after {
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    border-right-color: var(--color-header);
+  }
+
+  // ----------------------------------------
+  // Tema oscuro
+  // ----------------------------------------
+
+  [data-tema="oscuro"] & {
     background: $oscuro-fondo-secundario;
     border: $borde-thin solid $oscuro-borde;
     box-shadow: $oscuro-shadow-boton;
-  }
 
-  .tooltip--arriba::after {
-    border-top-color: $oscuro-fondo-secundario;
-  }
+    &--arriba::after {
+      border-top-color: $oscuro-fondo-secundario;
+    }
 
-  .tooltip--abajo::after {
-    border-bottom-color: $oscuro-fondo-secundario;
-  }
+    &--abajo::after {
+      border-bottom-color: $oscuro-fondo-secundario;
+    }
 
-  .tooltip--izquierda::after {
-    border-left-color: $oscuro-fondo-secundario;
-  }
+    &--izquierda::after {
+      border-left-color: $oscuro-fondo-secundario;
+    }
 
-  .tooltip--derecha::after {
-    border-right-color: $oscuro-fondo-secundario;
+    &--derecha::after {
+      border-right-color: $oscuro-fondo-secundario;
+    }
   }
 }

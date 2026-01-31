@@ -1,87 +1,72 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// BREADCRUMBS - NAVEGACIÓN
-// ============================================
-
 .breadcrumbs {
   width: 100%;
   padding: $space-2 $space-3;
-  
   background: var(--color-fondo-secundario);
-  
   border-bottom: $borde-thin solid var(--color-borde);
 
   @include respond-down(sm) {
     padding: $space-1 $space-2;
   }
-}
 
-.breadcrumbs__lista {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: $space-1;
-  
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0;
-  
-  list-style: none;
-}
-
-// ============================================
-// ITEMS
-// ============================================
-
-.breadcrumbs__item {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-}
-
-.breadcrumbs__enlace {
-  font-size: $texto-s;
-  text-decoration: none;
-  color: var(--color-boton);
-  
-  cursor: pointer;
-  
-  transition: color 0.15s ease;
-
-  &:hover {
-    color: var(--color-boton-hover);
-    text-decoration: underline;
+  &__lista {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-1;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $borde-thin;
-    
-    border-radius: $radio-sm;
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
   }
 
-  @include respond-down(sm) {
-    font-size: $texto-xs;
+  &__enlace {
+    font-size: $texto-s;
+    text-decoration: none;
+    color: var(--color-boton);
+    cursor: pointer;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--color-boton-hover);
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $borde-thin;
+      border-radius: $radio-sm;
+    }
+
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
   }
-}
 
-.breadcrumbs__separador {
-  font-size: $texto-s;
-  color: var(--color-subtitulo);
+  &__separador {
+    font-size: $texto-s;
+    color: var(--color-subtitulo);
 
-  @include respond-down(sm) {
-    font-size: $texto-xs;
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
   }
-}
 
-.breadcrumbs__actual {
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
+  &__actual {
+    font-size: $texto-s;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
 
-  @include respond-down(sm) {
-    font-size: $texto-xs;
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
   }
 }

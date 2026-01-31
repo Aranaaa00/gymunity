@@ -66,6 +66,10 @@ export class Card {
     return val !== null ? val.toFixed(1) : '';
   });
 
+  readonly variantClass = computed(() => {
+    return `card--${this.variant()}`;
+  });
+
   // ----------------------------------------
   // Métodos públicos
   // ----------------------------------------

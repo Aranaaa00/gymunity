@@ -1,21 +1,16 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// GALERÍA - ESTILOS (Layout Figma)
-// ============================================
-
-$galeria-miniaturas-size: 5rem;
+$galeria-miniaturas: 5rem;
 $galeria-gap: $space-2;
-$galeria-altura-desktop: 24rem;
-$galeria-altura-tablet: 18rem;
+$galeria-desktop: 24rem;
+$galeria-tablet: 18rem;
 
 .galeria {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: start;
   gap: $galeria-gap;
-
   margin: 0 0 $space-4 0;
 
   @include respond-down(md) {
@@ -23,151 +18,118 @@ $galeria-altura-tablet: 18rem;
     flex-direction: column;
     gap: $space-1;
   }
-}
 
-// ============================================
-// IMAGEN PRINCIPAL (ocupa toda la altura)
-// ============================================
+  &__principal {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: $galeria-desktop;
+    border-radius: $radio-lg;
 
-.galeria__principal {
-  position: relative;
+    @include respond-down(lg) {
+      height: $galeria-tablet;
+    }
 
-  overflow: hidden;
-
-  width: 100%;
-  height: $galeria-altura-desktop;
-
-  border-radius: $radio-lg;
-
-  @include respond-down(lg) {
-    height: $galeria-altura-tablet;
-  }
-
-  @include respond-down(md) {
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-}
-
-.galeria__imagen-principal {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  transition: transform 0.3s ease;
-
-  .galeria__principal:hover & {
-    transform: scale(1.02);
-  }
-}
-
-// ============================================
-// MINIATURAS (columna vertical al lado)
-// ============================================
-
-.galeria__miniaturas {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: $galeria-gap;
-
-  max-height: $galeria-altura-desktop;
-
-  overflow-y: auto;
-
-  @include respond-down(lg) {
-    max-height: $galeria-altura-tablet;
-  }
-
-  @include respond-down(md) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: auto;
-    overflow-x: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
+    @include respond-down(md) {
+      height: auto;
+      aspect-ratio: 16 / 9;
     }
   }
-}
 
-.galeria__miniatura {
-  position: relative;
-  flex-shrink: 0;
+  &__imagen-principal {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 
-  overflow: hidden;
-
-  width: $galeria-miniaturas-size;
-  height: $galeria-miniaturas-size;
-
-  padding: 0;
-
-  background: transparent;
-
-  border: $borde-medium solid transparent;
-  border-radius: $radio-md;
-
-  cursor: pointer;
-
-  transition: border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.05);
+    .galeria__principal:hover & {
+      transform: scale(1.02);
+    }
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 2px;
+  &__miniaturas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: $galeria-gap;
+    max-height: $galeria-desktop;
+    overflow-y: auto;
+
+    @include respond-down(lg) {
+      max-height: $galeria-tablet;
+    }
+
+    @include respond-down(md) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      height: auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
-  @include respond-down(md) {
-    width: 4rem;
-    height: 4rem;
+  &__miniatura {
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    width: $galeria-miniaturas;
+    height: $galeria-miniaturas;
+    padding: 0;
+    background: transparent;
+    border: $borde-medium solid transparent;
+    border-radius: $radio-md;
+    cursor: pointer;
+    transition: border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 2px;
+    }
+
+    @include respond-down(md) {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    &--activa {
+      border-color: var(--color-acento);
+      box-shadow: 0 0 0 2px rgba($color-botones, 0.3);
+    }
   }
-}
 
-.galeria__miniatura--activa {
-  border-color: var(--color-acento);
-  box-shadow: 0 0 0 2px rgba($color-botones, 0.3);
-}
+  &__miniatura-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: calc($radio-md - 2px);
+  }
 
-.galeria__miniatura-img {
-  width: 100%;
-  height: 100%;
+  &__caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: $space-2 $space-3;
+    background: rgba($gris-900, 0.85);
+    font-size: $texto-sm;
+    font-weight: $font-weight-medium;
+    text-align: center;
+    color: $gris-50;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 
-  object-fit: cover;
-
-  border-radius: calc($radio-md - 2px);
-}
-
-// ============================================
-// FIGCAPTION - Overlay en hover
-// ============================================
-
-.galeria__caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  
-  width: 100%;
-  padding: $space-2 $space-3;
-  
-  background: rgba($gris-900, 0.85);
-  
-  font-size: $texto-sm;
-  font-weight: $font-weight-medium;
-  text-align: center;
-  color: $gris-50;
-  
-  opacity: 0;
-  
-  transition: opacity 0.2s ease;
-  
-  .galeria__principal:hover & {
-    opacity: 1;
+    .galeria__principal:hover & {
+      opacity: 1;
+    }
   }
 }

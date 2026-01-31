@@ -1,22 +1,10 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-$spinner-animation-duration: 0.7s;
-
-// ============================================
-// HOST
-// ============================================
+$spinner-anim: 0.7s;
 
 :host {
   display: inline-flex;
 }
-
-// ============================================
-// SPINNER BASE
-// ============================================
 
 .spinner {
   display: flex;
@@ -24,56 +12,39 @@ $spinner-animation-duration: 0.7s;
   align-items: center;
   gap: $space-3;
   margin: 0;
-}
 
-.spinner__icono {
-  color: var(--color-boton);
-  animation: spinner-giro $spinner-animation-duration linear infinite;
-}
-
-.spinner__texto {
-  font-family: $fuente-principal;
-  font-size: $texto-sm;
-  font-variant-numeric: tabular-nums;
-  line-height: $line-height-normal;
-  text-align: center;
-  color: var(--color-subtitulo);
-}
-
-// ============================================
-// VARIANTES DE TAMAÑO
-// ============================================
-
-.spinner--lg .spinner__texto {
-  font-size: $texto-s;
-}
-
-// ============================================
-// MODO OVERLAY (dentro de carga-global)
-// ============================================
-
-.spinner--overlay {
-  .spinner__icono {
-    color: $gris-50;
+  &__icono {
+    color: var(--color-boton);
+    animation: spinner-giro $spinner-anim linear infinite;
   }
 
-  .spinner__texto {
+  &__texto {
+    font-family: $fuente-principal;
+    font-size: $texto-sm;
+    font-variant-numeric: tabular-nums;
+    line-height: $line-height-normal;
+    text-align: center;
+    color: var(--color-subtitulo);
+  }
+
+  &--lg &__texto {
     font-size: $texto-s;
-    font-weight: $font-weight-medium;
-    color: $gris-100;
+  }
+
+  &--overlay {
+    .spinner__icono {
+      color: $gris-50;
+    }
+
+    .spinner__texto {
+      font-size: $texto-s;
+      font-weight: $font-weight-medium;
+      color: $gris-100;
+    }
   }
 }
-
-// ============================================
-// ANIMACIONES
-// ============================================
 
 @keyframes spinner-giro {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

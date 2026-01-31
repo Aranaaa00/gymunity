@@ -24,6 +24,10 @@ $notificacion-hover-bg: rgba($color-negro, 0.05);
   line-height: $line-height-normal;
   box-shadow: $shadow-md;
 
+  // ----------------------------------------
+  // Modificadores de tipo
+  // ----------------------------------------
+
   &--success {
     background: var(--color-alerta-success-bg);
     border-color: var(--color-alerta-success-border);
@@ -47,29 +51,33 @@ $notificacion-hover-bg: rgba($color-negro, 0.05);
     border-color: var(--color-alerta-info-border);
     color: var(--color-alerta-info-text);
   }
-}
 
-.notificacion__mensaje {
-  flex: 1;
-  margin: 0;
-}
+  // ----------------------------------------
+  // Elementos
+  // ----------------------------------------
 
-.notificacion__cerrar {
-  display: flex;
-  flex-shrink: 0;
-  padding: $notificacion-cerrar-padding;
-  background: none;
-  border: none;
-  border-radius: $radio-sm;
-  color: currentColor;
-  cursor: pointer;
-  opacity: $notificacion-cerrar-opacity-default;
-  transition: 
-    opacity $notificacion-transition-duration ease, 
-    background $notificacion-transition-duration ease;
+  &__mensaje {
+    flex: 1;
+    margin: 0;
+  }
 
-  &:hover {
-    opacity: 1;
-    background: $notificacion-hover-bg;
+  &__cerrar {
+    display: flex;
+    flex-shrink: 0;
+    padding: $notificacion-cerrar-padding;
+    background: none;
+    border: none;
+    border-radius: $radio-sm;
+    color: currentColor;
+    cursor: pointer;
+    opacity: $notificacion-cerrar-opacity-default;
+    transition: 
+      opacity $notificacion-transition-duration ease, 
+      background $notificacion-transition-duration ease;
+
+    &:hover {
+      opacity: 1;
+      background: $notificacion-hover-bg;
+    }
   }
 }

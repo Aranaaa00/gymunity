@@ -5,51 +5,47 @@
 // VARIABLES LOCALES
 // ============================================
 
-$card-image-transition-duration: 0.3s;
-$card-image-hover-scale: 1.03;
-$card-image-horizontal-size: 4.5rem;
+$card-transition: 0.3s;
+$card-scale: 1.03;
+$card-horizontal: 4.5rem;
 
 // ============================================
-// CARD IMAGE (Imagen de Tarjeta)
+// CARD IMAGE
 // ============================================
 
-.card-image-wrapper {
+.card__image-wrapper {
   position: relative;
   display: block;
   overflow: hidden;
   background-color: var(--color-fondo-secundario);
   border-radius: $radio-lg;
-  transition: box-shadow $card-image-transition-duration ease;
+  transition: box-shadow $card-transition ease;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform $card-image-transition-duration ease;
+    transition: transform $card-transition ease;
   }
 
   &:hover img {
-    transform: scale($card-image-hover-scale);
+    transform: scale($card-scale);
   }
-}
 
-// ============================================
-// VARIANTE VERTICAL (aspect-ratio fijo)
-// ============================================
+  // ----------------------------------------
+  // Modificadores de variante
+  // ----------------------------------------
 
-.card-image-wrapper.vertical {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-}
+  &--vertical {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
 
-// ============================================
-// VARIANTE HORIZONTAL (cuadrada, compacta)
-// ============================================
-
-.card-image-wrapper.horizontal {
-  flex-shrink: 0;
-  width: $card-image-horizontal-size;
-  height: $card-image-horizontal-size;
-  border-radius: $radio-md;
+  &--horizontal {
+    flex-shrink: 0;
+    width: $card-horizontal;
+    height: $card-horizontal;
+    border-radius: $radio-md;
+  }
 }

@@ -1,10 +1,6 @@
 @use '../../../styles/00-settings/variables' as *;
 @use '../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// GIMNASIO - CONTENEDOR PRINCIPAL
-// ============================================
-
 .gimnasio {
   min-height: calc(100vh - 4rem);
   padding: $space-4 $space-3;
@@ -12,262 +8,214 @@
   @include respond-down(sm) {
     padding: $space-3 $space-2;
   }
-}
 
-.gimnasio--cargando,
-.gimnasio--error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gimnasio__contenedor {
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-  
-  max-width: $max-width-contenido;
-  margin: 0 auto;
-
-  @include respond-down(md) {
-    gap: $space-3;
+  &--cargando,
+  &--error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-}
 
-// ============================================
-// CARGA
-// ============================================
+  &__contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    max-width: $max-width-contenido;
+    margin: 0 auto;
 
-.gimnasio__carga {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-3;
+    @include respond-down(md) {
+      gap: $space-3;
+    }
+  }
 
-  text-align: center;
-}
+  &__carga {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-3;
+    text-align: center;
+  }
 
-.gimnasio__spinner {
-  animation: girar 1s linear infinite;
+  &__spinner {
+    animation: girar 1s linear infinite;
+  }
+
+  &__carga-texto {
+    font-size: $texto-lg;
+    color: var(--color-subtitulo);
+
+    @include respond-down(sm) {
+      font-size: $texto-s;
+    }
+  }
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-2;
+    width: 100%;
+
+    @include respond-down(lg) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  &__titulos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: $space-2;
+
+    @include respond-down(sm) {
+      gap: $space-1;
+    }
+  }
+
+  &__titulo {
+    margin: 0;
+    font-size: $texto-l;
+    font-weight: $font-weight-bold;
+    color: var(--color-titulo);
+
+    @include respond-down(md) {
+      font-size: $texto-lg;
+    }
+  }
+
+  &__valoracion {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+    font-size: $texto-s;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+  }
+
+  &__estrella {
+    color: var(--color-estrella);
+  }
+
+  &__boton-resenia {
+    padding: $space-1 $space-2;
+    background: var(--color-boton);
+    border: none;
+    border-radius: $radio-md;
+    font-size: $texto-xs;
+    font-weight: $font-weight-medium;
+    color: var(--color-boton-texto);
+    cursor: pointer;
+    transition: background-color $transicion-rapida, color $transicion-rapida;
+
+    &:hover {
+      background: var(--color-acento);
+      color: var(--color-boton-texto);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 2px;
+    }
+  }
+
+  &__imagen-unica {
+    margin: 0;
+    overflow: hidden;
+    border-radius: $radio-lg;
+    aspect-ratio: 16 / 9;
+  }
+
+  &__foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__descripcion {
+    padding: 0;
+  }
+
+  &__descripcion-texto {
+    margin: 0;
+    font-size: $texto-s;
+    line-height: $line-height-relaxed;
+    color: var(--color-texto);
+
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
+  }
+
+  &__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+
+    @include respond-down(md) {
+      gap: $space-3;
+    }
+  }
+
+  &__lista-profesores,
+  &__lista-clases,
+  &__lista-torneos,
+  &__lista-resenias {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include respond-down(sm) {
+      gap: $space-1;
+    }
+  }
+
+  &__estado-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-4;
+    text-align: center;
+
+    @include respond-down(sm) {
+      gap: $space-2;
+      padding: $space-3;
+    }
+  }
+
+  &__error-icono {
+    color: var(--color-error);
+  }
+
+  &__error-titulo {
+    margin: 0;
+    font-size: $texto-xl;
+    font-weight: $font-weight-bold;
+    color: var(--color-titulo);
+
+    @include respond-down(sm) {
+      font-size: $texto-lg;
+    }
+  }
+
+  &__error-texto {
+    margin: 0;
+    font-size: $texto-s;
+    color: var(--color-subtitulo);
+
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
+  }
 }
 
 @keyframes girar {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-.gimnasio__carga-texto {
-  font-size: $texto-lg;
-  color: var(--color-subtitulo);
-
-  @include respond-down(sm) {
-    font-size: $texto-s;
-  }
-}
-
-// ============================================
-// HEADER
-// ============================================
-
-.gimnasio__header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: $space-2;
-
-  width: 100%;
-
-  @include respond-down(lg) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-.gimnasio__titulos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: $space-2;
-
-  @include respond-down(sm) {
-    gap: $space-1;
-  }
-}
-
-.gimnasio__titulo {
-  margin: 0;
-
-  font-size: $texto-l;
-  font-weight: $font-weight-bold;
-  color: var(--color-titulo);
-
-  @include respond-down(md) {
-    font-size: $texto-lg;
-  }
-}
-
-.gimnasio__valoracion {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-
-  margin: 0;
-
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-}
-
-.gimnasio__estrella {
-  color: var(--color-estrella);
-}
-
-.gimnasio__boton-resenia {
-  padding: $space-1 $space-2;
-
-  background: var(--color-boton);
-
-  border: none;
-  border-radius: $radio-md;
-
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-boton-texto);
-  cursor: pointer;
-  transition: background-color $transicion-rapida, color $transicion-rapida;
-
-  &:hover {
-    background: var(--color-acento);
-    color: var(--color-boton-texto);
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 2px;
-  }
-}
-
-// ============================================
-// IMAGEN ÚNICA (sin galería)
-// ============================================
-
-.gimnasio__imagen-unica {
-  margin: 0;
-
-  overflow: hidden;
-
-  border-radius: $radio-lg;
-
-  aspect-ratio: 16 / 9;
-}
-
-.gimnasio__foto {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-// ============================================
-// DESCRIPCIÓN
-// ============================================
-
-.gimnasio__descripcion {
-  padding: 0;
-}
-
-.gimnasio__descripcion-texto {
-  margin: 0;
-
-  font-size: $texto-s;
-  line-height: $line-height-relaxed;
-  color: var(--color-texto);
-
-  @include respond-down(sm) {
-    font-size: $texto-xs;
-  }
-}
-
-// ============================================
-// CONTENIDO (Profesores, Torneos, Reseñas)
-// ============================================
-
-.gimnasio__contenido {
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-
-  @include respond-down(md) {
-    gap: $space-3;
-  }
-}
-
-// ============================================
-// LISTAS
-// ============================================
-
-.gimnasio__lista-profesores,
-.gimnasio__lista-clases,
-.gimnasio__lista-torneos,
-.gimnasio__lista-resenias {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-
-  @include respond-down(sm) {
-    gap: $space-1;
-  }
-}
-
-// ============================================
-// ERROR
-// ============================================
-
-.gimnasio__estado-error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-3;
-  
-  padding: $space-4;
-  
-  text-align: center;
-
-  @include respond-down(sm) {
-    gap: $space-2;
-    padding: $space-3;
-  }
-}
-
-.gimnasio__error-icono {
-  color: var(--color-error);
-}
-
-.gimnasio__error-titulo {
-  margin: 0;
-
-  font-size: $texto-xl;
-  font-weight: $font-weight-bold;
-  color: var(--color-titulo);
-
-  @include respond-down(sm) {
-    font-size: $texto-lg;
-  }
-}
-
-.gimnasio__error-texto {
-  margin: 0;
-
-  font-size: $texto-s;
-  color: var(--color-subtitulo);
-
-  @include respond-down(sm) {
-    font-size: $texto-xs;
-  }
 }

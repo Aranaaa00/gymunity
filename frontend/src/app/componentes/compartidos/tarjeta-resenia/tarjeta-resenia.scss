@@ -1,18 +1,11 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// TARJETA RESEÑA - ESTILOS
-// ============================================
-
 .tarjeta-resenia {
   display: flex;
   gap: $space-2;
-
   padding: $space-2;
-
   background: var(--color-fondo-secundario);
-
   border: $borde-thin solid var(--color-borde);
   border-radius: $radio-lg;
   transition: background-color $transicion-tema, border-color $transicion-tema;
@@ -21,142 +14,114 @@
     gap: $space-1;
     padding: $space-1;
   }
-}
 
-// ============================================
-// AVATAR
-// ============================================
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0;
+    background: var(--color-fondo);
+    border-radius: $radio-full;
+    overflow: hidden;
 
-.tarjeta-resenia__avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+    @include respond-down(sm) {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
 
-  width: 2.5rem;
-  height: 2.5rem;
-  margin: 0;
+  &__imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-  background: var(--color-fondo);
+  &__icono-default {
+    color: var(--color-subtitulo);
+  }
 
-  border-radius: $radio-full;
+  &__contenido {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: $space-1;
+    min-width: 0;
+  }
 
-  overflow: hidden;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
 
-  @include respond-down(sm) {
+  &__nombre {
+    margin: 0;
+    font-size: $texto-xs;
+    font-weight: $font-weight-medium;
+    color: var(--color-subtitulo);
+  }
+
+  &__titulo {
+    font-size: $texto-s;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+
+    @include respond-down(sm) {
+      font-size: $texto-xs;
+    }
+  }
+
+  &__texto {
+    margin: 0;
+    font-size: $texto-xs;
+    line-height: $line-height-relaxed;
+    color: var(--color-texto);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__valoracion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: $texto-xs;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+  }
+
+  &__estrella {
+    color: var(--color-estrella);
+  }
+
+  &__corazon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     width: 2rem;
     height: 2rem;
-  }
-}
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--color-subtitulo);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.15s ease;
 
-.tarjeta-resenia__imagen {
-  width: 100%;
-  height: 100%;
+    &:hover {
+      color: var(--color-error);
+      transform: scale(1.1);
+    }
 
-  object-fit: cover;
-}
-
-.tarjeta-resenia__icono-default {
-  color: var(--color-subtitulo);
-}
-
-// ============================================
-// CONTENIDO
-// ============================================
-
-.tarjeta-resenia__contenido {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: $space-1;
-
-  min-width: 0;
-}
-
-.tarjeta-resenia__header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.tarjeta-resenia__nombre {
-  margin: 0;
-
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-subtitulo);
-}
-
-.tarjeta-resenia__titulo {
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-
-  @include respond-down(sm) {
-    font-size: $texto-xs;
-  }
-}
-
-.tarjeta-resenia__texto {
-  margin: 0;
-
-  font-size: $texto-xs;
-  line-height: $line-height-relaxed;
-  color: var(--color-texto);
-
-  // Limitar a 3 líneas
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-// ============================================
-// VALORACIÓN Y CORAZÓN
-// ============================================
-
-.tarjeta-resenia__valoracion {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-
-  font-size: $texto-xs;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-}
-
-.tarjeta-resenia__estrella {
-  color: var(--color-estrella);
-}
-
-.tarjeta-resenia__corazon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-
-  background: transparent;
-  border: none;
-
-  color: var(--color-subtitulo);
-
-  cursor: pointer;
-
-  transition: color 0.2s ease, transform 0.15s ease;
-
-  &:hover {
-    color: var(--color-error);
-    transform: scale(1.1);
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 2px;
-    border-radius: $radio-sm;
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 2px;
+      border-radius: $radio-sm;
+    }
   }
 }

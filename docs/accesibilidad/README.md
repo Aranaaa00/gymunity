@@ -328,7 +328,7 @@ Después de aplicar todas las correcciones de accesibilidad, he vuelto a ejecuta
 |-------------|-------|---------|--------|
 | Lighthouse | 91/100 | 100/100 | +9 puntos |
 | WAVE | 2 errores, 5 alertas | 0 errores, 3 alertas | -2 errores, -2 alertas |
-| TAW | 11 problemas, 29 advertencias | 0 problemas | -11 problemas |
+| TAW | 11 problemas, 29 advertencias | 0 problemas, 36 advertencias | -11 problemas |
 
 **Capturas de los resultados finales:**
 - ![Lighthouse después de las correcciones](./capturas/lighthouse-despues.png)

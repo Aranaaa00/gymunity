@@ -6,7 +6,6 @@
 
 // Mixin para media queries responsive (desktop-first - max-width)
 // Breakpoints: xl(1280), lg(1024), md(768), sm(640)
-// Uso: estilos base para desktop, luego @include respond-down(lg) para tablet, etc.
 @mixin respond-down($breakpoint) {
   @if $breakpoint == xl {
     @media (max-width: #{$breakpoint-xl - 1px}) { @content; }

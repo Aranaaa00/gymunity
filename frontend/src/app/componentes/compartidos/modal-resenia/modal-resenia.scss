@@ -1,22 +1,10 @@
 @use '../../../../styles/00-settings/variables' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// MODAL RESEÑA
-// ============================================
-
-// ----------------------------------------
-// Variables locales
-// ----------------------------------------
-
-$modal-max-width: 28rem;
-$modal-backdrop-blur: 0.25rem;
-$modal-animation-duration: 0.2s;
+$modal-max: 28rem;
+$modal-blur: 0.25rem;
+$modal-anim: 0.2s;
 $estrella-size: 2.25rem;
-
-// ----------------------------------------
-// Overlay
-// ----------------------------------------
 
 .modal-resenia {
   position: fixed;
@@ -27,49 +15,261 @@ $estrella-size: 2.25rem;
   justify-content: center;
   padding: $space-4;
   background: rgba($color-negro, 0.5);
-  backdrop-filter: blur($modal-backdrop-blur);
-  animation: modal-fade $modal-animation-duration ease-out;
+  backdrop-filter: blur($modal-blur);
+  animation: modal-fade $modal-anim ease-out;
 
   @include respond-down(sm) {
     padding: $space-2;
     align-items: flex-end;
+  }
+
+  &__contenido {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    width: 100%;
+    max-width: $modal-max;
+    max-height: calc(100vh - #{$space-8});
+    max-height: calc(100dvh - #{$space-8});
+    padding: $space-5;
+    overflow-y: auto;
+    background: var(--color-fondo);
+    border-radius: $radio-xl;
+    box-shadow: $shadow-lg;
+    animation: modal-slide $modal-anim ease-out;
+    transition: background-color $transicion-tema;
+
+    @include respond-down(sm) {
+      gap: $space-3;
+      max-width: 100%;
+      max-height: 85vh;
+      max-height: 85dvh;
+      padding: $space-4;
+      border-radius: $radio-xl $radio-xl 0 0;
+    }
+  }
+
+  &__cerrar {
+    position: absolute;
+    top: $space-3;
+    right: $space-3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $radio-full;
+    color: var(--color-subtitulo);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+
+    &:hover {
+      background: var(--color-hover);
+      color: var(--color-texto);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 0.125rem;
+    }
+  }
+
+  &__header {
+    text-align: center;
+    padding-right: $space-6;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-size: $texto-xl;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+    color: var(--color-titulo);
+  }
+
+  &__gimnasio {
+    margin: $space-1 0 0;
+    font-size: $texto-s;
+    font-weight: $font-weight-medium;
+    color: var(--color-acento-texto);
+  }
+
+  &__cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__valoracion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  &__label {
+    font-size: $texto-s;
+    font-weight: $font-weight-medium;
+    color: var(--color-texto);
+  }
+
+  &__estrellas {
+    display: flex;
+    gap: $space-1;
+  }
+
+  &__estrella {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $estrella-size;
+    height: $estrella-size;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--color-borde);
+    cursor: pointer;
+    transition: transform 0.15s, color 0.15s;
+
+    &:hover {
+      transform: scale(1.15);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 0.125rem;
+      border-radius: $radio-sm;
+    }
+
+    @include respond-down(sm) {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &--activa {
+      color: var(--color-estrella);
+
+      svg {
+        fill: var(--color-estrella);
+      }
+    }
+  }
+
+  &__campo {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 7rem;
+    padding: $space-3;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-md;
+    font-family: inherit;
+    font-size: $texto-s;
+    line-height: $line-height-relaxed;
+    color: var(--color-texto);
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &::placeholder {
+      color: var(--color-subtitulo);
+    }
+
+    &:focus {
+      border-color: var(--color-acento);
+      box-shadow: 0 0 0 0.1875rem rgba($color-botones, 0.15);
+      outline: none;
+    }
+
+    @include respond-down(sm) {
+      min-height: 5rem;
+      padding: $space-2;
+    }
+  }
+
+  &__contador {
+    align-self: flex-end;
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
+  }
+
+  &__acciones {
+    display: flex;
+    gap: $space-2;
+    padding-top: $space-2;
+    border-top: $borde-thin solid var(--color-borde);
+
+    @include respond-down(sm) {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &__boton {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-1;
+    padding: $space-2 $space-4;
+    border: none;
+    border-radius: $radio-md;
+    font-size: $texto-s;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s, transform 0.15s;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: 0.125rem;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &--primario {
+      background: var(--color-boton);
+      color: var(--color-boton-texto);
+
+      &:hover:not(:disabled) {
+        background: var(--color-boton-hover);
+      }
+    }
+
+    &--secundario {
+      background: var(--color-fondo-secundario);
+      color: var(--color-texto);
+
+      &:hover:not(:disabled) {
+        background: var(--color-hover);
+      }
+    }
+  }
+
+  &__spinner {
+    animation: spin 1s linear infinite;
   }
 }
 
 @keyframes modal-fade {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-// ----------------------------------------
-// Contenido
-// ----------------------------------------
-
-.modal-resenia__contenido {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-  width: 100%;
-  max-width: $modal-max-width;
-  max-height: calc(100vh - #{$space-8});
-  max-height: calc(100dvh - #{$space-8});
-  padding: $space-5;
-  overflow-y: auto;
-  background: var(--color-fondo);
-  border-radius: $radio-xl;
-  box-shadow: $shadow-lg;
-  animation: modal-slide $modal-animation-duration ease-out;
-  transition: background-color $transicion-tema;
-
-  @include respond-down(sm) {
-    gap: $space-3;
-    max-width: 100%;
-    max-height: 85vh;
-    max-height: 85dvh;
-    padding: $space-4;
-    border-radius: $radio-xl $radio-xl 0 0;
-  }
 }
 
 @keyframes modal-slide {
@@ -81,250 +281,6 @@ $estrella-size: 2.25rem;
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
-
-// ----------------------------------------
-// Botón cerrar
-// ----------------------------------------
-
-.modal-resenia__cerrar {
-  position: absolute;
-  top: $space-3;
-  right: $space-3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: $radio-full;
-  color: var(--color-subtitulo);
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
-
-  &:hover {
-    background: var(--color-hover);
-    color: var(--color-texto);
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 0.125rem;
-  }
-}
-
-// ----------------------------------------
-// Header
-// ----------------------------------------
-
-.modal-resenia__header {
-  text-align: center;
-  padding-right: $space-6;
-}
-
-.modal-resenia__titulo {
-  margin: 0;
-  font-size: $texto-xl;
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-tight;
-  color: var(--color-titulo);
-}
-
-.modal-resenia__gimnasio {
-  margin: $space-1 0 0;
-  font-size: $texto-s;
-  font-weight: $font-weight-medium;
-  color: var(--color-acento-texto);
-}
-
-// ----------------------------------------
-// Cuerpo
-// ----------------------------------------
-
-.modal-resenia__cuerpo {
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-}
-
-// ----------------------------------------
-// Valoración con estrellas
-// ----------------------------------------
-
-.modal-resenia__valoracion {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-2;
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.modal-resenia__label {
-  font-size: $texto-s;
-  font-weight: $font-weight-medium;
-  color: var(--color-texto);
-}
-
-.modal-resenia__estrellas {
-  display: flex;
-  gap: $space-1;
-}
-
-.modal-resenia__estrella {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: $estrella-size;
-  height: $estrella-size;
-  padding: 0;
-  background: transparent;
-  border: none;
-  color: var(--color-borde);
-  cursor: pointer;
-  transition: transform 0.15s, color 0.15s;
-
-  &:hover {
-    transform: scale(1.15);
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 0.125rem;
-    border-radius: $radio-sm;
-  }
-
-  @include respond-down(sm) {
-    width: 2rem;
-    height: 2rem;
-  }
-}
-
-.modal-resenia__estrella--activa {
-  color: var(--color-estrella);
-
-  svg {
-    fill: var(--color-estrella);
-  }
-}
-
-// ----------------------------------------
-// Campo de texto
-// ----------------------------------------
-
-.modal-resenia__campo {
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-}
-
-.modal-resenia__textarea {
-  width: 100%;
-  min-height: 7rem;
-  padding: $space-3;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  font-family: inherit;
-  font-size: $texto-s;
-  line-height: $line-height-relaxed;
-  color: var(--color-texto);
-  resize: vertical;
-  transition: border-color 0.2s, box-shadow 0.2s;
-
-  &::placeholder {
-    color: var(--color-subtitulo);
-  }
-
-  &:focus {
-    border-color: var(--color-acento);
-    box-shadow: 0 0 0 0.1875rem rgba($color-botones, 0.15);
-    outline: none;
-  }
-
-  @include respond-down(sm) {
-    min-height: 5rem;
-    padding: $space-2;
-  }
-}
-
-.modal-resenia__contador {
-  align-self: flex-end;
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
-}
-
-// ----------------------------------------
-// Acciones
-// ----------------------------------------
-
-.modal-resenia__acciones {
-  display: flex;
-  gap: $space-2;
-  padding-top: $space-2;
-  border-top: $borde-thin solid var(--color-borde);
-
-  @include respond-down(sm) {
-    flex-direction: column-reverse;
-  }
-}
-
-.modal-resenia__boton {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-1;
-  padding: $space-2 $space-4;
-  border: none;
-  border-radius: $radio-md;
-  font-size: $texto-s;
-  font-weight: $font-weight-medium;
-  cursor: pointer;
-  transition: background-color 0.2s, opacity 0.2s, transform 0.15s;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: 0.125rem;
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-}
-
-.modal-resenia__boton--primario {
-  background: var(--color-boton);
-  color: var(--color-boton-texto);
-
-  &:hover:not(:disabled) {
-    background: var(--color-boton-hover);
-  }
-}
-
-.modal-resenia__boton--secundario {
-  background: var(--color-fondo-secundario);
-  color: var(--color-texto);
-
-  &:hover:not(:disabled) {
-    background: var(--color-hover);
-  }
-}
-
-// ----------------------------------------
-// Spinner
-// ----------------------------------------
-
-.modal-resenia__spinner {
-  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {

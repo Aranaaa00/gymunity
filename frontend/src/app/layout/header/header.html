@@ -50,9 +50,9 @@
     (click)="cerrarMenu()"
     aria-hidden="true">
   </aside>
-</header>
 
-<!-- Buscador flotante para móvil (fixed en bottom) -->
-<search class="gym-buscador-flotante">
-  <app-buscador placeholder="Buscar gimnasios..." [expandido]="true" (buscarConDebounce)="alBuscar($event)" />
-</search>
+  <!-- Buscador flotante para móvil (fixed en bottom) -->
+  <search class="gym-header__buscador-flotante">
+    <app-buscador placeholder="Buscar gimnasios..." [expandido]="true" (buscarConDebounce)="alBuscar($event)" />
+  </search>
+</header>

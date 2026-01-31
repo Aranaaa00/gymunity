@@ -1,16 +1,7 @@
 @use '../../../../styles/00-settings/variables' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-$carga-animation-duration: 0.2s;
-$carga-backdrop-blur: 0.25rem;
-$carga-overlay-opacity-claro: 0.7;
-$carga-overlay-opacity-oscuro: 0.85;
-
-// ============================================
-// CARGA GLOBAL - Overlay de Pantalla Completa
-// ============================================
+$carga-anim: 0.2s;
+$carga-blur: 0.25rem;
 
 .carga-global {
   position: fixed;
@@ -19,31 +10,16 @@ $carga-overlay-opacity-oscuro: 0.85;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba($gris-900, $carga-overlay-opacity-claro);
-  animation: carga-aparecer $carga-animation-duration ease-out;
-  backdrop-filter: blur($carga-backdrop-blur);
-}
+  background-color: rgba($gris-900, 0.7);
+  animation: carga-aparecer $carga-anim ease-out;
+  backdrop-filter: blur($carga-blur);
 
-// ============================================
-// ANIMACIONES
-// ============================================
+  [data-tema="oscuro"] & {
+    background-color: rgba($gris-900, 0.85);
+  }
+}
 
 @keyframes carga-aparecer {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-// ============================================
-// MODO OSCURO
-// ============================================
-
-[data-tema="oscuro"] {
-  .carga-global {
-    background-color: rgba($gris-900, $carga-overlay-opacity-oscuro);
-  }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

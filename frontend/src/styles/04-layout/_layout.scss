@@ -27,34 +27,42 @@ $transform-hover: -0.125rem;
   grid-template-columns: repeat(auto-fit, minmax($grid-item-min, 1fr));
   gap: $space-6;
   width: 100%;
-}
 
-.gym-grid__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-6;
-  width: 100%;
-}
+  // ----------------------------------------
+  // Elementos
+  // ----------------------------------------
 
-.gym-grid__item {
-  flex: 1 1 $grid-item-min;
-  min-width: $grid-item-min;
-  max-width: $grid-item-max;
-  background: var(--color-fondo-secundario);
-  border-radius: $radio-lg;
-  box-shadow: $shadow-sm;
-  overflow: hidden;
-  transition: 
-    background-color $transicion-tema,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY($transform-hover);
-    box-shadow: $shadow-md;
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-6;
+    width: 100%;
   }
-}
 
-.gym-grid--section {
-  margin-bottom: $space-8;
+  &__item {
+    flex: 1 1 $grid-item-min;
+    min-width: $grid-item-min;
+    max-width: $grid-item-max;
+    background: var(--color-fondo-secundario);
+    border-radius: $radio-lg;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+    transition: 
+      background-color $transicion-tema,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY($transform-hover);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  // ----------------------------------------
+  // Modificadores
+  // ----------------------------------------
+
+  &--section {
+    margin-bottom: $space-8;
+  }
 }

@@ -1,19 +1,11 @@
 @use '../../../styles/00-settings/variables' as *;
 @use '../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// VARIABLES LOCALES
-// ============================================
-
-$header-menu-transition-duration: 0.2s;
-$header-logo-height-mobile: 2rem;
-$header-logo-height-desktop: 2.5rem;
+$header-transition: 0.2s;
+$header-logo-mobile: 2rem;
+$header-logo-desktop: 2.5rem;
 $header-backdrop-opacity: 0.4;
-$header-buscador-max-width: 28rem;
-
-// ============================================
-// HEADER - COMPONENTE PRINCIPAL
-// ============================================
+$header-buscador-max: 28rem;
 
 .gym-header {
   position: fixed;
@@ -32,294 +24,255 @@ $header-buscador-max-width: 28rem;
   @include respond-down(md) {
     padding: $space-1 0;
   }
-}
 
-// ============================================
-// FILA SUPERIOR (logo + buscador desktop + acciones)
-// ============================================
-
-.gym-header__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-3;
-  width: 100%;
-  max-width: $max-width-contenido;
-  margin: 0 auto;
-  padding: 0 $space-4;
-
-  @include respond-down(md) {
-    gap: $space-2;
-    padding: 0 $space-3;
-  }
-}
-
-// ============================================
-// LOGO
-// ============================================
-
-.gym-header__logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  outline: none;
-  transition: opacity $header-menu-transition-duration ease;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  &:focus-visible {
-    opacity: 0.8;
-    outline: $borde-medium solid var(--color-boton);
-    outline-offset: $space-1;
-    border-radius: $radio-sm;
-  }
-
-  img {
-    display: block;
-    height: $header-logo-height-desktop;
-    width: auto;
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+    width: 100%;
+    max-width: $max-width-contenido;
+    margin: 0 auto;
+    padding: 0 $space-4;
 
     @include respond-down(md) {
-      height: $header-logo-height-mobile;
+      gap: $space-2;
+      padding: 0 $space-3;
     }
   }
-}
 
-// ============================================
-// BUSCADOR
-// ============================================
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    outline: none;
+    transition: opacity $header-transition ease;
 
-.gym-header__buscador {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  justify-content: center;
-  max-width: $header-buscador-max-width;
+    &:hover {
+      opacity: 0.9;
+    }
 
-  @include respond-down(md) {
-    display: none;
+    &:focus-visible {
+      opacity: 0.8;
+      outline: $borde-medium solid var(--color-boton);
+      outline-offset: $space-1;
+      border-radius: $radio-sm;
+    }
+
+    img {
+      display: block;
+      height: $header-logo-desktop;
+      width: auto;
+
+      @include respond-down(md) {
+        height: $header-logo-mobile;
+      }
+    }
   }
-}
 
-// ============================================
-// BUSCADOR FLOTANTE (móvil - fixed en bottom)
-// ============================================
+  &__buscador {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    max-width: $header-buscador-max;
 
-.gym-buscador-flotante {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: $z-sticky;
+    @include respond-down(md) {
+      display: none;
+    }
+  }
 
-  display: none;
+  &__acciones {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
 
-  width: 100%;
-  padding: $space-2;
-  padding-bottom: calc($space-2 + env(safe-area-inset-bottom, 0px));
-
-  background: var(--color-header);
-
-  border-top: $borde-thin solid var(--color-borde);
-
-  box-shadow: 0 -2px 10px rgba($color-negro, 0.1);
-
-  @include respond-down(md) {
+  &__tema {
     display: flex;
   }
 
-  // El buscador ocupa el 100%
-  app-buscador {
-    width: 100%;
+  &__menu-usuario {
+    display: flex;
   }
-}
 
-// ============================================
-// ACCIONES (tema + menu/nav + hamburguesa)
-// ============================================
-
-.gym-header__acciones {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: $space-2;
-  flex-shrink: 0;
-}
-
-.gym-header__tema {
-  display: flex;
-}
-
-// ============================================
-// MENU USUARIO
-// ============================================
-
-.gym-header__menu-usuario {
-  display: flex;
-}
-
-// ============================================
-// NAVEGACIÓN
-// ============================================
-
-.gym-header__nav {
-  position: static;
-  z-index: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: $space-2;
-  min-width: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  opacity: 1;
-  pointer-events: auto;
-  transform: none;
-
-  @include respond-down(md) {
-    position: absolute;
-    top: calc(100% + $space-2);
-    right: 0;
-    z-index: $z-overlay;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
+  &__nav {
+    position: static;
+    z-index: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
     gap: $space-2;
-    min-width: 12rem;
-    padding: $space-3;
-    background: $gris-50;
-    border: $borde-thin solid $gris-200;
-    border-radius: $radio-md;
-    box-shadow: $shadow-lg;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-0.5rem);
-    transition: opacity $header-menu-transition-duration ease,
-                transform $header-menu-transition-duration ease;
+    min-width: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
 
-    [data-tema="oscuro"] & {
-      background: $oscuro-fondo-secundario;
-      border-color: $oscuro-borde;
-    }
+    @include respond-down(md) {
+      position: absolute;
+      top: calc(100% + $space-2);
+      right: 0;
+      z-index: $z-overlay;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      gap: $space-2;
+      min-width: 12rem;
+      padding: $space-3;
+      background: $gris-50;
+      border: $borde-thin solid $gris-200;
+      border-radius: $radio-md;
+      box-shadow: $shadow-lg;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-0.5rem);
+      transition: opacity $header-transition ease,
+                  transform $header-transition ease;
 
-    // Estilos específicos para botones dentro del dropdown móvil
-    .boton {
-      justify-content: center;
-      width: 100%;
-      
-      &.boton--primario {
-        color: $gris-50;
-        background: $color-acento-texto;
-        
-        &:hover {
-          background: $color-botones-hover;
-        }
+      [data-tema="oscuro"] & {
+        background: $oscuro-fondo-secundario;
+        border-color: $oscuro-borde;
       }
 
-      &.boton--ghost {
-        color: $color-acento-texto;
-        background: transparent;
-        
-        &:hover {
+      .boton {
+        justify-content: center;
+        width: 100%;
+
+        &.boton--primario {
           color: $gris-50;
           background: $color-acento-texto;
-        }
-      }
-    }
 
-    [data-tema="oscuro"] & {
-      .boton {
-        &.boton--primario {
-          color: $gris-900;
-          background: $oscuro-boton;
-          
           &:hover {
-            background: $oscuro-boton-hover;
+            background: $color-botones-hover;
           }
         }
 
         &.boton--ghost {
-          color: $gris-50;
+          color: $color-acento-texto;
           background: transparent;
-          
+
           &:hover {
+            color: $gris-50;
+            background: $color-acento-texto;
+          }
+        }
+      }
+
+      [data-tema="oscuro"] & {
+        .boton {
+          &.boton--primario {
             color: $gris-900;
             background: $oscuro-boton;
+
+            &:hover {
+              background: $oscuro-boton-hover;
+            }
+          }
+
+          &.boton--ghost {
+            color: $gris-50;
+            background: transparent;
+
+            &:hover {
+              color: $gris-900;
+              background: $oscuro-boton;
+            }
           }
         }
       }
     }
+
+    &--abierto {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
   }
 
-  &--abierto {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-}
-
-// ============================================
-// HAMBURGUESA
-// ============================================
-
-.gym-header__hamburguesa {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: $space-1;
-  background: transparent;
-  border: none;
-  border-radius: $radio-md;
-  color: $gris-100;
-  cursor: pointer;
-  transition: background $header-menu-transition-duration ease;
-
-  &:hover {
-    background: rgba($gris-100, 0.1);
-  }
-
-  &--oculto {
+  &__hamburguesa {
     display: none;
-  }
+    align-items: center;
+    justify-content: center;
+    padding: $space-1;
+    background: transparent;
+    border: none;
+    border-radius: $radio-md;
+    color: $gris-100;
+    cursor: pointer;
+    transition: background $header-transition ease;
 
-  @include respond-down(md) {
-    display: flex;
+    &:hover {
+      background: rgba($gris-100, 0.1);
+    }
 
     &--oculto {
       display: none;
     }
-  }
-}
 
-// ============================================
-// BACKDROP (Overlay oscuro)
-// ============================================
+    @include respond-down(md) {
+      display: flex;
 
-.gym-header__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: $z-dropdown;
-  display: none;
-  background: rgba($color-negro, $header-backdrop-opacity);
-  opacity: 0;
-  cursor: pointer;
-  pointer-events: none;
-  transition: opacity $header-menu-transition-duration ease;
-
-  &--visible {
-    opacity: 1;
-    pointer-events: auto;
+      &--oculto {
+        display: none;
+      }
+    }
   }
 
-  @include respond-down(md) {
-    display: block;
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: $z-dropdown;
+    display: none;
+    background: rgba($color-negro, $header-backdrop-opacity);
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+    transition: opacity $header-transition ease;
+
+    &--visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @include respond-down(md) {
+      display: block;
+    }
+  }
+
+  // ----------------------------------------
+  // Buscador flotante móvil
+  // ----------------------------------------
+
+  &__buscador-flotante {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-sticky;
+    display: none;
+    width: 100%;
+    padding: $space-2;
+    padding-bottom: calc($space-2 + env(safe-area-inset-bottom, 0px));
+    background: var(--color-header);
+    border-top: $borde-thin solid var(--color-borde);
+    box-shadow: 0 -2px 10px rgba($color-negro, 0.1);
+
+    @include respond-down(md) {
+      display: flex;
+    }
+
+    app-buscador {
+      width: 100%;
+    }
   }
 }

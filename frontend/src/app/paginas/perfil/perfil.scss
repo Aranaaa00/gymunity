@@ -1,10 +1,6 @@
 @use '../../../styles/00-settings/variables' as *;
 @use '../../../styles/01-tools/mixins' as *;
 
-// ============================================
-// CONTENEDOR PRINCIPAL
-// ============================================
-
 .perfil {
   display: flex;
   flex-direction: column;
@@ -13,680 +9,659 @@
   @include respond-down(md) {
     gap: $space-3;
   }
-}
 
-// ============================================
-// CABECERA
-// ============================================
-
-.perfil__cabecera {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  padding: $space-3;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
-  transition: background-color $transicion-tema, border-color $transicion-tema;
-
-  @include respond-down(sm) {
-    flex-direction: column;
-    gap: $space-2;
-    text-align: center;
-  }
-}
-
-.perfil__avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: $space-10;
-  height: $space-10;
-  margin: 0;
-  background: var(--color-fondo);
-  border: $borde-medium solid var(--color-borde);
-  border-radius: $radio-full;
-  overflow: hidden;
-  transition: background-color $transicion-tema, border-color $transicion-tema;
-
-  @include respond-down(sm) {
-    width: $space-8;
-    height: $space-8;
-  }
-}
-
-.perfil__avatar-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.perfil__avatar-icono {
-  color: var(--color-subtitulo);
-}
-
-.perfil__info {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: $space-1;
-  min-width: 0;
-}
-
-.perfil__nombre {
-  margin: 0;
-  font-size: $texto-l;
-  font-weight: $font-weight-bold;
-  color: var(--color-titulo);
-
-  @include respond-down(sm) {
-    font-size: $texto-lg;
-  }
-}
-
-.perfil__rol {
-  margin: 0;
-  font-size: $texto-s;
-  color: var(--color-subtitulo);
-}
-
-.perfil__ubicacion {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  margin: 0;
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
-
-  @include respond-down(sm) {
-    justify-content: center;
-  }
-}
-
-// ============================================
-// ACCIONES
-// ============================================
-
-.perfil__acciones {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  flex-shrink: 0;
-  gap: $space-2;
-
-  @include respond-down(sm) {
-    flex-direction: row;
+  &__cabecera {
+    display: flex;
     align-items: center;
+    gap: $space-3;
+    padding: $space-3;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-lg;
+    transition: background-color $transicion-tema, border-color $transicion-tema;
+
+    @include respond-down(sm) {
+      flex-direction: column;
+      gap: $space-2;
+      text-align: center;
+    }
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: $space-10;
+    height: $space-10;
+    margin: 0;
+    background: var(--color-fondo);
+    border: $borde-medium solid var(--color-borde);
+    border-radius: $radio-full;
+    overflow: hidden;
+    transition: background-color $transicion-tema, border-color $transicion-tema;
+
+    @include respond-down(sm) {
+      width: $space-8;
+      height: $space-8;
+    }
+  }
+
+  &__avatar-img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-}
 
-.perfil__creditos {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-1;
-  min-width: $space-8 * 2;
-  padding: $space-1 $space-2;
-  background: rgba($color-botones, 0.1);
-  border: $borde-thin solid rgba($color-botones, 0.3);
-  border-radius: $radio-md;
+  &__avatar-icono {
+    color: var(--color-subtitulo);
+  }
 
-  @include respond-down(sm) {
+  &__info {
+    display: flex;
+    flex-direction: column;
     flex: 1;
-    min-width: auto;
+    gap: $space-1;
+    min-width: 0;
   }
-}
 
-.perfil__creditos-valor {
-  font-size: $texto-xs;
-  font-weight: $font-weight-bold;
-  color: var(--color-acento-texto);
-}
+  &__nombre {
+    margin: 0;
+    font-size: $texto-l;
+    font-weight: $font-weight-bold;
+    color: var(--color-titulo);
 
-.perfil__creditos-texto {
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
-}
+    @include respond-down(sm) {
+      font-size: $texto-lg;
+    }
+  }
 
-.perfil__btn-editar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-1;
-  min-width: $space-8 * 2;
-  padding: $space-1 $space-2;
-  background: transparent;
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-md;
-  font-family: $fuente-principal;
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: var(--color-texto);
-  cursor: pointer;
-  transition: border-color $transicion-rapida, color $transicion-rapida;
+  &__rol {
+    margin: 0;
+    font-size: $texto-s;
+    color: var(--color-subtitulo);
+  }
 
-  &:hover {
-    border-color: var(--color-acento-texto);
+  &__ubicacion {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    margin: 0;
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
+
+    @include respond-down(sm) {
+      justify-content: center;
+    }
+  }
+
+  &__acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    gap: $space-2;
+
+    @include respond-down(sm) {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  &__creditos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-1;
+    min-width: $space-8 * 2;
+    padding: $space-1 $space-2;
+    background: rgba($color-botones, 0.1);
+    border: $borde-thin solid rgba($color-botones, 0.3);
+    border-radius: $radio-md;
+
+    @include respond-down(sm) {
+      flex: 1;
+      min-width: auto;
+    }
+  }
+
+  &__creditos-valor {
+    font-size: $texto-xs;
+    font-weight: $font-weight-bold;
     color: var(--color-acento-texto);
   }
 
-  @include respond-down(sm) {
-    flex: 1;
-    min-width: auto;
-  }
-}
-
-// ============================================
-// LOGROS
-// ============================================
-
-.perfil__logros {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-4;
-  padding: $space-3;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
-  transition: background-color $transicion-tema, border-color $transicion-tema;
-
-  @include respond-down(md) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: $space-3;
+  &__creditos-texto {
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
   }
 
-  @include respond-down(sm) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.perfil__categoria {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-}
-
-.perfil__categoria-titulo {
-  margin: 0;
-  padding-bottom: $space-2;
-  border-bottom: $borde-thin solid var(--color-borde);
-  font-size: $texto-s;
-  font-weight: $font-weight-bold;
-  color: var(--color-titulo);
-}
-
-.perfil__lista-logros {
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.perfil__logro {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  padding: $space-1 $space-2;
-  border-radius: $radio-sm;
-  opacity: 0.4;
-  transition: background-color $transicion-rapida, opacity $transicion-rapida;
-}
-
-.perfil__logro--desbloqueado {
-  background: rgba($color-botones, 0.08);
-  opacity: 1;
-}
-
-.perfil__logro-icono {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: $space-4;
-  height: $space-4;
-  background: transparent;
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-sm;
-  color: var(--color-subtitulo);
-}
-
-.perfil__logro--desbloqueado .perfil__logro-icono {
-  background: transparent;
-  border-color: var(--color-acento-texto);
-  color: var(--color-acento-texto);
-}
-
-.perfil__logro-nombre {
-  font-size: $texto-s;
-  font-weight: $font-weight-medium;
-  color: var(--color-texto);
-}
-
-// ============================================
-// CLASES
-// ============================================
-
-.perfil__lista-clases {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.perfil__clase {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  padding: $space-2;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
-  cursor: pointer;
-  transition:
-    background-color $transicion-tema,
-    border-color $transicion-rapida,
-    box-shadow $transicion-rapida;
-
-  &:hover {
-    border-color: var(--color-acento);
-  }
-
-  &:focus-visible {
-    outline: $borde-medium solid var(--color-acento);
-    outline-offset: $borde-thin;
-  }
-
-  @include respond-down(sm) {
-    flex-wrap: wrap;
-    gap: $space-2;
-  }
-}
-
-.perfil__clase-avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: $space-6;
-  height: $space-6;
-  margin: 0;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-full;
-  color: var(--color-acento-texto);
-}
-
-.perfil__clase-info {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 0.0625rem;
-  min-width: 0;
-}
-
-.perfil__clase-nombre {
-  margin: 0;
-  font-size: $texto-s;
-  font-weight: $font-weight-semibold;
-  color: var(--color-texto);
-}
-
-.perfil__clase-gimnasio,
-.perfil__clase-profesor,
-.perfil__clase-fecha {
-  display: flex;
-  align-items: center;
-  gap: 0.125rem;
-  margin: 0;
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
-}
-
-.perfil__clase-profesor {
-  color: var(--color-acento-texto);
-}
-
-.perfil__clase-estado {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  flex-shrink: 0;
-  padding: $space-1 $space-2;
-  border-radius: $radio-md;
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-
-  @include respond-down(sm) {
-    width: 100%;
+  &__btn-editar {
+    display: flex;
+    align-items: center;
     justify-content: center;
-  }
-}
+    gap: $space-1;
+    min-width: $space-8 * 2;
+    padding: $space-1 $space-2;
+    background: transparent;
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-md;
+    font-family: $fuente-principal;
+    font-size: $texto-xs;
+    font-weight: $font-weight-medium;
+    color: var(--color-texto);
+    cursor: pointer;
+    transition: border-color $transicion-rapida, color $transicion-rapida;
 
-.perfil__clase-estado--pendiente {
-  background: rgba($color-warning, 0.1);
-  color: var(--color-warning-texto);
-}
+    &:hover {
+      border-color: var(--color-acento-texto);
+      color: var(--color-acento-texto);
+    }
 
-.perfil__clase-estado--completada {
-  background: rgba($color-botones, 0.1);
-  color: var(--color-acento-texto);
-}
-
-.perfil__clase-acciones {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  flex-shrink: 0;
-
-  @include respond-down(sm) {
-    width: 100%;
-    justify-content: flex-end;
-  }
-}
-
-.perfil__btn-cancelar {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  padding: $space-1 $space-2;
-  background: rgba($color-error, 0.1);
-  border: $borde-thin solid rgba($color-error, 0.3);
-  border-radius: $radio-md;
-  font-size: $texto-xs;
-  font-weight: $font-weight-medium;
-  color: $color-error;
-  cursor: pointer;
-  transition: background-color $transicion-rapida, border-color $transicion-rapida;
-
-  &:hover {
-    background: rgba($color-error, 0.15);
-    border-color: rgba($color-error, 0.5);
+    @include respond-down(sm) {
+      flex: 1;
+      min-width: auto;
+    }
   }
 
-  &:focus-visible {
-    outline: $borde-medium solid $color-error;
-    outline-offset: $borde-medium;
+  &__logros {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-4;
+    padding: $space-3;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-lg;
+    transition: background-color $transicion-tema, border-color $transicion-tema;
+
+    @include respond-down(md) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $space-3;
+    }
+
+    @include respond-down(sm) {
+      grid-template-columns: 1fr;
+    }
   }
-}
 
-.perfil__btn-cancelar--sin-reembolso {
-  background: rgba($color-warning, 0.1);
-  border-color: rgba($color-warning, 0.3);
-  color: var(--color-warning-texto);
-
-  &:hover {
-    background: rgba($color-warning, 0.15);
-    border-color: rgba($color-warning, 0.5);
-  }
-
-  &:focus-visible {
-    outline-color: $color-warning;
-  }
-}
-
-// ============================================
-// RESEÑAS - TIMELINE INNOVADOR
-// ============================================
-
-.perfil__timeline-resenias {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-  margin: 0;
-  padding: $space-3 0;
-  list-style: none;
-
-  @include respond-down(md) {
-    gap: $space-3;
-    padding: $space-2 0;
-  }
-}
-
-.perfil__resenia-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 2rem 1fr;
-  gap: $space-3;
-  align-items: start;
-
-  @include respond-down(md) {
-    grid-template-columns: 2rem 1fr;
+  &__categoria {
+    display: flex;
+    flex-direction: column;
     gap: $space-2;
   }
-}
 
-.perfil__resenia-item--par {
-  .perfil__resenia-card {
-    grid-column: 1;
-    grid-row: 1;
+  &__categoria-titulo {
+    margin: 0;
+    padding-bottom: $space-2;
+    border-bottom: $borde-thin solid var(--color-borde);
+    font-size: $texto-s;
+    font-weight: $font-weight-bold;
+    color: var(--color-titulo);
+  }
 
-    @include respond-down(md) {
-      grid-column: 2;
+  &__lista-logros {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__logro {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 $space-2;
+    border-radius: $radio-sm;
+    opacity: 0.4;
+    transition: background-color $transicion-rapida, opacity $transicion-rapida;
+
+    &--desbloqueado {
+      background: rgba($color-botones, 0.08);
+      opacity: 1;
     }
   }
 
-  .perfil__resenia-punto {
-    grid-column: 2;
-    grid-row: 1;
+  &__logro-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: $space-4;
+    height: $space-4;
+    background: transparent;
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-sm;
+    color: var(--color-subtitulo);
 
-    @include respond-down(md) {
-      grid-column: 1;
-    }
-  }
-}
-
-.perfil__resenia-item:not(.perfil__resenia-item--par) {
-  .perfil__resenia-card {
-    grid-column: 3;
-    grid-row: 1;
-
-    @include respond-down(md) {
-      grid-column: 2;
-    }
-  }
-
-  .perfil__resenia-punto {
-    grid-column: 2;
-    grid-row: 1;
-
-    @include respond-down(md) {
-      grid-column: 1;
-    }
-  }
-}
-
-.perfil__resenia-punto {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-
-  &::before {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 0.125rem;
-    background: linear-gradient(180deg, var(--color-boton) 0%, transparent 100%);
-    content: '';
-    transform: translateX(-50%);
-  }
-
-  .perfil__resenia-item:last-child & {
-    &::before {
-      background: linear-gradient(180deg, var(--color-boton) 0%, transparent 70%);
-    }
-  }
-}
-
-.perfil__resenia-circulo {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  background: var(--color-boton);
-  border: 0.25rem solid var(--color-fondo);
-  border-radius: $radio-full;
-  box-shadow: 0 0 0 0.125rem var(--color-boton);
-
-  @include respond-down(md) {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-width: 0.1875rem;
-  }
-}
-
-.perfil__resenia-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-  padding: $space-2;
-  background: var(--color-fondo-secundario);
-  border: $borde-thin solid var(--color-borde);
-  border-radius: $radio-lg;
-  transition: transform $transicion-rapida, box-shadow $transicion-rapida;
-
-  &::before {
-    position: absolute;
-    top: 1.5rem;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    content: '';
-
-    @include respond-down(md) {
-      left: -0.5rem;
-      border-width: 0.5rem 0.5rem 0.5rem 0;
-      border-color: transparent var(--color-borde) transparent transparent;
+    .perfil__logro--desbloqueado & {
+      border-color: var(--color-acento-texto);
+      color: var(--color-acento-texto);
     }
   }
 
-  &:hover {
-    transform: translateY(-0.125rem);
-    box-shadow: 0 0.5rem 1rem rgba($color-negro, 0.1);
+  &__logro-nombre {
+    font-size: $texto-s;
+    font-weight: $font-weight-medium;
+    color: var(--color-texto);
   }
 
-  .perfil__resenia-item--par & {
-    &::before {
-      @media (min-width: $breakpoint-md) {
-        right: -0.5rem;
-        border-width: 0.5rem 0 0.5rem 0.5rem;
-        border-color: transparent transparent transparent var(--color-borde);
+  &__lista-clases {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__clase {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-2;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-lg;
+    cursor: pointer;
+    transition:
+      background-color $transicion-tema,
+      border-color $transicion-rapida,
+      box-shadow $transicion-rapida;
+
+    &:hover {
+      border-color: var(--color-acento);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid var(--color-acento);
+      outline-offset: $borde-thin;
+    }
+
+    @include respond-down(sm) {
+      flex-wrap: wrap;
+      gap: $space-2;
+    }
+  }
+
+  &__clase-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: $space-6;
+    height: $space-6;
+    margin: 0;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-full;
+    color: var(--color-acento-texto);
+  }
+
+  &__clase-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.0625rem;
+    min-width: 0;
+  }
+
+  &__clase-nombre {
+    margin: 0;
+    font-size: $texto-s;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+  }
+
+  &__clase-gimnasio,
+  &__clase-fecha {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    margin: 0;
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
+  }
+
+  &__clase-profesor {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    margin: 0;
+    font-size: $texto-xs;
+    color: var(--color-acento-texto);
+  }
+
+  &__clase-estado {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex-shrink: 0;
+    padding: $space-1 $space-2;
+    border-radius: $radio-md;
+    font-size: $texto-xs;
+    font-weight: $font-weight-medium;
+
+    @include respond-down(sm) {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &--pendiente {
+      background: rgba($color-warning, 0.1);
+      color: var(--color-warning-texto);
+    }
+
+    &--completada {
+      background: rgba($color-botones, 0.1);
+      color: var(--color-acento-texto);
+    }
+  }
+
+  &__clase-acciones {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-shrink: 0;
+
+    @include respond-down(sm) {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  &__btn-cancelar {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    padding: $space-1 $space-2;
+    background: rgba($color-error, 0.1);
+    border: $borde-thin solid rgba($color-error, 0.3);
+    border-radius: $radio-md;
+    font-size: $texto-xs;
+    font-weight: $font-weight-medium;
+    color: $color-error;
+    cursor: pointer;
+    transition: background-color $transicion-rapida, border-color $transicion-rapida;
+
+    &:hover {
+      background: rgba($color-error, 0.15);
+      border-color: rgba($color-error, 0.5);
+    }
+
+    &:focus-visible {
+      outline: $borde-medium solid $color-error;
+      outline-offset: $borde-medium;
+    }
+
+    &--sin-reembolso {
+      background: rgba($color-warning, 0.1);
+      border-color: rgba($color-warning, 0.3);
+      color: var(--color-warning-texto);
+
+      &:hover {
+        background: rgba($color-warning, 0.15);
+        border-color: rgba($color-warning, 0.5);
+      }
+
+      &:focus-visible {
+        outline-color: $color-warning;
       }
     }
   }
 
-  .perfil__resenia-item:not(.perfil__resenia-item--par) & {
+  &__timeline-resenias {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    margin: 0;
+    padding: $space-3 0;
+    list-style: none;
+
+    @include respond-down(md) {
+      gap: $space-3;
+      padding: $space-2 0;
+    }
+  }
+
+  &__resenia-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 2rem 1fr;
+    gap: $space-3;
+    align-items: start;
+
+    @include respond-down(md) {
+      grid-template-columns: 2rem 1fr;
+      gap: $space-2;
+    }
+
+    &--par {
+      .perfil__resenia-card {
+        grid-column: 1;
+        grid-row: 1;
+
+        @include respond-down(md) {
+          grid-column: 2;
+        }
+      }
+
+      .perfil__resenia-punto {
+        grid-column: 2;
+        grid-row: 1;
+
+        @include respond-down(md) {
+          grid-column: 1;
+        }
+      }
+    }
+
+    &:not(.perfil__resenia-item--par) {
+      .perfil__resenia-card {
+        grid-column: 3;
+        grid-row: 1;
+
+        @include respond-down(md) {
+          grid-column: 2;
+        }
+      }
+
+      .perfil__resenia-punto {
+        grid-column: 2;
+        grid-row: 1;
+
+        @include respond-down(md) {
+          grid-column: 1;
+        }
+      }
+    }
+  }
+
+  &__resenia-punto {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
     &::before {
-      @media (min-width: $breakpoint-md) {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 0.125rem;
+      background: linear-gradient(180deg, var(--color-boton) 0%, transparent 100%);
+      content: '';
+      transform: translateX(-50%);
+    }
+
+    .perfil__resenia-item:last-child & {
+      &::before {
+        background: linear-gradient(180deg, var(--color-boton) 0%, transparent 70%);
+      }
+    }
+  }
+
+  &__resenia-circulo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    background: var(--color-boton);
+    border: 0.25rem solid var(--color-fondo);
+    border-radius: $radio-full;
+    box-shadow: 0 0 0 0.125rem var(--color-boton);
+
+    @include respond-down(md) {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-width: 0.1875rem;
+    }
+  }
+
+  &__resenia-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    padding: $space-2;
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-borde);
+    border-radius: $radio-lg;
+    transition: transform $transicion-rapida, box-shadow $transicion-rapida;
+
+    &::before {
+      position: absolute;
+      top: 1.5rem;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      content: '';
+
+      @include respond-down(md) {
         left: -0.5rem;
         border-width: 0.5rem 0.5rem 0.5rem 0;
         border-color: transparent var(--color-borde) transparent transparent;
       }
     }
+
+    &:hover {
+      transform: translateY(-0.125rem);
+      box-shadow: 0 0.5rem 1rem rgba($color-negro, 0.1);
+    }
+
+    .perfil__resenia-item--par & {
+      &::before {
+        @media (min-width: $breakpoint-md) {
+          right: -0.5rem;
+          border-width: 0.5rem 0 0.5rem 0.5rem;
+          border-color: transparent transparent transparent var(--color-borde);
+        }
+      }
+    }
+
+    .perfil__resenia-item:not(.perfil__resenia-item--par) & {
+      &::before {
+        @media (min-width: $breakpoint-md) {
+          left: -0.5rem;
+          border-width: 0.5rem 0.5rem 0.5rem 0;
+          border-color: transparent var(--color-borde) transparent transparent;
+        }
+      }
+    }
+
+    @include respond-down(md) {
+      padding: $space-2;
+    }
   }
 
-  @include respond-down(md) {
-    padding: $space-2;
+  &__resenia-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-2;
   }
-}
 
-.perfil__resenia-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-2;
-}
+  &__resenia-gimnasio {
+    margin: 0;
+    font-size: $texto-s;
+    font-weight: $font-weight-bold;
+    color: var(--color-titulo);
+  }
 
-.perfil__resenia-gimnasio {
-  margin: 0;
-  font-size: $texto-s;
-  font-weight: $font-weight-bold;
-  color: var(--color-titulo);
-}
+  &__resenia-valoracion {
+    display: flex;
+    gap: 0.125rem;
+  }
 
-.perfil__resenia-valoracion {
-  display: flex;
-  gap: 0.125rem;
-}
+  &__resenia-estrella {
+    color: var(--color-estrella-inactiva);
+    transition: color $transicion-rapida;
 
-.perfil__resenia-estrella {
-  color: var(--color-estrella-inactiva);
-  transition: color $transicion-rapida;
-}
+    &--activa {
+      color: var(--color-estrella);
+    }
+  }
 
-.perfil__resenia-estrella--activa {
-  color: var(--color-estrella);
-}
+  &__resenia-texto {
+    margin: 0;
+    font-size: $texto-s;
+    line-height: $line-height-relaxed;
+    color: var(--color-texto);
+  }
 
-.perfil__resenia-texto {
-  margin: 0;
-  font-size: $texto-s;
-  line-height: $line-height-relaxed;
-  color: var(--color-texto);
-}
+  &__resenia-footer {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    padding-top: $space-1;
+    border-top: $borde-thin solid var(--color-borde);
+  }
 
-.perfil__resenia-footer {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  padding-top: $space-1;
-  border-top: $borde-thin solid var(--color-borde);
-}
+  &__resenia-fecha {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
+  }
 
-.perfil__resenia-fecha {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  font-size: $texto-xs;
-  color: var(--color-subtitulo);
-}
+  &__vacio,
+  &__cargando {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-6 $space-4;
+    text-align: center;
+  }
 
-// ============================================
-// ESTADO VACÍO Y CARGANDO
-// ============================================
+  &__vacio-icono {
+    color: var(--color-subtitulo);
+    opacity: 0.5;
+  }
 
-.perfil__vacio,
-.perfil__cargando {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-2;
-  padding: $space-6 $space-4;
-  text-align: center;
-}
+  &__vacio-texto {
+    margin: 0;
+    font-size: $texto-lg;
+    font-weight: $font-weight-medium;
+    color: var(--color-titulo);
+  }
 
-.perfil__vacio-icono {
-  color: var(--color-subtitulo);
-  opacity: 0.5;
-}
+  &__vacio-subtexto {
+    margin: 0;
+    font-size: $texto-s;
+    color: var(--color-subtitulo);
+  }
 
-.perfil__vacio-texto {
-  margin: 0;
-  font-size: $texto-lg;
-  font-weight: $font-weight-medium;
-  color: var(--color-titulo);
-}
-
-.perfil__vacio-subtexto {
-  margin: 0;
-  font-size: $texto-s;
-  color: var(--color-subtitulo);
-}
-
-.perfil__spinner {
-  animation: spin 1s linear infinite;
+  &__spinner {
+    animation: spin 1s linear infinite;
+  }
 }
 
 @keyframes spin {
