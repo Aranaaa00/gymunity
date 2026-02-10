@@ -226,3 +226,15 @@ export interface FiltrosBusqueda {
   readonly arteMarcial?: string;
   readonly valoracionMinima?: number;
 }
+
+// --------------------------------------------
+// CONSEJO
+// --------------------------------------------
+
+export interface Consejo {
+  readonly id: number;
+  readonly titulo: string;
+  readonly descripcion: string;
+  readonly categoria: string;
+  readonly icono?: string;
+}

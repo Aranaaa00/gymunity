@@ -16,8 +16,13 @@ export class TarjetaConsejo {
   readonly categoria: InputSignal<string> = input<string>('');
   readonly icono: InputSignal<string> = input<string>('dumbell');
 
-  /*readonly iconoNombre = computed<NombreIcono> (() => {
-    return this.icono as NombreIcono;
-  });*/
-    
+  readonly iconoNombre = computed<NombreIcono> (() => {
+    return this.icono() as NombreIcono;
+  });
+
+  readonly categoriaFormateada = computed<string>(() => {
+    const cat = this.categoria();
+    if (!cat) return '';
+    return cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
+  });
 }
