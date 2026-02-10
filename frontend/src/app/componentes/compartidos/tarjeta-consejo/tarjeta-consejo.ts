@@ -10,9 +10,9 @@ import { Icono, NombreIcono } from '../icono/icono';
 })
 export class TarjetaConsejo {
 
-  readonly titulo: InputSignal<string> = input<string>('Primer consejo');
-  readonly descripcion: InputSignal<string> = input<string>('Si lees esto aprobaras el examen 100%');
-  readonly categoria: InputSignal<string> = input<string>('Prueba');
+  readonly titulo: InputSignal<string> = input<string>('');
+  readonly descripcion: InputSignal<string> = input<string>('');
+  readonly categoria: InputSignal<string> = input<string>('');
   readonly icono: InputSignal<string> = input<string>('dumbell');
 
   readonly iconoNombre = computed<NombreIcono> (() => {

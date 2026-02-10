@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gymunity.backend.dto.CancelacionRequestDTO;
 import com.gymunity.backend.dto.CancelacionResponseDTO;
 import com.gymunity.backend.dto.InscripcionRequestDTO;
 import com.gymunity.backend.dto.InscripcionResponseDTO;
