@@ -92,6 +92,11 @@ export class MenuUsuario {
     this.cerrarMenu();
   }
 
+  navegarAConsejos(): void {
+    this.router.navigate(['/consejos']);
+    this.cerrarMenu();
+  }
+
   cerrarSesion(): void {
     this.authService.cerrarSesion();
     this.cerrarMenu();

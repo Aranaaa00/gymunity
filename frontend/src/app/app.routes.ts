@@ -69,6 +69,12 @@ export const routes: Routes = [
     data: { breadcrumb: 'Guía de Estilo', titulo: 'Guía de estilo y componentes' },
   },
 
+  {
+    path: 'consejos',
+    loadComponent: () => import('./paginas/consejos/consejos').then((m) => m.Consejos),
+    data: { breadcrumb: 'Consejos', titulo: 'Consejos Fitness' },
+  },
+
   // ----------------------------------------
   // 404 - Wildcard (DEBE IR AL FINAL)
   // ----------------------------------------

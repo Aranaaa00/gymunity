@@ -22,6 +22,10 @@ export const serverRoutes: ServerRoute[] = [
     path: 'configuracion',
     renderMode: RenderMode.Client
   },
+  {
+    path: 'consejos',
+    renderMode: RenderMode.Client
+  },
   // Rutas estáticas - prerenderizar
   {
     path: 'guia-estilo',
