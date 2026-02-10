@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/gimnasios/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/clases/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/usuarios/verificar/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/consejos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/consejos/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/usuarios").hasRole("PROFESOR")
                         .requestMatchers(HttpMethod.PUT, "/api/usuarios/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**").authenticated()
