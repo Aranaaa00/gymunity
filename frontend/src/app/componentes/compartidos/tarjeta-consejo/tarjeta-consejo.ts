@@ -13,9 +13,9 @@ export class TarjetaConsejo {
   readonly titulo: InputSignal<string> = input<string>('');
   readonly descripcion: InputSignal<string> = input<string>('');
   readonly categoria: InputSignal<string> = input<string>('');
-  readonly icono: InputSignal<string> = input<string>('dumbell');
+  readonly icono: InputSignal<string> = input<string>('dumbbell');
 
-  readonly iconoNombre = computed<NombreIcono> (() => {
+  readonly iconoNombre = computed<NombreIcono>(() => {
     return this.icono() as NombreIcono;
   });
 
