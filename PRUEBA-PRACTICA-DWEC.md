@@ -19,3 +19,5 @@ Al usar loadComponent, hacemos que esta nueva ruta se convierta en lazy loading.
 ## 2. Arquitectura de Componentes
 He creado un componentes llamado tarjeta-consejo, el cual lo que almacena es su titulo, junto su descripción e icono, y el tema de que trata. En el caso de que en la base de datos no se encuentre ningún consejo, por defecto aparecerá un mensaje diciendolo
 
+### Documentación:
+[Página oficial de Angular](https://angular.dev)
