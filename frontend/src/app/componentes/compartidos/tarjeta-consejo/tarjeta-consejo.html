@@ -1,0 +1,10 @@
+<article class="tarjeta-consejo" [attr.aria-label]="'Consejo: ' + titulo()">
+  <div class="tarjeta-consejo__icono">
+    <app-icono [nombre]="iconoNombre()" tamano="md" />
+  </div>
+  <div class="tarjeta-consejo__contenido">
+    <h3 class="tarjeta-consejo__titulo">{{ titulo() }}</h3>
+    <p class="tarjeta-consejo__descripcion">{{ descripcion() }}</p>
+    <span class="tarjeta-consejo__categoria">{{ categoriaFormateada() }}</span>
+  </div>
+</article>
