@@ -12,12 +12,13 @@
         </section>
     } @else {
         <section class="consejos__grid">
-            @for (consejo of consejosService.consejos(); track consejo.id) {
-                <app-tarjeta-consejo
-                [titulo]="consejo.titulo"
-                [descripcion]="consejo.descripcion"
-                [categoria]="consejo.categoria" />
-            }
+            <!--@for (consejo of consejosService.consejos(); track consejo.id) {
+                    <app-tarjeta-consejo
+                    [titulo]="consejo.titulo"
+                    [descripcion]="consejo.descripcion"
+                    [categoria]="consejo.categoria" />
+                }-->
+            <app-tarjeta-consejo></app-tarjeta-consejo>
         </section>
     }
 </main>

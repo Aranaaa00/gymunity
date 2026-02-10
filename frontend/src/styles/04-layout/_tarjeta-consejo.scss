@@ -1,0 +1,51 @@
+@use '../styles/00-settings/variables' as *;
+@use '../styles/01-tools/mixins' as *;
+
+:host {
+  display: block;
+}
+
+.tarjeta-consejo {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: $space-2;
+  padding: $space-3;
+  background-color: var(--color-fondo-secundario);
+  border: $borde-thin solid var(--color-borde);
+  border-radius: $radio-md;
+
+  &__icono {
+    @include flex-center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: $radio-md;
+    background-color: var(--color-fondo-elevado);
+    color: var(--color-acento-texto);
+  }
+
+  &__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-family: $fuente-principal;
+    font-size: $texto-md;
+    font-weight: $font-weight-semibold;
+    color: var(--color-texto);
+  }
+
+  &__descripcion {
+    margin: 0;
+    font-size: $texto-sm;
+    line-height: $line-height-relaxed;
+    color: var(--color-subtitulo);
+  }
+
+  &__categoria {
+    font-size: $texto-xs;
+    color: var(--color-subtitulo);
+  }
+}
