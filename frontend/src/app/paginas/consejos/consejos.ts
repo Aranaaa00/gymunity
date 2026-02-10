@@ -7,7 +7,6 @@ import { ConsejosApiService } from '../../servicios/consejos-api';
   standalone: true,
   imports: [TarjetaConsejo],
   templateUrl: './consejos.html',
-  styleUrl: './consejos.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Consejos implements OnInit {

@@ -46,20 +46,4 @@
       grid-template-columns: 1fr;
     }
   }
-
-  &__vacio,
-  &__error {
-    padding: $space-6;
-    text-align: center;
-    color: var(--color-subtitulo);
-
-    p {
-      margin: 0;
-      font-size: $texto-s;
-    }
-  }
-
-  &__error {
-    color: var(--color-error-texto);
-  }
 }
