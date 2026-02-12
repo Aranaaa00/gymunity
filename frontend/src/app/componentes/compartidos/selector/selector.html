@@ -14,8 +14,9 @@
     [value]="value"
     [required]="required()"
     [disabled]="disabled() || isDisabled"
-    [attr.aria-describedby]="helpText() ? inputId() + '-help' : (hasError() ? inputId() + '-error' : null)"
-    [attr.aria-invalid]="hasError()"
+    [attr.aria-describedby]="getAriaDescribedBy()"
+    [attr.aria-invalid]="hasError() || null"
+    [attr.aria-required]="required() || null"
     (change)="onChangeEvent($event)"
     (blur)="onBlur()"
   >

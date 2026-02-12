@@ -204,6 +204,18 @@ $estrella-size: 2.25rem;
     color: var(--color-subtitulo);
   }
 
+  &__error {
+    display: block;
+    margin-top: $space-1;
+    font-size: $texto-xs;
+    color: var(--color-error, #e53e3e);
+    line-height: 1.4;
+  }
+
+  &__textarea--error {
+    border-color: var(--color-error, #e53e3e);
+  }
+
   &__acciones {
     display: flex;
     gap: $space-2;

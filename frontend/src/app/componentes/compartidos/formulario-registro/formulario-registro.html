@@ -20,6 +20,7 @@
       autocomplete="off"
       [formControl]="usernameControl"
       [required]="true"
+      helpText="Entre 3 y 20 caracteres. Solo letras, números y guión bajo."
       [validando]="estaValidando('username')"
       [hasError]="usernameControl.touched && usernameControl.invalid"
       [errorMessage]="getErrorMessage('username')"
@@ -48,6 +49,7 @@
       autocomplete="off"
       [formControl]="emailControl"
       [required]="true"
+      helpText="Formato válido: usuario@dominio.com"
       [validando]="estaValidando('email')"
       [hasError]="emailControl.touched && emailControl.invalid"
       [errorMessage]="getErrorMessage('email')"
@@ -78,6 +80,7 @@
       autocomplete="new-password"
       [formControl]="passwordControl"
       [required]="true"
+      helpText="La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas, minúsculas y números."
       [hasError]="passwordControl.touched && passwordControl.invalid"
       [errorMessage]="getErrorMessage('password')">
     </app-campo-formulario>

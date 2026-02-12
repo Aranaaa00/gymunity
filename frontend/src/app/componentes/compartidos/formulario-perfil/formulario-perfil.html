@@ -93,6 +93,8 @@
       inputId="perfil-bio"
       name="bio"
       [formControl]="getControl('bio')"
+      helpText="Máximo 500 caracteres."
+      [maxlength]="500"
       [hasError]="getControl('bio').touched && getControl('bio').invalid"
       [errorMessage]="getErrorMessage('bio')">
     </app-area-texto>
@@ -107,13 +109,18 @@
           <section class="formulario-perfil__red-campos">
             <section class="formulario-perfil__campo-selector">
               <label [for]="'red-plataforma-' + $index" class="sr-only">Plataforma</label>
-              <select [id]="'red-plataforma-' + $index" [formControl]="getRedSocialControl($index, 'plataforma')">
+              <select 
+                [id]="'red-plataforma-' + $index" 
+                [formControl]="getRedSocialControl($index, 'plataforma')"
+                [attr.aria-invalid]="getRedSocialControl($index, 'plataforma').touched && getRedSocialControl($index, 'plataforma').invalid || null"
+                [attr.aria-describedby]="getRedSocialControl($index, 'plataforma').touched && getRedSocialControl($index, 'plataforma').invalid ? 'error-plataforma-' + $index : null"
+                aria-required="true">
                 @for (plataforma of plataformasDisponibles; track plataforma) {
                   <option [value]="plataforma">{{ plataforma }}</option>
                 }
               </select>
               @if (getRedSocialControl($index, 'plataforma').touched && getRedSocialControl($index, 'plataforma').invalid) {
-                <small class="error">{{ getErrorMessageRedSocial($index, 'plataforma') }}</small>
+                <small class="error" [id]="'error-plataforma-' + $index" role="alert">{{ getErrorMessageRedSocial($index, 'plataforma') }}</small>
               }
             </section>
 

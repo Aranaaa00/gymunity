@@ -107,7 +107,8 @@ export class CampoFormulario implements ControlValueAccessor {
     const ids: string[] = [];
     const id = this.inputId();
     
-    if (this.helpText()) {
+    // Solo referencia elementos que realmente están renderizados en el DOM
+    if (this.helpText() && !this.hasError() && !this.mensajeExito() && !this.validando()) {
       ids.push(`${id}-help`);
     }
     if (this.hasError() && this.errorMessage()) {

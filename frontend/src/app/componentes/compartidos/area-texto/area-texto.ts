@@ -90,4 +90,21 @@ export class AreaTexto implements ControlValueAccessor {
     this.onTouched();
     this.blur.emit(valor);
   }
+
+  // ----------------------------------------
+  // Accesibilidad
+  // ----------------------------------------
+  getAriaDescribedBy(): string | null {
+    const ids: string[] = [];
+    const id = this.inputId();
+
+    if (this.helpText() && !this.hasError()) {
+      ids.push(`${id}-help`);
+    }
+    if (this.hasError() && this.errorMessage()) {
+      ids.push(`${id}-error`);
+    }
+
+    return ids.length > 0 ? ids.join(' ') : null;
+  }
 }

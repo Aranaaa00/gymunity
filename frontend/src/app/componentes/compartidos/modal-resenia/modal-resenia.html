@@ -26,7 +26,10 @@
         <span 
           class="modal-resenia__estrellas" 
           role="radiogroup" 
+          aria-required="true"
           aria-label="Valoración"
+          [attr.aria-invalid]="intentoEnvio() && valoracion() === 0 || null"
+          [attr.aria-describedby]="intentoEnvio() && valoracion() === 0 ? 'error-valoracion' : null"
           (mouseleave)="salirHover()"
         >
           @for (estrella of estrellas; track estrella) {
@@ -44,6 +47,9 @@
             </button>
           }
         </span>
+        @if (intentoEnvio() && valoracion() === 0) {
+          <small id="error-valoracion" class="modal-resenia__error" role="alert" aria-live="assertive">Selecciona una valoración de 1 a 5 estrellas para poder enviar tu reseña.</small>
+        }
       </fieldset>
 
       <div class="modal-resenia__campo">
@@ -51,13 +57,19 @@
         <textarea
           id="textarea-comentario-resenia"
           class="modal-resenia__textarea"
+          [class.modal-resenia__textarea--error]="intentoEnvio() && comentario().trim().length === 0"
           placeholder="Cuéntanos tu experiencia en este gimnasio..."
           rows="4"
           maxlength="1000"
+          aria-required="true"
           [value]="comentario()"
           (input)="actualizarComentario($event)"
-          aria-describedby="contador-comentario-resenia"
+          [attr.aria-invalid]="intentoEnvio() && comentario().trim().length === 0 || null"
+          [attr.aria-describedby]="'contador-comentario-resenia' + (intentoEnvio() && comentario().trim().length === 0 ? ' error-comentario' : '')"
         ></textarea>
+        @if (intentoEnvio() && comentario().trim().length === 0) {
+          <small id="error-comentario" class="modal-resenia__error" role="alert" aria-live="assertive">Escribe un comentario describiendo tu experiencia en el gimnasio.</small>
+        }
         <span id="contador-comentario-resenia" class="modal-resenia__contador" aria-live="polite">{{ comentario().length }}/1000</span>
       </div>
     </section>
@@ -75,7 +87,7 @@
       <button 
         type="button" 
         class="modal-resenia__boton modal-resenia__boton--primario"
-        [disabled]="!puedeEnviar()"
+        [disabled]="enviando()"
         (click)="onEnviar()"
         [attr.aria-label]="enviando() ? 'Enviando tu reseña, por favor espera' : 'Publicar tu reseña de ' + gimnasioNombre()"
       >

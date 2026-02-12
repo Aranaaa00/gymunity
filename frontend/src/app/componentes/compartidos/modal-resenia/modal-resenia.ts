@@ -39,6 +39,7 @@ export class ModalResenia {
   readonly comentario = signal('');
   readonly enviando = signal(false);
   readonly estrellaHover = signal(0);
+  readonly intentoEnvio = signal(false);
 
   readonly estrellas = [1, 2, 3, 4, 5];
 
@@ -55,6 +56,10 @@ export class ModalResenia {
   // ----------------------------------------
   seleccionarEstrella(valor: number): void {
     this.valoracion.set(valor);
+    // Limpiar error de intento al corregir
+    if (this.intentoEnvio() && valor > 0) {
+      this.intentoEnvio.set(false);
+    }
   }
 
   hoverEstrella(valor: number): void {
@@ -74,6 +79,10 @@ export class ModalResenia {
   actualizarComentario(event: Event): void {
     const input = event.target as HTMLTextAreaElement;
     this.comentario.set(input.value);
+    // Limpiar error de intento al corregir
+    if (this.intentoEnvio() && input.value.trim().length > 0 && this.valoracion() > 0) {
+      this.intentoEnvio.set(false);
+    }
   }
 
   puedeEnviar(): boolean {
@@ -81,6 +90,9 @@ export class ModalResenia {
   }
 
   onEnviar(): void {
+    // Marcar intento de envío para mostrar errores de validación
+    this.intentoEnvio.set(true);
+
     if (!this.puedeEnviar()) {
       return;
     }

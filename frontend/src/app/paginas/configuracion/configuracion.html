@@ -176,6 +176,7 @@
             autocomplete="new-password"
             [formControl]="contraseniaNuevaControl"
             [required]="true"
+            helpText="La contraseña debe tener mínimo 6 caracteres, incluir mayúsculas, minúsculas y números."
             [hasError]="contraseniaNuevaControl.touched && contraseniaNuevaControl.invalid"
             [errorMessage]="getErrorPassword('contraseniaNueva')" />
 
