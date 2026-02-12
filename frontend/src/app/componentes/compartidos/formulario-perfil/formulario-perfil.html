@@ -11,6 +11,7 @@
         name="nombre"
         [formControl]="getControl('nombre')"
         [required]="true"
+        helpText="Entre 2 y 50 caracteres."
         [hasError]="getControl('nombre').touched && getControl('nombre').invalid"
         [errorMessage]="getErrorMessage('nombre')">
       </app-campo-formulario>
@@ -23,6 +24,7 @@
         name="apellidos"
         [formControl]="getControl('apellidos')"
         [required]="true"
+        helpText="Entre 2 y 50 caracteres."
         [hasError]="getControl('apellidos').touched && getControl('apellidos').invalid"
         [errorMessage]="getErrorMessage('apellidos')">
       </app-campo-formulario>
@@ -36,6 +38,7 @@
       name="username"
       [formControl]="getControl('username')"
       [required]="true"
+      helpText="Entre 3 y 20 caracteres. Solo letras, números y guión bajo."
       [validando]="estaValidando('username')"
       [hasError]="getControl('username').touched && getControl('username').invalid"
       [errorMessage]="getErrorMessage('username')"
@@ -50,9 +53,9 @@
       name="email"
       [formControl]="getControl('email')"
       [required]="true"
+      helpText="El email no se puede modificar."
       [hasError]="getControl('email').touched && getControl('email').invalid"
       [errorMessage]="getErrorMessage('email')">
-      <small class="formulario-perfil__ayuda">El email no se puede modificar</small>
     </app-campo-formulario>
   </fieldset>
 
@@ -67,6 +70,7 @@
         inputId="perfil-telefono"
         name="telefono"
         [formControl]="getControl('telefono')"
+        helpText="Formato español: 600123456 o +34 600 123 456."
         [hasError]="getControl('telefono').touched && getControl('telefono').invalid"
         [errorMessage]="getErrorMessage('telefono')">
       </app-campo-formulario>
@@ -78,6 +82,7 @@
         inputId="perfil-codigoPostal"
         name="codigoPostal"
         [formControl]="getControl('codigoPostal')"
+        helpText="5 dígitos. Ejemplo: 28001."
         [hasError]="getControl('codigoPostal').touched && getControl('codigoPostal').invalid"
         [errorMessage]="getErrorMessage('codigoPostal')">
       </app-campo-formulario>
@@ -132,6 +137,7 @@
               name="url-{{$index}}"
               [formControl]="getRedSocialControl($index, 'url')"
               [required]="true"
+              helpText="URL completa. Ejemplo: https://instagram.com/tu_perfil"
               [hasError]="getRedSocialControl($index, 'url').touched && getRedSocialControl($index, 'url').invalid"
               [errorMessage]="getErrorMessageRedSocial($index, 'url')">
             </app-campo-formulario>
@@ -172,8 +178,7 @@
     </app-boton>
     <app-boton
       tipo="submit"
-      ariaLabel="Guardar todos los cambios de tu perfil"
-      [disabled]="perfilForm.invalid && perfilForm.touched">
+      ariaLabel="Guardar todos los cambios de tu perfil">
       Guardar cambios
     </app-boton>
   </footer>

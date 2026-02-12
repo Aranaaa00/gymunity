@@ -36,6 +36,7 @@
       autocomplete="off"
       [formControl]="fullNameControl"
       [required]="true"
+      helpText="Entre 2 y 50 caracteres."
       [hasError]="fullNameControl.touched && fullNameControl.invalid"
       [errorMessage]="getErrorMessage('fullName')">
     </app-campo-formulario>
@@ -65,6 +66,7 @@
       autocomplete="off"
       [formControl]="ciudadControl"
       [required]="true"
+      helpText="Tu ciudad para mostrarte gimnasios cercanos."
       [validando]="estaValidando('ciudad')"
       [hasError]="ciudadControl.touched && ciudadControl.invalid"
       [errorMessage]="getErrorMessage('ciudad')"
@@ -115,12 +117,13 @@
       autocomplete="new-password"
       [formControl]="password2Control"
       [required]="true"
+      helpText="Debe coincidir con la contraseña anterior."
       [hasError]="password2Control.touched && password2Control.invalid"
       [errorMessage]="getErrorMessage('password2')">
     </app-campo-formulario>
     
     <section class="formulario-auth__submit">
-      <app-boton tipo="submit" [disabled]="registroForm.invalid && registroForm.touched" [cargando]="cargando()">
+      <app-boton tipo="submit" [cargando]="cargando()">
         Empezar mi aventura
       </app-boton>
     </section>

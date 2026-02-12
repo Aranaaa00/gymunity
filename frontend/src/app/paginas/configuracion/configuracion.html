@@ -93,6 +93,7 @@
           autocomplete="username"
           [formControl]="usernameControl"
           [required]="false"
+          helpText="Entre 3 y 20 caracteres. Solo letras, números y guión bajo."
           [validando]="estaValidando('username')"
           [hasError]="usernameControl.touched && usernameControl.invalid"
           [errorMessage]="getErrorPerfil('username')"
@@ -107,6 +108,7 @@
           autocomplete="email"
           [formControl]="emailControl"
           [required]="false"
+          helpText="Formato válido: usuario@dominio.com"
           [validando]="estaValidando('email')"
           [hasError]="emailControl.touched && emailControl.invalid"
           [errorMessage]="getErrorPerfil('email')"
@@ -121,6 +123,7 @@
           autocomplete="address-level2"
           [formControl]="ciudadControl"
           [required]="false"
+          helpText="Nombre de tu ciudad. Mínimo 2 caracteres."
           [validando]="estaValidando('ciudad')"
           [hasError]="ciudadControl.touched && ciudadControl.invalid"
           [errorMessage]="getErrorPerfil('ciudad')"
@@ -163,6 +166,7 @@
           autocomplete="current-password"
           [formControl]="contraseniaActualControl"
           [required]="true"
+          helpText="Necesaria para verificar tu identidad."
           [hasError]="contraseniaActualControl.touched && contraseniaActualControl.invalid"
           [errorMessage]="getErrorPassword('contraseniaActual')" />
 
@@ -212,6 +216,7 @@
             autocomplete="new-password"
             [formControl]="confirmarContraseniaControl"
             [required]="true"
+            helpText="Debe coincidir con la nueva contraseña."
             [hasError]="confirmarContraseniaControl.touched && !contraseniasCoinciden()"
             [errorMessage]="getErrorPassword('confirmarContrasenia')"
             [mensajeExito]="getMensajeCoincidencia()" />
@@ -220,7 +225,6 @@
         <app-boton 
           tipo="submit"
           variante="primary"
-          [disabled]="!puedeGuardarPassword()"
           [cargando]="guardandoPassword()"
           aria-label="Guardar nueva contraseña">
           Cambiar contraseña
@@ -264,10 +268,11 @@
             placeholder="Tu nombre de usuario"
             autocomplete="off"
             aria-required="true"
-            aria-describedby="confirmar-titulo"
+            [attr.aria-invalid]="errorEliminar() ? true : null"
+            [attr.aria-describedby]="'confirmar-titulo' + (errorEliminar() ? ' error-eliminar-cuenta' : '')"
           />
           @if (errorEliminar()) {
-            <p class="ajustes__mensaje ajustes__mensaje--error" role="alert">{{ errorEliminar() }}</p>
+            <p class="ajustes__mensaje ajustes__mensaje--error" id="error-eliminar-cuenta" role="alert">{{ errorEliminar() }}</p>
           }
           <div class="ajustes__confirmar-btns">
             <button 

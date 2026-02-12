@@ -20,6 +20,7 @@
       <p class="modal-resenia__gimnasio">{{ gimnasioNombre() }}</p>
     </header>
 
+    <form novalidate (ngSubmit)="onEnviar()">
     <section class="modal-resenia__cuerpo">
       <fieldset class="modal-resenia__valoracion">
         <legend class="modal-resenia__label">¿Cómo valorarías tu experiencia?</legend>
@@ -85,10 +86,9 @@
         Cancelar
       </button>
       <button 
-        type="button" 
+        type="submit" 
         class="modal-resenia__boton modal-resenia__boton--primario"
         [disabled]="enviando()"
-        (click)="onEnviar()"
         [attr.aria-label]="enviando() ? 'Enviando tu reseña, por favor espera' : 'Publicar tu reseña de ' + gimnasioNombre()"
       >
         @if (enviando()) {
@@ -99,5 +99,6 @@
         }
       </button>
     </footer>
+    </form>
   </article>
 </aside>
