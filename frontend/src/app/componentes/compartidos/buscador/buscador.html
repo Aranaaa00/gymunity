@@ -1,18 +1,23 @@
-<form class="buscador" [class.buscador--expandido]="expandido()" role="search" (ngSubmit)="onBuscar()">
-  <label for="buscador-gimnasios" class="sr-only">Buscar gimnasios</label>
+<form class="buscador" [class.buscador--expandido]="expandido()" role="search" (ngSubmit)="onBuscar()" novalidate>
+  <label [for]="idUnico()" class="sr-only">Buscar gimnasios</label>
   <input 
     #inputBusqueda
-    id="buscador-gimnasios"
+    [id]="idUnico()"
     type="search" 
     class="buscador__input"
+    [class.buscador__input--error]="errorValidacion()"
     [placeholder]="placeholder()" 
     [value]="valor()"
     (input)="onValorCambia(inputBusqueda.value)"
-    aria-describedby="buscador-ayuda"
+    [attr.aria-describedby]="idUnico() + '-ayuda' + (errorValidacion() ? ' ' + idUnico() + '-error' : '')"
+    [attr.aria-invalid]="errorValidacion() ? 'true' : null"
     name="busqueda"
     autocomplete="off"
   >
-  <span id="buscador-ayuda" class="sr-only">Escribe el nombre de un gimnasio o ciudad para buscar</span>
+  <span [id]="idUnico() + '-ayuda'" class="sr-only">Escribe el nombre de un gimnasio o ciudad para buscar. Mínimo {{ minCaracteres() }} caracteres.</span>
+  @if (errorValidacion()) {
+    <span [id]="idUnico() + '-error'" class="buscador__error" role="alert" aria-live="assertive">{{ errorValidacion() }}</span>
+  }
   <button type="submit" class="buscador__boton" aria-label="Iniciar búsqueda de gimnasios">
     <app-icono nombre="buscar" tamano="md" aria-hidden="true" />
   </button>

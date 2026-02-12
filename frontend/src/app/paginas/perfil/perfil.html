@@ -1,4 +1,4 @@
-<section class="perfil" role="main" aria-labelledby="perfil-titulo">
+<section class="perfil" aria-labelledby="perfil-titulo">
   <header class="perfil__cabecera" tabindex="0" [attr.aria-label]="'Perfil de ' + (usuario()?.nombreUsuario ?? 'Usuario') + ', ' + rolFormateado() + ' en ' + ciudad() + '. Tienes ' + creditosTexto() + ' créditos disponibles'">
     <figure class="perfil__avatar" aria-hidden="true">
       @if (usuario()?.avatar) {
@@ -35,7 +35,7 @@
         <article class="perfil__logros" role="region" aria-label="Tus logros y medallas">
           @for (categoria of categorias; track categoria) {
             <section class="perfil__categoria" role="region" [attr.aria-label]="'Categoría ' + categoria">
-              <h3 class="perfil__categoria-titulo" tabindex="0">{{ categoria }}</h3>
+              <h2 class="perfil__categoria-titulo" tabindex="0">{{ categoria }}</h2>
               <ul class="perfil__lista-logros" role="list">
                 @for (logro of logrosPorCategoria().get(categoria); track logro.id) {
                   <li 
@@ -112,12 +112,36 @@
                         class="perfil__btn-cancelar"
                         [class.perfil__btn-cancelar--sin-reembolso]="!clase.puedeReembolsar"
                         [attr.aria-label]="clase.puedeReembolsar ? 'Cancelar clase de ' + clase.nombre + ' en ' + clase.gimnasio + ' y recuperar tu crédito' : 'Cancelar clase de ' + clase.nombre + ' sin reembolso porque quedan menos de 24 horas'"
-                        (click)="cancelarClase(clase); $event.stopPropagation()"
+                        (click)="solicitarCancelacion(clase); $event.stopPropagation()"
                         [title]="clase.puedeReembolsar ? 'Cancelar y recuperar crédito' : 'Cancelar sin reembolso (menos de 24h)'"
                       >
                         <app-icono nombre="x-circle" tamano="sm" />
                         {{ clase.puedeReembolsar ? 'Cancelar' : 'Cancelar (sin reembolso)' }}
                       </button>
+                    }
+
+                    @if (clasePendienteCancelar()?.id === clase.id) {
+                      <div class="perfil__confirmar-cancelacion" role="alertdialog" aria-labelledby="confirmar-cancelar-titulo" (click)="$event.stopPropagation()">
+                        <p id="confirmar-cancelar-titulo" class="perfil__confirmar-texto">
+                          {{ clase.puedeReembolsar ? '¿Seguro que quieres cancelar esta clase? Se te devolverá el crédito.' : '¿Seguro que quieres cancelar? No se reembolsará el crédito porque quedan menos de 24 horas.' }}
+                        </p>
+                        <div class="perfil__confirmar-btns">
+                          <button 
+                            type="button" 
+                            class="perfil__btn-confirmar-no"
+                            (click)="clasePendienteCancelar.set(null); $event.stopPropagation()"
+                            aria-label="No cancelar, mantener la reserva">
+                            No, mantener
+                          </button>
+                          <button 
+                            type="button" 
+                            class="perfil__btn-confirmar-si"
+                            (click)="confirmarCancelacion(); $event.stopPropagation()"
+                            aria-label="Sí, confirmar cancelación de la clase">
+                            Sí, cancelar
+                          </button>
+                        </div>
+                      </div>
                     }
                   }
                 </aside>

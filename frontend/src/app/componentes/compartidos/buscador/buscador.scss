@@ -7,6 +7,7 @@ $buscador-max-desktop: 28rem;
 $buscador-transition: 0.2s;
 
 .buscador {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -108,6 +109,10 @@ $buscador-transition: 0.2s;
       opacity: 0;
     }
 
+    &--error {
+      border-color: var(--color-error, #e53e3e);
+    }
+
     .buscador--expandido & {
       @include respond-down(sm) {
         width: auto;
@@ -116,6 +121,21 @@ $buscador-transition: 0.2s;
         opacity: 1;
       }
     }
+  }
+
+  &__error {
+    position: absolute;
+    top: 100%;
+    left: $space-2;
+    right: $space-2;
+    margin-top: $space-1;
+    padding: $space-1 $space-2;
+    font-size: $texto-xs;
+    color: var(--color-error, #e53e3e);
+    background: var(--color-fondo-secundario);
+    border: $borde-thin solid var(--color-error, #e53e3e);
+    border-radius: $radio-sm;
+    z-index: 10;
   }
 
   &__boton {

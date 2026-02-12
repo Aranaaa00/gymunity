@@ -6,6 +6,7 @@
     <img 
       [src]="imagenPrincipal()" 
       [alt]="captionActivo()" 
+      [attr.longdesc]="'Fotografía de las instalaciones del gimnasio. ' + captionActivo() + '. Imagen ' + (indiceActivo() + 1) + ' de ' + imagenes().length + ' de la galería.'"
       class="galeria__imagen-principal"
       loading="eager"
       fetchpriority="high"

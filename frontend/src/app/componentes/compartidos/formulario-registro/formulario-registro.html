@@ -83,8 +83,13 @@
     </app-campo-formulario>
 
     @if (passwordControl.value) {
-      <section class="formulario-registro__fuerza">
-        <figure class="formulario-registro__fuerza-barra">
+      <section class="formulario-registro__fuerza" aria-label="Indicador de fuerza de la contraseña">
+        <figure class="formulario-registro__fuerza-barra"
+          role="meter"
+          [attr.aria-valuenow]="fuerzaPassword().porcentaje"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [attr.aria-label]="'Fuerza de la contraseña: ' + fuerzaPassword().mensaje">
           <span 
             class="formulario-registro__fuerza-progreso"
             [class.formulario-registro__fuerza-progreso--debil]="fuerzaPassword().nivel === 'debil'"
@@ -94,7 +99,7 @@
             [style.width.%]="fuerzaPassword().porcentaje">
           </span>
         </figure>
-        <small class="formulario-registro__fuerza-mensaje">{{ fuerzaPassword().mensaje }}</small>
+        <small class="formulario-registro__fuerza-mensaje" aria-live="polite">{{ fuerzaPassword().mensaje }}</small>
       </section>
     }
     
@@ -118,7 +123,7 @@
     </section>
 
     @if (errorServidor()) {
-      <p class="formulario-auth__error-servidor">{{ errorServidor() }}</p>
+      <p class="formulario-auth__error-servidor" role="alert" aria-live="assertive">{{ errorServidor() }}</p>
     }
 
     <footer class="formulario-auth__footer">

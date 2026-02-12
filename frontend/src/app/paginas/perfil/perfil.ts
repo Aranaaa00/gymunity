@@ -105,6 +105,8 @@ export class Perfil implements ComponenteConCambios {
     return this.resenias().length > RESENIAS_POR_PAGINA;
   });
 
+  readonly clasePendienteCancelar = signal<ClaseReservada | null>(null);
+
   readonly rolFormateado = computed(() => {
     const u = this.usuario();
     if (!u) {
@@ -169,6 +171,18 @@ export class Perfil implements ComponenteConCambios {
 
   cancelarClase(clase: ClaseReservada): void {
     this.reservasService.cancelarReserva(clase.claseId);
+    this.clasePendienteCancelar.set(null);
+  }
+
+  solicitarCancelacion(clase: ClaseReservada): void {
+    this.clasePendienteCancelar.set(clase);
+  }
+
+  confirmarCancelacion(): void {
+    const clase = this.clasePendienteCancelar();
+    if (clase) {
+      this.cancelarClase(clase);
+    }
   }
 
   formatearFecha(fechaISO: string): string {

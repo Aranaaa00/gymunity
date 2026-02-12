@@ -6,7 +6,7 @@
     </section>
   </main>
 } @else if (gimnasio()) {
-  <main class="gimnasio" role="main" aria-labelledby="gimnasio-titulo">
+  <main class="gimnasio" aria-labelledby="gimnasio-titulo">
     <article class="gimnasio__contenedor">
       <!-- HEADER: Título y valoración -->
       <header class="gimnasio__header">
@@ -47,7 +47,8 @@
         <figure class="gimnasio__imagen-unica">
           <img 
             [src]="gimnasio()!.foto" 
-            [alt]="'Instalaciones de ' + gimnasio()!.nombre" 
+            [alt]="'Instalaciones de ' + gimnasio()!.nombre"
+            [attr.longdesc]="'Fotografía de las instalaciones del gimnasio ' + gimnasio()!.nombre + '. Muestra las áreas de entrenamiento, equipamiento disponible y espacios dedicados a la práctica de artes marciales y fitness.'"
             class="gimnasio__foto" 
             loading="eager"
             fetchpriority="high"

@@ -1,4 +1,4 @@
-<main class="ajustes" role="main" aria-labelledby="titulo-ajustes">
+<main class="ajustes" aria-labelledby="titulo-ajustes">
   <header class="ajustes__cabecera">
     <h1 id="titulo-ajustes" class="ajustes__titulo">Ajustes</h1>
     <button 
@@ -180,8 +180,13 @@
             [errorMessage]="getErrorPassword('contraseniaNueva')" />
 
           @if (contraseniaNuevaControl.value) {
-            <section class="ajustes__fuerza">
-              <figure class="ajustes__fuerza-barra">
+            <section class="ajustes__fuerza" aria-label="Indicador de fuerza de la contraseña">
+              <figure class="ajustes__fuerza-barra"
+                role="meter"
+                [attr.aria-valuenow]="fuerzaPassword().porcentaje"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                [attr.aria-label]="'Fuerza de la contraseña: ' + fuerzaPassword().mensaje">
                 <span 
                   class="ajustes__fuerza-progreso"
                   [class.ajustes__fuerza-progreso--debil]="fuerzaPassword().nivel === 'debil'"
@@ -191,7 +196,7 @@
                   [style.width.%]="fuerzaPassword().porcentaje">
                 </span>
               </figure>
-              <small class="ajustes__fuerza-mensaje">{{ fuerzaPassword().mensaje }}</small>
+              <small class="ajustes__fuerza-mensaje" aria-live="polite">{{ fuerzaPassword().mensaje }}</small>
             </section>
           }
         </article>
